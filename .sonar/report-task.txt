@@ -1,0 +1,5 @@
+projectKey=JavaApplication3
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/JavaApplication3
+ceTaskId=AVau3kNhqd6pwkwGYGtC
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVau3kNhqd6pwkwGYGtC

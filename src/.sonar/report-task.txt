@@ -1,0 +1,5 @@
+projectKey=FactService
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/FactService
+ceTaskId=AV57xMaVd9PobMVFfUsd
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AV57xMaVd9PobMVFfUsd
