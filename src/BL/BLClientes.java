@@ -149,10 +149,10 @@ public class BLClientes {
         return datos;
     }
 
-    public int InsertarCliente(Clientes objClientes) throws ClassNotFoundException, SQLException {
-        return manejadorClientes.InsertarCliente(objClientes.getStrNombre(), objClientes.getIntCedula(), objClientes.getIntTelf(), objClientes.getDblDeuda()
-        , objClientes.getStrDireccion());
-    }
+//    public int InsertarCliente(Clientes objClientes) throws ClassNotFoundException, SQLException {
+//        return manejadorClientes.InsertarCliente(objClientes.getStrNombre(), objClientes.getIntCedula(), objClientes.getIntTelf(), objClientes.getDblDeuda()
+//        , objClientes.getStrDireccion());
+//    }
 
     public int InsertarDeuda(Clientes objClientes) throws ClassNotFoundException, SQLException {
         return manejadorClientes.agregarDeuda(objClientes.getDblDeuda(), objClientes.getStrNombre());

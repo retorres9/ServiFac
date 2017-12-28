@@ -40,7 +40,7 @@ public class Guardar {
             if (!guardarBarras.toString().endsWith(".png")) {
                 guardarBarras = new File(fileChooser.getSelectedFile() + ".png");
                 ruta = guardarBarras.toString();
-                IngresoProd.jLabel10.setText(ruta);
+                //IngresoProd.jLabel10.setText(ruta);
                 System.out.println(ruta);
             }
             try {

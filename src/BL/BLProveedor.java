@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class BLProveedor {
     DATProveedor manejadorProveedor = new DATProveedor();
     
-    public int crearProveedor(Proveedor objP) throws ClassNotFoundException, SQLException{
-        return manejadorProveedor.ingresoProveedor(objP.getStrEmpresa(), objP.getStrNombreCuenta(), objP.getStrTipo(), objP.getStrNumCuenta(), objP.getDblDeuda(), objP.getIntTelf());
-    }
+//    public int crearProveedor(Proveedor objP) throws ClassNotFoundException, SQLException{
+//        return manejadorProveedor.ingresoProveedor(objP.getStrEmpresa(), objP.getStrNombreCuenta(), objP.getStrTipo(), objP.getStrNumCuenta(), objP.getDblDeuda(), objP.getIntTelf());
+//    }
     
     public ArrayList<Object[]> cargarTabla() throws ClassNotFoundException, SQLException{
         ArrayList<Object[]> datos = new ArrayList<>();

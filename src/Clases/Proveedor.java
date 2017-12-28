@@ -76,4 +76,8 @@ public class Proveedor {
     public void setDblDeuda(double dblDeuda) {
         this.dblDeuda = dblDeuda;
     }
+    @Override
+    public String toString(){
+        return this.strEmpresa;
+    }
 }

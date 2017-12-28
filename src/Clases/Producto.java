@@ -1,6 +1,5 @@
 package Clases;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.InputStream;
 
@@ -13,7 +12,8 @@ public class Producto {
     private int intCantidad;
     private int intCantidadMinima;
     private String strEmpresa;
-    private InputStream imgCodigoProd;
+    private File imgCodigoProd;
+    private File fotoProd;
 
     public Producto(int intCantidadMinima, String strNombreProd) {
         this.strNombreProd = strNombreProd;
@@ -36,7 +36,7 @@ public class Producto {
         this.strUbicacion = strUbicacion;
     }
     
-    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadMinima, String strEmpresa, InputStream imgCodigoProd) {
+    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadMinima, String strEmpresa, File imgCodigoProd, File fotoProd) {
         this.strNombreProd = strNombreProd;
         this.strCod = strCod;
         this.fltPrecio = fltPrecio;
@@ -46,13 +46,14 @@ public class Producto {
         this.intCantidadMinima = intCantidadMinima;
         this.strEmpresa = strEmpresa;
         this.imgCodigoProd = imgCodigoProd;
+        this.fotoProd = fotoProd;
     }
 
-    public InputStream getImgCodigoProd() {
+    public File getImgCodigoProd() {
         return imgCodigoProd;
     }
 
-    public void setImgCodigoProd(InputStream imgCodigoProd) {
+    public void setImgCodigoProd(File imgCodigoProd) {
         this.imgCodigoProd = imgCodigoProd;
     }
 

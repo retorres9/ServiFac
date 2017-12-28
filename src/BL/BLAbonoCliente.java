@@ -26,8 +26,8 @@ public class BLAbonoCliente {
         return datos;
     }
     
-    public int abonoCliente(AbonoCliente objAc) throws ClassNotFoundException, SQLException{
-        return manejadorAbono.abonoCliente(objAc.getIntCedula(), objAc.getStrUsuario(), objAc.getDblMontoAbono(), objAc.getStrFecha());
-    }
+//    public int abonoCliente(AbonoCliente objAc) throws ClassNotFoundException, SQLException{
+//        return manejadorAbono.abonoCliente(objAc.getIntCedula(), objAc.getStrUsuario(), objAc.getDblMontoAbono(), objAc.getStrFecha());
+//    }
 
 }

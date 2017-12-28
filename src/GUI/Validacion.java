@@ -201,7 +201,6 @@ public final class Validacion extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             Statement stm = con.createStatement();
-            //ResultSet mod = stm.executeQuery("SET GLOBAL wait_timeout = 10;");
             res = stm.executeQuery("SELECT Usuario, Contrasena, Rol FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
 
             while (res.next()) {

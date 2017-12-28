@@ -4,6 +4,7 @@ import BL.BLConexion;
 import BL.BLMaterial;
 import Clases.Configuracion;
 import Clases.Usuario;
+import Dat.DATMaterial;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ public final class Principal extends javax.swing.JFrame {
     Usuario objU = new Usuario();
     Configuracion config = new Configuracion();
     Validacion objV = new Validacion();
+    DATMaterial objProd = new DATMaterial();
 
     public Principal() {
         initComponents();
@@ -472,23 +474,19 @@ public final class Principal extends javax.swing.JFrame {
     }
 
     public void alerta() {
-        try {
-            cant = objM.CuentaRegistros();
-            String path = "/Recursos/alerta.png";
-            URL url = this.getClass().getResource(path);
-            ImageIcon icon = new ImageIcon(url);
-            String path2 = "/Recursos/success.png";
-            URL url2 = this.getClass().getResource(path2);
-            ImageIcon icon2 = new ImageIcon(url2);
-            if (cant >= 1) {
-                txtAlarma.setIcon(icon);
-                txtAlarma.setToolTipText("Hay productos por debajo de su cantidad mínima");
-            } else {
-                txtAlarma.setIcon(icon2);
-                txtAlarma.setToolTipText("No hay elementos faltantes");
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        cant = objProd.CuentaRegistros();
+        String path = "/Recursos/alerta.png";
+        URL url = this.getClass().getResource(path);
+        ImageIcon icon = new ImageIcon(url);
+        String path2 = "/Recursos/success.png";
+        URL url2 = this.getClass().getResource(path2);
+        ImageIcon icon2 = new ImageIcon(url2);
+        if (cant >= 1) {
+            txtAlarma.setIcon(icon);
+            txtAlarma.setToolTipText("Hay productos por debajo de su cantidad mínima");
+        } else {
+            txtAlarma.setIcon(icon2);
+            txtAlarma.setToolTipText("No hay elementos faltantes");
         }
     }
 
