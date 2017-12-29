@@ -1,7 +1,6 @@
 package Clases;
 
 import java.io.File;
-import java.io.InputStream;
 
 public class Producto {
     private String strNombreProd;
@@ -23,18 +22,28 @@ public class Producto {
     public Producto(String strNombreProd) {
         this.strNombreProd = strNombreProd;
     }
+    
+    public Producto(String strNombreProd, String strCod){
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+    }
+    
+    public Producto(){
+        
+    }
 
     public Producto(String strNombreProd, int intCantidad) {
         this.strNombreProd = strNombreProd;
         this.intCantidad = intCantidad;
     }
 
-    public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, int intCantidad, String strUbicacion) {
+    public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, int intCantidad, String strUbicacion, String strCod) {
         this.strNombreProd = strNombreProd;
         this.fltPrecio = fltPrecio;
         this.fltPrecioMayor = fltPrecioMayor;
         this.intCantidad = intCantidad;
         this.strUbicacion = strUbicacion;
+        this.strCod = strCod;
     }
     
     public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad) {
@@ -65,10 +74,6 @@ public class Producto {
 
     public void setImgCodigoProd(File imgCodigoProd) {
         this.imgCodigoProd = imgCodigoProd;
-    }
-
-    public Producto() {
-        /*Constructor vacio para utilizar posteriormente en la BLProductos*/
     }
 
     public String getStrNombreProd() {

@@ -184,14 +184,10 @@ public class DATMaterial {
     public void UpdateProducto(Producto producto){
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Nombre_Producto = ?";
+            String Sentencia = "UPDATE producto SET Nombre_Producto = ? WHERE Codigo = ?";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
-            ps.setDouble(2, producto.getFltPrecio());
-            ps.setDouble(3, producto.getFltPrecioMayor());
-            ps.setInt(4, producto.getIntCantidad());
-            ps.setString(5, producto.getStrUbicacion());
-            ps.setString(6, producto.getStrNombreProd());
+            ps.setString(2, producto.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -205,17 +201,17 @@ public class DATMaterial {
         }
     }
     
-    public void UpdateNombreProducto(Producto producto, String nombre){
+    public void UpdateNombreProducto(Producto producto, String codigo){
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Nombre_Producto = ?";
+            String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Codigo = ?";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
             ps.setDouble(2, producto.getFltPrecio());
             ps.setDouble(3, producto.getFltPrecioMayor());
             ps.setInt(4, producto.getIntCantidad());
             ps.setString(5, producto.getStrUbicacion());
-            ps.setString(6, nombre);
+            ps.setString(6, producto.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
