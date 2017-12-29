@@ -46,4 +46,23 @@ public class DATUbicacion {
         }
         return listaUbicacion;
     }
+    
+    public void crearUbicacion(Ubicacion ubi){
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "INSERT INTO ubicacion(nombre_ubic) VALUES(?)";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, ubi.getStrUbicacion());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

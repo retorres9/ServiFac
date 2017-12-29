@@ -2,6 +2,7 @@ package GUI;
 
 import BL.BLUsuario;
 import Clases.Usuario;
+import Dat.DATUsuario;
 import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -15,17 +16,18 @@ import javax.swing.JOptionPane;
 public final class NuevoUsuario extends javax.swing.JFrame {
 
     Usuario objUs = new Usuario();
-    BLUsuario manejadorUsuario = new BLUsuario();
+    DATUsuario usuario;
 
     public NuevoUsuario() {
         initComponents();
         combo();
+        usuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         txtNombreEmp.setText(Constantes.Constantes.nombreEmpresa);
         this.setTitle(Constantes.Constantes.nombrePrograma);
     }
-    
+
     public void combo() {
         jComboBox1.addItem("Seleccione...");
         jComboBox1.addItem("Administrador");
@@ -59,8 +61,8 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox();
         txtPass = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtConf = new javax.swing.JPasswordField();
@@ -80,19 +82,25 @@ public final class NuevoUsuario extends javax.swing.JFrame {
 
         jLabel4.setText("Rol:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/save.png"))); // NOI18N
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/error.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/save.png"))); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/error.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -132,9 +140,9 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addGap(62, 62, 62))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(btnCancelar)
                                 .addGap(128, 128, 128)
-                                .addComponent(jButton1))
+                                .addComponent(btnGuardar))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel6)
@@ -147,11 +155,10 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtConf, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtConf)
+                                    .addComponent(txtPass)
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCedulaUser))))
                         .addGap(0, 112, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -196,23 +203,23 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
                 .addGap(52, 52, 52))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         Validacion objV = new Validacion();
         objV.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         int rolUs = 0;
-
+        int digitosCedula = txtCedulaUser.getText().length();
         if (jComboBox1.getSelectedItem().equals("Seleccione...")) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un rol para el usuario");
         }
@@ -220,42 +227,39 @@ public final class NuevoUsuario extends javax.swing.JFrame {
             if (txtConf.getText().isEmpty() || txtNombre.getText().isEmpty()
                     || txtPass.getText().isEmpty() || txtUsuario.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+            } else if (digitosCedula != 10 && digitosCedula != 13) {
+                JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos");
             } else {
                 String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear un usuario Administrador");
                 try {
                     if (n.equals("Um9iZXJ0")) {
-                        try {
-                            String strCedula = txtCedulaUser.getText();
-                            int cedula = Integer.parseInt(strCedula);
-                            String nom = txtNombre.getText();
-                            String usu = txtUsuario.getText();
-                            String pass = txtPass.getText();
-                            String rol = (String) jComboBox1.getSelectedItem();
-                            if (rol.equals("Vendedor")) {
-                                rolUs = 0;
-                            } else if (rol.equals("Administrador")) {
-                                rolUs = 1;
-                            }
-                            if (txtPass.getText().equals(txtConf.getText())) {
-                                String newPass = pass;
-                                pass = getMD5(newPass);
-                                objUs = new Usuario(cedula, nom, usu, pass, rolUs);
-                                manejadorUsuario.nuevoUsuario(objUs);
-                                Validacion objV = new Validacion();
-                                objV.setVisible(true);
-                                this.setVisible(false);
-                            } else {
-                                JOptionPane.showMessageDialog(null, "La contraseñas no coinciden");
-                            }
-
-                        } catch (ClassNotFoundException | SQLException ex) {
-                            Logger.getLogger(NuevoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                        String strCedula = txtCedulaUser.getText();
+                        int cedula = Integer.parseInt(strCedula);
+                        String nom = txtNombre.getText();
+                        String usu = txtUsuario.getText();
+                        String pass = txtPass.getText();
+                        String rol = (String) jComboBox1.getSelectedItem();
+                        if (rol.equals("Administrador")) {
+                            rolUs = 1;
+                        }
+                        if (txtPass.getText().equals(txtConf.getText())) {
+                            String newPass = pass;
+                            pass = getMD5(newPass);
+                            objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                            usuario.nuevoUsuario(objUs);
+                            JOptionPane.showMessageDialog(null, "Usuario creado satisfactoriamente!!!"
+                                    + "\nPor favor vuelva a ingresar su usuario y contraseña en la siguiente ventana");
+                            Validacion objV = new Validacion();
+                            objV.setVisible(true);
+                            this.setVisible(false);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "La contraseñas no coinciden");
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Codigo Incorrecto");
                     }
                 } catch (NullPointerException ex) {
-                    JOptionPane.showMessageDialog(null, "No ha ingresado mas productos de:\n" + txtNombre.getText());
+                    JOptionPane.showMessageDialog(null, "No ha ingresado el código de verificación");
                 }
             }
         }
@@ -264,45 +268,48 @@ public final class NuevoUsuario extends javax.swing.JFrame {
             if (txtConf.getText().isEmpty() || txtNombre.getText().isEmpty()
                     || txtPass.getText().isEmpty() || txtUsuario.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+            } else if (digitosCedula != 10 && digitosCedula != 13) {
+                JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos");
             } else {
-                try {
-                    String strCedula = txtCedulaUser.getText();
-                    int cedula = Integer.parseInt(strCedula);
-                    String nom = txtNombre.getText();
-                    String usu = txtUsuario.getText();
-                    String pass = txtPass.getText();
-                    String rol = (String) jComboBox1.getSelectedItem();
-                    if (rol.equals("Vendedor")) {
-                        rolUs = 0;
-                    } else if (rol.equals("Administrador")) {
-                        rolUs = 1;
-                    }
-                    if (txtPass.getText().equals(txtConf.getText())) {
-                        String newPass = pass;
-                        pass = getMD5(newPass);
-                        objUs = new Usuario(cedula, nom, usu, pass, rolUs);
-                        manejadorUsuario.nuevoUsuario(objUs);
-                        Validacion objV = new Validacion();
-                        objV.setVisible(true);
-                        this.setVisible(false);
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-                    }
-                } catch (ClassNotFoundException | SQLException ex) {
-                    Logger.getLogger(NuevoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                String strCedula = txtCedulaUser.getText();
+                int cedula = Integer.parseInt(strCedula);
+                String nom = txtNombre.getText();
+                String usu = txtUsuario.getText();
+                String pass = txtPass.getText();
+                String rol = (String) jComboBox1.getSelectedItem();
+                if (rol.equals("Vendedor")) {
+                    rolUs = 0;
+                }
+                if (txtPass.getText().equals(txtConf.getText())) {
+                    String newPass = pass;
+                    pass = getMD5(newPass);
+                    objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                    usuario.nuevoUsuario(objUs);
+                    Validacion objV = new Validacion();
+                    objV.setVisible(true);
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
                 }
             }
 
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtCedulaUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaUserKeyTyped
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) && txtCedulaUser.getText().length() == 10){
+        String caracteres = txtCedulaUser.getText();
+        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCedulaUserKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char caracter = evt.getKeyChar();
+        if(!(Character.isLetter(caracter)) &&(caracter != KeyEvent.VK_BACK_SPACE) && (caracter != KeyEvent.VK_SPACE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -340,8 +347,8 @@ public final class NuevoUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

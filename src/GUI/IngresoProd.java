@@ -30,13 +30,15 @@ import net.sourceforge.jbarcodebean.model.Interleaved25;
 
 public final class IngresoProd extends javax.swing.JFrame {
 
-    BLMaterial objMaterial = new BLMaterial();
+    Principal objP = new Principal();
     Producto objProd = new Producto();
     int cant;
     File imgArticulo;
     DATCategoria objCat;
     DATProveedor objProveedor;
     DATUbicacion objUbic;
+    Categoria categoria;
+    Ubicacion ubicacion;
 
     //Modelos de combobox    
     DefaultComboBoxModel<Categoria> modeloCategorias;
@@ -58,13 +60,13 @@ public final class IngresoProd extends javax.swing.JFrame {
         objProveedor = new DATProveedor();
         objUbic = new DATUbicacion();
         conMat = new DATMaterial();
-        
+
         cargarModeloCat();
         cargarModeloProv();
         cargarModeloUbic();
         initComponents();
         permisos();
-        
+
         btnGenerador.setEnabled(false);
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
@@ -116,7 +118,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             jmConfig.setEnabled(true);
         }
     }
-    
+
     public void guardar() {
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator('.');
@@ -215,9 +217,9 @@ public final class IngresoProd extends javax.swing.JFrame {
         lblImagProd = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         cmbCategoria = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnProveedor = new javax.swing.JButton();
+        btnUbicacion = new javax.swing.JButton();
+        btnCategoria = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -391,11 +393,26 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         cmbCategoria.setModel(modeloCategorias);
 
-        jButton1.setText("Agregar Proveedor");
+        btnProveedor.setText("Agregar Proveedor");
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Agregar Ubicación");
+        btnUbicacion.setText("Agregar Ubicación");
+        btnUbicacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbicacionActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Agregar Categoria");
+        btnCategoria.setText("Agregar Categoria");
+        btnCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaActionPerformed(evt);
+            }
+        });
 
         jMenu2.setText("Productos");
 
@@ -547,9 +564,9 @@ public final class IngresoProd extends javax.swing.JFrame {
                                         .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3)
+                            .addComponent(btnUbicacion)
+                            .addComponent(btnProveedor)
+                            .addComponent(btnCategoria)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)))
                 .addContainerGap())
@@ -610,17 +627,17 @@ public final class IngresoProd extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(jButton1))
+                            .addComponent(btnProveedor))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(jButton2))))
+                            .addComponent(btnUbicacion))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(btnCategoria))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -687,17 +704,14 @@ public final class IngresoProd extends javax.swing.JFrame {
                     "Aviso!",
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
-//                if (!objP.isActive()) {
-//                    this.setVisible(false);
-//                } else {
-//                    objP.setVisible(true);
-//                    this.setVisible(false);
+                    objP.setVisible(true);
+                    this.dispose();
 //                }
             }
         } else {
 
-//            objP.setVisible(true);
-//            this.setVisible(false);
+            objP.setVisible(true);
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnAtrasActionPerformed
@@ -835,6 +849,51 @@ public final class IngresoProd extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbProveedorActionPerformed
 
+    private void btnUbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbicacionActionPerformed
+        String rol = Configuracion.validacion();
+        if (rol.equals("0")) {
+            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevas ubicaciones", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String ubi = JOptionPane.showInputDialog(null, "Ingrese el nombre de la ubicacion");
+            if (ubi == null) {
+
+            } else {
+                ubicacion = new Ubicacion(ubi);
+                objUbic.crearUbicacion(ubicacion);
+            }
+        }
+    }//GEN-LAST:event_btnUbicacionActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        String rol = Configuracion.validacion();
+        if (rol.equals("0")) {
+            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            NuevoProveedorDialgo dialogProv = new NuevoProveedorDialgo(this, true);
+            dialogProv.setVisible(true);
+        }
+    }//GEN-LAST:event_btnProveedorActionPerformed
+
+    private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
+        String rol = Configuracion.validacion();
+        if (rol.equals("0")) {
+            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevas categorias", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String cat = JOptionPane.showInputDialog(null, "Ingrese el nombre de la categoria");
+            if (cat == null) {
+
+            } else {
+                try {
+                    categoria = new Categoria(cat);
+                    objCat.IngresarCat(categoria);
+                } catch (ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al ingresar \nla nueva categoria");
+                }
+            }
+
+        }
+    }//GEN-LAST:event_btnCategoriaActionPerformed
+
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra
         barcode.setCodeType(new Interleaved25());
@@ -882,16 +941,16 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnGenerador;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnProveedor;
+    private javax.swing.JButton btnUbicacion;
     private javax.swing.JCheckBox cbxAyuda;
     private javax.swing.JCheckBox cbxGenerador;
     private javax.swing.JComboBox<Categoria> cmbCategoria;
     private javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JComboBox<Ubicacion> cmbUbicacion;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

@@ -1,7 +1,6 @@
 package Dat;
 
 import Clases.Categoria;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,14 +44,13 @@ public class DATCategoria {
         }
         return listaCategoria;
     }
-    public void IngresarCat(int cod,String strNombre) throws ClassNotFoundException {
+    public void IngresarCat(Categoria cat) throws ClassNotFoundException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "INSERT INTO categorias (id_Categoria,nombre_Cat)"
-                    + "VALUES (?,?)";
+            String Sentencia = "INSERT INTO categorias (nombre_Cat)"
+                    + "VALUES (?)";
             ps = con.prepareStatement(Sentencia);
-            ps.setInt(1, cod);
-            ps.setString(2, strNombre);
+            ps.setString(1, cat.getStrCat());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

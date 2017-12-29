@@ -54,22 +54,58 @@ public class DATMaterial {
         return listaProductos;
     }
 
-//    public ResultSet ConsultarMinimo() throws ClassNotFoundException, SQLException {
-//        Statement st = c.getConnection().createStatement();
-//        String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad, Cantidad_Minima, Empresa FROM producto WHERE Cantidad <= Cantidad_Minima";
-//        ResultSet re = st.executeQuery(Sentencia);
-//        //re.close();
-//        return re;
-//    }
-//
-//    public ResultSet Consultar2(String nombre) throws ClassNotFoundException, SQLException {
-//        //Statement st = c.getConnection().createStatement();
-//        String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto WHERE Nombre_Producto REGEXP CONCAT('^',?)";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        //ResultSet re = st.executeQuery(Sentencia);
-//        ps.setString(1, nombre);
-//        return ps.executeQuery();
-//    }
+    public ArrayList<Producto> ConsultarMinimo() throws SQLException {
+        ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad, Cantidad_Minima, Empresa FROM producto WHERE Cantidad <= Cantidad_Minima";
+            ps = con.prepareStatement(sentencia);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreProd = rs.getString(1);
+                String cod = rs.getString(2);
+                double precio = rs.getDouble(3);
+                double precioProdMayor = rs.getDouble(4);
+                String ubi = rs.getString(5);
+                int cant = rs.getInt(6);
+                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
+                listadoMinimos.add(prod);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            rs.close();
+            con.close();
+        }
+        return listadoMinimos;
+    }
+
+    public ArrayList<Producto> Consultar2(String nombre) throws SQLException {
+        ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto WHERE Nombre_Producto REGEXP CONCAT('^',?) ORDER BY Nombre_Producto Asc";
+            ps = con.prepareStatement(Sentencia);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreProd = rs.getString(1);
+                String cod = rs.getString(2);
+                double precio = rs.getDouble(3);
+                double precioProdMayor = rs.getDouble(4);
+                String ubi = rs.getString(5);
+                int cant = rs.getInt(6);
+                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
+                listaProductosNombre.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            rs.close();
+            con.close();
+        }
+        return listaProductosNombre;
+    }
 //
 //    public ResultSet ConsultarCodigo(String codigo) throws ClassNotFoundException, SQLException {
 //        //Statement st = c.getConnection().createStatement();
@@ -79,7 +115,9 @@ public class DATMaterial {
 //        ps.setString(1, codigo);
 //        return ps.executeQuery();
 //    }
+
     public void IngresarProducto(String strNombre, String strCodigo, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadminima, String strEmpresa, File imagen) throws ClassNotFoundException {
+
         try {
             //File fotoProd = prod.getImgCodigoProd();
             //FileInputStream fis = new FileInputStream(fotoProd);
@@ -118,13 +156,21 @@ public class DATMaterial {
         }
     }
 
-//    public int UpdateFormaCantMin(int strCantMin, String nombre) throws ClassNotFoundException, SQLException {
-//        String Sentencia = "UPDATE producto SET Cantidad_Minima = ? WHERE Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setInt(1, strCantMin);
-//        ps.setString(2, nombre);
-//        return ps.executeUpdate();
-//    }
+    public void UpdateFormaCantMin(Producto producto) throws ClassNotFoundException, SQLException {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET Cantidad_Minima = ? WHERE Nombre_Producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, producto.getIntCantidad());
+            ps.setString(2, producto.getStrNombreProd());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            ps.close();
+            con.close();
+        }
+    }
 //
 //    public int UpdateCant(String nombre, int strCant) throws ClassNotFoundException, SQLException {
 //        String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
@@ -134,28 +180,54 @@ public class DATMaterial {
 //        return ps.executeUpdate();
 //    }
 //
-//    public int UpdateProducto(String nombre, double dblPrecio, double dblPrecioMayor, String strUbicacion) throws ClassNotFoundException, SQLException {
-//        String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Ubicacion = ? WHERE Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setString(1, nombre);
-//        ps.setDouble(2, dblPrecio);
-//        ps.setDouble(3, dblPrecioMayor);
-//        ps.setString(4, strUbicacion);
-//        ps.setString(5, nombre);
-//        return ps.executeUpdate();
-//    }
-//
-//    public int UpdateProducto2(String nombre, double dblPrecio, double dblPrecioMayor, String strUbicacion, String n) throws ClassNotFoundException, SQLException {
-//        String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Ubicacion = ? WHERE Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setString(1, nombre);
-//        ps.setDouble(2, dblPrecio);
-//        ps.setDouble(3, dblPrecioMayor);
-//        ps.setString(4, strUbicacion);
-//        ps.setString(5, n);
-//        return ps.executeUpdate();
-//    }
-//
+
+    public void UpdateProducto(Producto producto){
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Nombre_Producto = ?";
+            ps = con.prepareStatement(Sentencia);
+            ps.setString(1, producto.getStrNombreProd());
+            ps.setDouble(2, producto.getFltPrecio());
+            ps.setDouble(3, producto.getFltPrecioMayor());
+            ps.setInt(4, producto.getIntCantidad());
+            ps.setString(5, producto.getStrUbicacion());
+            ps.setString(6, producto.getStrNombreProd());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void UpdateNombreProducto(Producto producto, String nombre){
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Nombre_Producto = ?";
+            ps = con.prepareStatement(Sentencia);
+            ps.setString(1, producto.getStrNombreProd());
+            ps.setDouble(2, producto.getFltPrecio());
+            ps.setDouble(3, producto.getFltPrecioMayor());
+            ps.setInt(4, producto.getIntCantidad());
+            ps.setString(5, producto.getStrUbicacion());
+            ps.setString(6, nombre);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 //    //mod abajo
     public int CuentaRegistros() {
         int cant = 0;

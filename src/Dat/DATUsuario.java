@@ -1,5 +1,6 @@
 package Dat;
 
+import Clases.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,17 +14,17 @@ public class DATUsuario {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public void nuevoUsuario(int cedulaUser,String nombre, String usuario, String cont, int rol){
+    public void nuevoUsuario(Usuario usuario){
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol) "
                 + "VALUES (?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
-            ps.setInt(1, cedulaUser);
-            ps.setString(2, nombre);
-            ps.setString(3, usuario);
-            ps.setString(4, cont);
-            ps.setInt(5, rol);
+            ps.setInt(1, usuario.getCedulaUsuario());
+            ps.setString(2, usuario.getNombre());
+            ps.setString(3, usuario.getUsuario());
+            ps.setString(4, usuario.getContrasena());
+            ps.setInt(5, usuario.getRol());
             ps.executeUpdate();            
         } catch (SQLException ex) {
             Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);

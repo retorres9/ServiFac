@@ -6,8 +6,9 @@
 package GUI;
 
 import BL.BLMaterial;
-import java.math.BigDecimal;
-import java.sql.SQLException;
+import Clases.Producto;
+import Dat.DATMaterial;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -18,10 +19,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Roberth
  */
 public final class Inventario extends javax.swing.JFrame {
-
     /**
      * Creates new form Inventario
      */
+    DefaultTableModel modelo = new DefaultTableModel();
+    DATMaterial material = new DATMaterial();
     boolean bandera = true;
 
     public Inventario() {
@@ -30,7 +32,7 @@ public final class Inventario extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.nombrePrograma);
         this.setLocationRelativeTo(null);
         cargaProductos();
-        totalInv();
+//        totalInv();
     }
 
     @SuppressWarnings("unchecked")
@@ -48,17 +50,7 @@ public final class Inventario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tblInventario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tblInventario.setModel(modelo);
         jScrollPane1.setViewportView(tblInventario);
 
         jLabel1.setText("Total de mercaderia:");
@@ -137,22 +129,31 @@ public final class Inventario extends javax.swing.JFrame {
 
     public void cargaProductos() {
         try {
-            BLMaterial objM = new BLMaterial();
-            DefaultTableModel modelo = new DefaultTableModel()/*(DefaultTableModel) tblInventario.getModel()*/;
             modelo.addColumn("Nombre producto");
-            modelo.addColumn("Nombre producto 2");
             modelo.addColumn("Codigo");
             modelo.addColumn("Precio");
             modelo.addColumn("Precio por mayor");
             modelo.addColumn("Ubicación");
             modelo.addColumn("Cantidad");
-            for (int i = 0; i < objM.getMaterial().size(); i++) {
-                modelo.addRow(objM.getMaterial().get(i));
+            ArrayList<Producto> listaProductos = material.Consultar();
+            int numeroProductos = listaProductos.size();
+            modelo.setNumRows(numeroProductos);
+            for (int i = 0; i < numeroProductos; i++) {
+                Producto producto = listaProductos.get(i);
+                String nombreProd = producto.getStrNombreProd();
+                String cod = producto.getStrCod();
+                Double precio = producto.getFltPrecio();
+                Double precioMayor = producto.getFltPrecioMayor();
+                String ubi = producto.getStrUbicacion();
+                Integer cant = producto.getIntCantidad();
+                modelo.setValueAt(nombreProd, i, 0);
+                modelo.setValueAt(cod, i, 1);
+                modelo.setValueAt(precio, i, 2);
+                modelo.setValueAt(precioMayor, i, 3);
+                modelo.setValueAt(ubi, i, 4);
+                modelo.setValueAt(cant, i, 5);
             }
-            tblInventario.setModel(modelo);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
         bandera = false;

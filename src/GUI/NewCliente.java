@@ -403,7 +403,7 @@ public final class NewCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarCliActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-
+        
 //        if(objFact.isEnabled()){
 //            
 //            this.setVisible(false);
@@ -419,7 +419,7 @@ public final class NewCliente extends javax.swing.JFrame {
                 this.dispose();
             }
         } else {
-            //objP.setVisible(true);
+            objP.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnAtrasActionPerformed

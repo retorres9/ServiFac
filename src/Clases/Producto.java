@@ -29,11 +29,21 @@ public class Producto {
         this.intCantidad = intCantidad;
     }
 
-    public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, String strUbicacion) {
+    public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, int intCantidad, String strUbicacion) {
         this.strNombreProd = strNombreProd;
         this.fltPrecio = fltPrecio;
         this.fltPrecioMayor = fltPrecioMayor;
+        this.intCantidad = intCantidad;
         this.strUbicacion = strUbicacion;
+    }
+    
+    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.fltPrecioMayor = fltPrecioMayor;
+        this.strUbicacion = strUbicacion;
+        this.intCantidad = intCantidad;
     }
     
     public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadMinima, String strEmpresa, File imgCodigoProd, File fotoProd) {
