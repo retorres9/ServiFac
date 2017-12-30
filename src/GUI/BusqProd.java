@@ -147,7 +147,7 @@ public final class BusqProd extends javax.swing.JFrame {
             int cantLista = listadoProd.size();
             modelo.setNumRows(cantLista);
             for (int i = 0; i < cantLista; i++) {
-                Producto producto = listadoProd.get(i);
+                producto = listadoProd.get(i);
                 String nombreProd = producto.getStrNombreProd();
                 String cod = producto.getStrCod();
                 Double precio = producto.getFltPrecio();
@@ -393,6 +393,7 @@ public final class BusqProd extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtPrecioM, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
                                 .addComponent(btnActualizaPrecioMayor)))))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
@@ -593,7 +594,8 @@ public final class BusqProd extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -656,7 +658,7 @@ public final class BusqProd extends javax.swing.JFrame {
             int cantLista = listadoProd.size();
             modelo.setNumRows(cantLista);
             for (int i = 0; i < cantLista; i++) {
-                Producto producto = listadoProd.get(i);
+                producto = listadoProd.get(i);
                 String nombreProd = producto.getStrNombreProd();
                 String cod = producto.getStrCod();
                 Double precio = producto.getFltPrecio();

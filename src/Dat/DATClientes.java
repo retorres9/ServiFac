@@ -1,11 +1,13 @@
 package Dat;
 
+import Clases.Clientes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,19 +17,42 @@ public class DATClientes {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    Clientes cliente = new Clientes();
 
-    public ResultSet ConsultarPagosGui() throws SQLException, ClassNotFoundException {
-        Statement st = c.getConnection().createStatement();
-        String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda>0";
-        ResultSet rs = st.executeQuery(sentencia);
-        return rs;
+    public ArrayList<Clientes> ConsultarPagosGui() {
+        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda>0";
+            ps = con.prepareStatement(sentencia);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombre = rs.getString(1);
+                String cedula = rs.getString(2);
+                int telf = rs.getInt(3);
+                double deuda = rs.getDouble(4);
+                String direccion = rs.getString(5);
+                cliente = new Clientes(nombre, cedula, telf, deuda, direccion);
+                listadoClientes.add(cliente);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoClientes;
     }
 
     public ResultSet ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
 
         String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
                 + "FROM clientes c, detalle_venta dv, venta v "
-                + "WHERE c.Cedula = dv.Cedula AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres Asc, dv.Id_Venta";
+                + "WHERE c.Cedula_Cliente = dv.Cedula AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres Asc, dv.Id_Venta";
         PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
         ps.setString(1, nombre);
         return ps.executeQuery();
@@ -42,22 +67,64 @@ public class DATClientes {
         return re;
     }
 
-    public ResultSet Consultar2(String nombre) throws ClassNotFoundException, SQLException {
-        //Statement st = c.getConnection().createStatement();
-        String Sentencia = "SELECT Nombres, Cedula, Telefono, Deuda, Direccion FROM clientes WHERE Nombres REGEXP CONCAT('^',?)";
-        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-        //ResultSet re = st.executeQuery(Sentencia);
-        ps.setString(1, nombre);
-        return ps.executeQuery();
+    public ArrayList<Clientes> ConsultarPorNombre(String nombre) {
+        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0 AND Nombres REGEXP CONCAT('^',?) ORDER BY Nombres";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreCliente = rs.getString(1);
+                String cedula = rs.getString(2);
+                int telf = rs.getInt(3);
+                double deuda = rs.getDouble(4);
+                String direccion = rs.getString(5);
+                cliente = new Clientes(nombreCliente, cedula, telf, deuda, direccion);
+                listadoClientes.add(cliente);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoClientes;
     }
 
-    public ResultSet ConsultarCedula(String nombre) throws ClassNotFoundException, SQLException {
-        //Statement st = c.getConnection().createStatement();
-        String Sentencia = "SELECT Nombres, Cedula, Telefono, Deuda, Direccion FROM clientes WHERE Cedula REGEXP CONCAT('^',?)";
-        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-        //ResultSet re = st.executeQuery(Sentencia);
-        ps.setString(1, nombre);
-        return ps.executeQuery();
+    public ArrayList<Clientes> ConsultarCedula(int cedulaCli) {
+        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String Sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0 AND Cedula_Cliente REGEXP CONCAT('^',?) ORDER BY Nombres";
+            ps = con.prepareStatement(Sentencia);
+            ps.setInt(1, cedulaCli);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreCliente = rs.getString(1);
+                String cedula = rs.getString(2);
+                int telf = rs.getInt(3);
+                double deuda = rs.getDouble(4);
+                String direccion = rs.getString(5);
+                cliente = new Clientes(nombreCliente, cedula, telf, deuda, direccion);
+                listadoClientes.add(cliente);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoClientes;
     }
 
     public void InsertarCliente(String nombre, int cedula, int telf, double deuda, String direccion) throws SQLException {
@@ -92,14 +159,46 @@ public class DATClientes {
         return ps.executeUpdate();
     }
 
-    public int updateCliente(String nombre, int cedula, int telf, String n) throws ClassNotFoundException, SQLException {
-        String sentencia = "UPDATE clientes SET Nombres = ?, Cedula = ?, Telefono = ? WHERE Nombres = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setString(1, nombre);
-        ps.setInt(2, cedula);
-        ps.setInt(3, telf);
-        ps.setString(4, n);
-        return ps.executeUpdate();
+    public void actualizarCliente(Clientes cliente) {
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "UPDATE clientes SET Nombres = ?, Telefono = ?, Direccion = ? WHERE Cedula_Cliente = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, cliente.getStrNombre());
+            ps.setInt(2, cliente.getIntTelf());
+            ps.setString(3, cliente.getStrDireccion());
+            ps.setString(4, cliente.getStrCedula());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void actualizarCedulaCliente(Clientes cliente){
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "UPDATE clientes SET Cedula_Cliente = ? WHERE Nombres = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, cliente.getStrCedula());
+            ps.setString(2, cliente.getStrNombre());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public int eliminarCliente(String strNombre) throws ClassNotFoundException, SQLException {

@@ -1,7 +1,7 @@
 package Clases;
 public class Clientes {
     private String strNombre;
-    private int intCedula;
+    private String strCedula;
     private int intTelf;
     private double dblDeuda;
     private String strDireccion;
@@ -20,15 +20,16 @@ public class Clientes {
         this.dblDeuda = dblDeuda;
     }
 
-    public Clientes(String strNombre, int intCedula, int intTelf) {
+    public Clientes(String strNombre, String strCedula, int intTelf, String strDireccion) {
         this.strNombre = strNombre;
-        this.intCedula = intCedula;
+        this.strCedula = strCedula;
         this.intTelf = intTelf;
+        this.strDireccion = strDireccion;
     }
     
-    public Clientes(String strNombre, int intCedula, int intTelf, double dblDeuda, String strDireccion) {
+    public Clientes(String strNombre, String strCedula, int intTelf, double dblDeuda, String strDireccion) {
         this.strNombre = strNombre;
-        this.intCedula = intCedula;
+        this.strCedula = strCedula;
         this.intTelf = intTelf;
         this.dblDeuda = dblDeuda;
         this.strDireccion = strDireccion;
@@ -42,12 +43,12 @@ public class Clientes {
         this.strNombre = strNombre;
     }
 
-    public int getIntCedula() {
-        return intCedula;
+    public String getStrCedula() {
+        return strCedula;
     }
 
-    public void setIntCedula(int intCedula) {
-        this.intCedula = intCedula;
+    public void setIntCedula(String strCedula) {
+        this.strCedula = strCedula;
     }
 
     public int getIntTelf() {

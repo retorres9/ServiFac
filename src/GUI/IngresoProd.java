@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLMaterial;
 import BL.BLProveedor;
 import Clases.Categoria;
 import Clases.Configuracion;

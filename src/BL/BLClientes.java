@@ -79,7 +79,7 @@ public class BLClientes {
             throws ClassNotFoundException, SQLException{
         
         ArrayList<Object[]> datos = new ArrayList<>();
-        ResultSet rs = manejadorClientes.Consultar2(nombre);
+        ResultSet rs = manejadorClientes.ConsultarPorNombre(nombre);
         ResultSetMetaData rm = rs.getMetaData();
         int nroColumnas = rm.getColumnCount();
         
@@ -159,7 +159,7 @@ public class BLClientes {
     }
     
     public int updateCliente(Clientes objClientes, String n) throws ClassNotFoundException, SQLException{
-        return manejadorClientes.updateCliente(objClientes.getStrNombre(), objClientes.getIntCedula(), objClientes.getIntTelf(),n);
+        return manejadorClientes.actualizarCliente(objClientes.getStrNombre(), objClientes.getIntCedula(), objClientes.getIntTelf(),n);
     }
     public int eliminarCliente(Clientes objClientes) throws ClassNotFoundException, SQLException{
         return manejadorClientes.eliminarCliente(objClientes.getStrNombre());

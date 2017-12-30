@@ -38,7 +38,7 @@ public class DATMaterial {
                 String ubicacion = rs.getString(5);
                 int cant = rs.getInt(6);
 
-                Producto prod = new Producto(nombre, codigo, precio, precioMayor, ubicacion, cant, 2, null, null, null);
+                prod = new Producto(nombre, codigo, precio, precioMayor, ubicacion, cant, 2, null, null, null);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
