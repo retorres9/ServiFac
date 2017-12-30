@@ -80,13 +80,14 @@ public class DATMaterial {
         return listadoMinimos;
     }
 
-    public ArrayList<Producto> Consultar2(String nombre) throws SQLException {
+    public ArrayList<Producto> ConsultarPorNombre(String nombre) throws SQLException {
         ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto WHERE Nombre_Producto REGEXP CONCAT('^',?) ORDER BY Nombre_Producto Asc";
+            String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto WHERE Nombre_Producto REGEXP CONCAT('^',?) OR Codigo REGEXP CONCAT ('^',?) ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, nombre);
+            ps.setString(2, nombre);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombreProd = rs.getString(1);
@@ -95,7 +96,7 @@ public class DATMaterial {
                 double precioProdMayor = rs.getDouble(4);
                 String ubi = rs.getString(5);
                 int cant = rs.getInt(6);
-                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
+                prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {
@@ -172,13 +173,13 @@ public class DATMaterial {
         }
     }
 //
-//    public int UpdateCant(String nombre, int strCant) throws ClassNotFoundException, SQLException {
-//        String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setInt(1, strCant);
-//        ps.setString(2, nombre);
-//        return ps.executeUpdate();
-//    }
+    public int UpdateCantFactura(String nombre, int strCant) throws ClassNotFoundException, SQLException {
+        String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
+        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
+        ps.setInt(1, strCant);
+        ps.setString(2, nombre);
+        return ps.executeUpdate();
+    }
 //
 
     public void UpdateProducto(Producto producto){

@@ -654,7 +654,7 @@ public final class BusqProd extends javax.swing.JFrame {
         String dato = txtBuscar.getText();
         try {
             setAnchoColumnas();
-            ArrayList<Producto> listadoProd = material.Consultar2(dato);
+            ArrayList<Producto> listadoProd = material.ConsultarPorNombre(dato);
             int cantLista = listadoProd.size();
             modelo.setNumRows(cantLista);
             for (int i = 0; i < cantLista; i++) {

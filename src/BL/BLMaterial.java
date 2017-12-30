@@ -63,7 +63,7 @@ public class BLMaterial {
 //            throws ClassNotFoundException, SQLException {
 //
 //        ArrayList<Object[]> datos = new ArrayList<>();
-//        ResultSet rs = ManejadorMaterial.Consultar2(nombre);
+//        ResultSet rs = ManejadorMaterial.ConsultarPorNombre(nombre);
 //        ResultSetMetaData rm = rs.getMetaData();
 //        int nroColumnas = rm.getColumnCount();
 //
@@ -149,7 +149,7 @@ public class BLMaterial {
 //    }
 //
 //    public int updateCant(Producto objMaterial) throws SQLException, ClassNotFoundException {
-//        return ManejadorMaterial.UpdateCant(objMaterial.getStrNombreProd(), objMaterial.getIntCantidad());
+//        return ManejadorMaterial.UpdateCantFactura(objMaterial.getStrNombreProd(), objMaterial.getIntCantidad());
 //    }
 //
 //    public int updateProducto(Producto objMaterial) throws ClassNotFoundException, SQLException {

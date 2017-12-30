@@ -242,7 +242,7 @@ public final class Factura extends javax.swing.JFrame {
                 }
                 cantExist = cantExist - cantVenta;
                 manejadorProducto = new Producto(descripcionVenta, cantExist);
-                objM.updateCant(manejadorProducto);
+                objM.updateCantFactura(manejadorProducto);
                 int cedula = Integer.parseInt(txtCed.getText());
                 System.out.println(cont);
                 manejadorReporte = new DetalleVenta(cedula, cantVenta, codigo, precio_Venta, vendedor, cont);

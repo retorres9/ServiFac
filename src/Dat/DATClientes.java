@@ -151,12 +151,24 @@ public class DATClientes {
         }
     }
 
-    public int agregarDeuda(double deuda, String nombre) throws ClassNotFoundException, SQLException {
-        String sentencia = "UPDATE clientes SET Deuda = ? WHERE Nombres = ? ";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setDouble(1, deuda);
-        ps.setString(2, nombre);
-        return ps.executeUpdate();
+    public void agregarDeuda(Clientes cliente) {
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE clientes SET Deuda = ? WHERE Cedula_Cliente = ? ";
+            ps = con.prepareStatement(sentencia);
+            ps.setDouble(1, cliente.getDblDeuda());
+            ps.setString(2, cliente.getStrCedula());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void actualizarCliente(Clientes cliente) {

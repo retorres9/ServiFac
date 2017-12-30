@@ -560,7 +560,7 @@ public final class Pagos extends javax.swing.JFrame {
         btnActualizarNombre.setVisible(true);
         btnActualizaCedula.setVisible(true);
         btnActualizaTelf.setVisible(true);
-
+        btnActualizaDir.setVisible(true);
     }//GEN-LAST:event_tblClientesMouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -609,20 +609,19 @@ public final class Pagos extends javax.swing.JFrame {
         if (txtMonto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un monto");
         } else {
-            if (!txtMonto.getText().isEmpty()) {
-                int n = JOptionPane.showConfirmDialog(null, ("El Cliente: "
-                        + txtNombre.getText() + " ha realizado un pago de $" + txtMonto.getText()),
-                        "Aviso!",
-                        JOptionPane.YES_NO_OPTION);
-                if (n == JOptionPane.YES_OPTION) {
-//                    pago();
+            int n = JOptionPane.showConfirmDialog(null, ("El Cliente: "
+                    + txtNombre.getText() + " ha realizado un pago de $" + txtMonto.getText()),
+                    "Aviso!",
+                    JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                    pago();
                     cargarTabla();
 //                    pagoVentaXVenta();
-                    //vistaReporte();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
-                }
+                //vistaReporte();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
             }
+
         }
     }
 
@@ -661,22 +660,26 @@ public final class Pagos extends javax.swing.JFrame {
             }
         }
         if (cmbClientes.getSelectedItem().equals("Cedula")) {
-            int ced = Integer.parseInt(dato);
-            ArrayList<Clientes> listadoClienteCed = cliente.ConsultarCedula(ced);
-            int cantListado = listadoClienteCed.size();
-            modelo.setNumRows(cantListado);
-            for (int i = 0; i < cantListado; i++) {
-                objCliente = listadoClienteCed.get(i);
-                String nombreCli = objCliente.getStrNombre();
-                String cedula = objCliente.getStrCedula();
-                int telf = objCliente.getIntTelf();
-                double deuda = objCliente.getDblDeuda();
-                String direccion = objCliente.getStrDireccion();
-                modelo.setValueAt(nombreCli, i, 0);
-                modelo.setValueAt(cedula, i, 1);
-                modelo.setValueAt(telf, i, 2);
-                modelo.setValueAt(deuda, i, 3);
-                modelo.setValueAt(direccion, i, 4);
+            try {
+                int ced = Integer.parseInt(dato);
+                ArrayList<Clientes> listadoClienteCed = cliente.ConsultarCedula(ced);
+                int cantListado = listadoClienteCed.size();
+                modelo.setNumRows(cantListado);
+                for (int i = 0; i < cantListado; i++) {
+                    objCliente = listadoClienteCed.get(i);
+                    String nombreCli = objCliente.getStrNombre();
+                    String cedula = objCliente.getStrCedula();
+                    int telf = objCliente.getIntTelf();
+                    double deuda = objCliente.getDblDeuda();
+                    String direccion = objCliente.getStrDireccion();
+                    modelo.setValueAt(nombreCli, i, 0);
+                    modelo.setValueAt(cedula, i, 1);
+                    modelo.setValueAt(telf, i, 2);
+                    modelo.setValueAt(deuda, i, 3);
+                    modelo.setValueAt(direccion, i, 4);
+                }
+            } catch (NumberFormatException ex) {
+
             }
 
         }
@@ -712,34 +715,31 @@ public final class Pagos extends javax.swing.JFrame {
 
     private void btnActualizaCedulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCedulaMouseClicked
         try {
-            String n;
-            String contenedor = txtNombre.getText();
-            n = JOptionPane.showInputDialog(null, "Actualice el numero de cédula del cliente:\n" + txtNombre.getText());
-            if (n == null) {
-                n = txtCedula.getText();
-            }
-            int num = Integer.parseInt(n);
+            String ced;
+            ced = JOptionPane.showInputDialog(null, "Actualice el numero de cédula del cliente:\n" + txtNombre.getText());
             String nom = txtNombre.getText();
-            int telf = Integer.parseInt(txtTelf.getText());
-            //objC = new Clientes(nom, num, telf);
-//            try {
-//                manejadorCliente.actualizarCliente(objC, contenedor);
-//                cargarTabla();
-//            } catch (ClassNotFoundException | SQLException ex) {
-//                Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            if (ced.length() != 10 && ced.length() != 13) {
+                JOptionPane.showMessageDialog(null, "Ha ingresado un número de cedula o RUC inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                objCliente = new Clientes(nom, ced);
+                cliente.actualizarCedulaCliente(objCliente);
+                txtCedula.setText(ced);
+                cargarTabla();
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Formato de Cédula Incorrecto", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException ex) {
+
         }
     }//GEN-LAST:event_btnActualizaCedulaMouseClicked
 
     private void btnActualizaTelfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaTelfMouseClicked
         try {
-            String n;
-            n = JOptionPane.showInputDialog(null, "Actualice el nuevo número de teléfono del cliente:\n" + txtNombre.getText());
-            int nuevoTelf = Integer.parseInt(n);
-            System.out.println(n.length());
-            if (n.length() != 7 && n.length() != 10) {
+            String telf;
+            telf = JOptionPane.showInputDialog(null, "Actualice el nuevo número de teléfono del cliente:\n" + txtNombre.getText());
+            int nuevoTelf = Integer.parseInt(telf);
+            System.out.println(telf.length());
+            if (telf.length() != 7 && telf.length() != 10) {
                 JOptionPane.showMessageDialog(null, "El número ingresado no es un número de teléfono valido", "Aviso", JOptionPane.ERROR_MESSAGE);
             } else {
                 String nombreCli = txtNombre.getText();
@@ -747,6 +747,8 @@ public final class Pagos extends javax.swing.JFrame {
                 String cedula = txtCedula.getText();
                 objCliente = new Clientes(nombreCli, cedula, nuevoTelf, direccion);
                 cliente.actualizarCliente(objCliente);
+                txtTelf.setText(telf);
+                cargarTabla();
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Formato de telefono Incorrecto", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -821,7 +823,20 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void btnActualizaDirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaDirMouseClicked
-        // TODO add your handling code here:
+        String direccion;
+        try {
+            direccion = JOptionPane.showInputDialog(null, "Ingrese la nueva dirección para el cliente:\n" + txtNombre.getText());
+            System.out.println(direccion);
+            String nom = txtNombre.getText();
+            String ced = txtCedula.getText();
+            int telf = Integer.parseInt(ced);
+            objCliente = new Clientes(nom, ced, telf, direccion);
+            cliente.actualizarCliente(objCliente);
+            txtDireccion.setText(direccion);
+            cargarTabla();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "No ha ingresado ninguna dirección", "Erroe", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnActualizaDirMouseClicked
 
     public void cargarTabla() {
@@ -835,7 +850,6 @@ public final class Pagos extends javax.swing.JFrame {
             int telf = objCliente.getIntTelf();
             String strTelf = String.valueOf(telf);
             if (strTelf.length() == 9) {
-                System.out.println("bandera");
                 strTelf = "0" + strTelf;
                 System.out.println(strTelf);
                 telf = Integer.parseInt(strTelf);
@@ -871,29 +885,24 @@ public final class Pagos extends javax.swing.JFrame {
 //            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-//    public void pago() {
-//        double deuda2;
-//        double monto = Double.parseDouble(txtMonto.getText());
-//        try {
-//            double deuda = Double.parseDouble(txtDeuda.getText());
-//            if (deuda <= 0) {
-//                JOptionPane.showMessageDialog(null, "No puede realizar esta accion ya que no existe deuda del cliente: " + txtNombre.getText());
-//            }
-//            if (monto > deuda) {
-//                JOptionPane.showMessageDialog(null, "El monto pagado excede el monto adeudado");
-//            }
-//            if (monto <= deuda) {
-//                deuda2 = deuda - monto;
-//                txtDeuda.setText(Double.toString(deuda2));
-//                String nombre = txtNombre.getText();
-//                objC = new Clientes(deuda2, nombre);
-//                manejadorCliente.InsertarDeuda(objC);
-//            }
-//
-//        } catch (ClassNotFoundException | SQLException ex) {
-//            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void pago() {
+        double deuda2;
+        double monto = Double.parseDouble(txtMonto.getText());
+        double deuda = Double.parseDouble(txtDeuda.getText());
+        if (deuda <= 0) {
+            JOptionPane.showMessageDialog(null, "No puede realizar esta accion ya que no existe deuda del cliente: " + txtNombre.getText());
+        }
+        if (monto > deuda) {
+            JOptionPane.showMessageDialog(null, "El monto pagado excede el monto adeudado");
+        }
+        if (monto <= deuda) {
+            deuda2 = deuda - monto;
+            txtDeuda.setText(Double.toString(deuda2));
+            String ced = txtCedula.getText();
+            objCliente = new Clientes(deuda2, ced);
+            cliente.agregarDeuda(objCliente);
+        }
+    }
     /**
      * @param args the command line arguments
      */
