@@ -6,8 +6,12 @@ public class Producto {
     private String strNombreProd;
     private String strCod;
     private double fltPrecio;
+    private double precioCompra;
+    private double ganancia;
+    private boolean stock;
     private double fltPrecioMayor;
-    private String strUbicacion;
+    private String strUbicacion;//
+    private int categoria;
     private int intCantidad;
     private int intCantidadMinima;
     private String strEmpresa;

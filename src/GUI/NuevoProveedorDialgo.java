@@ -4,15 +4,9 @@ package GUI;
  *
  * @author rober
  */
-import BL.BLProveedor;
-import Clases.Configuracion;
 import Clases.Proveedor;
-import Dat.DATPagoProveedor;
 import Dat.DATProveedor;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

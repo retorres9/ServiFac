@@ -1,15 +1,11 @@
 package GUI;
 
-import BL.BLUsuario;
 import Clases.Usuario;
 import Dat.DATUsuario;
 import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

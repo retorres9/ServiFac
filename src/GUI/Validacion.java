@@ -1,7 +1,5 @@
 package GUI;
 
-import BL.BLReporte;
-import BL.BLUsuario;
 import Clases.Configuracion;
 import Clases.Fechas;
 import Clases.Usuario;
@@ -23,9 +21,9 @@ public final class Validacion extends javax.swing.JFrame {
 
     NuevoUsuario objUs = new NuevoUsuario();
     Usuario objU = new Usuario();
-    BLUsuario manejadorUsuario = new BLUsuario();
+    
     Fechas fe = new Fechas();
-    BLReporte manejadorReporte = new BLReporte();
+    
     Configuracion config = new Configuracion();
     int validRol;
 

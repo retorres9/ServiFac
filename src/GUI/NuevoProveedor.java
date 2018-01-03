@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLProveedor;
 import Clases.Configuracion;
 import Clases.Proveedor;
 import Dat.DATPagoProveedor;

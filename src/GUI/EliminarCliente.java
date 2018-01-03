@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLClientes;
 import Clases.Clientes;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.swing.table.TableColumnModel;
 
 public final class EliminarCliente extends javax.swing.JFrame {
 
-    BLClientes manejadorCliente = new BLClientes(); 
     Clientes objC = new Clientes();
     int fila;
     Principal objP = new Principal();

@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLMaterial;
 import Clases.Configuracion;
 import Clases.Producto;
 import Clases.Usuario;
@@ -21,7 +20,6 @@ import javax.swing.table.TableColumnModel;
 
 public final class Minimos extends javax.swing.JFrame {
 
-    BLMaterial objM = new BLMaterial();
     Producto manejadorProd = new Producto();
     Principal objP = new Principal();
     Usuario objU = new Usuario();

@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLClientes;
 import Clases.Clientes;
 import Clases.Configuracion;
 import Dat.DATClientes;
@@ -13,8 +12,7 @@ import javax.swing.JOptionPane;
 
 public final class NewCliente extends javax.swing.JFrame {
 
-    Clientes objCliente = new Clientes();
-    BLClientes manejadorClientes = new BLClientes();
+    Clientes objCliente = new Clientes
     Principal objP = new Principal();
     public static int valid = 1;
     DATClientes cliente;

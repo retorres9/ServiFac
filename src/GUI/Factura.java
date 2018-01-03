@@ -1,9 +1,5 @@
 package GUI;
 
-import BL.BLClientes;
-import BL.BLMaterial;
-import BL.BLReporte;
-import BL.BLVenta;
 import Clases.Clientes;
 import Clases.Configuracion;
 import Clases.Producto;

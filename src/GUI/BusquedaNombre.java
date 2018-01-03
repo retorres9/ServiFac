@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLClientes;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +9,6 @@ public class BusquedaNombre extends javax.swing.JFrame {
 
     String nombre, cedula, direccion;
     
-    BLClientes manejadorCliente = new BLClientes();
     public BusquedaNombre() {
         initComponents();
         cargaTabla();
@@ -19,23 +17,16 @@ public class BusquedaNombre extends javax.swing.JFrame {
     }
 
     public void cargaTabla(){
-        try {
-            BLClientes dl = new BLClientes();
+        
+            
             DefaultTableModel dtm = new DefaultTableModel();
             dtm.addColumn("Nombres");
             dtm.addColumn("Cedula");
             dtm.addColumn("Telefono");
             dtm.addColumn("Deuda");
             dtm.addColumn("Dirección");
-            for (int i = 0; i < dl.getCliente().size(); i++) {
-                dtm.addRow(dl.getCliente().get(i));
-            }
-            tblClientes.setModel(dtm);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

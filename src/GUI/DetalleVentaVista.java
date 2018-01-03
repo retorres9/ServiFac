@@ -1,9 +1,6 @@
 package GUI;
 
-import BL.BLAbonoCliente;
-import BL.BLPagoProveedor;
-import BL.BLReporte;
-import BL.BLVenta;
+
 import Clases.DetalleVenta;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -20,7 +17,6 @@ import javax.swing.table.TableColumnModel;
 public final class DetalleVentaVista extends javax.swing.JFrame {
 
     DetalleVenta objRep = new DetalleVenta();
-    BLReporte manejadorReporte = new BLReporte();
     String id_Venta, cedula, nombre, total;
     String pagosCl = "<html><body>Pago<br>Clientes</body></html>";
     String pagosPr = "<html><body>Pago<br>Proveedores</body></html>";

@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import BL.BLPrueba;
 import Clases.Categoria;
 import Clases.Pruebas;
 import Dat.DATPrueba;

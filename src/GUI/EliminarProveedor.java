@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLProveedor;
 import Clases.Proveedor;
 import java.sql.SQLException;
 import java.util.ArrayList;

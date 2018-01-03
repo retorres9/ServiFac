@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
-import GUI.Principal;
 import javax.swing.ImageIcon;
 
 public final class ConfiguracionGUI extends javax.swing.JFrame {

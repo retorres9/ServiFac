@@ -1,21 +1,15 @@
 package GUI;
 
-import BL.BLConexion;
-import BL.BLMaterial;
+
 import Clases.Configuracion;
 import Clases.Usuario;
 import Dat.DATMaterial;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public final class Principal extends javax.swing.JFrame {
 
-    BLMaterial objM = new BLMaterial();
-    BLConexion con = new BLConexion();
     int cant;
     String rol = Configuracion.validacion();
     String vendedor = Configuracion.vendedor_venta();

@@ -2,7 +2,7 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-SELECT * FROM clientes;
+SELECT * FROM usuario;
 
 
 CREATE TABLE usuario(
@@ -26,12 +26,15 @@ CREATE TABLE producto(
 Nombre_Producto VARCHAR(25) NOT NULL,
 Codigo VARCHAR (13) PRIMARY KEY,
 Precio DECIMAL(6,2) NOT NULL,
-Stock BOOLEAN DEFAULT true,
+Precio_Compra DECIMAL (6,2) NOT NULL,
+Ganancia DECIMAL(3,2) NOT NULL,
+Stock BOOLEAN DEFAULT TRUE,
+Categoria INT (3) NOT NULL,
 Precio_Mayor DECIMAL(6,2),
 id_ubicacion VARCHAR(10),
 Cantidad INT(7),
 Cantidad_Minima INT (3),
-Empresa VARCHAR(15),
+RUC VARCHAR(15),
 Imagen_Codigo BLOB
 );
 
@@ -60,6 +63,17 @@ Codigo VARCHAR (13),
 Precio_Venta DECIMAL(6,2) NOT NULL,
 Usuario VARCHAR(15),
 Id_Venta INT(10)
+);
+
+CREATE TABLE bodega(
+id_bodega INT (3) PRIMARY KEY,
+nombre_bodega VARCHAR (20) NOT NULL
+);
+
+CREATE TABLE existenciasBodega(
+id_bodega INT (3),
+codigo VARCHAR(13),
+cantidad INT (4)
 );
 
 CREATE TABLE abono_cliente(

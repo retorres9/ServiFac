@@ -1,7 +1,5 @@
 package GUI;
 
-import BL.BLPagoProveedor;
-import BL.BLProveedor;
 import Clases.PagoProveedorClase;
 import Clases.Proveedor;
 import java.sql.SQLException;

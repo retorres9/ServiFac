@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLClientes;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

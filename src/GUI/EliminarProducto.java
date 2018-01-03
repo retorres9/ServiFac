@@ -1,6 +1,5 @@
 package GUI;
 
-import BL.BLMaterial;
 import Clases.Producto;
 import Dat.DATMaterial;
 import java.sql.SQLException;
