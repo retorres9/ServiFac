@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 public class DATClientes {
 
-    Dat.DATConexion c = new DATConexion();
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -48,11 +47,20 @@ public class DATClientes {
         return listadoClientes;
     }
 
-    public ResultSet ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
-
-        String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
+    public ArrayList<Clientes> ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
+        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
                 + "FROM clientes c, detalle_venta dv, venta v "
                 + "WHERE c.Cedula_Cliente = dv.Cedula AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres Asc, dv.Id_Venta";
+            ps = con.prepareStatement(Sentencia);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                
+            }
+        }
+        
         PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
         ps.setString(1, nombre);
         return ps.executeQuery();

@@ -472,8 +472,8 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel14.setText("Ganancia %");
 
         txtGanancia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtGananciaKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtGananciaKeyReleased(evt);
             }
         });
 
@@ -779,9 +779,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlGenerador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbxGenerador)
-                        .addGap(134, 134, 134)))
+                    .addComponent(cbxGenerador))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAtras)
@@ -1063,13 +1061,14 @@ public final class IngresoProd extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadActionPerformed
 
-    private void txtGananciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaKeyTyped
+    private void txtGananciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaKeyReleased
+        System.out.println(txtGanancia.getText());
         if(txtGanancia.getText().isEmpty() || txtGanancia.getText().equals("")){
             System.out.println("flag");
         } else {
             muestraPrecio();
         }
-    }//GEN-LAST:event_txtGananciaKeyTyped
+    }//GEN-LAST:event_txtGananciaKeyReleased
     
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra

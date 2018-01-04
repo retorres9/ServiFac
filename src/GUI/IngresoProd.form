@@ -370,10 +370,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="pnlGenerador" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="cbxGenerador" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="134" pref="134" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="cbxGenerador" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -715,7 +712,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtGanancia">
       <Events>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaKeyTyped"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="txtCalcPrecio">
