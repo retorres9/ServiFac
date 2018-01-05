@@ -6,63 +6,78 @@ SELECT * FROM usuario;
 
 
 CREATE TABLE usuario(
-Cedula_Usuario INT(10) PRIMARY KEY,
-Nombre VARCHAR(30) NOT NULL,
-Usuario VARCHAR(15) NOT NULL,
-Contrasena VARCHAR(128) NOT NULL,
-Rol INT(10) 
+cedula_usuario INT(10) PRIMARY KEY,
+nombre VARCHAR(30) NOT NULL,
+usuario VARCHAR(15) NOT NULL,
+contrasena VARCHAR(128) NOT NULL,
+rol INT(10) 
 );
 
 CREATE TABLE clientes(
-Nombres VARCHAR(30) NOT NULL,
-Cedula_Cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
-Telefono INT(10) NOT NULL,#ANALIZAR cambiar a varchar
-Deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
-Direccion TEXT NOT NULL,
-Descuento INT(2) DEFAULT 0
+nombres VARCHAR(30) NOT NULL,
+cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
+telefono INT(10) NOT NULL,#ANALIZAR cambiar a varchar
+deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
+direccion TEXT NOT NULL,
+descuento INT(2) DEFAULT 0
 );
 
+DROP TABLE producto;
+
 CREATE TABLE producto(
-Nombre_Producto VARCHAR(25) NOT NULL,
-Codigo VARCHAR (13) PRIMARY KEY,
-Precio DECIMAL(6,2) NOT NULL,
-Precio_Compra DECIMAL (6,2) NOT NULL,
-Ganancia DECIMAL(3,2) NOT NULL,
-Stock BOOLEAN DEFAULT TRUE,
-Categoria INT (3) NOT NULL,
-Precio_Mayor DECIMAL(6,2),
+nombre_Producto VARCHAR(25) NOT NULL,
+codigo VARCHAR (13) PRIMARY KEY,
+precio DECIMAL(6,2) NOT NULL,
+precio_Compra DECIMAL (6,2) NOT NULL,
+ganancia DECIMAL(3,2) NOT NULL,
+ganancia_Mayor DECIMAL(3,2) NOT NULL,
+stock BOOLEAN DEFAULT TRUE,
+id_categoria INT (3) NOT NULL,
+precio_Mayor DECIMAL(6,2),
 id_ubicacion VARCHAR(10),
-Cantidad INT(7),
-Cantidad_Minima INT (3),
-RUC VARCHAR(15),
-Imagen_Codigo BLOB
+cantidad INT(7),
+cantidad_Minima INT (3),
+ruc VARCHAR(15),
+imagen_codigo BLOB,
+imagen_producto BLOB,
+id_bodega INT(3)
+);
+
+CREATE TABLE ubicacion(
+id_ubicacion INT (3),
+nombre_ubicacion VARCHAR(20)
+);
+
+CREATE TABLE categoria(
+id_categoria INT (3),
+nombre_categoria VARCHAR(20)
 );
 
 CREATE TABLE proveedores(
-Empresa VARCHAR(15) NOT NULL,
-RUC VARCHAR(13) NOT NULL PRIMARY KEY,
-Nombre_Cuenta VARCHAR(20) NOT NULL,
-Tipo_Cuenta VARCHAR(20) NOT NULL,
-Numero_Cuenta VARCHAR(15),
-Deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
-Telefono INT(10)
+empresa VARCHAR(15) NOT NULL,
+ruc VARCHAR(13) NOT NULL PRIMARY KEY,
+nombre_cuenta VARCHAR(20) NOT NULL,
+tipo_cuenta VARCHAR(20) NOT NULL,
+numero_cuenta VARCHAR(15),
+deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
+telefono INT(10)
 );
 
 CREATE TABLE venta(
-Id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
-Total_Venta DECIMAL(7,2) NOT NULL,
-Valor_Cancelado DECIMAL(7,2) NOT NULL,
-Fecha DATE,
-Cedula_Usuario INT(10) NOT NULL
+id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
+total_Venta DECIMAL(7,2) NOT NULL,
+valor_Cancelado DECIMAL(7,2) NOT NULL,
+fecha DATE,
+cedula_usuario INT(10) NOT NULL
 );
 
 CREATE TABLE detalle_venta(
-Cedula_Cliente INT(10),
-Cantidad INT(7),
-Codigo VARCHAR (13),
-Precio_Venta DECIMAL(6,2) NOT NULL,
-Usuario VARCHAR(15),
-Id_Venta INT(10)
+cedula_cliente INT(10),
+cantidad INT(7),
+codigo VARCHAR (13),
+precio_venta DECIMAL(6,2) NOT NULL,
+usuario VARCHAR(15),
+id_venta INT(10)
 );
 
 CREATE TABLE bodega(
@@ -77,20 +92,20 @@ cantidad INT (4)
 );
 
 CREATE TABLE abono_cliente(
-Id_Abono INT(10) PRIMARY KEY AUTO_INCREMENT,
-Cedula INT(10) NOT NULL,
-Usuario VARCHAR(15) NOT NULL,
-Monto_Abono DECIMAL(7,2) NOT NULL,
-Fecha DATE
+id_Abono INT(10) PRIMARY KEY AUTO_INCREMENT,
+cedula INT(10) NOT NULL,
+usuario VARCHAR(15) NOT NULL,
+monto_abono DECIMAL(7,2) NOT NULL,
+fecha DATE
 );
 -- Revisar pago_proveedor
 CREATE TABLE pago_proveedor(
-Id_Pago INT(6) PRIMARY KEY AUTO_INCREMENT,
-Empresa VARCHAR(15),
-Usuario VARCHAR(15) NOT NULL,
-Monto_Cancelado DECIMAL(7,2) NOT NULL,
-Fecha DATE,
-Tipo VARCHAR(7)
+id_pago INT(6) PRIMARY KEY AUTO_INCREMENT,
+empresa VARCHAR(15),
+usuario VARCHAR(15) NOT NULL,
+monto_cancelado DECIMAL(7,2) NOT NULL,
+fecha DATE,
+tipo VARCHAR(7)
 );
 
 ALTER TABLE detalle_venta

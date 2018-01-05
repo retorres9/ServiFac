@@ -2,11 +2,20 @@ package Clases;
 
 public class Proveedor {
     private String strEmpresa;
+    private String ruc;
     private String strNombreCuenta;
     private String strTipo;
     private String strNumCuenta;
     private double dblDeuda;
     private int intTelf;
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
 
     public int getIntTelf() {
         return intTelf;

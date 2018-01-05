@@ -48,14 +48,10 @@ public final class Factura extends javax.swing.JFrame {
     int cantInicial;
     boolean flag = true;
     String n, vendedor;
-    BLClientes objC = new BLClientes();
     Clientes manejadorCliente = new Clientes();
-    BLReporte objR = new BLReporte();
     DetalleVenta manejadorReporte = new DetalleVenta();
-    BLMaterial objM = new BLMaterial();
     Producto manejadorProducto = new Producto();
     Venta manejadorVenta = new Venta();
-    BLVenta objV = new BLVenta();
 
     public Factura() {
         initComponents();

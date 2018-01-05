@@ -1,7 +1,6 @@
 package Dat;
 
 import Clases.Producto;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -12,14 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.stream.FileImageInputStream;
 
 public class DATMaterial {
 
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    FileImageInputStream fis;
     int longitudbytes = 9;
     Producto prod = new Producto();
 
@@ -117,27 +114,37 @@ public class DATMaterial {
 //        return ps.executeQuery();
 //    }
 
-    public void IngresarProducto(String strNombre, String strCodigo, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadminima, String strEmpresa, File imagen) throws ClassNotFoundException {
+    public void IngresarProducto(Producto producto) throws ClassNotFoundException {
 
         try {
-            //File fotoProd = prod.getImgCodigoProd();
-            //FileInputStream fis = new FileInputStream(fotoProd);
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "INSERT INTO producto (Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad, Cantidad_Minima, Empresa, Imagen_Codigo)"
-                    + "VALUES (?,?,?,?,?,?,?,?,?)";
+            FileInputStream fis = new FileInputStream(producto.getFotoProd());
+            FileInputStream fisCod = new FileInputStream(producto.getImgCodigoProd());
+            String Sentencia = "INSERT INTO producto (nombre_producto, codigo,"
+                    + " precio_Compra, precio, precio_mayor, ganancia, ganancia_Mayor,"
+                    + "id_categoria, id_ubicacion, cantidad, cantidad_Minima,"
+                    + " ruc, imagen_codigo, imagen_producto)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = con.prepareStatement(Sentencia);
-            ps.setString(1, strNombre);
-            ps.setString(2, strCodigo);
-            ps.setDouble(3, fltPrecio);
-            ps.setDouble(4, fltPrecioMayor);
-            ps.setString(5, strUbicacion);
-            ps.setInt(6, intCantidad);
-            ps.setInt(7, intCantidadminima);
-            ps.setString(8, strEmpresa);
-            ps.setBinaryStream(9, fis, (int) prod.getImgCodigoProd().length());
+            ps.setString(1, producto.getStrNombreProd());
+            ps.setString(2, producto.getStrCod());
+            ps.setDouble(3, producto.getPrecioCompra());
+            ps.setDouble(4, producto.getFltPrecio());
+            ps.setDouble(5, producto.getFltPrecioMayor());
+            ps.setDouble(6, producto.getGanancia());
+            ps.setDouble(7, producto.getGananciaMayor());
+            ps.setInt(8, producto.getIdCategoria());
+            ps.setInt(9, producto.getIntUbicacion());
+            ps.setInt(10, producto.getIntCantidad());
+            ps.setInt(11, producto.getIntCantidadMinima());
+            ps.setString(12, producto.getStrRUC());
+            ps.setBinaryStream(14, fisCod, (int) prod.getImgCodigoProd().length());
+            ps.setBinaryStream(13, fis, (int) prod.getFotoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (ps != null) {
                 try {
