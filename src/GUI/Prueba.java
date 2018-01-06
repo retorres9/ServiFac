@@ -5,14 +5,17 @@
  */
 package GUI;
 
-import Clases.Categoria;
 import Clases.Pruebas;
 import Dat.DATPrueba;
-import java.sql.SQLException;
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -23,26 +26,14 @@ public class Prueba extends javax.swing.JFrame {
     /**
      * Creates new form Prueba
      */
-    DefaultComboBoxModel <Pruebas> modeloPrueba;
+    DefaultComboBoxModel<Pruebas> modeloPrueba;
     Pruebas cat = new Pruebas();
     DATPrueba manCat = new DATPrueba();
+    File imgArticulo;
+
     public Prueba() {
-        modeloPrueba = new DefaultComboBoxModel <Pruebas>();
-        cargarModeloCat();
+        
         initComponents();
-    }
-    
-        private void cargarModeloCat(){
-        try {
-            ArrayList<Pruebas> listaCategorias;
-            listaCategorias = manCat.obtenerCategoria();
-            System.out.println(listaCategorias);
-            for (Pruebas cat : listaCategorias) {
-                modeloPrueba.addElement(cat);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -54,11 +45,8 @@ public class Prueba extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        lblImagProd = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,7 +57,11 @@ public class Prueba extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(modeloPrueba);
+        lblImagProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImagProdMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,33 +69,19 @@ public class Prueba extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(336, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(228, 228, 228))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(279, 279, 279))))
+                .addComponent(jButton1)
+                .addGap(279, 279, 279))
             .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(134, 134, 134)
+                .addComponent(lblImagProd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(64, 64, 64)
+                .addComponent(lblImagProd, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(119, 119, 119)
                 .addComponent(jButton1)
                 .addContainerGap(173, Short.MAX_VALUE))
         );
@@ -113,16 +91,33 @@ public class Prueba extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String a = jTextField1.getText();
-            String b = jTextField2.getText();
-            String c = jTextField3.getText();
-            int n = Integer.parseInt(b);
-            
-            manCat.IngresarCat(n, c);
+            cat = new Pruebas(imgArticulo);
+            manCat.IngresarCat(cat);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void lblImagProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagProdMouseClicked
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter extension = new FileNameExtensionFilter(
+                "Archivos de imagen jpg, gif o png", "jpg", "gif", "png");
+        chooser.setFileFilter(extension);
+
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            int anchoImagen = lblImagProd.getWidth();
+            int altoImagen = lblImagProd.getHeight();
+
+            imgArticulo = chooser.getSelectedFile();
+            ImageIcon icono = new ImageIcon(imgArticulo.getAbsolutePath());
+            Image imagen2 = icono.getImage();
+            Image imagenescalada = imagen2.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_DEFAULT);
+
+            ImageIcon iconoRedimensionado = new ImageIcon(imagenescalada);
+            lblImagProd.setIcon(iconoRedimensionado);
+        }
+    }//GEN-LAST:event_lblImagProdMouseClicked
 
     /**
      * @param args the command line arguments
@@ -161,9 +156,6 @@ public class Prueba extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<Pruebas> jComboBox1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblImagProd;
     // End of variables declaration//GEN-END:variables
 }

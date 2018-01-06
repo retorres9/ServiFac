@@ -2,7 +2,11 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-SELECT * FROM usuario;
+SELECT * FROM producto;
+create table prueba(
+imagen longblob
+);
+drop table prueba;
 
 
 CREATE TABLE usuario(
@@ -22,24 +26,24 @@ direccion TEXT NOT NULL,
 descuento INT(2) DEFAULT 0
 );
 
-DROP TABLE producto;
+Select * from producto;
 
 CREATE TABLE producto(
-nombre_Producto VARCHAR(25) NOT NULL,
-codigo VARCHAR (13) PRIMARY KEY,
-precio DECIMAL(6,2) NOT NULL,
-precio_Compra DECIMAL (6,2) NOT NULL,
-ganancia DECIMAL(3,2) NOT NULL,
-ganancia_Mayor DECIMAL(3,2) NOT NULL,
+nombre_Producto VARCHAR(25) NOT NULL,#
+codigo VARCHAR (13) PRIMARY KEY,#
+precio_Compra DECIMAL (6,2) NOT NULL,#
+precio DECIMAL(6,2) NOT NULL,#
+ganancia DECIMAL(6,2) NOT NULL,#
+ganancia_Mayor DECIMAL(6,2) NOT NULL,#
 stock BOOLEAN DEFAULT TRUE,
-id_categoria INT (3) NOT NULL,
-precio_Mayor DECIMAL(6,2),
-id_ubicacion VARCHAR(10),
-cantidad INT(7),
-cantidad_Minima INT (3),
-ruc VARCHAR(15),
-imagen_codigo BLOB,
-imagen_producto BLOB,
+id_categoria INT (3) NOT NULL,#
+precio_Mayor DECIMAL(6,2),#
+id_ubicacion VARCHAR(10),#
+cantidad INT(7),#
+cantidad_Minima INT (3),#
+ruc VARCHAR(15),#
+imagen_codigo BLOB,#
+imagen_producto BLOB,#
 id_bodega INT(3)
 );
 
@@ -75,7 +79,7 @@ CREATE TABLE detalle_venta(
 cedula_cliente INT(10),
 cantidad INT(7),
 codigo VARCHAR (13),
-precio_venta DECIMAL(6,2) NOT NULL,
+precio_venta DECIMAL(8,2) NOT NULL,
 usuario VARCHAR(15),
 id_venta INT(10)
 );

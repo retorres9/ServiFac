@@ -17,8 +17,7 @@ public class DATMaterial {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    int longitudbytes = 9;
-    Producto prod = new Producto();
+    //int longitudbytes = 9;
 
     public ArrayList<Producto> Consultar() throws ClassNotFoundException {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
@@ -35,7 +34,7 @@ public class DATMaterial {
                 String ubicacion = rs.getString(5);
                 int cant = rs.getInt(6);
 
-                prod = new Producto(nombre, codigo, precio, precioMayor, ubicacion, cant, 2, null, null, null);
+                Producto prod = new Producto(nombre, codigo, precio, precioMayor, ubicacion, cant, 2, null, null, null);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
@@ -93,7 +92,7 @@ public class DATMaterial {
                 double precioProdMayor = rs.getDouble(4);
                 String ubi = rs.getString(5);
                 int cant = rs.getInt(6);
-                prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
+                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {
@@ -120,10 +119,12 @@ public class DATMaterial {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             FileInputStream fis = new FileInputStream(producto.getFotoProd());
             FileInputStream fisCod = new FileInputStream(producto.getImgCodigoProd());
+            System.out.println(fis);
+            System.out.println(fisCod);
             String Sentencia = "INSERT INTO producto (nombre_producto, codigo,"
                     + " precio_Compra, precio, precio_mayor, ganancia, ganancia_Mayor,"
                     + "id_categoria, id_ubicacion, cantidad, cantidad_Minima,"
-                    + " ruc, imagen_codigo, imagen_producto)"
+                    + " ruc, imagen_producto,imagen_codigo)"
                     + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
@@ -138,28 +139,19 @@ public class DATMaterial {
             ps.setInt(10, producto.getIntCantidad());
             ps.setInt(11, producto.getIntCantidadMinima());
             ps.setString(12, producto.getStrRUC());
-            ps.setBinaryStream(14, fisCod, (int) prod.getImgCodigoProd().length());
-            ps.setBinaryStream(13, fis, (int) prod.getFotoProd().length());
+            ps.setBinaryStream(13, fis, (int) producto.getFotoProd().length());
+            ps.setBinaryStream(14, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ex) {
-
-                }
-
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -180,6 +172,7 @@ public class DATMaterial {
         }
     }
 //
+
     public int UpdateCantFactura(String nombre, int strCant) throws ClassNotFoundException, SQLException {
         String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
         PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
@@ -189,7 +182,7 @@ public class DATMaterial {
     }
 //
 
-    public void UpdateProducto(Producto producto){
+    public void UpdateProducto(Producto producto) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "UPDATE producto SET Nombre_Producto = ? WHERE Codigo = ?";
@@ -208,8 +201,8 @@ public class DATMaterial {
             }
         }
     }
-    
-    public void UpdateNombreProducto(Producto producto, String codigo){
+
+    public void UpdateNombreProducto(Producto producto, String codigo) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Codigo = ?";
@@ -233,6 +226,7 @@ public class DATMaterial {
         }
     }
 //    //mod abajo
+
     public int CuentaRegistros() {
         int cant = 0;
         try {

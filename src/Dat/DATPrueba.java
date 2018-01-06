@@ -7,6 +7,8 @@ package Dat;
 
 import Clases.Categoria;
 import Clases.Pruebas;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,17 +27,19 @@ public class DATPrueba {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public void IngresarCat(int cod,String strNombre) throws ClassNotFoundException {
+    public void IngresarCat(Pruebas prueba) throws ClassNotFoundException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "INSERT INTO categorias (id_Categoria,nombre_Cat)"
-                    + "VALUES (?,?)";
+            FileInputStream fis = new FileInputStream(prueba.getImagen());
+            String Sentencia = "INSERT INTO prueba (imagen)"
+                    + "VALUES (?)";
             ps = con.prepareStatement(Sentencia);
-            ps.setInt(1, cod);
-            ps.setString(2, strNombre);
+            ps.setBinaryStream(1, fis, (int) prueba.getImagen().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DATPrueba.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();

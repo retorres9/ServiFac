@@ -5,6 +5,8 @@
  */
 package Clases;
 
+import java.io.File;
+
 /**
  *
  * @author rober
@@ -12,6 +14,19 @@ package Clases;
 public class Pruebas {
     private int idCategoria;
     private String strCat;
+    private File imagen;
+
+    public File getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(File imagen) {
+        this.imagen = imagen;
+    }
+
+    public Pruebas(File imagen) {
+        this.imagen = imagen;
+    }
 
     public Pruebas() {
     }

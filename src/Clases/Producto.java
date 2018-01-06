@@ -81,6 +81,26 @@ public class Producto {
         this.iva = iva;
         this.bodega = bodega;
     }
+
+    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, int intUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File fotoProd, boolean iva, int bodega) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.precioCompra = precioCompra;
+        this.ganancia = ganancia;
+        this.gananciaMayor = gananciaMayor;
+        this.stock = stock;
+        this.fltPrecioMayor = fltPrecioMayor;
+        this.intUbicacion = intUbicacion;
+        this.idCategoria = idCategoria;
+        this.intCantidad = intCantidad;
+        this.intCantidadMinima = intCantidadMinima;
+        this.strRUC = strRUC;
+        
+        this.fotoProd = fotoProd;
+        this.iva = iva;
+        this.bodega = bodega;
+    }
     
     
     

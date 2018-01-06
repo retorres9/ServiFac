@@ -164,7 +164,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         DecimalFormat decimal = new DecimalFormat("0.00", simbolo);
         try {
             String strCod = txtCod.getText();
-            String nombre = txtNombreProd.getText();
+            String nombre = txtNombreProd.getText().toUpperCase();
             double precioCompra = Double.parseDouble(txtPrecioCompra.getText());
             double ganancia = Double.parseDouble(txtGanancia.getText());
             double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
@@ -174,44 +174,33 @@ public final class IngresoProd extends javax.swing.JFrame {
             Proveedor empresa = (Proveedor) cmbProveedor.getSelectedItem();
             Categoria cat = (Categoria) cmbCategoria.getSelectedItem();
             String strPrecio1 = decimal.format(precioCompra);
+            String strGanancia = decimal.format(ganancia);
+            String strGnanciaMayor = decimal.format(gananciaMayor);
             double dblPrecioCompra = Double.parseDouble(strPrecio1);
+            double dblGanancia = Double.parseDouble(strGanancia);
+            double dblGananciaMayot = Double.parseDouble(strGnanciaMayor);
             boolean stock = true;// revisar ya que en BD esta default
             
             
             if (!cbxGenerador.isSelected()) {
                 System.out.println("=D");
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, ganancia, gananciaMayor, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgArticulo, imgCodigoArticulo,true,1);
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgArticulo, imgCodigoArticulo,true,1);
                 conMat.IngresarProducto(producto);
                 //objProd = new Producto(nombre, strCod, dblPrecio1, dblPrecio2, ubica.getStrUbicacion(), cantidad, cantidadMin, empresa.getStrEmpresa(), null, null);
             } else {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, ganancia, gananciaMayor, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgArticulo, imgCodigoArticulo,true,1);
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgArticulo, imgCodigoArticulo,true,1);
                 conMat.IngresarProducto(producto);
-                System.out.println("flag");
-//                int anchoImagen = lblImagen.getWidth();
-//                int altoImagen = lblImagen.getHeight();
-//
-//                imgArticulo = (File) lblImagen.getIcon();
-////                ImageIcon icono = new ImageIcon(imgArticulo);
-////                Image imagen = icono.getImage();
-////                Image imagenescalada = imagen.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_SMOOTH);
-//
-////                ImageIcon iconoRedimensionado = new ImageIcon(imagenescalada);
-////                lblImagProd.setIcon(iconoRedimensionado);
-////                FileInputStream fis = null;
-//                File fileCodFoto;
-//                fileCodFoto = imgArticulo;
-////                fis = new FileInputStream(imgArticulo);
-//                System.out.println("bander ok");
-//                conMat.IngresarProducto(nombre, strCod, dblPrecio2, dblPrecio2, strPrecio2, cantidad, cantidadMin, strPrecio2, imgArticulo);
-//objProd = new Producto(nombre, strCod, dblPrecio1, dblPrecio2, ubica.getStrUbicacion(), cantidad, cantidadMin, empresa.getStrEmpresa(), fileCodFoto, null);
+                
             }
-            //IngresarProductoBl(objProd);
             JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             if (cbxAyuda.isSelected()) {
                 txtCod.setText("");
                 txtCantidad.setText("");
                 txtPrecioCompra.setText("");
                 txtPrecioMayor.setText("");
+                txtGanancia.setText("");
+                txtGananciaMayor.setText("");
+                cbxGenerador.setSelected(false);
             } else {
                 txtCantidad.setText("");
                 txtCod.setText("");
@@ -219,6 +208,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 txtPrecioCompra.setText("");
                 txtPrecioMayor.setText("");
                 txtCantMin.setText("");
+                cbxGenerador.setSelected(false);
             }
 
         } catch (ClassNotFoundException ex) {
@@ -992,7 +982,8 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void lblImagProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagProdMouseClicked
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter extension = new FileNameExtensionFilter("Archivos de imagen jpg, gif o png", "jpg", "gif", "png");
+        FileNameExtensionFilter extension = new FileNameExtensionFilter(
+                "Archivos de imagen jpg, gif o png", "jpg", "gif", "png");
         chooser.setFileFilter(extension);
 
         int returnVal = chooser.showOpenDialog(this);
@@ -1003,12 +994,11 @@ public final class IngresoProd extends javax.swing.JFrame {
             imgArticulo = chooser.getSelectedFile();
             ImageIcon icono = new ImageIcon(imgArticulo.getAbsolutePath());
             Image imagen2 = icono.getImage();
-            Image imagenescalada = imagen2.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_SMOOTH);
+            Image imagenescalada = imagen2.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_DEFAULT);
 
             ImageIcon iconoRedimensionado = new ImageIcon(imagenescalada);
             lblImagProd.setIcon(iconoRedimensionado);
         }
-        System.out.println(chooser.getSelectedFile());
     }//GEN-LAST:event_lblImagProdMouseClicked
 
     private void btnUbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbicacionActionPerformed
