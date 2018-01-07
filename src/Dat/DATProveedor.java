@@ -19,19 +19,19 @@ public class DATProveedor {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public void ingresoProveedor(String empresa, String nombreCuenta, String tipo,
-            String numCuenta, double deuda, int telefono) throws MySQLIntegrityConstraintViolationException {
+    public void ingresoProveedor(Proveedor prov) throws MySQLIntegrityConstraintViolationException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "INSERT INTO proveedores (Empresa, Nombre_Cuenta, Tipo_Cuenta,"
-                    + "Numero_Cuenta, Deuda, Telefono)" + "VALUES(?,?,?,?,?,?)";
+            String sentencia = "INSERT INTO proveedores (empresa, ruc, nombre_cuenta, tipo_cuenta,"
+                    + "numero_cuenta, deuda, telefono)" + "VALUES(?,?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
-            ps.setString(1, empresa);
-            ps.setString(2, nombreCuenta);
-            ps.setString(3, tipo);
-            ps.setString(4, numCuenta);
-            ps.setDouble(5, deuda);
-            ps.setInt(6, telefono);
+            ps.setString(1, prov.getStrEmpresa());
+            ps.setString(2, prov.getRuc());
+            ps.setString(3, prov.getStrNombreCuenta());
+            ps.setString(4, prov.getStrTipo());
+            ps.setString(5, prov.getStrNumCuenta());
+            ps.setDouble(6, prov.getDblDeuda());
+            ps.setInt(7, prov.getIntTelf());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

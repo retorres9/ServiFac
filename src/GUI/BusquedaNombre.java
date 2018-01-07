@@ -13,7 +13,7 @@ public class BusquedaNombre extends javax.swing.JFrame {
         initComponents();
         cargaTabla();
         this.setLocationRelativeTo(null);
-        this.setTitle(Constantes.Constantes.nombreEmpresa);
+        this.setTitle(Constantes.Constantes.NOMBRE_EMPRESA);
     }
 
     public void cargaTabla(){

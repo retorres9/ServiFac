@@ -28,7 +28,7 @@ public final class EliminarProducto extends javax.swing.JFrame {
         combo();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         updateTabla();
     }
 

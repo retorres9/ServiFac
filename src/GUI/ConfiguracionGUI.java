@@ -24,7 +24,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
             configuracion();
             getTexto();
             this.setLocationRelativeTo(null);
-            this.setTitle(Constantes.Constantes.nombrePrograma);
+            this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
             setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
     }
 
@@ -116,17 +116,14 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreEmp)
-                            .addComponent(txtDireccionEmp)
-                            .addComponent(txtPropietarioEmp)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtTelefonoEmp, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtRucEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-                                .addGap(99, 99, 99))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDireccionEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPropietarioEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRucEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTelefonoEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
                         .addComponent(btnCancelar)
@@ -135,7 +132,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
                         .addComponent(jLabel1)))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,11 +222,11 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     }
 
     public void configuracion() {
-        txtNombreEmp.setText(Constantes.Constantes.nombreEmpresa);
-        txtDireccionEmp.setText(Constantes.Constantes.direccionEmpresa);
-        txtPropietarioEmp.setText(Constantes.Constantes.propietarioEmpresa);
-        txtRucEmp.setText(Constantes.Constantes.rucEmpresa);
-        txtTelefonoEmp.setText(Constantes.Constantes.rucEmpresa);
+        txtNombreEmp.setText(Constantes.Constantes.NOMBRE_EMPRESA);
+        txtDireccionEmp.setText(Constantes.Constantes.DIRECCION_EMPRESA);
+        txtPropietarioEmp.setText(Constantes.Constantes.PROPIETARIO_EMPRESA);
+        txtRucEmp.setText(Constantes.Constantes.RUC_EMPRESA);
+        txtTelefonoEmp.setText(Constantes.Constantes.RUC_EMPRESA);
     }
 
     public void getTexto() {

@@ -23,7 +23,7 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
         prov = new DATProveedor();
         combo();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
     }
 

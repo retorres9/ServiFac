@@ -20,8 +20,8 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         usuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        txtNombreEmp.setText(Constantes.Constantes.nombreEmpresa);
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        txtNombreEmp.setText(Constantes.Constantes.NOMBRE_EMPRESA);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
     }
 
     public void combo() {

@@ -12,8 +12,8 @@ import javax.swing.JOptionPane;
 
 public final class NewCliente extends javax.swing.JFrame {
 
-    Clientes objCliente = new Clientes
-    Principal objP = new Principal();
+    Clientes objCliente = new Clientes();
+    
     public static int valid = 1;
     DATClientes cliente;
 
@@ -21,9 +21,9 @@ public final class NewCliente extends javax.swing.JFrame {
         initComponents();
         cliente = new DATClientes();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
-        //permisos();
+        permisos();
     }
 
     public void permisos() {
@@ -42,36 +42,16 @@ public final class NewCliente extends javax.swing.JFrame {
         }
     }
 
-    public void GuardarCliente() {
-        double deuda;
-        int ced;
-        int telf;
+    public void guardarCliente() {
         try {
-            String nombre = txtNombre.getText();
-            String dir = txtDireccion.getText();
-
-            String cedu = txtCedula.getText();
-            if (cedu.equals("")) {
-                ced = 0;
-            } else {
-                ced = Integer.parseInt(txtCedula.getText());
-            }
-            String tele = txtTelf.getText();
-            if (tele.equals("")) {
-                telf = 0;
-            } else {
-                telf = Integer.parseInt(txtTelf.getText());
-            }
-            String deu = txtDeuda.getText();
-            if (deu.equals("")) {
-                deuda = 0;
-            } else {
-                deuda = Double.parseDouble(txtDeuda.getText());
-            }
-            System.out.println(cedu);
-            cliente.InsertarCliente(nombre, ced, telf, deuda, dir);
-            //objCliente = new Clientes(nombre, ced, telf, deuda, dir);
-            //manejadorClientes.InsertarCliente(objCliente);
+            String nombre = txtNombre.getText().toUpperCase();
+            String dir = txtDireccion.getText().toUpperCase();
+            String cedula = txtCedula.getText();
+            int telf = Integer.parseInt(txtTelf.getText());
+            double deuda = Double.parseDouble(txtDeuda.getText());
+            
+            objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
+            cliente.InsertarCliente(objCliente);
             JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
             txtCedula.setText("");
             txtDeuda.setText("");
@@ -79,8 +59,9 @@ public final class NewCliente extends javax.swing.JFrame {
             txtTelf.setText("");
             txtDireccion.setText("");
         } catch (NumberFormatException ex) {
-            Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
-
+            //JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+              //      + " es valido\nEjemplo (99.99)");
+              ex.printStackTrace();
         } catch (SQLException ex) {
             Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,7 +81,6 @@ public final class NewCliente extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         btnGuardarCli = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
-        txtDeuda = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
@@ -108,6 +88,7 @@ public final class NewCliente extends javax.swing.JFrame {
         txtCedula = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
+        txtDeuda = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -128,8 +109,9 @@ public final class NewCliente extends javax.swing.JFrame {
         jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 570));
-        setPreferredSize(new java.awt.Dimension(600, 570));
+        setLocationByPlatform(true);
+        setMinimumSize(new java.awt.Dimension(600, 470));
+        setPreferredSize(new java.awt.Dimension(600, 470));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -147,6 +129,12 @@ public final class NewCliente extends javax.swing.JFrame {
 
         jLabel6.setText("Deuda:");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         btnGuardarCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/save.png"))); // NOI18N
         btnGuardarCli.setText("Guardar");
         btnGuardarCli.addActionListener(new java.awt.event.ActionListener() {
@@ -159,18 +147,6 @@ public final class NewCliente extends javax.swing.JFrame {
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtrasActionPerformed(evt);
-            }
-        });
-
-        txtDeuda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##.##;#,##;###,##"))));
-        txtDeuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeudaActionPerformed(evt);
-            }
-        });
-        txtDeuda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDeudaKeyTyped(evt);
             }
         });
 
@@ -192,6 +168,18 @@ public final class NewCliente extends javax.swing.JFrame {
         });
 
         jLabel10.setText("Direccion:");
+
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+
+        txtDeuda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDeudaKeyTyped(evt);
+            }
+        });
 
         jMenu2.setText("Productos");
 
@@ -304,44 +292,47 @@ public final class NewCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(114, 114, 114)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(13, 13, 13)
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtCedula))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(2, 2, 2)
+                                    .addComponent(jLabel5)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtTelf))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(16, 16, 16)
+                                    .addComponent(jLabel6)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtDeuda))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(75, 75, 75)
+                                            .addComponent(jLabel1))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(1, 1, 1)
+                                            .addComponent(jLabel3)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(0, 0, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(75, 75, 75)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(161, 161, 161)
-                                .addComponent(btnAtras)
-                                .addGap(79, 79, 79)
-                                .addComponent(btnGuardarCli)))
-                        .addGap(0, 258, Short.MAX_VALUE)))
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(99, 99, 99)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnAtras)
+                .addGap(79, 79, 79)
+                .addComponent(btnGuardarCli)
+                .addGap(162, 162, 162))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,8 +360,8 @@ public final class NewCliente extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,7 +370,7 @@ public final class NewCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAtras)
                     .addComponent(btnGuardarCli))
-                .addContainerGap())
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -391,21 +382,17 @@ public final class NewCliente extends javax.swing.JFrame {
         System.out.println(digitTelf+ " "+ digitosCedula);
         if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
-        }else if((txtCedula.getText().length() != 10) && (txtCedula.getText().length() != 13)){
+        }else if((txtCedula.getText().length() != 10) || (txtCedula.getText().length() != 13)){
             JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos","Error", JOptionPane.ERROR_MESSAGE);
-        }else if(digitTelf != 7 && digitTelf != 10){
+        }else if(digitTelf != 7 || digitTelf != 10){
             JOptionPane.showMessageDialog(null, "Número telefónico incorrectos","Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            GuardarCliente();
+            guardarCliente();
         }
     }//GEN-LAST:event_btnGuardarCliActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        
-//        if(objFact.isEnabled()){
-//            
-//            this.setVisible(false);
-//        }
+        Principal objP = new Principal();
         if (!txtNombre.getText().isEmpty()) {
             int n = JOptionPane.showConfirmDialog(
                     null,
@@ -413,7 +400,7 @@ public final class NewCliente extends javax.swing.JFrame {
                     "Aviso!",
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
-                //objP.setVisible(true);
+                objP.setVisible(true);
                 this.dispose();
             }
         } else {
@@ -444,15 +431,8 @@ public final class NewCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCedulaKeyTyped
 
-    private void txtDeudaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDeudaKeyTyped
-        char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)
-                && (caracter != '.')) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtDeudaKeyTyped
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Principal objP = new Principal();
         objP.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -510,9 +490,24 @@ public final class NewCliente extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
-    private void txtDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeudaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeudaActionPerformed
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if(txtNombre.getText().length() > 49){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        if(txtDireccion.getText().length() > 149){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtDeudaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDeudaKeyTyped
+        char c = evt.getKeyChar();
+        if(c < '0' || c > '9' || txtDeuda.getText().length() > 6){
+            evt.consume();  
+        }
+    }//GEN-LAST:event_txtDeudaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -574,7 +569,7 @@ public final class NewCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JTextField txtCedula;
-    private javax.swing.JFormattedTextField txtDeuda;
+    private javax.swing.JTextField txtDeuda;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelf;

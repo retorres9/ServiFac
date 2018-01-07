@@ -14,7 +14,7 @@ public final class Principal extends javax.swing.JFrame {
     String rol = Configuracion.validacion();
     String vendedor = Configuracion.vendedor_venta();
     static Process p;
-    Validacion valid = new Validacion();
+
     Usuario objU = new Usuario();
     Configuracion config = new Configuracion();
     Validacion objV = new Validacion();
@@ -24,7 +24,7 @@ public final class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         alerta();
         
 //        config();
@@ -594,6 +594,7 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtConfigMouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        Validacion valid = new Validacion();
         int n = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar la seción?", "Aviso!", JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             this.setVisible(false);
@@ -604,7 +605,7 @@ public final class Principal extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         DetalleVentaVista rv = new DetalleVentaVista();
         rv.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     public static void main(String args[]) {

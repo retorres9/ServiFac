@@ -135,17 +135,17 @@ public class DATClientes {
         return listadoClientes;
     }
 
-    public void InsertarCliente(String nombre, int cedula, int telf, double deuda, String direccion) throws SQLException {
+    public void InsertarCliente(Clientes cliente) throws SQLException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO clientes (Nombres, Cedula_Cliente, Telefono, Deuda, Direccion)"
                     + "VALUES (?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
-            ps.setString(1, nombre);
-            ps.setInt(2, cedula);
-            ps.setInt(3, telf);
-            ps.setDouble(4, deuda);
-            ps.setString(5, direccion);
+            ps.setString(1, cliente.getStrNombre());
+            ps.setString(2, cliente.getStrCedula());
+            ps.setInt(3, cliente.getIntTelf());
+            ps.setDouble(4, cliente.getDblDeuda());
+            ps.setString(5, cliente.getStrDireccion());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);

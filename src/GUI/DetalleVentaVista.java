@@ -25,7 +25,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         initComponents();
         sumar();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
         updateTablaVentas();
         updateTablaPagosCL();

@@ -31,7 +31,6 @@ import net.sourceforge.jbarcodebean.model.Interleaved25;
 
 public final class IngresoProd extends javax.swing.JFrame {
 
-    Principal objP = new Principal();
     int cant;
     File imgArticulo;
     File imgCodigoArticulo;
@@ -75,7 +74,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         btnGenerador.setEnabled(false);
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
     }
 
     public void seleccionIva() {
@@ -159,6 +158,8 @@ public final class IngresoProd extends javax.swing.JFrame {
     }
 
     public void guardar() {
+        File imagenDefaultProd = new File("src/Recursos/circulo-de-no-disponible.png");
+        File imagenDefaultCodigo = new File("src/Recursos/circulo-de-no-disponible.png");
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator('.');
         DecimalFormat decimal = new DecimalFormat("0.00", simbolo);
@@ -180,15 +181,25 @@ public final class IngresoProd extends javax.swing.JFrame {
             double dblGanancia = Double.parseDouble(strGanancia);
             double dblGananciaMayot = Double.parseDouble(strGnanciaMayor);
             boolean stock = true;// revisar ya que en BD esta default
+            String iva;
+            if(iva0.isSelected()){
+                iva = "0%";
+            } else {
+                iva = "12%";
+            }
             
             
             if (!cbxGenerador.isSelected()) {
                 System.out.println("=D");
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgArticulo, imgCodigoArticulo,true,1);
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo,imgArticulo, iva,1);
                 conMat.IngresarProducto(producto);
                 //objProd = new Producto(nombre, strCod, dblPrecio1, dblPrecio2, ubica.getStrUbicacion(), cantidad, cantidadMin, empresa.getStrEmpresa(), null, null);
-            } else {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgArticulo, imgCodigoArticulo,true,1);
+            } if(imgArticulo == null){
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva,1);
+                conMat.IngresarProducto(producto);
+            } 
+            else {
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva,1);
                 conMat.IngresarProducto(producto);
                 
             }
@@ -202,6 +213,8 @@ public final class IngresoProd extends javax.swing.JFrame {
                 txtGananciaMayor.setText("");
                 cbxGenerador.setSelected(false);
             } else {
+                txtGanancia.setText("");
+                txtGananciaMayor.setText("");
                 txtCantidad.setText("");
                 txtCod.setText("");
                 txtNombreProd.setText("");
@@ -209,6 +222,8 @@ public final class IngresoProd extends javax.swing.JFrame {
                 txtPrecioMayor.setText("");
                 txtCantMin.setText("");
                 cbxGenerador.setSelected(false);
+                txtCalcPrecio.setVisible(false);
+                txtPrecioMayor.setVisible(false);
             }
 
         } catch (ClassNotFoundException ex) {
@@ -253,13 +268,14 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         cmbCategoria = new javax.swing.JComboBox<>();
         btnProveedor = new javax.swing.JButton();
+        txtGanancia = new javax.swing.JTextField();
+        txtGananciaMayor = new javax.swing.JTextField();
         btnUbicacion = new javax.swing.JButton();
         btnCategoria = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         iva12 = new javax.swing.JRadioButton();
         iva0 = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
-        txtGanancia = new javax.swing.JTextField();
         txtCalcPrecio = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -267,7 +283,6 @@ public final class IngresoProd extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtGananciaMayor = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -296,6 +311,12 @@ public final class IngresoProd extends javax.swing.JFrame {
             }
         });
 
+        txtCod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodKeyTyped(evt);
+            }
+        });
+
         txtPrecioCompra.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioCompraKeyReleased(evt);
@@ -305,11 +326,6 @@ public final class IngresoProd extends javax.swing.JFrame {
             }
         });
 
-        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCantidadActionPerformed(evt);
-            }
-        });
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantidadKeyTyped(evt);
@@ -456,6 +472,24 @@ public final class IngresoProd extends javax.swing.JFrame {
             }
         });
 
+        txtGanancia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtGananciaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGananciaKeyTyped(evt);
+            }
+        });
+
+        txtGananciaMayor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtGananciaMayorKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGananciaMayorKeyTyped(evt);
+            }
+        });
+
         btnUbicacion.setText("Agregar Ubicación");
         btnUbicacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -473,18 +507,10 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel13.setText("Producto con IVA:");
 
-        iva12.setText("12%");
-
         iva0.setText("0%");
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel14.setText("Ganancia %");
-
-        txtGanancia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtGananciaKeyReleased(evt);
-            }
-        });
 
         txtCalcPrecio.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         txtCalcPrecio.setForeground(new java.awt.Color(0, 153, 0));
@@ -531,12 +557,6 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setText("Ganancia por mayor");
-
-        txtGananciaMayor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtGananciaMayorKeyReleased(evt);
-            }
-        });
 
         jMenu2.setText("Productos");
 
@@ -815,8 +835,8 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         if (txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
                 || txtNombreProd.getText().isEmpty() || txtPrecioCompra.getText().isEmpty()
-                || txtPrecioMayor.getText().isEmpty() || /*!iva12.isSelected()
-                || !iva0.isSelected() ||*/ txtGanancia.getText().isEmpty()
+                || txtPrecioMayor.getText().isEmpty() || !iva12.isSelected()
+                || !iva0.isSelected() || txtGanancia.getText().isEmpty()
                 || txtGananciaMayor.getText().isEmpty()) { //Asegura que ningun campo quede nulo
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
         } else { //Si todo esta bien procede a guardar proveedor
@@ -827,8 +847,6 @@ public final class IngresoProd extends javax.swing.JFrame {
                         if (new Clases.Guardar().guardarImagen(txtNombreProd.getText())) { //si guarda la imagen el icono vuelve a estar en blanco
                             imagen = null;
                             this.lblImagen.setIcon(null);
-                            //JOptionPane.showMessageDialog(this, "Código guardado con éxito!!!", "Información", JOptionPane.INFORMATION_MESSAGE);
-                            //guardar(rutadefi);
                             guardar();
                             
                         }
@@ -849,19 +867,13 @@ public final class IngresoProd extends javax.swing.JFrame {
                 } else {//Si no esta seleccionado el combobox no guarda ninguna imagen
                     guardar();
                 }
-//                if (new Clases.Guardar().guardarImagen(txtNombreProd.getText())) {
-//                    imagen = null;
-//                    this.lblImagen.setIcon(null);
-//                    //JOptionPane.showMessageDialog(this, "Código guardado con éxito!!!", "Información", JOptionPane.INFORMATION_MESSAGE);
-//                    //guardar(rutadefi);
-//                }
             }
 
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-
+        Principal objP = new Principal();
         if (!txtCantidad.getText().isEmpty() || !txtCod.getText().isEmpty()
                 || !txtNombreProd.getText().isEmpty() || !txtPrecioCompra.getText().isEmpty()
                 || !txtPrecioMayor.getText().isEmpty()) {
@@ -873,10 +885,8 @@ public final class IngresoProd extends javax.swing.JFrame {
             if (n == JOptionPane.YES_OPTION) {
                 objP.setVisible(true);
                 this.dispose();
-//                }
             }
         } else {
-
             objP.setVisible(true);
             this.dispose();
         }
@@ -885,7 +895,8 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)
+        if (((caracter < '0') || (caracter > '9') || txtPrecioCompra.getText().length()>5)
+                && (caracter != KeyEvent.VK_BACK_SPACE)
                 && (caracter != '.')) {
             evt.consume();
         }
@@ -898,14 +909,14 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char c = evt.getKeyChar();
-        if ((c < '0' || c > '9')) {
+        if ((c < '0' || c > '9' || txtCantidad.getText().length()>6)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void txtCantMinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMinKeyTyped
         char c = evt.getKeyChar();
-        if (c < '0' || c > '9') {
+        if (c < '0' || c > '9' || txtCantMin.getText().length()>2) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantMinKeyTyped
@@ -1046,12 +1057,11 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
-    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCantidadActionPerformed
-
     private void txtGananciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaKeyReleased
-
+        char c = evt.getKeyChar();
+        if((c < '0') || (c > '9') && (c != '.')){
+            evt.consume();
+        }
         if ((txtGanancia.getText().isEmpty()) || (txtGanancia.getText().equals("")) || (txtPrecioCompra.getText().isEmpty())) {
 
         } else {
@@ -1060,7 +1070,12 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_txtGananciaKeyReleased
 
     private void txtPrecioCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyReleased
-
+        if(txtGanancia.getText().isEmpty() || txtGananciaMayor.getText().isEmpty()){
+            
+        } else {
+            muestraPrecio();
+            muestraPrecioxMayor();
+        }
     }//GEN-LAST:event_txtPrecioCompraKeyReleased
 
     private void txtGananciaMayorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaMayorKeyReleased
@@ -1071,11 +1086,30 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtGananciaMayorKeyReleased
 
+    private void txtCodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyTyped
+        char c = evt.getKeyChar();
+        if((c < '0') || (c > '9') || (txtCod.getText().length() > 12)){ // Se compara el tamaño de txtCod con 12 porque txtCod.lenght()cuenta desde 0>
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodKeyTyped
+
+    private void txtGananciaMayorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaMayorKeyTyped
+        char c = evt.getKeyChar();
+        if((c < '0') || (c > '9') && (c != '.')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtGananciaMayorKeyTyped
+
+    private void txtGananciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaKeyTyped
+        char c = evt.getKeyChar();
+        if((c < '0') || (c > '9') && (c != '.')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtGananciaKeyTyped
+
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra
         barcode.setCodeType(new Interleaved25());
-        //barcode.setCodeType(new Code39());
-
         // nuestro valor a codificar y algunas configuraciones mas
         barcode.setCode(codigo);
 

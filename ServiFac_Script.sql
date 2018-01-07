@@ -2,11 +2,11 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-SELECT * FROM producto;
+SELECT * FROM clientes;
 create table prueba(
 imagen longblob
 );
-drop table prueba;
+drop table clientes;
 
 
 CREATE TABLE usuario(
@@ -21,21 +21,21 @@ CREATE TABLE clientes(
 nombres VARCHAR(30) NOT NULL,
 cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
 telefono INT(10) NOT NULL,#ANALIZAR cambiar a varchar
-deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
-direccion TEXT NOT NULL,
-descuento INT(2) DEFAULT 0
+deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
+direccion TEXT NOT NULL
 );
 
 Select * from producto;
 
 CREATE TABLE producto(
-nombre_Producto VARCHAR(25) NOT NULL,#
+nombre_Producto VARCHAR(40) NOT NULL,#
 codigo VARCHAR (13) PRIMARY KEY,#
 precio_Compra DECIMAL (6,2) NOT NULL,#
 precio DECIMAL(6,2) NOT NULL,#
 ganancia DECIMAL(6,2) NOT NULL,#
 ganancia_Mayor DECIMAL(6,2) NOT NULL,#
 stock BOOLEAN DEFAULT TRUE,
+iva BOOLEAN,
 id_categoria INT (3) NOT NULL,#
 precio_Mayor DECIMAL(6,2),#
 id_ubicacion VARCHAR(10),#
@@ -58,9 +58,9 @@ nombre_categoria VARCHAR(20)
 );
 
 CREATE TABLE proveedores(
-empresa VARCHAR(15) NOT NULL,
+empresa VARCHAR(50) NOT NULL,
 ruc VARCHAR(13) NOT NULL PRIMARY KEY,
-nombre_cuenta VARCHAR(20) NOT NULL,
+nombre_cuenta VARCHAR(30) NOT NULL,
 tipo_cuenta VARCHAR(20) NOT NULL,
 numero_cuenta VARCHAR(15),
 deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
@@ -72,7 +72,7 @@ id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
 total_Venta DECIMAL(7,2) NOT NULL,
 valor_Cancelado DECIMAL(7,2) NOT NULL,
 fecha DATE,
-cedula_usuario INT(10) NOT NULL
+cedula_usuario INT(150) NOT NULL
 );
 
 CREATE TABLE detalle_venta(

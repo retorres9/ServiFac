@@ -56,12 +56,12 @@ public final class Factura extends javax.swing.JFrame {
     public Factura() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
         setAnchoColumnas();
         contador();
         permisos();
-        txtEmpresa.setText(Constantes.Constantes.nombreEmpresa);
+        txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
     }
 
     public void contador() {

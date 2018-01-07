@@ -394,6 +394,9 @@
     <Component class="javax.swing.JTextField" name="txtNombreProd">
     </Component>
     <Component class="javax.swing.JTextField" name="txtCod">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCodKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecioCompra">
       <Events>
@@ -403,7 +406,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtCantidad">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCantidadActionPerformed"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadKeyTyped"/>
       </Events>
     </Component>
@@ -675,6 +677,18 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProveedorActionPerformed"/>
       </Events>
     </Component>
+    <Component class="javax.swing.JTextField" name="txtGanancia">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaKeyTyped"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtGananciaMayor">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaMayorKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaMayorKeyTyped"/>
+      </Events>
+    </Component>
     <Component class="javax.swing.JButton" name="btnUbicacion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar Ubicaci&#xf3;n"/>
@@ -700,9 +714,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="iva12">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="12%"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="iva0">
       <Properties>
@@ -716,11 +727,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Ganancia %"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtGanancia">
-      <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaKeyReleased"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="txtCalcPrecio">
       <Properties>
@@ -817,11 +823,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Ganancia por mayor"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtGananciaMayor">
-      <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGananciaMayorKeyReleased"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

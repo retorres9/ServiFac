@@ -23,7 +23,7 @@ public class DATMaterial {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto ORDER BY Nombre_Producto Asc";
+            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.ubicacion = u.ubicacion ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -34,7 +34,7 @@ public class DATMaterial {
                 String ubicacion = rs.getString(5);
                 int cant = rs.getInt(6);
 
-                Producto prod = new Producto(nombre, codigo, precio, precioMayor, ubicacion, cant, 2, null, null, null);
+                Producto prod = new Producto(nombre,codigo,precio,precioMayor,ubicacion, cant);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
@@ -124,8 +124,8 @@ public class DATMaterial {
             String Sentencia = "INSERT INTO producto (nombre_producto, codigo,"
                     + " precio_Compra, precio, precio_mayor, ganancia, ganancia_Mayor,"
                     + "id_categoria, id_ubicacion, cantidad, cantidad_Minima,"
-                    + " ruc, imagen_producto,imagen_codigo)"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + " ruc, iva, imagen_producto,imagen_codigo)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
             ps.setString(2, producto.getStrCod());
@@ -139,8 +139,9 @@ public class DATMaterial {
             ps.setInt(10, producto.getIntCantidad());
             ps.setInt(11, producto.getIntCantidadMinima());
             ps.setString(12, producto.getStrRUC());
-            ps.setBinaryStream(13, fis, (int) producto.getFotoProd().length());
-            ps.setBinaryStream(14, fisCod, (int) producto.getImgCodigoProd().length());
+            ps.setString(13, producto.getIva());
+            ps.setBinaryStream(14, fis, (int) producto.getFotoProd().length());
+            ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

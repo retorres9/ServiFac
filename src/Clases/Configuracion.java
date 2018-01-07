@@ -17,15 +17,15 @@ public class Configuracion {
     public static String guardar(String nombre) {
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(nombre+".png"));
+            BufferedReader br = new BufferedReader(new FileReader(nombre + ".png"));
             s1 = br.readLine();
             br.close();
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return s1;
     }
-    
+
     public static String validacion() {
         String s1 = "";
         try {
@@ -37,7 +37,7 @@ public class Configuracion {
         }
         return s1;
     }
-    
+
     public static String vendedor() {
         String s1 = "";
         try {
@@ -58,7 +58,7 @@ public class Configuracion {
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) { 
+        } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
@@ -152,7 +152,7 @@ public class Configuracion {
         } else {
             JOptionPane.showMessageDialog(null, "Ha habido un error");
         }
-        
+
     }
 
     public void actualizaPropietarioEmp(String updNombre) throws IOException {
@@ -222,7 +222,7 @@ public class Configuracion {
             JOptionPane.showMessageDialog(null, "Ha habido un error");
         }
     }
-    
+
     public void vendedor(String valid) throws IOException {
         String ruta = "Vendedor.txt";
         File archivo = new File(ruta);
@@ -239,10 +239,25 @@ public class Configuracion {
             JOptionPane.showMessageDialog(null, "Ha habido un error");
         }
     }
-     public static String vendedor_venta() {
+
+    public static String vendedor_venta() {
         String s1 = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader("Vendedor.txt"));
+            s1 = br.readLine();
+            br.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s1;
+    }
+    
+    public static String iva() {
+        String s1 = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("Iva.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {

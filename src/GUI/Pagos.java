@@ -40,7 +40,7 @@ public final class Pagos extends javax.swing.JFrame {
         iconos();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         cargarTabla();
         permisos();
         txtVendedor.setText(vendedor);

@@ -34,9 +34,9 @@ public final class BusqProd extends javax.swing.JFrame {
         CargaCombo();
         this.txtPrecio.setEditable(false);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        this.setTitle(Constantes.Constantes.nombrePrograma);
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
-        txtEmpresa.setText(Constantes.Constantes.nombreEmpresa);
+        //txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
         permisos();
         config();
         updateTabla();
