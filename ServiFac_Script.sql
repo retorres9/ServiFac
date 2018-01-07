@@ -63,7 +63,7 @@ ruc VARCHAR(13) NOT NULL PRIMARY KEY,
 nombre_cuenta VARCHAR(30) NOT NULL,
 tipo_cuenta VARCHAR(20) NOT NULL,
 numero_cuenta VARCHAR(15),
-deuda DECIMAL(4,2) NOT NULL DEFAULT 0.00,
+deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 telefono INT(10)
 );
 

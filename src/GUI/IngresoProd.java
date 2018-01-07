@@ -67,6 +67,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         cargarModeloProv();
         cargarModeloUbic();
         initComponents();
+        //iva12.setText(Configuracion.iva());
         muestraPrecio();
         muestraPrecioxMayor();
         permisos();
@@ -182,26 +183,25 @@ public final class IngresoProd extends javax.swing.JFrame {
             double dblGananciaMayot = Double.parseDouble(strGnanciaMayor);
             boolean stock = true;// revisar ya que en BD esta default
             String iva;
-            if(iva0.isSelected()){
+            if (iva0.isSelected()) {
                 iva = "0%";
             } else {
                 iva = "12%";
             }
-            
-            
-            if (!cbxGenerador.isSelected()) {
+
+            if (!cbxGenerador.isSelected() && lblImagProd == null) {
                 System.out.println("=D");
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo,imgArticulo, iva,1);
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imagenDefaultProd, iva, 1);
                 conMat.IngresarProducto(producto);
-                //objProd = new Producto(nombre, strCod, dblPrecio1, dblPrecio2, ubica.getStrUbicacion(), cantidad, cantidadMin, empresa.getStrEmpresa(), null, null);
-            } if(imgArticulo == null){
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva,1);
+            } else if (imgArticulo == null && cbxGenerador.isSelected()) {
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva, 1);
                 conMat.IngresarProducto(producto);
-            } 
-            else {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva,1);
+            } else if (!cbxGenerador.isSelected() && lblImagProd != null) {
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imgArticulo, iva, 1);
                 conMat.IngresarProducto(producto);
-                
+            } else {
+                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva, 1);
+                conMat.IngresarProducto(producto);
             }
             JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             if (cbxAyuda.isSelected()) {
@@ -848,7 +848,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                             imagen = null;
                             this.lblImagen.setIcon(null);
                             guardar();
-                            
+
                         }
                     } else { //Si no esta seleccionado el combobox no guarda ninguna imagen
                         guardar();
@@ -895,7 +895,7 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9') || txtPrecioCompra.getText().length()>5)
+        if (((caracter < '0') || (caracter > '9') || txtPrecioCompra.getText().length() > 5)
                 && (caracter != KeyEvent.VK_BACK_SPACE)
                 && (caracter != '.')) {
             evt.consume();
@@ -909,14 +909,14 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char c = evt.getKeyChar();
-        if ((c < '0' || c > '9' || txtCantidad.getText().length()>6)) {
+        if ((c < '0' || c > '9' || txtCantidad.getText().length() > 6)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void txtCantMinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMinKeyTyped
         char c = evt.getKeyChar();
-        if (c < '0' || c > '9' || txtCantMin.getText().length()>2) {
+        if (c < '0' || c > '9' || txtCantMin.getText().length() > 2) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantMinKeyTyped
@@ -1059,7 +1059,7 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtGananciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaKeyReleased
         char c = evt.getKeyChar();
-        if((c < '0') || (c > '9') && (c != '.')){
+        if ((c < '0') || (c > '9') && (c != '.')) {
             evt.consume();
         }
         if ((txtGanancia.getText().isEmpty()) || (txtGanancia.getText().equals("")) || (txtPrecioCompra.getText().isEmpty())) {
@@ -1070,8 +1070,8 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_txtGananciaKeyReleased
 
     private void txtPrecioCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyReleased
-        if(txtGanancia.getText().isEmpty() || txtGananciaMayor.getText().isEmpty()){
-            
+        if (txtGanancia.getText().isEmpty() || txtGananciaMayor.getText().isEmpty()) {
+
         } else {
             muestraPrecio();
             muestraPrecioxMayor();
@@ -1088,21 +1088,21 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtCodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyTyped
         char c = evt.getKeyChar();
-        if((c < '0') || (c > '9') || (txtCod.getText().length() > 12)){ // Se compara el tamaño de txtCod con 12 porque txtCod.lenght()cuenta desde 0>
+        if ((c < '0') || (c > '9') || (txtCod.getText().length() > 12)) { // Se compara el tamaño de txtCod con 12 porque txtCod.lenght()cuenta desde 0>
             evt.consume();
         }
     }//GEN-LAST:event_txtCodKeyTyped
 
     private void txtGananciaMayorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaMayorKeyTyped
         char c = evt.getKeyChar();
-        if((c < '0') || (c > '9') && (c != '.')){
+        if ((c < '0') || (c > '9') && (c != '.')) {
             evt.consume();
         }
     }//GEN-LAST:event_txtGananciaMayorKeyTyped
 
     private void txtGananciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGananciaKeyTyped
         char c = evt.getKeyChar();
-        if((c < '0') || (c > '9') && (c != '.')){
+        if ((c < '0') || (c > '9') && (c != '.')) {
             evt.consume();
         }
     }//GEN-LAST:event_txtGananciaKeyTyped
@@ -1122,21 +1122,21 @@ public final class IngresoProd extends javax.swing.JFrame {
         lblImagen.setIcon(barras);
         Image image = barras.getImage();
 
-            // cast it to bufferedimage
-            BufferedImage buffered = (BufferedImage) image;
+        // cast it to bufferedimage
+        BufferedImage buffered = (BufferedImage) image;
 
-            try {
-                String workingDirectory = System.getProperty("user.home");
-                String absoluteFilePath = "";
-                absoluteFilePath = workingDirectory + "\\Pictures" + File.separator + "saved2.png";
-                // save to file
-                imgCodigoArticulo = new File(absoluteFilePath);
-                System.out.println(imgCodigoArticulo.getAbsolutePath());
-                ImageIO.write(imagen, "png", imgCodigoArticulo);
-                System.out.println(imgCodigoArticulo.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            String workingDirectory = System.getProperty("user.home");
+            String absoluteFilePath = "";
+            absoluteFilePath = workingDirectory + "\\Pictures" + File.separator + "saved2.png";
+            // save to file
+            imgCodigoArticulo = new File(absoluteFilePath);
+            System.out.println(imgCodigoArticulo.getAbsolutePath());
+            ImageIO.write(imagen, "png", imgCodigoArticulo);
+            System.out.println(imgCodigoArticulo.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

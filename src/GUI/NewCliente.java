@@ -3,7 +3,6 @@ package GUI;
 import Clases.Clientes;
 import Clases.Configuracion;
 import Dat.DATClientes;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,8 +58,8 @@ public final class NewCliente extends javax.swing.JFrame {
             txtTelf.setText("");
             txtDireccion.setText("");
         } catch (NumberFormatException ex) {
-            //JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
-              //      + " es valido\nEjemplo (99.99)");
+            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+                    + " es valido\nEjemplo (99.99)");
               ex.printStackTrace();
         } catch (SQLException ex) {
             Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -382,9 +381,10 @@ public final class NewCliente extends javax.swing.JFrame {
         System.out.println(digitTelf+ " "+ digitosCedula);
         if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
-        }else if((txtCedula.getText().length() != 10) || (txtCedula.getText().length() != 13)){
+        }
+        else if((txtCedula.getText().length() != 10) && (txtCedula.getText().length() != 13)){
             JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos","Error", JOptionPane.ERROR_MESSAGE);
-        }else if(digitTelf != 7 || digitTelf != 10){
+        }else if(digitTelf != 7 && digitTelf != 10){
             JOptionPane.showMessageDialog(null, "Número telefónico incorrectos","Error", JOptionPane.ERROR_MESSAGE);
         } else {
             guardarCliente();

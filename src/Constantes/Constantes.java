@@ -12,5 +12,5 @@ public class Constantes {
     public static final String TELEFONO_EMPRESA = Configuracion.configTelefonoEmpresa();
     public static final String NOMBRE_PROGRAMA = "ServiFac";
     public static final String VALIDACION = Configuracion.validacion();
-    public static final String IVA = Configuracion.iva();
+    public static String IVA = Configuracion.iva();
 }
