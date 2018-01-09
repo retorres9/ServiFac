@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 public class NuevoProveedorDialgo extends javax.swing.JDialog {
 
     Proveedor objP = new Proveedor();
-    BLProveedor manejadorProveedor = new BLProveedor();
     Principal objPr = new Principal();
     DATProveedor prov;
     
@@ -33,55 +32,34 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     }
 
     public void guardarProveedor() {
-        int numCuenta2;
-        int numTelf2;
-        String empresa = txtEmpresa.getText();
-        if (txtEmpresa.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se puede dejar el campo de nombre de empresa vacio");
-        } else {
-            String nombreCuenta = txtNombre.getText();
-            if (txtNombre.getText().isEmpty()) {
-                nombreCuenta = "";
-            }
-
-            String mayuscula = nombreCuenta.charAt(0) + "";
-
-            mayuscula = mayuscula.toUpperCase();
-            nombreCuenta = nombreCuenta.replaceFirst(nombreCuenta.charAt(0) + "", mayuscula);
-            System.out.println(nombreCuenta);
+        try {
+            String nombreCta = txtNombre.getText();
+            String empresa = txtEmpresa.getText();
+            String ruc = txtRuc.getText();
             String tipoCuenta = cmbTipo.getSelectedItem().toString();
             String numCuenta = (txtNumero.getText());
             double deuda = Double.parseDouble(txtDeuda.getText());
+            int telf = Integer.parseInt(txtTelf.getText());
             if (txtDeuda.getText().isEmpty()) {
                 deuda = 0;
             }
-            String numTelf = (txtTelf.getText());
-            if (numTelf.equals("")) {
-                numTelf2 = 0;
-            } else {
-                numTelf2 = Integer.parseInt(txtTelf.getText());
+            if (txtTelf.getText().isEmpty()) {
+                telf = 0000000000;
             }
-            try {
-                prov.ingresoProveedor(empresa, nombreCuenta, tipoCuenta, numCuenta, deuda, numTelf2);
-                JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
-            } catch (MySQLIntegrityConstraintViolationException ex) {
-                JOptionPane.showMessageDialog(null, "El proveedor que ingresó ya se encuentra registrado", "Aviso!", JOptionPane.ERROR_MESSAGE);
-            }
-            //objP = new Proveedor(empresa, nombreCuenta, tipoCuenta, numCuenta, deuda, numTelf2);
-//            try {
-                //manejadorProveedor.crearProveedor(objP);
-//                
-//            } catch (SQLException ex) {
-//                Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-                
-//            } catch (ClassNotFoundException ex) {
-//                Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+
+            objP = new Proveedor(empresa, ruc, nombreCta, tipoCuenta, numCuenta, deuda, telf);
+            prov.ingresoProveedor(objP);
             txtDeuda.setText("");
             txtEmpresa.setText("");
             txtNombre.setText("");
             txtNumero.setText("");
             txtTelf.setText("");
+            JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
+        } catch (MySQLIntegrityConstraintViolationException ex) {
+            JOptionPane.showMessageDialog(null, "El proveedor que ingresó ya se encuentra registrado", "Aviso!", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+                    + " es valido\nEjemplo (99.99)");
         }
     }
     /**
@@ -93,44 +71,50 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtTelf = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtEmpresa = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
+        txtRuc = new javax.swing.JTextField();
         cmbTipo = new javax.swing.JComboBox<>();
         txtDeuda = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtTelf = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtEmpresa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel2.setText("Nombre de cuenta:");
-
-        jLabel6.setText("Teléfono:");
-
-        jLabel3.setText("Tipo de cuenta:");
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/apreton-de-manos.png"))); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel8.setText("Ingreso de proveedor");
 
-        jLabel4.setText("Número de cuenta:");
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
-        jLabel5.setText("Deuda:");
+        jLabel9.setText("RUC:");
 
         txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNumeroKeyTyped(evt);
+            }
+        });
+
+        txtRuc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRucKeyTyped(evt);
             }
         });
 
@@ -150,10 +134,32 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
 
         jLabel1.setText("Empresa:");
 
-        jButton2.setText("Cancelar");
+        jButton2.setText("Atrás");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Nombre de cuenta:");
+
+        jLabel6.setText("Teléfono:");
+
+        jLabel3.setText("Tipo de cuenta:");
+
+        txtTelf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelfKeyTyped(evt);
+            }
+        });
+
+        jLabel4.setText("Número de cuenta:");
+
+        jLabel5.setText("Deuda:");
+
+        txtEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmpresaKeyTyped(evt);
             }
         });
 
@@ -164,41 +170,36 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addContainerGap())
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(124, 124, 124)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(23, 23, 23)
-                            .addComponent(jButton2)
-                            .addGap(77, 77, 77)
-                            .addComponent(jButton1)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDeuda)
+                            .addComponent(txtNombre)
+                            .addComponent(txtRuc)
+                            .addComponent(txtEmpresa)
+                            .addComponent(cmbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNumero)
-                            .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDeuda)
+                            .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jButton2)
+                        .addGap(77, 77, 77)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -211,69 +212,109 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
                         .addComponent(jLabel8)))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(5, 5, 5)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(48, 48, 48)
+                    .addComponent(jLabel6)
+                    .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if(txtNombre.getText().length() > 29){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
     private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped
         char c = evt.getKeyChar();
-        if (c < '0' || c > '9') {
+        if (c < '0' || c > '9' || txtNumero.getText().length() > 14) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNumeroKeyTyped
 
+    private void txtRucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyTyped
+        char c = evt.getKeyChar();
+        if(c < '0' || c > '9' || txtRuc.getText().length() > 12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRucKeyTyped
+
     private void txtDeudaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDeudaKeyTyped
         char c = evt.getKeyChar();
-        if ((c < '0' || c > '9') && c != '.') {
+
+        if (((c < '0') || (c > '9'))
+            && (c != '.')) {
             evt.consume();
         }
     }//GEN-LAST:event_txtDeudaKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        guardarProveedor();
+        if (txtNombre.getText().isEmpty() || txtRuc.getText().isEmpty()
+            || txtEmpresa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Hay campos que no se pueden dejar vacios");
+        } else {
+            guardarProveedor();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Principal objPr = new Principal();
         if (!txtDeuda.getText().isEmpty() || !txtEmpresa.getText().isEmpty()
-                || !txtNombre.getText().isEmpty() || !txtNumero.getText().isEmpty()) {
+            || !txtNombre.getText().isEmpty() || !txtNumero.getText().isEmpty()) {
             int n = JOptionPane.showConfirmDialog(null, "Hay datos que no han sido guardados\n¿Desea salir?", "Aviso", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
+                objPr.setVisible(true);
                 this.dispose();
             }
         } else {
+            objPr.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtTelfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfKeyTyped
+        char c = evt.getKeyChar();
+        if(c < '0' || c > '9' || txtTelf.getText().length() > 9){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelfKeyTyped
+
+    private void txtEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmpresaKeyTyped
+        if(txtEmpresa.getText().length() > 49){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtEmpresaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -329,11 +370,13 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField txtDeuda;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtRuc;
     private javax.swing.JTextField txtTelf;
     // End of variables declaration//GEN-END:variables
 }

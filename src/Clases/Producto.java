@@ -52,13 +52,12 @@ public class Producto {
         this.strNombreProd = strNombreProd;
         this.intCantidad = intCantidad;
     }
-
-    public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, int intCantidad, int strUbicacion, String strCod) {
+    /*Para instanciar el producto al actualizar el producto sin ubicacion*/
+    public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, int intCantidad, String strCod) {
         this.strNombreProd = strNombreProd;
         this.fltPrecio = fltPrecio;
         this.fltPrecioMayor = fltPrecioMayor;
         this.intCantidad = intCantidad;
-        this.intUbicacion = strUbicacion;
         this.strCod = strCod;
     }
     
@@ -90,6 +89,26 @@ public class Producto {
         this.stock = stock;
         this.fltPrecioMayor = fltPrecioMayor;
         this.intUbicacion = intUbicacion;
+        this.idCategoria = idCategoria;
+        this.intCantidad = intCantidad;
+        this.intCantidadMinima = intCantidadMinima;
+        this.strRUC = strRUC;
+        this.imgCodigoProd = imgCodigoProd;
+        this.fotoProd = fotoProd;
+        this.iva = iva;
+        this.bodega = bodega;
+    }
+    
+    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, String strUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File imgCodigoProd, File fotoProd, String iva, int bodega) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.precioCompra = precioCompra;
+        this.ganancia = ganancia;
+        this.gananciaMayor = gananciaMayor;
+        this.stock = stock;
+        this.fltPrecioMayor = fltPrecioMayor;
+        this.strUbicacion = strUbicacion;
         this.idCategoria = idCategoria;
         this.intCantidad = intCantidad;
         this.intCantidadMinima = intCantidadMinima;

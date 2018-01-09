@@ -67,7 +67,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         cargarModeloProv();
         cargarModeloUbic();
         initComponents();
-        //iva12.setText(Configuracion.iva());
+        //iva12.setText(Constantes.Constantes.IVA);
         muestraPrecio();
         muestraPrecioxMayor();
         permisos();
@@ -87,16 +87,16 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (txtPrecioCompra.getText().isEmpty() || txtGananciaMayor.getText().isEmpty()) {
             txtPrecioMayor.setVisible(false);
         } else {
-            txtPrecioMayor.setVisible(true);
             double precio = Double.parseDouble(txtPrecioCompra.getText());
             double ganancia = Double.parseDouble(txtGananciaMayor.getText());
             precioVentaMayor = precio + (precio * (ganancia / 100));
             DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
             simbolos.setDecimalSeparator('.');
-            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-            String strPrecio = dcmlCambio.format(precioVentaMayor);
-            precioVentaMayor = Double.parseDouble(strPrecio);
+            DecimalFormat dcmlCambioMayor = new DecimalFormat("0.00", simbolos);
+            String strPrecioMayor = dcmlCambioMayor.format(precioVentaMayor);
+            precioVentaMayor = Double.parseDouble(strPrecioMayor);
             txtPrecioMayor.setText("El precio de venta al por mayor es: $" + precioVentaMayor);
+            txtPrecioMayor.setVisible(true);
         }
     }
 
@@ -104,11 +104,16 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (txtPrecioCompra.getText().isEmpty() || txtGanancia.getText().isEmpty()) {
             txtCalcPrecio.setVisible(false);
         } else {
-            txtCalcPrecio.setVisible(true);
             double precioInput = Double.parseDouble(txtPrecioCompra.getText());
             double ganancia = Double.parseDouble(txtGanancia.getText());
             precioVenta = precioInput + (precioInput * (ganancia / 100));
+            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+            simbolos.setDecimalSeparator('.');
+            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+            String strPrecio = dcmlCambio.format(precioVenta);
+            precioVenta = Double.parseDouble(strPrecio);
             txtCalcPrecio.setText("El precio de venta es: $" + precioVenta);
+            txtCalcPrecio.setVisible(true);
         }
     }
 
@@ -389,7 +394,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         cmbProveedor.setModel(modeloProv);
 
         cbxAyuda.setText("Ayuda");
-        cbxAyuda.setToolTipText("Seleccione \"Ayuda\" para que algunos campos no desaparezcan");
+        cbxAyuda.setToolTipText("Al seleccionar el botón algunos campos no se borrarán para que siga ingresando productos parecidos");
 
         pnlGenerador.setBorder(javax.swing.BorderFactory.createTitledBorder("Generador de Codigo de Barras"));
 
@@ -514,7 +519,7 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         txtCalcPrecio.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         txtCalcPrecio.setForeground(new java.awt.Color(0, 153, 0));
-        txtCalcPrecio.setText("jLabel10");
+        txtCalcPrecio.setText("Precio de venta al público");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("En bodega"));
 
@@ -833,11 +838,11 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        if (txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
+        if ((txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
                 || txtNombreProd.getText().isEmpty() || txtPrecioCompra.getText().isEmpty()
-                || txtPrecioMayor.getText().isEmpty() || !iva12.isSelected()
-                || !iva0.isSelected() || txtGanancia.getText().isEmpty()
-                || txtGananciaMayor.getText().isEmpty()) { //Asegura que ningun campo quede nulo
+                || txtPrecioMayor.getText().isEmpty() || txtGanancia.getText().isEmpty()
+                || txtGananciaMayor.getText().isEmpty()) || (!iva12.isSelected()
+                && !iva0.isSelected())) { //Asegura que ningun campo quede nulo
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
         } else { //Si todo esta bien procede a guardar proveedor
             if (cmbProveedor.getSelectedItem().toString().equals("Sin Proveedor")) { //Se pregunta al usuario si desa dejar el producto sin proveedor
@@ -899,6 +904,17 @@ public final class IngresoProd extends javax.swing.JFrame {
                 && (caracter != KeyEvent.VK_BACK_SPACE)
                 && (caracter != '.')) {
             evt.consume();
+        }
+        if(!txtGanancia.getText().isEmpty() || !txtGananciaMayor.getText().isEmpty()){
+            double precio = Double.parseDouble(txtPrecioCompra.getText());
+            double ganancia = Double.parseDouble(txtGanancia.getText());
+            double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
+            precioVenta = precio + (precio * (ganancia / 100));
+            txtCalcPrecio.setText("El precio de venta es: $" + precioVenta);
+            txtCalcPrecio.setVisible(true);
+            precioVentaMayor = precio + (precio * (gananciaMayor / 100));
+            txtCalcPrecio.setText("El precio de venta al por mayor es: $" + precioVentaMayor);
+            txtPrecioMayor.setVisible(true);
         }
     }//GEN-LAST:event_txtPrecioCompraKeyTyped
 

@@ -541,7 +541,7 @@
     <Component class="javax.swing.JCheckBox" name="cbxAyuda">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ayuda"/>
-        <Property name="toolTipText" type="java.lang.String" value="Seleccione &quot;Ayuda&quot; para que algunos campos no desaparezcan"/>
+        <Property name="toolTipText" type="java.lang.String" value="Al seleccionar el bot&#xf3;n algunos campos no se borrar&#xe1;n para que siga ingresando productos parecidos"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="pnlGenerador">
@@ -736,7 +736,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="99" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jLabel10"/>
+        <Property name="text" type="java.lang.String" value="Precio de venta al p&#xfa;blico"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel2">

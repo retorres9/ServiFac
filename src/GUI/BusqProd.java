@@ -746,17 +746,12 @@ public final class BusqProd extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void btnActualizaUbicacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaUbicacionMouseClicked
-        try {
-            String ubicacion = JOptionPane.showInputDialog(null, "Ingrese la nueva ubicación de:\n" + txtNombre.getText());
-            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()),
-                Integer.parseInt(txtCantidad.getText()), ubicacion, cod);
-            material.UpdateProducto(producto);
-            txtUbicacion.setText(ubicacion);
-            updateTabla();
-
-        } catch (NullPointerException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "No se ha cambiado la ubicación de:\n" + txtNombre.getText());
+        String rol = Configuracion.validacion();
+        if (rol.equals("0")) {
+            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
+            dialogUbic.setVisible(true);
         }
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
@@ -768,7 +763,7 @@ public final class BusqProd extends javax.swing.JFrame {
             int cant2 = Integer.parseInt(txtCantidad.getText());
             int total = cant1 + cant2;
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), total, txtUbicacion.getText(),cod);
+            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), total, cod);
             material.UpdateProducto(producto);
             String nuevaCantTxt = String.valueOf(total);
             txtCantidad.setText(nuevaCantTxt);
@@ -784,7 +779,7 @@ public final class BusqProd extends javax.swing.JFrame {
             String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombre.getText());
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
             System.out.println(cod);
-            producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), txtUbicacion.getText(), cod);
+            producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
             material.UpdateProducto(producto);
             System.out.println(cod);
             updateTabla();
@@ -799,7 +794,7 @@ public final class BusqProd extends javax.swing.JFrame {
             double newPrecio = Double.parseDouble(n);
             int cant = Integer.parseInt(txtCantidad.getText());
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), newPrecio, cant, txtUbicacion.getText(),cod);
+            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), newPrecio, cant, cod);
             material.UpdateProducto(producto);
             String nuevoPrecio = String.valueOf(n);
             txtPrecioM.setText(nuevoPrecio);
@@ -819,7 +814,7 @@ public final class BusqProd extends javax.swing.JFrame {
             double newPrecio = Double.parseDouble(n);
             int cant = Integer.parseInt(txtCantidad.getText());
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), newPrecio, Double.parseDouble(txtPrecioM.getText()), cant, txtUbicacion.getText(),cod);
+            producto = new Producto(txtNombre.getText(), newPrecio, Double.parseDouble(txtPrecioM.getText()), cant, cod);
             material.UpdateProducto(producto);
             String nuevoPrecio = String.valueOf(n);
             txtPrecio.setText(nuevoPrecio);

@@ -257,7 +257,7 @@ public class Configuracion {
     public static String iva() {
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader("Iva.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\rober\\Desktop\\ServiFac\\Iva.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
