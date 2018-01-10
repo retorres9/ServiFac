@@ -16,7 +16,6 @@ public final class EliminarCliente extends javax.swing.JFrame {
 
     Clientes objC = new Clientes();
     int fila;
-    Principal objP = new Principal();
 
     public EliminarCliente() {
         initComponents();
@@ -343,11 +342,13 @@ public final class EliminarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Principal objP = new Principal();
         objP.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Principal objP = new Principal();
         objP.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 

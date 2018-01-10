@@ -13,7 +13,6 @@ public final class EliminarProveedor extends javax.swing.JFrame {
 
     int fila;
     Proveedor objP = new Proveedor();
-    BLProveedor objBl = new BLProveedor();
     Principal objPr = new Principal();
 
     public EliminarProveedor() {

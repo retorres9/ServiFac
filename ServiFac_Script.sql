@@ -2,7 +2,7 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-SELECT * FROM clientes;
+SELECT * FROM producto;
 create table prueba(
 imagen longblob
 );
@@ -35,7 +35,7 @@ precio DECIMAL(6,2) NOT NULL,#
 ganancia DECIMAL(6,2) NOT NULL,#
 ganancia_Mayor DECIMAL(6,2) NOT NULL,#
 stock BOOLEAN DEFAULT TRUE,
-iva BOOLEAN,
+iva Varchar(3) NOT NULL,
 id_categoria INT (3) NOT NULL,#
 precio_Mayor DECIMAL(6,2),#
 id_ubicacion VARCHAR(10),#

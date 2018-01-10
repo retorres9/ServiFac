@@ -47,6 +47,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         txtRucEmp = new javax.swing.JTextField();
         txtTelefonoEmp = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +102,8 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
         jLabel1.setText("Configuración de la Empresa");
 
+        jLabel8.setText("Agregar botones para cambiar y administrar el negocio");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,7 +134,10 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                         .addComponent(btnGuardar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(jLabel8)))
                 .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -167,7 +173,9 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addGap(48, 48, 48))
+                .addGap(19, 19, 19)
+                .addComponent(jLabel8)
+                .addContainerGap())
         );
 
         pack();
@@ -289,6 +297,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField txtDireccionEmp;
     private javax.swing.JTextField txtNombreEmp;

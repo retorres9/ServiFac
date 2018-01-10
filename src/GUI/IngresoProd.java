@@ -1,10 +1,12 @@
 package GUI;
 
+import Clases.Bodega;
 import Clases.Categoria;
 import Clases.Configuracion;
 import Clases.Producto;
 import Clases.Proveedor;
 import Clases.Ubicacion;
+import Dat.DATBodega;
 import Dat.DATCategoria;
 import Dat.DATMaterial;
 import Dat.DATProveedor;
@@ -35,6 +37,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     File imgArticulo;
     File imgCodigoArticulo;
     DATCategoria objCat;
+    DATBodega objBodega;
     DATProveedor objProveedor;
     DATUbicacion objUbic;
     Categoria categoria;
@@ -46,6 +49,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     DefaultComboBoxModel<Categoria> modeloCategorias;
     DefaultComboBoxModel<Proveedor> modeloProv;
     DefaultComboBoxModel<Ubicacion> modeloUbic;
+    DefaultComboBoxModel<Bodega> modeloBodega;
 
     JBarcodeBean barcode = new JBarcodeBean();
     public static BufferedImage imagen = null;
@@ -57,17 +61,20 @@ public final class IngresoProd extends javax.swing.JFrame {
         modeloCategorias = new DefaultComboBoxModel<Categoria>();
         modeloProv = new DefaultComboBoxModel<Proveedor>();
         modeloUbic = new DefaultComboBoxModel<Ubicacion>();
+        modeloBodega = new DefaultComboBoxModel<Bodega>();
 
         objCat = new DATCategoria();
         objProveedor = new DATProveedor();
         objUbic = new DATUbicacion();
         conMat = new DATMaterial();
+        objBodega = new DATBodega();
 
         cargarModeloCat();
         cargarModeloProv();
         cargarModeloUbic();
+        cargarModeloBodega();
         initComponents();
-        //iva12.setText(Constantes.Constantes.IVA);
+        iva12.setText(Constantes.Constantes.IVA);
         muestraPrecio();
         muestraPrecioxMayor();
         permisos();
@@ -126,6 +133,14 @@ public final class IngresoProd extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void cargarModeloBodega(){
+        ArrayList<Bodega> listaBodegas;
+        listaBodegas = objBodega.obtenerBodega();
+        for (Bodega bodega : listaBodegas) {
+            modeloBodega.addElement(bodega);
         }
     }
 
@@ -523,7 +538,7 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("En bodega"));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(modeloBodega);
 
         jButton1.setText("Agregar Bodega");
 
@@ -1200,7 +1215,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JRadioButton iva0;
     private javax.swing.JRadioButton iva12;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<Bodega> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
