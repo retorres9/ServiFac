@@ -20,6 +20,23 @@ public class Bodega {
         this.intIdBodega = intIdBodega;
         this.strBodega = strBodega;
     }
+
+    public int getIntIdBodega() {
+        return intIdBodega;
+    }
+
+    public void setIntIdBodega(int intIdBodega) {
+        this.intIdBodega = intIdBodega;
+    }
+
+    public String getStrBodega() {
+        return strBodega;
+    }
+
+    public void setStrBodega(String strBodega) {
+        this.strBodega = strBodega;
+    }
+    
     @Override
     public String toString(){
         return this.strBodega;

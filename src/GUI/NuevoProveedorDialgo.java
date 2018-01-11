@@ -7,6 +7,8 @@ package GUI;
 import Clases.Proveedor;
 import Dat.DATProveedor;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -39,14 +41,20 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             String tipoCuenta = cmbTipo.getSelectedItem().toString();
             String numCuenta = (txtNumero.getText());
             double deuda = Double.parseDouble(txtDeuda.getText());
-            int telf = Integer.parseInt(txtTelf.getText());
             if (txtDeuda.getText().isEmpty()) {
                 deuda = 0;
             }
+            DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+            simbolo.setDecimalSeparator('.');
+            DecimalFormat formato = new DecimalFormat("0.00", simbolo);
+            
+            String strDeuda = formato.format(deuda);
+            deuda = Double.parseDouble(strDeuda);
+            String telf = txtTelf.getText();
+            
             if (txtTelf.getText().isEmpty()) {
-                telf = 0000000000;
+                telf = "0000000000";
             }
-
             objP = new Proveedor(empresa, ruc, nombreCta, tipoCuenta, numCuenta, deuda, telf);
             prov.ingresoProveedor(objP);
             txtDeuda.setText("");
@@ -54,12 +62,14 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             txtNombre.setText("");
             txtNumero.setText("");
             txtTelf.setText("");
+            txtRuc.setText("");
             JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
         } catch (MySQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "El proveedor que ingresó ya se encuentra registrado", "Aviso!", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
-                    + " es valido\nEjemplo (99.99)");
+//            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+//                    + " es valido\nEjemplo (99.99)");
+ex.printStackTrace();
         }
     }
     /**
@@ -285,6 +295,10 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Hay campos que no se pueden dejar vacios");
         } else {
             guardarProveedor();
+            IngresoProd ingresoProd = new IngresoProd();
+            ingresoProd.cmbProveedor.removeAllItems();
+            ingresoProd.cargarModeloProv();
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

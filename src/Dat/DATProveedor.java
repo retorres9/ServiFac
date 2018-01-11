@@ -31,7 +31,7 @@ public class DATProveedor {
             ps.setString(4, prov.getStrTipo());
             ps.setString(5, prov.getStrNumCuenta());
             ps.setDouble(6, prov.getDblDeuda());
-            ps.setInt(7, prov.getIntTelf());
+            ps.setString(7, prov.getStrTelf());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -51,13 +51,14 @@ public class DATProveedor {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Empresa FROM proveedores";
+            String sentencia = "SELECT ruc, empresa FROM proveedores";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                String empresa = rs.getString(1);
-                Proveedor prov = new Proveedor(empresa);
+                String ruc = rs.getString(1);
+                String empresa = rs.getString(2);
+                Proveedor prov = new Proveedor(empresa, ruc);
                 listaProveedor.add(prov);
             }
 

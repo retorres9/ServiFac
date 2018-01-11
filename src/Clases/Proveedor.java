@@ -7,17 +7,22 @@ public class Proveedor {
     private String strTipo;
     private String strNumCuenta;
     private double dblDeuda;
+    private String strTelf;
 
-    public Proveedor(String strEmpresa, String ruc, String strNombreCuenta, String strTipo, String strNumCuenta, double dblDeuda, int intTelf) {
+    public Proveedor(String strEmpresa, String ruc, String strNombreCuenta, String strTipo, String strNumCuenta, double dblDeuda, String strTelf) {
         this.strEmpresa = strEmpresa;
         this.ruc = ruc;
         this.strNombreCuenta = strNombreCuenta;
         this.strTipo = strTipo;
         this.strNumCuenta = strNumCuenta;
         this.dblDeuda = dblDeuda;
-        this.intTelf = intTelf;
+        this.strTelf = strTelf;
     }
-    private int intTelf;
+
+    public Proveedor(String strEmpresa, String ruc) {
+        this.strEmpresa = strEmpresa;
+        this.ruc = ruc;
+    }
 
     public String getRuc() {
         return ruc;
@@ -27,12 +32,12 @@ public class Proveedor {
         this.ruc = ruc;
     }
 
-    public int getIntTelf() {
-        return intTelf;
+    public String getStrTelf() {
+        return strTelf;
     }
 
-    public void setIntTelf(int intTelf) {
-        this.intTelf = intTelf;
+    public void setIntTelf(String strTelf) {
+        this.strTelf = strTelf;
     }
 
     public Proveedor() {

@@ -2,11 +2,13 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-SELECT * FROM producto;
+INSERT INTO Bodega (nombre_bodega) VALUES("Bodega 1");
+
+SELECT * FROM proveedores;
 create table prueba(
 imagen longblob
 );
-drop table clientes;
+drop table categoria;
 
 
 CREATE TABLE usuario(
@@ -48,12 +50,12 @@ id_bodega INT(3)
 );
 
 CREATE TABLE ubicacion(
-id_ubicacion INT (3),
+id_ubicacion INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_ubicacion VARCHAR(20)
 );
 
 CREATE TABLE categoria(
-id_categoria INT (3),
+id_categoria INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_categoria VARCHAR(20)
 );
 
@@ -64,7 +66,7 @@ nombre_cuenta VARCHAR(30) NOT NULL,
 tipo_cuenta VARCHAR(20) NOT NULL,
 numero_cuenta VARCHAR(15),
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
-telefono INT(10)
+telefono VARCHAR(10)
 );
 
 CREATE TABLE venta(
@@ -85,7 +87,7 @@ id_venta INT(10)
 );
 
 CREATE TABLE bodega(
-id_bodega INT (3) PRIMARY KEY,
+id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL
 );
 

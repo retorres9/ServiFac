@@ -480,12 +480,12 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             String tipoCuenta = cmbTipo.getSelectedItem().toString();
             String numCuenta = (txtNumero.getText());
             double deuda = Double.parseDouble(txtDeuda.getText());
-            int telf = Integer.parseInt(txtTelf.getText());
+            String telf = txtTelf.getText();
             if (txtDeuda.getText().isEmpty()) {
                 deuda = 0;
             }
             if (txtTelf.getText().isEmpty()) {
-                telf = 0000000000;
+                telf = "0000000000";
             }
 
             objP = new Proveedor(empresa, ruc, nombreCta, tipoCuenta, numCuenta, deuda, telf);

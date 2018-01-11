@@ -24,12 +24,13 @@ public class DATCategoria {
         ArrayList<Categoria> listaCategoria = new ArrayList<Categoria>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombre_Cat FROM categorias";
+            String sentencia = "SELECT id_categoria, nombre_categoria FROM categoria";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String cat = rs.getString("nombre_Cat");
-                Categoria objCat = new Categoria(cat);
+                int idCat = rs.getInt("id_categoria");
+                String cat = rs.getString("nombre_categoria");
+                Categoria objCat = new Categoria(idCat, cat);
                 listaCategoria.add(objCat);
             }
         } catch (SQLException ex) {
@@ -47,7 +48,7 @@ public class DATCategoria {
     public void IngresarCat(Categoria cat) throws ClassNotFoundException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "INSERT INTO categorias (nombre_Cat)"
+            String Sentencia = "INSERT INTO categoria (nombre_categoria)"
                     + "VALUES (?)";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, cat.getStrCat());

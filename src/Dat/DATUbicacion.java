@@ -24,14 +24,14 @@ public class DATUbicacion {
         ArrayList<Ubicacion> listaUbicacion = new ArrayList<Ubicacion>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombre_ubic FROM ubicacion";
+            String sentencia = "SELECT id_ubicacion, nombre_ubicacion FROM ubicacion ORDER BY nombre_ubicacion";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             
             while(rs.next()){
-                String ubicacion = rs.getString(1);
-                
-                Ubicacion ubic = new Ubicacion(ubicacion);
+                int idUbic = rs.getInt(1);
+                String ubicacion = rs.getString(2);
+                Ubicacion ubic = new Ubicacion(idUbic, ubicacion);
                 listaUbicacion.add(ubic);
             }
         } catch (SQLException ex) {
@@ -50,7 +50,7 @@ public class DATUbicacion {
     public void crearUbicacion(Ubicacion ubi){
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "INSERT INTO ubicacion(nombre_ubic) VALUES(?)";
+            String sentencia = "INSERT INTO ubicacion(nombre_ubicacion) VALUES(?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, ubi.getStrUbicacion());
             ps.executeUpdate();

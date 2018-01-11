@@ -3,11 +3,13 @@ package GUI;
 import Clases.Bodega;
 import Clases.Categoria;
 import Clases.Configuracion;
+import Clases.ExistenciasBodega;
 import Clases.Producto;
 import Clases.Proveedor;
 import Clases.Ubicacion;
 import Dat.DATBodega;
 import Dat.DATCategoria;
+import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATProveedor;
 import Dat.DATUbicacion;
@@ -40,8 +42,10 @@ public final class IngresoProd extends javax.swing.JFrame {
     DATBodega objBodega;
     DATProveedor objProveedor;
     DATUbicacion objUbic;
+    DATExistenciasBodega objExistenciasBodega;
     Categoria categoria;
     Ubicacion ubicacion;
+    Bodega objetoBodega;
     double precioVenta;
     double precioVentaMayor;
 
@@ -55,6 +59,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     public static BufferedImage imagen = null;
     DATMaterial conMat;
     Producto producto = new Producto();
+    ExistenciasBodega bodegaExistencias = new ExistenciasBodega();
     ButtonGroup iva = new ButtonGroup();
 
     public IngresoProd() {
@@ -68,6 +73,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         objUbic = new DATUbicacion();
         conMat = new DATMaterial();
         objBodega = new DATBodega();
+        objExistenciasBodega = new DATExistenciasBodega();
 
         cargarModeloCat();
         cargarModeloProv();
@@ -124,7 +130,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }
 
-    private void cargarModeloCat() {
+    public void cargarModeloCat() {
         try {
             ArrayList<Categoria> listaCategorias;
             listaCategorias = objCat.obtenerCategoria();
@@ -144,7 +150,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }
 
-    private void cargarModeloProv() {
+    public void cargarModeloProv() {
         ArrayList<Proveedor> listaProveedores;
         listaProveedores = objProveedor.obtenerEmpresa();
         for (Proveedor prov : listaProveedores) {
@@ -175,6 +181,17 @@ public final class IngresoProd extends javax.swing.JFrame {
             jmiElimCliente.setEnabled(true);
             jmiElimProv.setEnabled(true);
             jmConfig.setEnabled(true);
+        }
+    }
+    
+    public void guardarBodega(){
+        if(!txtExistenciasBodega.getText().isEmpty()){
+            Bodega bodega = (Bodega)cmbBodega.getSelectedItem();
+            String codigo = txtCod.getText();
+            int Cantidad = Integer.parseInt(txtCantidad.getText());
+            System.out.println(bodega.getIntIdBodega());
+            bodegaExistencias = new ExistenciasBodega(bodega.getIntIdBodega(), codigo, Cantidad);
+            objExistenciasBodega.ingresarEnBodega(bodegaExistencias);
         }
     }
 
@@ -223,6 +240,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva, 1);
                 conMat.IngresarProducto(producto);
             }
+            guardarBodega();
             JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             if (cbxAyuda.isSelected()) {
                 txtCod.setText("");
@@ -298,8 +316,8 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         txtCalcPrecio = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
+        cmbBodega = new javax.swing.JComboBox<>();
+        txtExistenciasBodega = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -538,9 +556,20 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("En bodega"));
 
-        jComboBox1.setModel(modeloBodega);
+        cmbBodega.setModel(modeloBodega);
+
+        txtExistenciasBodega.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtExistenciasBodegaKeyTyped(evt);
+            }
+        });
 
         jButton1.setText("Agregar Bodega");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("*Si deja el campo vacio no se agregará nada a bodega");
 
@@ -552,9 +581,9 @@ public final class IngresoProd extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, 0, 135, Short.MAX_VALUE)
+                        .addComponent(cmbBodega, 0, 135, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtExistenciasBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52))
@@ -567,8 +596,8 @@ public final class IngresoProd extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtExistenciasBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
@@ -852,7 +881,6 @@ public final class IngresoProd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
         if ((txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
                 || txtNombreProd.getText().isEmpty() || txtPrecioCompra.getText().isEmpty()
                 || txtPrecioMayor.getText().isEmpty() || txtGanancia.getText().isEmpty()
@@ -1054,6 +1082,8 @@ public final class IngresoProd extends javax.swing.JFrame {
             } else {
                 ubicacion = new Ubicacion(ubi);
                 objUbic.crearUbicacion(ubicacion);
+                cmbUbicacion.removeAllItems();
+                cargarModeloUbic();
             }
         }
     }//GEN-LAST:event_btnUbicacionActionPerformed
@@ -1080,6 +1110,8 @@ public final class IngresoProd extends javax.swing.JFrame {
                 try {
                     categoria = new Categoria(cat);
                     objCat.IngresarCat(categoria);
+                    cmbCategoria.removeAllItems();
+                    cargarModeloCat();
                 } catch (ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al ingresar \nla nueva categoria");
                 }
@@ -1137,6 +1169,25 @@ public final class IngresoProd extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtGananciaKeyTyped
+
+    private void txtExistenciasBodegaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExistenciasBodegaKeyTyped
+        char c = evt.getKeyChar();
+        if(c < '0' || c > '9' || txtExistenciasBodega.getText().length() > 3){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtExistenciasBodegaKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String newBodega = JOptionPane.showInputDialog(null, "Ingrese la nueva bodega");
+        if(newBodega == null){
+            
+        } else {
+            objetoBodega = new Bodega(newBodega);
+            objBodega.nuevaBodega(objetoBodega);
+            cmbBodega.removeAllItems();
+            cargarModeloBodega();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra
@@ -1208,14 +1259,14 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JButton btnUbicacion;
     private javax.swing.JCheckBox cbxAyuda;
     private javax.swing.JCheckBox cbxGenerador;
+    private javax.swing.JComboBox<Bodega> cmbBodega;
     private javax.swing.JComboBox<Categoria> cmbCategoria;
-    private javax.swing.JComboBox<Proveedor> cmbProveedor;
+    public static javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JComboBox<Ubicacion> cmbUbicacion;
     private javax.swing.ButtonGroup grupoIVA;
     private javax.swing.JRadioButton iva0;
     private javax.swing.JRadioButton iva12;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<Bodega> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1245,7 +1296,6 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
@@ -1257,6 +1307,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantMin;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCod;
+    private javax.swing.JTextField txtExistenciasBodega;
     private javax.swing.JTextField txtGanancia;
     private javax.swing.JTextField txtGananciaMayor;
     private javax.swing.JTextField txtNombreProd;
