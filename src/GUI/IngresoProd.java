@@ -14,6 +14,7 @@ import Dat.DATMaterial;
 import Dat.DATProveedor;
 import Dat.DATUbicacion;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -61,6 +62,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     Producto producto = new Producto();
     ExistenciasBodega bodegaExistencias = new ExistenciasBodega();
     ButtonGroup iva = new ButtonGroup();
+    public static boolean bandera = true;
 
     public IngresoProd() {
         modeloCategorias = new DefaultComboBoxModel<Categoria>();
@@ -94,6 +96,10 @@ public final class IngresoProd extends javax.swing.JFrame {
     public void seleccionIva() {
         iva.add(iva0);
         iva.add(iva12);
+    }
+
+    private void nuevoProveedorActionPerformed(ActionEvent evt) {
+
     }
 
     public void muestraPrecioxMayor() {
@@ -141,8 +147,8 @@ public final class IngresoProd extends javax.swing.JFrame {
             Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void cargarModeloBodega(){
+
+    private void cargarModeloBodega() {
         ArrayList<Bodega> listaBodegas;
         listaBodegas = objBodega.obtenerBodega();
         for (Bodega bodega : listaBodegas) {
@@ -183,10 +189,10 @@ public final class IngresoProd extends javax.swing.JFrame {
             jmConfig.setEnabled(true);
         }
     }
-    
-    public void guardarBodega(){
-        if(!txtExistenciasBodega.getText().isEmpty()){
-            Bodega bodega = (Bodega)cmbBodega.getSelectedItem();
+
+    public void guardarBodega() {
+        if (!txtExistenciasBodega.getText().isEmpty()) {
+            Bodega bodega = (Bodega) cmbBodega.getSelectedItem();
             String codigo = txtCod.getText();
             int Cantidad = Integer.parseInt(txtCantidad.getText());
             System.out.println(bodega.getIntIdBodega());
@@ -948,7 +954,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 && (caracter != '.')) {
             evt.consume();
         }
-        if(!txtGanancia.getText().isEmpty() || !txtGananciaMayor.getText().isEmpty()){
+        if (!txtGanancia.getText().isEmpty() || !txtGananciaMayor.getText().isEmpty()) {
             double precio = Double.parseDouble(txtPrecioCompra.getText());
             double ganancia = Double.parseDouble(txtGanancia.getText());
             double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
@@ -1093,8 +1099,15 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (rol.equals("0")) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            NuevoProveedorDialgo dialogProv = new NuevoProveedorDialgo(this, true);
-            dialogProv.setVisible(true);
+            NuevoProveedorDialgo provDialog = new NuevoProveedorDialgo(null, true);
+            provDialog.setVisible(true);
+
+            if (provDialog != null) {
+                if (!provDialog.getInformacion().equals("")) {
+                    modeloProv.removeAllElements();
+                    cargarModeloProv();
+                }
+            }
         }
     }//GEN-LAST:event_btnProveedorActionPerformed
 
@@ -1172,15 +1185,15 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtExistenciasBodegaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExistenciasBodegaKeyTyped
         char c = evt.getKeyChar();
-        if(c < '0' || c > '9' || txtExistenciasBodega.getText().length() > 3){
+        if (c < '0' || c > '9' || txtExistenciasBodega.getText().length() > 3) {
             evt.consume();
         }
     }//GEN-LAST:event_txtExistenciasBodegaKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String newBodega = JOptionPane.showInputDialog(null, "Ingrese la nueva bodega");
-        if(newBodega == null){
-            
+        if (newBodega == null) {
+
         } else {
             objetoBodega = new Bodega(newBodega);
             objBodega.nuevaBodega(objetoBodega);
@@ -1261,7 +1274,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbxGenerador;
     private javax.swing.JComboBox<Bodega> cmbBodega;
     private javax.swing.JComboBox<Categoria> cmbCategoria;
-    public static javax.swing.JComboBox<Proveedor> cmbProveedor;
+    private javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JComboBox<Ubicacion> cmbUbicacion;
     private javax.swing.ButtonGroup grupoIVA;
     private javax.swing.JRadioButton iva0;

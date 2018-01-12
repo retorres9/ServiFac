@@ -51,7 +51,7 @@ public class DATProveedor {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT ruc, empresa FROM proveedores";
+            String sentencia = "SELECT ruc, empresa FROM proveedores ORDER BY empresa";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
 

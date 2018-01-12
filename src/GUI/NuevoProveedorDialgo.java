@@ -17,6 +17,11 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     Proveedor objP = new Proveedor();
     Principal objPr = new Principal();
     DATProveedor prov;
+    String informacion = "";
+    
+    public String getInformacion(){
+        return informacion;
+    }
     
     public NuevoProveedorDialgo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -67,9 +72,8 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
         } catch (MySQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "El proveedor que ingresó ya se encuentra registrado", "Aviso!", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException ex) {
-//            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
-//                    + " es valido\nEjemplo (99.99)");
-ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+                    + " es valido\nEjemplo (99.99)");
         }
     }
     /**
@@ -294,10 +298,10 @@ ex.printStackTrace();
             || txtEmpresa.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos que no se pueden dejar vacios");
         } else {
+            IngresoProd.bandera = false;
+            
             guardarProveedor();
-            IngresoProd ingresoProd = new IngresoProd();
-            ingresoProd.cmbProveedor.removeAllItems();
-            ingresoProd.cargarModeloProv();
+            informacion = "bandera";
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

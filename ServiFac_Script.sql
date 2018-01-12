@@ -4,11 +4,11 @@ USE empresa;
 
 INSERT INTO Bodega (nombre_bodega) VALUES("Bodega 1");
 
-SELECT * FROM proveedores;
+SELECT * FROM pro;
 create table prueba(
 imagen longblob
 );
-drop table categoria;
+drop table ubicacion;
 
 
 CREATE TABLE usuario(
@@ -58,6 +58,8 @@ CREATE TABLE categoria(
 id_categoria INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_categoria VARCHAR(20)
 );
+
+DROP TABLE proveedores;
 
 CREATE TABLE proveedores(
 empresa VARCHAR(50) NOT NULL,
