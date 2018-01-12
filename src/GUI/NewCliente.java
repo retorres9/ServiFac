@@ -3,6 +3,7 @@ package GUI;
 import Clases.Clientes;
 import Clases.Configuracion;
 import Dat.DATClientes;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,14 +119,19 @@ public final class NewCliente extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         jLabel1.setText("Datos del Cliente");
 
+        jLabel3.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel3.setText("Nombres:");
 
+        jLabel4.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel4.setText("Cedula:");
 
+        jLabel5.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel5.setText("Telefono:");
 
+        jLabel6.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel6.setText("Deuda:");
 
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -166,6 +172,7 @@ public final class NewCliente extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel10.setText("Direccion:");
 
         txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -369,7 +376,7 @@ public final class NewCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAtras)
                     .addComponent(btnGuardarCli))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -491,7 +498,8 @@ public final class NewCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        if(txtNombre.getText().length() > 49){
+        char caracter = evt.getKeyChar();
+        if((!Character.isLetter(caracter)) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter != KeyEvent.VK_SPACE) || (txtNombre.getText().length() > 49)){
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped

@@ -1,33 +1,27 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+SELECT * FROM usuario;
 
-INSERT INTO Bodega (nombre_bodega) VALUES("Bodega 1");
-
-SELECT * FROM pro;
 create table prueba(
 imagen longblob
 );
-drop table ubicacion;
-
 
 CREATE TABLE usuario(
-cedula_usuario INT(10) PRIMARY KEY,
-nombre VARCHAR(30) NOT NULL,
-usuario VARCHAR(15) NOT NULL,
+cedula_usuario VARCHAR(10) PRIMARY KEY,
+nombre VARCHAR(50) NOT NULL UNIQUE,
+usuario VARCHAR(15) NOT NULL UNIQUE,
 contrasena VARCHAR(128) NOT NULL,
 rol INT(10) 
 );
 
 CREATE TABLE clientes(
-nombres VARCHAR(30) NOT NULL,
+nombres VARCHAR(50) NOT NULL,
 cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
 telefono INT(10) NOT NULL,#ANALIZAR cambiar a varchar
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL
 );
-
-Select * from producto;
 
 CREATE TABLE producto(
 nombre_Producto VARCHAR(40) NOT NULL,#
@@ -58,8 +52,6 @@ CREATE TABLE categoria(
 id_categoria INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_categoria VARCHAR(20)
 );
-
-DROP TABLE proveedores;
 
 CREATE TABLE proveedores(
 empresa VARCHAR(50) NOT NULL,

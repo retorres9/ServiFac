@@ -298,10 +298,8 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             || txtEmpresa.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos que no se pueden dejar vacios");
         } else {
-            IngresoProd.bandera = false;
-            
             guardarProveedor();
-            informacion = "bandera";
+            informacion = "bandera";//Envia este campo al Frame IngresoProd para actualizar combobox de proveedor
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

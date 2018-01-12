@@ -1,7 +1,7 @@
 package Clases;
 
 public class Usuario {
-    private int cedulaUsuario;
+    private String cedulaUsuario;
     private String nombre;
     private String usuario;
     private String contrasena;
@@ -10,7 +10,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int cedulaUsuario,String nombre, String usuario, String contrasena, int rol) {
+    public Usuario(String cedulaUsuario,String nombre, String usuario, String contrasena, int rol) {
         this.cedulaUsuario = cedulaUsuario;
         this.nombre = nombre;
         this.usuario = usuario;
@@ -35,11 +35,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public int getCedulaUsuario() {
+    public String getCedulaUsuario() {
         return cedulaUsuario;
     }
 
-    public void setCedulaUsuario(int cedulaUsuario) {
+    public void setCedulaUsuario(String cedulaUsuario) {
         this.cedulaUsuario = cedulaUsuario;
     }
 
