@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,7 +48,7 @@ public class DATUbicacion {
         return listaUbicacion;
     }
     
-    public void crearUbicacion(Ubicacion ubi){
+    public boolean crearUbicacion(Ubicacion ubi)throws SQLException{
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO ubicacion(nombre_ubicacion) VALUES(?)";
@@ -55,7 +56,8 @@ public class DATUbicacion {
             ps.setString(1, ubi.getStrUbicacion());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Nombre de ubicación ya existente");
+            return false;
         } finally {
             try {
                 ps.close();
@@ -64,5 +66,6 @@ public class DATUbicacion {
                 Logger.getLogger(DATUbicacion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return true;
     }
 }

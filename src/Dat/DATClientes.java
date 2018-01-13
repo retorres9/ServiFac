@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATClientes {
 
@@ -135,7 +136,7 @@ public class DATClientes {
         return listadoClientes;
     }
 
-    public void InsertarCliente(Clientes cliente) throws SQLException {
+    public boolean InsertarCliente(Clientes cliente) throws SQLException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO clientes (Nombres, Cedula_Cliente, Telefono, Deuda, Direccion)"
@@ -148,7 +149,8 @@ public class DATClientes {
             ps.setString(5, cliente.getStrDireccion());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "El nombre o la cédula ya están asignados a otro cliente");
+            return false;
         } finally {
             try {
                 ps.close();
@@ -157,6 +159,7 @@ public class DATClientes {
                 Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return true;
     }
 
     public void agregarDeuda(Clientes cliente) {

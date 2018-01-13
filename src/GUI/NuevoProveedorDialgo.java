@@ -7,8 +7,11 @@ package GUI;
 import Clases.Proveedor;
 import Dat.DATProveedor;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -61,16 +64,20 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
                 telf = "0000000000";
             }
             objP = new Proveedor(empresa, ruc, nombreCta, tipoCuenta, numCuenta, deuda, telf);
-            prov.ingresoProveedor(objP);
-            txtDeuda.setText("");
-            txtEmpresa.setText("");
-            txtNombre.setText("");
-            txtNumero.setText("");
-            txtTelf.setText("");
-            txtRuc.setText("");
-            JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
-        } catch (MySQLIntegrityConstraintViolationException ex) {
-            JOptionPane.showMessageDialog(null, "El proveedor que ingresó ya se encuentra registrado", "Aviso!", JOptionPane.ERROR_MESSAGE);
+            try {
+                if (prov.ingresoProveedor(objP)) {
+                    JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
+                    txtDeuda.setText("");
+                    txtEmpresa.setText("");
+                    txtNombre.setText("");
+                    txtNumero.setText("");
+                    txtTelf.setText("");
+                    txtRuc.setText("");
+                    this.dispose();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error");
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
                     + " es valido\nEjemplo (99.99)");
@@ -300,7 +307,6 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
         } else {
             guardarProveedor();
             informacion = "bandera";//Envia este campo al Frame IngresoProd para actualizar combobox de proveedor
-            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

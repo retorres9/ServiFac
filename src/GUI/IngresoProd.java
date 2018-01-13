@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -192,6 +193,30 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }
 
+    public void reseteoCampos() {
+        if (cbxAyuda.isSelected()) {
+            txtCod.setText("");
+            txtCantidad.setText("");
+            txtCantMin.setText("");
+            txtPrecioCompra.setText("");
+            lblPrecioMayor.setText("");
+            txtGanancia.setText("");
+            txtGananciaMayor.setText("");
+            cbxGenerador.setSelected(false);
+        } else {
+            txtGanancia.setText("");
+            txtGananciaMayor.setText("");
+            txtCantidad.setText("");
+            txtCod.setText("");
+            txtNombreProd.setText("");
+            txtPrecioCompra.setText("");
+            lblPrecioMayor.setText("");
+            lblPrecioPublico.setText("");
+            txtCantMin.setText("");
+            cbxGenerador.setSelected(false);
+        }
+    }
+
     public void guardar() {
         File imagenDefaultProd = new File("src/Recursos/circulo-de-no-disponible.png");
         File imagenDefaultCodigo = new File("src/Recursos/circulo-de-no-disponible.png");
@@ -233,101 +258,47 @@ public final class IngresoProd extends javax.swing.JFrame {
 
             if (!cbxGenerador.isSelected() && (bandera = true)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imagenDefaultProd, iva, idBodega);
-                conMat.IngresarProducto(producto);
-                if (cbxAyuda.isSelected()) {
-                    txtCod.setText("");
-                    txtCantidad.setText("");
-                    txtCantMin.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    cbxGenerador.setSelected(false);
-                } else {
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    txtCantidad.setText("");
-                    txtCod.setText("");
-                    txtNombreProd.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    lblPrecioPublico.setText("");
-                    txtCantMin.setText("");
-                    cbxGenerador.setSelected(false);
+                try {
+                    if (conMat.IngresarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
+                        reseteoCampos();
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
+
             } else if ((bandera = true) && cbxGenerador.isSelected()) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva, idBodega);
-                conMat.IngresarProducto(producto);
-                if (cbxAyuda.isSelected()) {
-                    txtCod.setText("");
-                    txtCantidad.setText("");
-                    txtCantMin.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    cbxGenerador.setSelected(false);
-                } else {
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    txtCantidad.setText("");
-                    txtCod.setText("");
-                    txtNombreProd.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtCantMin.setText("");
-                    cbxGenerador.setSelected(false);
+                try {
+                    if (conMat.IngresarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
+                        reseteoCampos();
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
             } else if (!cbxGenerador.isSelected() && (bandera = false)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imgArticulo, iva, idBodega);
-                conMat.IngresarProducto(producto);
-                bandera = true;
-                if (cbxAyuda.isSelected()) {
-                    txtCod.setText("");
-                    txtCantidad.setText("");
-                    txtCantMin.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    cbxGenerador.setSelected(false);
-                } else {
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    txtCantidad.setText("");
-                    txtCod.setText("");
-                    txtNombreProd.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtCantMin.setText("");
-                    cbxGenerador.setSelected(false);
+                try {
+                    if (conMat.IngresarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
+                        reseteoCampos();
+                        bandera = true;
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
-                //JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             } else {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva, idBodega);
-                conMat.IngresarProducto(producto);
-                bandera = true;
-                if (cbxAyuda.isSelected()) {
-                    txtCod.setText("");
-                    txtCantidad.setText("");
-                    txtCantMin.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    cbxGenerador.setSelected(false);
-                } else {
-                    txtGanancia.setText("");
-                    txtGananciaMayor.setText("");
-                    txtCantidad.setText("");
-                    txtCod.setText("");
-                    txtNombreProd.setText("");
-                    txtPrecioCompra.setText("");
-                    lblPrecioMayor.setText("");
-                    txtCantMin.setText("");
-                    cbxGenerador.setSelected(false);
+                try {
+                    if (conMat.IngresarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
+                        reseteoCampos();
+                        bandera = true;
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
-                //JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             }
             if (!txtExistenciasBodega.getText().isEmpty()) {
                 guardarBodega();
@@ -1153,9 +1124,15 @@ public final class IngresoProd extends javax.swing.JFrame {
 
             } else {
                 ubicacion = new Ubicacion(ubi);
-                objUbic.crearUbicacion(ubicacion);
-                cmbUbicacion.removeAllItems();
-                cargarModeloUbic();
+                try {
+                    if (objUbic.crearUbicacion(ubicacion)) {
+                        cmbUbicacion.removeAllItems();
+                        cargarModeloUbic();
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_btnUbicacionActionPerformed
@@ -1188,9 +1165,15 @@ public final class IngresoProd extends javax.swing.JFrame {
             } else {
                 try {
                     categoria = new Categoria(cat);
-                    objCat.IngresarCat(categoria);
-                    cmbCategoria.removeAllItems();
-                    cargarModeloCat();
+                    try {
+                        if (objCat.IngresarCat(categoria)) {
+                            cmbCategoria.removeAllItems();
+                            cargarModeloCat();
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error");
+                    }
+
                 } catch (ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al ingresar \nla nueva categoria");
                 }

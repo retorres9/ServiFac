@@ -1,8 +1,8 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-select * from usuario;
-DROP TABLE producto;
+select * from producto;
+
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
 nombre VARCHAR(50) NOT NULL UNIQUE,
@@ -10,9 +10,7 @@ usuario VARCHAR(15) NOT NULL UNIQUE,
 contrasena VARCHAR(128) NOT NULL,
 rol INT(10) 
 );
-select * from ubicacion;
-
-SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion ORDER BY p.Nombre_Producto Asc;
+select * from usuario;
 
 CREATE TABLE clientes(
 nombres VARCHAR(50) NOT NULL,

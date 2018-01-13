@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,7 +46,7 @@ public class DATCategoria {
         }
         return listaCategoria;
     }
-    public void IngresarCat(Categoria cat) throws ClassNotFoundException {
+    public boolean IngresarCat(Categoria cat) throws SQLException, ClassNotFoundException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "INSERT INTO categoria (nombre_categoria)"
@@ -54,7 +55,8 @@ public class DATCategoria {
             ps.setString(1, cat.getStrCat());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Nombre de categoria ya existente");
+            return false;
         } finally {
             try {
                 ps.close();
@@ -64,6 +66,6 @@ public class DATCategoria {
             }
 
         }
-
+        return true;
     }
 }

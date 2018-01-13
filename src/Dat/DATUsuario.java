@@ -29,7 +29,7 @@ public class DATUsuario {
             ps.setInt(5, usuario.getRol());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campo\n"
+            JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campos\n"
                     + "que ha llenado han sido ingresados en otro usuario");
             return false;
         } finally {

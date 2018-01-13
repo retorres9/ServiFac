@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public final class NewCliente extends javax.swing.JFrame {
 
     Clientes objCliente = new Clientes();
-    
+
     public static int valid = 1;
     DATClientes cliente;
 
@@ -49,21 +49,24 @@ public final class NewCliente extends javax.swing.JFrame {
             String cedula = txtCedula.getText();
             int telf = Integer.parseInt(txtTelf.getText());
             double deuda = Double.parseDouble(txtDeuda.getText());
-            
+
             objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
-            cliente.InsertarCliente(objCliente);
-            JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
-            txtCedula.setText("");
-            txtDeuda.setText("");
-            txtNombre.setText("");
-            txtTelf.setText("");
-            txtDireccion.setText("");
+            try {
+                if (cliente.InsertarCliente(objCliente)) {
+                    JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
+                    txtCedula.setText("");
+                    txtDeuda.setText("");
+                    txtNombre.setText("");
+                    txtTelf.setText("");
+                    txtDireccion.setText("");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
                     + " es valido\nEjemplo (99.99)");
-              ex.printStackTrace();
-        } catch (SQLException ex) {
-            Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -175,6 +178,11 @@ public final class NewCliente extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel10.setText("Direccion:");
 
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionActionPerformed(evt);
+            }
+        });
         txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDireccionKeyTyped(evt);
@@ -298,39 +306,36 @@ public final class NewCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(13, 13, 13)
-                                    .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtCedula))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(2, 2, 2)
-                                    .addComponent(jLabel5)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtTelf))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(16, 16, 16)
-                                    .addComponent(jLabel6)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtDeuda))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(75, 75, 75)
-                                            .addComponent(jLabel1))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(1, 1, 1)
-                                            .addComponent(jLabel3)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(130, 130, 130)
+                                        .addComponent(jLabel6))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(114, 114, 114)
+                                        .addComponent(jLabel10))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(116, 116, 116)
+                                        .addComponent(jLabel5))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(127, 127, 127)
+                                        .addComponent(jLabel4)))
                                 .addGap(18, 18, 18)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCedula)
+                                    .addComponent(txtTelf)
+                                    .addComponent(txtDireccion)
+                                    .addComponent(txtDeuda)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(189, 189, 189)
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(118, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(99, 99, 99)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -385,14 +390,13 @@ public final class NewCliente extends javax.swing.JFrame {
     private void btnGuardarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCliActionPerformed
         int digitosCedula = txtCedula.getText().length();
         int digitTelf = txtTelf.getText().length();
-        System.out.println(digitTelf+ " "+ digitosCedula);
+        System.out.println(digitTelf + " " + digitosCedula);
         if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
-        }
-        else if((txtCedula.getText().length() != 10) && (txtCedula.getText().length() != 13)){
-            JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos","Error", JOptionPane.ERROR_MESSAGE);
-        }else if(digitTelf != 7 && digitTelf != 10){
-            JOptionPane.showMessageDialog(null, "Número telefónico incorrectos","Error", JOptionPane.ERROR_MESSAGE);
+        } else if ((txtCedula.getText().length() != 10) && (txtCedula.getText().length() != 13)) {
+            JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (digitTelf != 7 && digitTelf != 10) {
+            JOptionPane.showMessageDialog(null, "Número telefónico incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             guardarCliente();
         }
@@ -499,23 +503,27 @@ public final class NewCliente extends javax.swing.JFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char caracter = evt.getKeyChar();
-        if((!Character.isLetter(caracter)) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter != KeyEvent.VK_SPACE) || (txtNombre.getText().length() > 49)){
+        if ((!Character.isLetter(caracter)) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter != KeyEvent.VK_SPACE) || (txtNombre.getText().length() > 49)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
-        if(txtDireccion.getText().length() > 149){
+        if (txtDireccion.getText().length() > 149) {
             evt.consume();
         }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void txtDeudaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDeudaKeyTyped
         char c = evt.getKeyChar();
-        if(c < '0' || c > '9' || txtDeuda.getText().length() > 6){
-            evt.consume();  
+        if (c < '0' || c > '9' || txtDeuda.getText().length() > 6) {
+            evt.consume();
         }
     }//GEN-LAST:event_txtDeudaKeyTyped
+
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionActionPerformed
 
     /**
      * @param args the command line arguments

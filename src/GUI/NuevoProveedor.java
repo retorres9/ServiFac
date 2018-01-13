@@ -4,6 +4,9 @@ import Clases.Configuracion;
 import Clases.Proveedor;
 import Dat.DATProveedor;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -443,26 +446,26 @@ public final class NuevoProveedor extends javax.swing.JFrame {
 
     private void txtRucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyTyped
         char c = evt.getKeyChar();
-        if(c < '0' || c > '9' || txtRuc.getText().length() > 12){
+        if (c < '0' || c > '9' || txtRuc.getText().length() > 12) {
             evt.consume();
         }
     }//GEN-LAST:event_txtRucKeyTyped
 
     private void txtTelfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfKeyTyped
         char c = evt.getKeyChar();
-        if(c < '0' || c > '9' || txtTelf.getText().length() > 9){
+        if (c < '0' || c > '9' || txtTelf.getText().length() > 9) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelfKeyTyped
 
     private void txtEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmpresaKeyTyped
-        if(txtEmpresa.getText().length() > 49){
+        if (txtEmpresa.getText().length() > 49) {
             evt.consume();
         }
     }//GEN-LAST:event_txtEmpresaKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        if(txtNombre.getText().length() > 29){
+        if (txtNombre.getText().length() > 29) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
@@ -489,15 +492,20 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             }
 
             objP = new Proveedor(empresa, ruc, nombreCta, tipoCuenta, numCuenta, deuda, telf);
-            prov.ingresoProveedor(objP);
-            txtDeuda.setText("");
-            txtEmpresa.setText("");
-            txtNombre.setText("");
-            txtNumero.setText("");
-            txtTelf.setText("");
-            JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
-        } catch (MySQLIntegrityConstraintViolationException ex) {
-            JOptionPane.showMessageDialog(null, "El proveedor que ingresó ya se encuentra registrado", "Aviso!", JOptionPane.ERROR_MESSAGE);
+            try {
+                if (prov.ingresoProveedor(objP)) {
+                    JOptionPane.showMessageDialog(null, "Proveedor creado satisfactoriamente");
+                    txtDeuda.setText("");
+                    txtEmpresa.setText("");
+                    txtNombre.setText("");
+                    txtNumero.setText("");
+                    txtTelf.setText("");
+                    txtRuc.setText("");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
                     + " es valido\nEjemplo (99.99)");

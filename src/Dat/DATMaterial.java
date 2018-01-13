@@ -143,7 +143,7 @@ public class DATMaterial {
         }
     }
 
-    public void IngresarProducto(Producto producto) throws ClassNotFoundException {
+    public boolean IngresarProducto(Producto producto) throws SQLException, ClassNotFoundException {
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -173,9 +173,9 @@ public class DATMaterial {
             ps.setBinaryStream(14, fis, (int) producto.getFotoProd().length());
             ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");
+            return false;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -186,6 +186,7 @@ public class DATMaterial {
                 Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return true;
     }
 
     public void UpdateFormaCantMin(Producto producto) throws ClassNotFoundException, SQLException {

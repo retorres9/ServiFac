@@ -1,7 +1,6 @@
 package Dat;
 
 import Clases.Proveedor;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATProveedor {
 
@@ -19,7 +19,7 @@ public class DATProveedor {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public void ingresoProveedor(Proveedor prov) throws MySQLIntegrityConstraintViolationException {
+    public boolean ingresoProveedor(Proveedor prov) throws SQLException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO proveedores (empresa, ruc, nombre_cuenta, tipo_cuenta,"
@@ -34,7 +34,9 @@ public class DATProveedor {
             ps.setString(7, prov.getStrTelf());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "El proveedor ya está registrado o uno de los campos\n"
+                    + "que ha llenado han sido ingresados en otro proveedor");
+            return false;
         } finally {
             try {
                 ps.close();
@@ -43,7 +45,7 @@ public class DATProveedor {
                 Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        return true;
     }
 
     ////////////////////////////////////////////////////////////////////////////
