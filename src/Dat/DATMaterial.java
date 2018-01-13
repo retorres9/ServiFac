@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATMaterial {
 
@@ -23,18 +24,20 @@ public class DATMaterial {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion ORDER BY p.Nombre_Producto Asc";
+            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor, u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombre = rs.getString(1);
                 String codigo = rs.getString(2);
-                double precio = rs.getDouble(3);
-                double precioMayor = rs.getDouble(4);
-                String ubicacion = rs.getString(5);
-                int cant = rs.getInt(6);
-
-                Producto prod = new Producto(nombre,codigo,precio,precioMayor,ubicacion, cant);
+                double precioCompra = rs.getDouble(3);
+                double precio = rs.getDouble(4);
+                double precioMayor = rs.getDouble(5);
+                double ganancia = rs.getDouble(6);
+                double gananciaMayor = rs.getDouble(7);
+                String ubicacion = rs.getString(8);
+                int cant = rs.getInt(9);
+                Producto prod = new Producto(nombre, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, ubicacion);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
@@ -54,7 +57,7 @@ public class DATMaterial {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.Cantidad_Minima, Empresa FROM producto WHERE Cantidad <= Cantidad_Minima";
+            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.Cantidad_Minima, Empresa FROM producto p, ubicacion u WHERE p.id_ubicacion <= u.id_ubicacion";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -80,19 +83,26 @@ public class DATMaterial {
         ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto WHERE Nombre_Producto REGEXP CONCAT('^',?) OR Codigo REGEXP CONCAT ('^',?) ORDER BY Nombre_Producto Asc";
+            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
+                    + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
+                    + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
+                    + "WHERE  p.id_ubicacion <= u.id_ubicacion AND Nombre_Producto REGEXP CONCAT('^',?) OR Codigo "
+                    + "REGEXP CONCAT ('^',?) ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, nombre);
             ps.setString(2, nombre);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String nombreProd = rs.getString(1);
-                String cod = rs.getString(2);
-                double precio = rs.getDouble(3);
-                double precioProdMayor = rs.getDouble(4);
-                String ubi = rs.getString(5);
-                int cant = rs.getInt(6);
-                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
+                String nombreprod = rs.getString(1);
+                String codigo = rs.getString(2);
+                double precioCompra = rs.getDouble(3);
+                double precio = rs.getDouble(4);
+                double precioMayor = rs.getDouble(5);
+                double ganancia = rs.getDouble(6);
+                double gananciaMayor = rs.getDouble(7);
+                String ubicacion = rs.getString(8);
+                int cant = rs.getInt(9);
+                Producto prod = new Producto(nombreprod, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, ubicacion);
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {
@@ -163,8 +173,9 @@ public class DATMaterial {
             ps.setBinaryStream(14, fis, (int) producto.getFotoProd().length());
             ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

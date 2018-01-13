@@ -69,6 +69,18 @@ public class Producto {
         this.intUbicacion = strUbicacion;
         this.intCantidad = intCantidad;
     }
+
+    public Producto(String strNombreProd, String strCod, double fltPrecio, double precioCompra, double ganancia, double gananciaMayor, double fltPrecioMayor, int intCantidad, String strUbicacion) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.precioCompra = precioCompra;
+        this.ganancia = ganancia;
+        this.gananciaMayor = gananciaMayor;
+        this.fltPrecioMayor = fltPrecioMayor;
+        this.intCantidad = intCantidad;
+        this.strUbicacion = strUbicacion;
+    }
     
     public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad) {
         this.strNombreProd = strNombreProd;

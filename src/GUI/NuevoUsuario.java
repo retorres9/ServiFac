@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -238,78 +239,106 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    public void nuevoUsuarioVendedor() {
         int rolUs = 0;
         int digitosCedula = txtCedulaUser.getText().length();
+        if (txtConf.getText().isEmpty() || txtNombre.getText().isEmpty()
+                || txtPass.getText().isEmpty() || txtUsuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+        } else if (digitosCedula != 10) {
+            JOptionPane.showMessageDialog(null, "Número de cédula incorrecto");
+        } else {
+            String cedula = txtCedulaUser.getText();
+            String nom = txtNombre.getText();
+            String usu = txtUsuario.getText();
+            String pass = txtPass.getText();
+            String rol = (String) jComboBox1.getSelectedItem();
+            if (rol.equals("Vendedor")) {
+                rolUs = 0;
+            }
+            if (txtPass.getText().equals(txtConf.getText())) {
+                String newPass = pass;
+                pass = getMD5(newPass);
+                objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                try {
+                    if (usuario.nuevoUsuario(objUs)) {
+                        JOptionPane.showMessageDialog(null, "El usuario se guardó"
+                                + " correctamente, ahora por favor vuelva a ingresar\n"
+                                + "su usuario y contraseña");
+                        Validacion valid = new Validacion();
+                        valid.setVisible(true);
+                        this.dispose();
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "error");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+            }
+        }
+    }
+
+    public void nuevoUsuarioAdmin() {
+        int rolUs = 0;
+        int digitosCedula = txtCedulaUser.getText().length();
+
+        if (txtConf.getText().isEmpty() || txtNombre.getText().isEmpty()
+                || txtPass.getText().isEmpty() || txtUsuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+        } else if (digitosCedula != 10) {
+            JOptionPane.showMessageDialog(null, "Número de cédula incorrecto");
+        } else {
+            String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear\n"
+                    + "un usuario con rol de Administrador");
+            try {
+                if (n.equals(clave)) {
+                    String cedula = txtCedulaUser.getText();
+                    String nom = txtNombre.getText();
+                    String usu = txtUsuario.getText();
+                    String pass = txtPass.getText();
+                    String rol = (String) jComboBox1.getSelectedItem();
+                    if (rol.equals("Administrador")) {
+                        rolUs = 1;
+                    }
+                    if (txtPass.getText().equals(txtConf.getText())) {
+                        String newPass = pass;
+                        pass = getMD5(newPass);
+                        objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                        try {
+                            if (usuario.nuevoUsuario(objUs)) {
+                                JOptionPane.showMessageDialog(null, "El usuario se guardó"
+                                        + " correctamente, ahora por favor vuelva a ingresar\n"
+                                        + "su usuario y contraseña");
+                                Validacion valid = new Validacion();
+                                valid.setVisible(true);
+                                this.dispose();
+                            }
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "error");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La contraseñas no coinciden");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Codigo Incorrecto");
+                }
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(null, "No ha ingresado el código de verificación");
+            }
+        }
+
+    }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (jComboBox1.getSelectedItem().equals("Seleccione...")) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un rol para el usuario");
         } else if (jComboBox1.getSelectedItem().equals("Administrador")) {
-            if (txtConf.getText().isEmpty() || txtNombre.getText().isEmpty()
-                    || txtPass.getText().isEmpty() || txtUsuario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
-            } else if (digitosCedula != 10 && digitosCedula != 13) {
-                JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos");
-            } else {
-                String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear un usuario Administrador");
-                try {
-                    if (n.equals(clave)) {
-                        String cedula = txtCedulaUser.getText();
-                        String nom = txtNombre.getText();
-                        String usu = txtUsuario.getText();
-                        String pass = txtPass.getText();
-                        String rol = (String) jComboBox1.getSelectedItem();
-                        if (rol.equals("Administrador")) {
-                            rolUs = 1;
-                        }
-                        if (txtPass.getText().equals(txtConf.getText())) {
-                            String newPass = pass;
-                            pass = getMD5(newPass);
-                            objUs = new Usuario(cedula, nom, usu, pass, rolUs);
-                            usuario.nuevoUsuario(objUs);
-                            Validacion objV = new Validacion();
-                            objV.setVisible(true);
-                            this.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "La contraseñas no coinciden");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Codigo Incorrecto");
-                    }
-                } catch (NullPointerException ex) {
-                    JOptionPane.showMessageDialog(null, "No ha ingresado el código de verificación");
-                }
-            }
+            nuevoUsuarioAdmin();
         } else if (jComboBox1.getSelectedItem().equals("Vendedor")) {
-            if (txtConf.getText().isEmpty() || txtNombre.getText().isEmpty()
-                    || txtPass.getText().isEmpty() || txtUsuario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
-            } else if (digitosCedula != 10 && digitosCedula != 13) {
-                JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos");
-            } else {
-                String cedula = txtCedulaUser.getText();
-                String nom = txtNombre.getText();
-                String usu = txtUsuario.getText();
-                String pass = txtPass.getText();
-                String rol = (String) jComboBox1.getSelectedItem();
-                if (rol.equals("Vendedor")) {
-                    rolUs = 0;
-                }
-                if (txtPass.getText().equals(txtConf.getText())) {
-                    String newPass = pass;
-                    pass = getMD5(newPass);
-                    objUs = new Usuario(cedula, nom, usu, pass, rolUs);
-                    usuario.nuevoUsuario(objUs);
-                    Validacion objV = new Validacion();
-                    objV.setVisible(true);
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-                }
-            }
+            nuevoUsuarioVendedor();
         }
-        JOptionPane.showMessageDialog(null, "El usuario se creó correctamente, "
-                                    + "a continuación deberá \nvolver a ingresar "
-                                    + "su usuario y contraseña");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtCedulaUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaUserKeyTyped
@@ -343,16 +372,24 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NuevoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NuevoUsuario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NuevoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NuevoUsuario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NuevoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NuevoUsuario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NuevoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NuevoUsuario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

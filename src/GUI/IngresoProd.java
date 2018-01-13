@@ -224,53 +224,115 @@ public final class IngresoProd extends javax.swing.JFrame {
             } else {
                 iva = "12%";
             }
-            if(txtExistenciasBodega.getText().isEmpty()){
+            if (txtExistenciasBodega.getText().isEmpty()) {
                 idBodega = 0;
             } else {
-                
+
                 idBodega = bod.getIntIdBodega();
             }
 
             if (!cbxGenerador.isSelected() && (bandera = true)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imagenDefaultProd, iva, idBodega);
                 conMat.IngresarProducto(producto);
+                if (cbxAyuda.isSelected()) {
+                    txtCod.setText("");
+                    txtCantidad.setText("");
+                    txtCantMin.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    cbxGenerador.setSelected(false);
+                } else {
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    txtCantidad.setText("");
+                    txtCod.setText("");
+                    txtNombreProd.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    lblPrecioPublico.setText("");
+                    txtCantMin.setText("");
+                    cbxGenerador.setSelected(false);
+                }
             } else if ((bandera = true) && cbxGenerador.isSelected()) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva, idBodega);
                 conMat.IngresarProducto(producto);
+                if (cbxAyuda.isSelected()) {
+                    txtCod.setText("");
+                    txtCantidad.setText("");
+                    txtCantMin.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    cbxGenerador.setSelected(false);
+                } else {
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    txtCantidad.setText("");
+                    txtCod.setText("");
+                    txtNombreProd.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtCantMin.setText("");
+                    cbxGenerador.setSelected(false);
+                }
             } else if (!cbxGenerador.isSelected() && (bandera = false)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imgArticulo, iva, idBodega);
                 conMat.IngresarProducto(producto);
                 bandera = true;
+                if (cbxAyuda.isSelected()) {
+                    txtCod.setText("");
+                    txtCantidad.setText("");
+                    txtCantMin.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    cbxGenerador.setSelected(false);
+                } else {
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    txtCantidad.setText("");
+                    txtCod.setText("");
+                    txtNombreProd.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtCantMin.setText("");
+                    cbxGenerador.setSelected(false);
+                }
+                //JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             } else {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva, idBodega);
                 conMat.IngresarProducto(producto);
                 bandera = true;
+                if (cbxAyuda.isSelected()) {
+                    txtCod.setText("");
+                    txtCantidad.setText("");
+                    txtCantMin.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    cbxGenerador.setSelected(false);
+                } else {
+                    txtGanancia.setText("");
+                    txtGananciaMayor.setText("");
+                    txtCantidad.setText("");
+                    txtCod.setText("");
+                    txtNombreProd.setText("");
+                    txtPrecioCompra.setText("");
+                    lblPrecioMayor.setText("");
+                    txtCantMin.setText("");
+                    cbxGenerador.setSelected(false);
+                }
+                //JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             }
-            if(!txtExistenciasBodega.getText().isEmpty()){
+            if (!txtExistenciasBodega.getText().isEmpty()) {
                 guardarBodega();
+                //JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             }
-            JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
-            if (cbxAyuda.isSelected()) {
-                txtCod.setText("");
-                txtCantidad.setText("");
-                txtCantMin.setText("");
-                txtPrecioCompra.setText("");
-                lblPrecioMayor.setText("");
-                txtGanancia.setText("");
-                txtGananciaMayor.setText("");
-                cbxGenerador.setSelected(false);
-            } else {
-                txtGanancia.setText("");
-                txtGananciaMayor.setText("");
-                txtCantidad.setText("");
-                txtCod.setText("");
-                txtNombreProd.setText("");
-                txtPrecioCompra.setText("");
-                lblPrecioMayor.setText("");
-                txtCantMin.setText("");
-                cbxGenerador.setSelected(false);
-            }
-            
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);

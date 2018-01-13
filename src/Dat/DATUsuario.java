@@ -1,8 +1,6 @@
 package Dat;
 
 import Clases.Usuario;
-import com.mysql.jdbc.MysqlDataTruncation;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +16,7 @@ public class DATUsuario {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public void nuevoUsuario(Usuario usuario) {
+    public boolean nuevoUsuario(Usuario usuario) throws SQLException{
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol) "
@@ -33,6 +31,7 @@ public class DATUsuario {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campo\n"
                     + "que ha llenado han sido ingresados en otro usuario");
+            return false;
         } finally {
             try {
                 ps.close();
@@ -41,6 +40,7 @@ public class DATUsuario {
                 Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return true;
 
     }
 

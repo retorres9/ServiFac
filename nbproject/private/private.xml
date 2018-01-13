@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/BusqProd.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoUsuario.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoProveedorDialgo.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Validacion.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/BusqProd.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Inventario.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Producto.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/ActualzarUbicacionDialog.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/IngresoProd.java</file>
         </group>
     </open-files>
