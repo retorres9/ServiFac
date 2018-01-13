@@ -48,9 +48,9 @@ public class Producto {
         
     }
 
-    public Producto(String strNombreProd, int intCantidad) {
+    public Producto(String strNombreProd, int intUbicacion) {
         this.strNombreProd = strNombreProd;
-        this.intCantidad = intCantidad;
+        this.intUbicacion = intUbicacion;
     }
     /*Para instanciar el producto al actualizar el producto sin ubicacion*/
     public Producto(String strNombreProd, double fltPrecio, double fltPrecioMayor, int intCantidad, String strCod) {

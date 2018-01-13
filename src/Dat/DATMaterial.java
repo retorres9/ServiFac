@@ -23,7 +23,7 @@ public class DATMaterial {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.ubicacion = u.ubicacion ORDER BY Nombre_Producto Asc";
+            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -54,7 +54,7 @@ public class DATMaterial {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad, Cantidad_Minima, Empresa FROM producto WHERE Cantidad <= Cantidad_Minima";
+            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.Cantidad_Minima, Empresa FROM producto WHERE Cantidad <= Cantidad_Minima";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -112,6 +112,26 @@ public class DATMaterial {
 //        ps.setString(1, codigo);
 //        return ps.executeQuery();
 //    }
+    
+    public void actualizarUbicacion(Producto producto){
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET id_ubicacion = ? WHERE nombre_producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, producto.getIntUbicacion());
+            ps.setString(2, producto.getStrNombreProd());
+            ps.executeUpdate();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     public void IngresarProducto(Producto producto) throws ClassNotFoundException {
 
@@ -174,14 +194,14 @@ public class DATMaterial {
     }
 //
 
-    public int UpdateCantFactura(String nombre, int strCant) throws ClassNotFoundException, SQLException {
-        String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-        ps.setInt(1, strCant);
-        ps.setString(2, nombre);
-        return ps.executeUpdate();
-    }
-//
+//    public int UpdateCantFactura(String nombre, int strCant) throws ClassNotFoundException, SQLException {
+//        String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
+//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
+//        ps.setInt(1, strCant);
+//        ps.setString(2, nombre);
+//        return ps.executeUpdate();
+//    }
+////
 
     public void UpdateProducto(Producto producto) {
         try {

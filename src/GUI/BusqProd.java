@@ -751,7 +751,16 @@ public final class BusqProd extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
             ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
+            ActualzarUbicacionDialog.lblProd.setText(txtNombre.getText());
             dialogUbic.setVisible(true);
+            
+            if(dialogUbic != null){
+                if(!dialogUbic.getInfo().equals("")){
+                    updateTabla();
+                    txtUbicacion.setText(dialogUbic.getUbic());
+                }
+            }
+            
         }
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
