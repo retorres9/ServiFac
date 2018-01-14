@@ -2,6 +2,7 @@ package GUI;
 
 import Clases.PagoProveedorClase;
 import Clases.Proveedor;
+import Dat.DATProveedor;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,22 +21,32 @@ public final class PagoProveedor extends javax.swing.JFrame {
 
     int fila;
     Proveedor manejadorProveedor = new Proveedor();
-    BLProveedor objP = new BLProveedor();
     DefaultTableModel modelo = new DefaultTableModel();
     PagoProveedorClase manejadorProv = new PagoProveedorClase();
-    BLPagoProveedor objPago = new BLPagoProveedor();
+    DATProveedor proveedor;
 
     public PagoProveedor() {
         initComponents();
+        proveedor = new DATProveedor();
         cargarColumnas();
-        setAnchoColumnas();
+        cargarTabla();
         combo();
         seleccion();
         this.txtDeuda.setEditable(false);
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        cargarTabla();
+    }
+
+    public void combo() {
+        cmbBusq.addItem("Nombre de la Empresa");
+        cmbBusq.addItem("Nombre de la Cuenta");
+    }
+
+    public void seleccion() {
+        ButtonGroup grupo = new ButtonGroup();
+        grupo.add(opc1);
+        grupo.add(ocp2);
     }
 
     public void cargarColumnas() {
@@ -80,6 +91,93 @@ public final class PagoProveedor extends javax.swing.JFrame {
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
+        }
+    }
+
+    public void cargarTablaBusquedaNombre(String busq) {
+        try {
+            setAnchoColumnas();
+            ArrayList<Proveedor> listadoProv = proveedor.buscarNombreCuenta(busq);
+            int cantLista = listadoProv.size();
+            modelo.setNumRows(cantLista);
+            for (int i = 0; i < cantLista; i++) {
+                manejadorProveedor = listadoProv.get(i);
+                String empresa = manejadorProveedor.getStrEmpresa();
+                String ruc = manejadorProveedor.getRuc();
+                String nombre = manejadorProveedor.getStrNombreCuenta();
+                String tipo = manejadorProveedor.getStrTipo();
+                String numero = manejadorProveedor.getStrNumCuenta();
+                double deuda = manejadorProveedor.getDblDeuda();
+                String telf = manejadorProveedor.getStrTelf();
+
+                modelo.setValueAt(empresa, i, 0);
+                modelo.setValueAt(ruc, i, 1);
+                modelo.setValueAt(nombre, i, 2);
+                modelo.setValueAt(tipo, i, 3);
+                modelo.setValueAt(numero, i, 4);
+                modelo.setValueAt(deuda, i, 5);
+                modelo.setValueAt(telf, i, 6);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cargarTablaBusquedaEmpresa(String busq) {
+        try {
+            setAnchoColumnas();
+            ArrayList<Proveedor> listadoProv = proveedor.buscarEmpresa(busq);
+            int cantLista = listadoProv.size();
+            modelo.setNumRows(cantLista);
+            for (int i = 0; i < cantLista; i++) {
+                manejadorProveedor = listadoProv.get(i);
+                String empresa = manejadorProveedor.getStrEmpresa();
+                String ruc = manejadorProveedor.getRuc();
+                String nombre = manejadorProveedor.getStrNombreCuenta();
+                String tipo = manejadorProveedor.getStrTipo();
+                String numero = manejadorProveedor.getStrNumCuenta();
+                double deuda = manejadorProveedor.getDblDeuda();
+                String telf = manejadorProveedor.getStrTelf();
+
+                modelo.setValueAt(empresa, i, 0);
+                modelo.setValueAt(ruc, i, 1);
+                modelo.setValueAt(nombre, i, 2);
+                modelo.setValueAt(tipo, i, 3);
+                modelo.setValueAt(numero, i, 4);
+                modelo.setValueAt(deuda, i, 5);
+                modelo.setValueAt(telf, i, 6);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cargarTabla() {
+        setAnchoColumnas();
+        ArrayList<Proveedor> listaProv = proveedor.obtenerTODOempresa();
+        int cantLista = listaProv.size();
+        modelo.setNumRows(cantLista);
+        for (int i = 0; i < cantLista; i++) {
+            manejadorProveedor = listaProv.get(i);
+            String empresa = manejadorProveedor.getStrEmpresa();
+            String ruc = manejadorProveedor.getRuc();
+            String nombre = manejadorProveedor.getStrNombreCuenta();
+            String tipo = manejadorProveedor.getStrTipo();
+            String numero = manejadorProveedor.getStrNumCuenta();
+            double deuda = manejadorProveedor.getDblDeuda();
+            String telf = manejadorProveedor.getStrTelf();
+
+            modelo.setValueAt(empresa, i, 0);
+            modelo.setValueAt(ruc, i, 1);
+            modelo.setValueAt(nombre, i, 2);
+            modelo.setValueAt(tipo, i, 3);
+            modelo.setValueAt(numero, i, 4);
+            modelo.setValueAt(deuda, i, 5);
+            modelo.setValueAt(telf, i, 6);
         }
     }
 
@@ -131,6 +229,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         jmConfig = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1024, 754));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -387,22 +486,17 @@ public final class PagoProveedor extends javax.swing.JFrame {
                         .addGap(282, 282, 282)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 787, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
@@ -421,8 +515,12 @@ public final class PagoProveedor extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 878, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,47 +579,28 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private void tblProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProvMouseClicked
         fila = tblProv.rowAtPoint(evt.getPoint());
         String strValor;
-        int intValor;
         strValor = (String) tblProv.getValueAt(fila, 0);
         txtEmpresa.setText(strValor);
-        strValor = (String) tblProv.getValueAt(fila, 3);
+        strValor = (String) tblProv.getValueAt(fila, 4);
         txtNumCuenta.setText(strValor);
-        strValor = (String) tblProv.getValueAt(fila, 4).toString();
+        strValor = (String) tblProv.getValueAt(fila, 5).toString();
         txtDeuda.setText(strValor);
-        intValor = (int) tblProv.getValueAt(fila, 5);
-        txtTelf.setText(Integer.toString(intValor));
+        strValor = (String) tblProv.getValueAt(fila, 6);
+        txtTelf.setText(strValor);
     }//GEN-LAST:event_tblProvMouseClicked
 
     private void txtBuscKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscKeyReleased
-        DefaultTableModel modelo = new DefaultTableModel();
+
         String texto = txtBusc.getText();
         if (cmbBusq.getSelectedItem().equals("Seleccione...")) {
             JOptionPane.showMessageDialog(null, "Seleccione un criterio de busqueda");
             txtBusc.setText("");
         }
         if (cmbBusq.getSelectedItem().equals("Nombre de la Empresa")) {
-            try {
-                ArrayList<Object[]> datos = new ArrayList<Object[]>();
-                datos = objP.buscarNombre(texto);
-                for (int i = 0; i < datos.size(); i++) {
-                    modelo.addRow(datos.get(i));
-                }
-                tblProv.setModel(modelo);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            cargarTablaBusquedaEmpresa(texto);
         }
         if (cmbBusq.getSelectedItem().equals("Nombre de la Cuenta")) {
-            try {
-                ArrayList<Object[]> datos = new ArrayList<Object[]>();
-                datos = objP.buscarNombreEmpresa(texto);
-                for (int i = 0; i < datos.size(); i++) {
-                    modelo.addRow(datos.get(i));
-                }
-                tblProv.setModel(modelo);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            cargarTablaBusquedaNombre(texto);
         }
     }//GEN-LAST:event_txtBuscKeyReleased
 
@@ -562,11 +641,9 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (txtMonto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un monto");
-        }
-        if (!opc1.isSelected() && !ocp2.isSelected()) {
+        } else if (!opc1.isSelected() && !ocp2.isSelected()) {
             JOptionPane.showMessageDialog(null, "Tiene que seleccionar una accion");
-        }
-        if (txtEmpresa.getText().equals("---------------------")) {
+        } else if (txtEmpresa.getText().equals("---------------------")) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor");
         } else {
             if (opc1.isSelected()) {
@@ -684,55 +761,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         return formato.format(fecha);
     }
-
-    public void cargaTablaPagos() {
-        try {
-            //metodo para cargar en la tabla de pago_Proveedor
-            String empresa = txtEmpresa.getText();
-            String vendedor = "retorres9";
-            double monto = Double.parseDouble(txtMonto.getText());
-            String fecha = getFecha();
-            String tipo;
-            if (opc1.isSelected()) {
-                tipo = "Pago";
-            } else {
-                tipo = "Credito";
-            }
-            manejadorProv = new PagoProveedorClase(empresa, vendedor, monto, fecha, tipo);
-            objPago.pago(manejadorProv);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void combo() {
-        cmbBusq.addItem("Nombre de la Empresa");
-        cmbBusq.addItem("Nombre de la Cuenta");
-    }
-
-    public void seleccion() {
-        ButtonGroup grupo = new ButtonGroup();
-        grupo.add(opc1);
-        grupo.add(ocp2);
-    }
-
-    public void cargarTabla() {
-        try {
-            BLProveedor objBl = new BLProveedor();
-
-            for (int i = 0; i < objBl.cargarTabla().size(); i++) {
-                modelo.addRow(objBl.cargarTabla().get(i));
-            }
-            tblProv.setModel(modelo);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

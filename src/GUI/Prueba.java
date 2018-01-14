@@ -45,8 +45,9 @@ public class Prueba extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jButton1 = new javax.swing.JButton();
-        lblImagProd = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,12 +55,6 @@ public class Prueba extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        lblImagProd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImagProdMouseClicked(evt);
             }
         });
 
@@ -72,16 +67,16 @@ public class Prueba extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(279, 279, 279))
             .addGroup(layout.createSequentialGroup()
-                .addGap(134, 134, 134)
-                .addComponent(lblImagProd, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(96, 96, 96)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(lblImagProd, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119)
+                .addGap(139, 139, 139)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(jButton1)
                 .addContainerGap(173, Short.MAX_VALUE))
         );
@@ -97,27 +92,6 @@ public class Prueba extends javax.swing.JFrame {
             Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void lblImagProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagProdMouseClicked
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter extension = new FileNameExtensionFilter(
-                "Archivos de imagen jpg, gif o png", "jpg", "gif", "png");
-        chooser.setFileFilter(extension);
-
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            int anchoImagen = lblImagProd.getWidth();
-            int altoImagen = lblImagProd.getHeight();
-
-            imgArticulo = chooser.getSelectedFile();
-            ImageIcon icono = new ImageIcon(imgArticulo.getAbsolutePath());
-            Image imagen2 = icono.getImage();
-            Image imagenescalada = imagen2.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_DEFAULT);
-
-            ImageIcon iconoRedimensionado = new ImageIcon(imagenescalada);
-            lblImagProd.setIcon(iconoRedimensionado);
-        }
-    }//GEN-LAST:event_lblImagProdMouseClicked
 
     /**
      * @param args the command line arguments
@@ -156,6 +130,7 @@ public class Prueba extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel lblImagProd;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 }
