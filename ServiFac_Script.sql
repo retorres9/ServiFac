@@ -2,7 +2,7 @@ CREATE DATABASE empresa;
 
 USE empresa;
 select * from producto;
-DROP TABLE clientes;
+SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE  p.id_ubicacion = u.id_ubicacion AND Nombre_Producto REGEXP CONCAT('^',"") OR Codigo REGEXP CONCAT ('^',"") ORDER BY Nombre_Producto Asc;
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,

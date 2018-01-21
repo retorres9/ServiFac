@@ -662,23 +662,44 @@ public final class BusqProd extends javax.swing.JFrame {
         String dato = txtBuscar.getText();
         try {
             setAnchoColumnas();
-            ArrayList<Producto> listadoProd = material.ConsultarPorNombre(dato);
-            int cantLista = listadoProd.size();
-            modelo.setNumRows(cantLista);
-            for (int i = 0; i < cantLista; i++) {
-                producto = listadoProd.get(i);
-                String nombreProd = producto.getStrNombreProd();
-                String cod = producto.getStrCod();
-                Double precio = producto.getFltPrecio();
-                Double precioMayor = producto.getFltPrecioMayor();
-                String ubi = producto.getStrUbicacion();
-                Integer cant = producto.getIntCantidad();
-                modelo.setValueAt(nombreProd, i, 0);
-                modelo.setValueAt(cod, i, 1);
-                modelo.setValueAt(precio, i, 2);
-                modelo.setValueAt(precioMayor, i, 3);
-                modelo.setValueAt(ubi, i, 4);
-                modelo.setValueAt(cant, i, 5);
+            if (cmbBusq.getSelectedItem().equals("Nombre producto")) {
+                ArrayList<Producto> listadoProd = material.ConsultarPorNombre(dato);
+                int cantLista = listadoProd.size();
+                modelo.setNumRows(cantLista);
+                for (int i = 0; i < cantLista; i++) {
+                    producto = listadoProd.get(i);
+                    String nombreProd = producto.getStrNombreProd();
+                    String cod = producto.getStrCod();
+                    Double precio = producto.getFltPrecio();
+                    Double precioMayor = producto.getFltPrecioMayor();
+                    String ubi = producto.getStrUbicacion();
+                    Integer cant = producto.getIntCantidad();
+                    modelo.setValueAt(nombreProd, i, 0);
+                    modelo.setValueAt(cod, i, 1);
+                    modelo.setValueAt(precio, i, 2);
+                    modelo.setValueAt(precioMayor, i, 3);
+                    modelo.setValueAt(ubi, i, 4);
+                    modelo.setValueAt(cant, i, 5);
+                }
+            } else {
+                ArrayList<Producto> listadoProd = material.ConsultarPorCodigo(dato);
+                int cantLista = listadoProd.size();
+                modelo.setNumRows(cantLista);
+                for (int i = 0; i < cantLista; i++) {
+                    producto = listadoProd.get(i);
+                    String nombreProd = producto.getStrNombreProd();
+                    String cod = producto.getStrCod();
+                    Double precio = producto.getFltPrecio();
+                    Double precioMayor = producto.getFltPrecioMayor();
+                    String ubi = producto.getStrUbicacion();
+                    Integer cant = producto.getIntCantidad();
+                    modelo.setValueAt(nombreProd, i, 0);
+                    modelo.setValueAt(cod, i, 1);
+                    modelo.setValueAt(precio, i, 2);
+                    modelo.setValueAt(precioMayor, i, 3);
+                    modelo.setValueAt(ubi, i, 4);
+                    modelo.setValueAt(cant, i, 5);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(BusqProd.class.getName()).log(Level.SEVERE, null, ex);

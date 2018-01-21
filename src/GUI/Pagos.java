@@ -6,9 +6,12 @@ import Clases.Configuracion;
 import Clases.Venta;
 import Dat.DATClientes;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
@@ -658,8 +661,7 @@ public final class Pagos extends javax.swing.JFrame {
         }
         if (cmbClientes.getSelectedItem().equals("Cedula")) {
             try {
-                int ced = Integer.parseInt(dato);
-                ArrayList<Clientes> listadoClienteCed = cliente.ConsultarCedula(ced);
+                ArrayList<Clientes> listadoClienteCed = cliente.ConsultarCedula(dato);
                 int cantListado = listadoClienteCed.size();
                 modelo.setNumRows(cantListado);
                 for (int i = 0; i < cantListado; i++) {
@@ -698,7 +700,11 @@ public final class Pagos extends javax.swing.JFrame {
             String direccion = txtDireccion.getText();
             String cedula = txtCedula.getText();
             objCliente = new Clientes(n, cedula, telf, direccion);
-            cliente.actualizarCliente(objCliente);
+            try {
+                cliente.actualizarCliente(objCliente);
+            } catch (SQLException ex) {
+                Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
+            }
             txtNombre.setText(n);
             cargarTabla();
         } catch (NullPointerException ex) {
@@ -746,6 +752,8 @@ public final class Pagos extends javax.swing.JFrame {
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Formato de telefono Incorrecto", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnActualizaTelfMouseClicked
 
@@ -829,6 +837,8 @@ public final class Pagos extends javax.swing.JFrame {
             cargarTabla();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "No ha ingresado ninguna dirección", "Erroe", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnActualizaDirMouseClicked
 

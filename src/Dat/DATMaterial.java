@@ -92,11 +92,44 @@ public class DATMaterial {
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
                     + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
-                    + "WHERE  p.id_ubicacion <= u.id_ubicacion AND Nombre_Producto REGEXP CONCAT('^',?) OR Codigo "
+                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND Nombre_Producto REGEXP CONCAT('^',?) "
+                    + "ORDER BY Nombre_Producto Asc";
+            ps = con.prepareStatement(Sentencia);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreprod = rs.getString(1);
+                String codigo = rs.getString(2);
+                double precioCompra = rs.getDouble(3);
+                double precio = rs.getDouble(4);
+                double precioMayor = rs.getDouble(5);
+                double ganancia = rs.getDouble(6);
+                double gananciaMayor = rs.getDouble(7);
+                String ubicacion = rs.getString(8);
+                int cant = rs.getInt(9);
+                Producto prod = new Producto(nombreprod, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, ubicacion);
+                listaProductosNombre.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            rs.close();
+            con.close();
+        }
+        return listaProductosNombre;
+    }
+    
+     public ArrayList<Producto> ConsultarPorCodigo(String nombre) throws SQLException {
+        ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
+                    + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
+                    + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
+                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND Codigo "
                     + "REGEXP CONCAT ('^',?) ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, nombre);
-            ps.setString(2, nombre);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombreprod = rs.getString(1);
@@ -290,13 +323,26 @@ public class DATMaterial {
         }
         return cant;
     }
-//
-//    public int eliminarProducto(String strNombre) throws ClassNotFoundException, SQLException {
-//        String sentencia = "DELETE FROM producto WHERE Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-//        ps.setString(1, strNombre);
-//        return ps.executeUpdate();
-//    }
+
+    public void eliminarProducto(String nombre){
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "DELETE FROM producto WHERE codigo = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, nombre);
+            ps.executeUpdate();
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "No se puede eliminar el producto");
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
 //
 //    public ResultSet Venta(String codigo) throws ClassNotFoundException, SQLException {
 //        String Sentencia = "SELECT Nombre_Producto, Precio, Codigo FROM producto WHERE Cantidad > 0 AND Codigo = ?";

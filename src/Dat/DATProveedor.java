@@ -124,7 +124,7 @@ public class DATProveedor {
         return re;
     }
 
-    public ArrayList<Proveedor> buscarEmpresa(String nombre) throws ClassNotFoundException, SQLException {
+    public ArrayList<Proveedor> buscarEmpresa(String nombre){
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -147,13 +147,17 @@ public class DATProveedor {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            ps.close();
-            con.close();
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listadoBusq;
     }
 
-    public ArrayList<Proveedor> buscarNombreCuenta(String nombreEmpresa) throws ClassNotFoundException, SQLException {
+    public ArrayList<Proveedor> buscarNombreCuenta(String nombreEmpresa){
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -176,8 +180,12 @@ public class DATProveedor {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            ps.close();
-            con.close();
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listadoBusq;
     }
@@ -199,10 +207,22 @@ public class DATProveedor {
         
     }
 
-    public int eliminarProveedor(String empresa) throws ClassNotFoundException, SQLException {
-        String sentencia = "DELETE FROM proveedores WHERE  Empresa = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setString(1, empresa);
-        return ps.executeUpdate();
+    public void eliminarProveedor(String empresa) {
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "DELETE FROM proveedores WHERE  Empresa = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, empresa);
+            ps.executeUpdate();
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "No se puede eliminar el proveedor");
+        } finally{
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

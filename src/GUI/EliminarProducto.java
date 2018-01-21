@@ -309,21 +309,17 @@ public final class EliminarProducto extends javax.swing.JFrame {
         modelo.addColumn("Cantidad");
     }
 
-//    public void eliminarProducto() {
-//        String val1 = txtNombre.getText();
-//        producto = new Producto(val1);
-//        try {
-//            objM.eliminarProducto(producto);
-//            updateTabla();
-//            setAnchoColumnas();
-//        } catch (ClassNotFoundException | SQLException ex) {
-//            Logger.getLogger(EliminarProducto.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void eliminarProducto() {
+        String val1 = txtCodigo.getText();
+        material.eliminarProducto(val1);
+        updateTabla();
+        JOptionPane.showMessageDialog(null, "Producto eliminado satisfactoriamente");
+    }
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        String dato = txtBuscar.getText();
         try {
-            String dato = txtBuscar.getText();
+            setAnchoColumnas();
             if (cmbBusq.getSelectedItem().equals("Nombre producto")) {
                 ArrayList<Producto> listadoProducto = material.ConsultarPorNombre(dato);
                 int cantLista = listadoProducto.size();
@@ -345,7 +341,7 @@ public final class EliminarProducto extends javax.swing.JFrame {
                 }
             }
             if (cmbBusq.getSelectedItem().equals("Codigo")) {
-                ArrayList<Producto> listadoProducto = material.ConsultarPorNombre(dato);
+                ArrayList<Producto> listadoProducto = material.ConsultarPorCodigo(dato);
                 int cantLista = listadoProducto.size();
                 modelo.setNumRows(cantLista);
                 for (int i = 0; i < cantLista; i++) {
@@ -385,7 +381,7 @@ public final class EliminarProducto extends javax.swing.JFrame {
         } else {
             int n = JOptionPane.showConfirmDialog(null, "Esta seguro de que desea eliminar el producto:\n" + txtNombre.getText() + "?", "Aviso!", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
-//                eliminarProducto();
+                eliminarProducto();
                 updateTabla();
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha borrado nada");
@@ -488,7 +484,7 @@ public final class EliminarProducto extends javax.swing.JFrame {
         }
     }
 
-    private void updateTabla() {
+    public void updateTabla() {
         try {
             setAnchoColumnas();
             ArrayList<Producto> listadoProd = material.Consultar();

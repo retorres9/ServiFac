@@ -107,13 +107,13 @@ public class DATClientes {
         return listadoClientes;
     }
 
-    public ArrayList<Clientes> ConsultarCedula(int cedulaCli) {
+    public ArrayList<Clientes> ConsultarCedula(String cedulaCli) {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0 AND Cedula_Cliente REGEXP CONCAT('^',?) ORDER BY Nombres";
             ps = con.prepareStatement(Sentencia);
-            ps.setInt(1, cedulaCli);
+            ps.setString(1, cedulaCli);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombreCliente = rs.getString(1);
@@ -183,7 +183,7 @@ public class DATClientes {
         }
     }
 
-    public void actualizarCliente(Clientes cliente) {
+    public void actualizarCliente(Clientes cliente) throws SQLException {
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
             String sentencia = "UPDATE clientes SET Nombres = ?, Telefono = ?, Direccion = ? WHERE Cedula_Cliente = ?";
@@ -196,15 +196,13 @@ public class DATClientes {
         } catch(MySQLIntegrityConstraintViolationException ex){
             JOptionPane.showMessageDialog(null, "El nombre o número cédula ingresado ya está\n"
                     + "asignado a otro cliente");
-        } catch (SQLException ex) {
-            //ex.printStackTrace();
         } finally {
             try {
                 ps.close();
                 con.close();
             } catch (SQLException ex) {
                 //Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
-                ex.printStackTrace();
+                //ex.printStackTrace();
             }
         }
     }

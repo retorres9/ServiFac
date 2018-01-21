@@ -1,27 +1,81 @@
 package GUI;
 
 import Clases.Proveedor;
+import Dat.DATProveedor;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public final class EliminarProveedor extends javax.swing.JFrame {
 
     int fila;
-    Proveedor objP = new Proveedor();
-    Principal objPr = new Principal();
+    DefaultTableModel modelo = new DefaultTableModel();
+    DATProveedor manejadorProv;
+    Proveedor prov = new Proveedor();
+    //Proveedor objP = new Proveedor();
 
     public EliminarProveedor() {
         initComponents();
+        manejadorProv = new DATProveedor();
+        cargarEncabezado();
         cargarTabla();
         combo();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
+    }
+
+    public void cargarEncabezado() {
+        modelo.addColumn("Empresa");
+        modelo.addColumn("Ruc");
+        modelo.addColumn("Nombre de la Cuenta");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Número de cuenta");
+        modelo.addColumn("Deuda");
+        modelo.addColumn("Teléfono");
+    }
+
+    public void setAnchoColumnas() {
+        JViewport scroll = (JViewport) jTable1.getParent();
+        int ancho = scroll.getWidth();
+        int anchoColumna = 0;
+        TableColumnModel modeloColumna = jTable1.getColumnModel();
+        TableColumn columnaTabla;
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            columnaTabla = modeloColumna.getColumn(i);
+            switch (i) {
+                case 0:
+                    anchoColumna = (60 * ancho) / 100;
+                    break;
+                case 1:
+                    anchoColumna = (35 * ancho) / 100;
+                    break;
+                case 2:
+                    anchoColumna = (50 * ancho) / 100;
+                    break;
+                case 3:
+                    anchoColumna = (40 * ancho) / 100;
+                    break;
+                case 4:
+                    anchoColumna = (45 * ancho) / 100;
+                    break;
+                case 5:
+                    anchoColumna = (20 * ancho) / 100;
+                    break;
+                case 6:
+                    anchoColumna = (30 * ancho) / 100;
+                    break;
+            }
+            columnaTabla.setPreferredWidth(anchoColumna);
+
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -33,8 +87,8 @@ public final class EliminarProveedor extends javax.swing.JFrame {
         txtBusc = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtEmpresa = new javax.swing.JLabel();
@@ -64,8 +118,6 @@ public final class EliminarProveedor extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar por:");
 
-        cmbBusq.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione..." }));
-
         txtBusc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscKeyReleased(evt);
@@ -76,34 +128,22 @@ public final class EliminarProveedor extends javax.swing.JFrame {
 
         jLabel3.setText("Deuda:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/error.png"))); // NOI18N
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/error.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Atras");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnAtrasActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setModel(modelo);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -221,57 +261,50 @@ public final class EliminarProveedor extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(70, 70, 70)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDeuda))
-                                .addContainerGap())))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(416, 416, 416))))
+                        .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAtras)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(86, 86, 86)
+                            .addComponent(btnEliminar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDeuda))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtEmpresa))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDeuda))
+                .addGap(34, 34, 34)
+                .addComponent(btnEliminar)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtEmpresa))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtDeuda))
-                        .addGap(34, 34, 34)
-                        .addComponent(jButton1)))
-                .addGap(48, 48, 48)
-                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAtras)
                 .addGap(59, 59, 59))
         );
 
@@ -282,74 +315,84 @@ public final class EliminarProveedor extends javax.swing.JFrame {
         fila = jTable1.rowAtPoint(evt.getPoint());
         String strValor = (String) jTable1.getValueAt(fila, 0);
         txtEmpresa.setText(strValor);
-        String strValor2 = (String) jTable1.getValueAt(fila, 4).toString();
+        String strValor2 = (String) jTable1.getValueAt(fila, 5).toString();
         txtDeuda.setText(strValor2);
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (txtEmpresa.getText().equals("----------------------------")) {
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningun proveedor");
         } else {
-            try {
-                int n = JOptionPane.showConfirmDialog(null,
-                        "¿Está seguro de que desea eliminar el proveedor?",
-                        "Aviso!", JOptionPane.YES_NO_OPTION);
-                if (n == JOptionPane.YES_OPTION) {
-                    String nombre = txtEmpresa.getText();
-                    objP = new Proveedor(nombre);
-                    objBl.eliminarProveedor(objP);
-                    cargarTabla();
-                }
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(EliminarProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            int n = JOptionPane.showConfirmDialog(null,
+                    "¿Está seguro de que desea eliminar el proveedor?",
+                    "Aviso!", JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                String nombre = txtEmpresa.getText();
+                manejadorProv.eliminarProveedor(nombre);
+                cargarTabla();
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        Principal objPr = new Principal();
         objPr.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void txtBuscKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscKeyReleased
-        DefaultTableModel modelo = new DefaultTableModel();
         String texto = txtBusc.getText();
-        modelo.addColumn("Empresa");
-        modelo.addColumn("Nombre de la Cuenta");
-        modelo.addColumn("Número de cuenta");
-        modelo.addColumn("Tipo de Cuenta");
-        modelo.addColumn("Deuda");
-        if (cmbBusq.getSelectedItem().equals("Seleccione...")) {
-            JOptionPane.showMessageDialog(null, "Seleccione un criterio de busqueda");
-            txtBusc.setText("");
-        }
+
         if (cmbBusq.getSelectedItem().equals("Nombre de la Empresa")) {
-            try {
-                ArrayList<Object[]> datos = new ArrayList<Object[]>();
-                datos = objBl.buscarNombre(texto);
-                for (int i = 0; i < datos.size(); i++) {
-                    modelo.addRow(datos.get(i));
-                }
-                jTable1.setModel(modelo);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            ArrayList<Proveedor> listado = manejadorProv.buscarEmpresa(texto);
+            int cant = listado.size();
+            modelo.setNumRows(cant);
+            for (int i = 0; i < cant; i++) {
+                prov = listado.get(i);
+                String empresa = prov.getStrEmpresa();
+                String ruc = prov.getRuc();
+                String nombreCta = prov.getStrNombreCuenta();
+                String tipo = prov.getStrTipo();
+                String nroCta = prov.getStrNumCuenta();
+                double deuda = prov.getDblDeuda();
+                String telf = prov.getStrTelf();
+
+                modelo.setValueAt(empresa, i, 0);
+                modelo.setValueAt(ruc, i, 1);
+                modelo.setValueAt(nombreCta, i, 2);
+                modelo.setValueAt(tipo, i, 3);
+                modelo.setValueAt(nroCta, i, 4);
+                modelo.setValueAt(deuda, i, 5);
+                modelo.setValueAt(telf, i, 6);
             }
         }
         if (cmbBusq.getSelectedItem().equals("Nombre de la Cuenta")) {
-            try {
-                ArrayList<Object[]> datos = new ArrayList<Object[]>();
-                datos = objBl.buscarNombreEmpresa(texto);
-                for (int i = 0; i < datos.size(); i++) {
-                    modelo.addRow(datos.get(i));
-                }
-                jTable1.setModel(modelo);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            ArrayList<Proveedor> listado = manejadorProv.buscarNombreCuenta(texto);
+            int cant = listado.size();
+            modelo.setNumRows(cant);
+            for (int i = 0; i < cant; i++) {
+                prov = listado.get(i);
+                String empresa = prov.getStrEmpresa();
+                String ruc = prov.getRuc();
+                String nombreCta = prov.getStrNombreCuenta();
+                String tipo = prov.getStrTipo();
+                String nroCta = prov.getStrNumCuenta();
+                double deuda = prov.getDblDeuda();
+                String telf = prov.getStrTelf();
+
+                modelo.setValueAt(empresa, i, 0);
+                modelo.setValueAt(ruc, i, 1);
+                modelo.setValueAt(nombreCta, i, 2);
+                modelo.setValueAt(tipo, i, 3);
+                modelo.setValueAt(nroCta, i, 4);
+                modelo.setValueAt(deuda, i, 5);
+                modelo.setValueAt(telf, i, 6);
             }
         }
     }//GEN-LAST:event_txtBuscKeyReleased
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Principal objPr = new Principal();
         objPr.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -413,22 +456,27 @@ public final class EliminarProveedor extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        try {
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn("Empresa");
-            modelo.addColumn("Nombre de la Cuenta");
-            modelo.addColumn("Número de cuenta");
-            modelo.addColumn("Tipo de Cuenta");
-            modelo.addColumn("Deuda");
+        setAnchoColumnas();
+        ArrayList<Proveedor> listadoProv = manejadorProv.obtenerTODOempresa();
+        int cant = listadoProv.size();
+        modelo.setNumRows(cant);
+        for (int i = 0; i < cant; i++) {
+            prov = listadoProv.get(i);
+            String empresa = prov.getStrEmpresa();
+            String ruc = prov.getRuc();
+            String nombreCta = prov.getStrNombreCuenta();
+            String tipo = prov.getStrTipo();
+            String nroCta = prov.getStrNumCuenta();
+            double deuda = prov.getDblDeuda();
+            String telf = prov.getStrTelf();
 
-            for (int i = 0; i < objBl.cargarTabla().size(); i++) {
-                modelo.addRow(objBl.cargarTabla().get(i));
-            }
-            jTable1.setModel(modelo);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EliminarProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(EliminarProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            modelo.setValueAt(empresa, i, 0);
+            modelo.setValueAt(ruc, i, 1);
+            modelo.setValueAt(nombreCta, i, 2);
+            modelo.setValueAt(tipo, i, 3);
+            modelo.setValueAt(nroCta, i, 4);
+            modelo.setValueAt(deuda, i, 5);
+            modelo.setValueAt(telf, i, 6);
         }
     }
 
@@ -461,9 +509,9 @@ public final class EliminarProveedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cmbBusq;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -286,24 +286,44 @@ public final class EliminarCliente extends javax.swing.JFrame {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         String dato = txtBuscar.getText();
+        if (cmbBusq.getSelectedItem().equals("Nombre")) {
+            ArrayList<Clientes> listadoBusq = cliente.ConsultarPorNombre(dato);
+            int cant = listadoBusq.size();
+            modelo.setNumRows(cant);
+            for (int i = 0; i < cant; i++) {
+                objCliente = listadoBusq.get(i);
+                String nombreCliente = objCliente.getStrNombre();
+                String cedula = objCliente.getStrCedula();
+                int telf = objCliente.getIntTelf();
+                double deuda = objCliente.getDblDeuda();
+                String direccion = objCliente.getStrDireccion();
 
-        ArrayList<Clientes> listadoBusq = cliente.ConsultarPorNombre(dato);
-        int cant = listadoBusq.size();
-        modelo.setNumRows(cant);
-        for (int i = 0; i < cant; i++) {
-            objCliente = listadoBusq.get(i);
-            String nombreCliente = objCliente.getStrNombre();
-            String cedula = objCliente.getStrCedula();
-            int telf = objCliente.getIntTelf();
-            double deuda = objCliente.getDblDeuda();
-            String direccion = objCliente.getStrDireccion();
+                modelo.setValueAt(nombreCliente, i, 0);
+                modelo.setValueAt(cedula, i, 1);
+                modelo.setValueAt(telf, i, 2);
+                modelo.setValueAt(deuda, i, 3);
+                modelo.setValueAt(direccion, i, 4);
+            }
+        } else {
+            ArrayList<Clientes> listadoBusq = cliente.ConsultarCedula(dato);
+            int cant = listadoBusq.size();
+            modelo.setNumRows(cant);
+            for (int i = 0; i < cant; i++) {
+                objCliente = listadoBusq.get(i);
+                String nombreCliente = objCliente.getStrNombre();
+                String cedula = objCliente.getStrCedula();
+                int telf = objCliente.getIntTelf();
+                double deuda = objCliente.getDblDeuda();
+                String direccion = objCliente.getStrDireccion();
 
-            modelo.setValueAt(nombreCliente, i, 0);
-            modelo.setValueAt(cedula, i, 1);
-            modelo.setValueAt(telf, i, 2);
-            modelo.setValueAt(deuda, i, 3);
-            modelo.setValueAt(direccion, i, 4);
+                modelo.setValueAt(nombreCliente, i, 0);
+                modelo.setValueAt(cedula, i, 1);
+                modelo.setValueAt(telf, i, 2);
+                modelo.setValueAt(deuda, i, 3);
+                modelo.setValueAt(direccion, i, 4);
+            }
         }
+
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -453,6 +473,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
             String ced = txtCedula.getText();
             objCliente = new Clientes(ced);
             cliente.eliminarCliente(objCliente);
+            JOptionPane.showMessageDialog(null, "Cliente eliminado satisfactoriamente");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
