@@ -234,7 +234,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        Validacion objV = new Validacion();
+        Login objV = new Login();
         objV.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -265,7 +265,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "El usuario se guardó"
                                 + " correctamente, ahora por favor vuelva a ingresar\n"
                                 + "su usuario y contraseña");
-                        Validacion valid = new Validacion();
+                        Login valid = new Login();
                         valid.setVisible(true);
                         this.dispose();
                     }
@@ -310,7 +310,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "El usuario se guardó"
                                         + " correctamente, ahora por favor vuelva a ingresar\n"
                                         + "su usuario y contraseña");
-                                Validacion valid = new Validacion();
+                                Login valid = new Login();
                                 valid.setVisible(true);
                                 this.dispose();
                             }

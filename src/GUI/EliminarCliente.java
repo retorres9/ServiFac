@@ -1,6 +1,7 @@
 package GUI;
 
 import Clases.Clientes;
+import Dat.DATClientes;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -14,17 +15,19 @@ import javax.swing.table.TableColumnModel;
 
 public final class EliminarCliente extends javax.swing.JFrame {
 
-    Clientes objC = new Clientes();
+    DATClientes cliente = new DATClientes();
+    Clientes objCliente = new Clientes();
+    DefaultTableModel modelo = new DefaultTableModel();
     int fila;
 
     public EliminarCliente() {
         initComponents();
-        setAnchoColumnas();
+        cargarEncabezado();
+        cargarClientes();
         combo();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        updateTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -95,19 +98,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setModel(modelo);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -225,56 +216,53 @@ public final class EliminarCliente extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(115, 115, 115)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCedula)
-                                    .addComponent(txtNombre)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtCedula)
+                                        .addComponent(txtNombre)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1)))
+                            .addComponent(jButton3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(361, 361, 361)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 739, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 88, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombre))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCedula))
+                .addGap(34, 34, 34)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNombre))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtCedula))
-                        .addGap(34, 34, 34)
-                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(jButton3)
                 .addGap(66, 66, 66))
@@ -287,54 +275,55 @@ public final class EliminarCliente extends javax.swing.JFrame {
         cmbBusq.addItem("Nombre");
         cmbBusq.addItem("Cedula");
     }
-    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        try {
-            String dato = txtBuscar.getText();
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn("Nombres");
-            modelo.addColumn("Cedula");
-            modelo.addColumn("Teléfono");
-            modelo.addColumn("Deuda");
-            if (cmbBusq.getSelectedItem().equals("Nombre")) {
-                ArrayList<Object[]> datos = new ArrayList<>();
-                datos = manejadorCliente.busqCliente(dato);
-                for (int i = 0; i < datos.size(); i++) {
-                    modelo.addRow(datos.get(i));
-                }
-                jTable1.setModel(modelo);
-            }
-            if (cmbBusq.getSelectedItem().equals("Cedula")) {
-                ArrayList<Object[]> datos = new ArrayList<>();
-                datos = manejadorCliente.busqClienteCedula(dato);
-                for (int i = 0; i < datos.size(); i++) {
-                    modelo.addRow(datos.get(i));
-                }
-                jTable1.setModel(modelo);
-            }
 
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(BusqProd.class.getName()).log(Level.SEVERE, null, ex);
+    public void cargarEncabezado() {
+        modelo.addColumn("Nombres");
+        modelo.addColumn("Cédula");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Deuda");
+        modelo.addColumn("Dirección");
+    }
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        String dato = txtBuscar.getText();
+
+        ArrayList<Clientes> listadoBusq = cliente.ConsultarPorNombre(dato);
+        int cant = listadoBusq.size();
+        modelo.setNumRows(cant);
+        for (int i = 0; i < cant; i++) {
+            objCliente = listadoBusq.get(i);
+            String nombreCliente = objCliente.getStrNombre();
+            String cedula = objCliente.getStrCedula();
+            int telf = objCliente.getIntTelf();
+            double deuda = objCliente.getDblDeuda();
+            String direccion = objCliente.getStrDireccion();
+
+            modelo.setValueAt(nombreCliente, i, 0);
+            modelo.setValueAt(cedula, i, 1);
+            modelo.setValueAt(telf, i, 2);
+            modelo.setValueAt(deuda, i, 3);
+            modelo.setValueAt(direccion, i, 4);
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         fila = jTable1.rowAtPoint(evt.getPoint());
         String strNombre;
-        int intCedula;
+        String strCedula;
         strNombre = (String) jTable1.getValueAt(fila, 0);
         txtNombre.setText(strNombre);
-        intCedula = (int) jTable1.getValueAt(fila, 1);
-        txtCedula.setText(Integer.toString(intCedula));
+        strCedula = (String) jTable1.getValueAt(fila, 1);
+        txtCedula.setText(strCedula);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (txtNombre.getText().equals("---------------")) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado ningún cliente para elimiar");
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ningún cliente para eliminar");
         } else {
             int n = JOptionPane.showConfirmDialog(null, "¿Esta seguro de que desea eliminar al cliente:\n" + txtNombre.getText() + "?", "Aviso!", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 elimiarCliente();
-                updateTabla();
+                cargarClientes();
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha borrado nada");
             }
@@ -415,56 +404,61 @@ public final class EliminarCliente extends javax.swing.JFrame {
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
+                case 0:
+                    anchoColumna = (60 * ancho) / 100;
+                    break;
                 case 1:
                     anchoColumna = (30 * ancho) / 100;
                     break;
                 case 2:
-                    anchoColumna = (50 * ancho) / 100;
-                    break;
-                case 3:
                     anchoColumna = (20 * ancho) / 100;
                     break;
+                case 3:
+                    anchoColumna = (10 * ancho) / 100;
+                    break;
                 case 4:
-                    anchoColumna = (30 * ancho) / 100;
+                    anchoColumna = (60 * ancho) / 100;
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
+
         }
     }
 
-    private void updateTabla() {
+    public void cargarClientes() {
+
+        setAnchoColumnas();
+        ArrayList<Clientes> listadoClientes = cliente.ObtenerClientes();
+        int cantClientes = listadoClientes.size();
+        modelo.setNumRows(cantClientes);
+        for (int i = 0; i < cantClientes; i++) {
+            objCliente = listadoClientes.get(i);
+            String nombreCliente = objCliente.getStrNombre();
+            String cedula = objCliente.getStrCedula();
+            int telf = objCliente.getIntTelf();
+            double deuda = objCliente.getDblDeuda();
+            String direccion = objCliente.getStrDireccion();
+
+            modelo.setValueAt(nombreCliente, i, 0);
+            modelo.setValueAt(cedula, i, 1);
+            modelo.setValueAt(telf, i, 2);
+            modelo.setValueAt(deuda, i, 3);
+            modelo.setValueAt(direccion, i, 4);
+        }
+
+    }
+
+    public void elimiarCliente() {
         try {
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Nombres");
-            dtm.addColumn("Cedula");
-            dtm.addColumn("Telefono");
-            dtm.addColumn("Deuda");
-            setAnchoColumnas();
-            for (int i = 0; i < dl.getCliente().size(); i++) {
-                
-                dtm.addRow(dl.getCliente().get(i));
-                
-            }
-            
-            jTable1.setModel(dtm);
+            String ced = txtCedula.getText();
+            objCliente = new Clientes(ced);
+            cliente.eliminarCliente(objCliente);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-
-    public void elimiarCliente() {
-        String nom = txtNombre.getText();
-        objC = new Clientes(nom);
-        try {
-            manejadorCliente.eliminarCliente(objC);
-            updateTabla();
-            setAnchoColumnas();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static void main(String args[]) {
@@ -484,7 +478,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(EliminarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */

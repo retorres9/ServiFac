@@ -1,6 +1,7 @@
 package Dat;
 
 import Clases.Clientes;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,11 +20,11 @@ public class DATClientes {
     ResultSet rs = null;
     Clientes cliente = new Clientes();
 
-    public ArrayList<Clientes> ConsultarPagosGui() {
+    public ArrayList<Clientes> ObtenerClientes() {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda>0";
+            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion FROM clientes ORDER BY nombres";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -80,7 +81,7 @@ public class DATClientes {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0 AND Nombres REGEXP CONCAT('^',?) ORDER BY Nombres";
+            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Nombres REGEXP CONCAT('^',?) ORDER BY Nombres";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
@@ -192,14 +193,18 @@ public class DATClientes {
             ps.setString(3, cliente.getStrDireccion());
             ps.setString(4, cliente.getStrCedula());
             ps.executeUpdate();
+        } catch(MySQLIntegrityConstraintViolationException ex){
+            JOptionPane.showMessageDialog(null, "El nombre o número cédula ingresado ya está\n"
+                    + "asignado a otro cliente");
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         } finally {
             try {
                 ps.close();
                 con.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
     }
@@ -224,11 +229,20 @@ public class DATClientes {
         }
     }
 
-    public int eliminarCliente(String strNombre) throws ClassNotFoundException, SQLException {
-        String sentencia = "DELETE FROM clientes WHERE Nombres = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setString(1, strNombre);
-        return ps.executeUpdate();
+    public void eliminarCliente(Clientes cliente) throws ClassNotFoundException, SQLException {
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "DELETE FROM clientes WHERE cedula_cliente = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, cliente.getStrCedula());
+            ps.executeUpdate();
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "No se puede eliminar el cliente"
+                    + " seleccionado.\nEste error se debe a que el\n"
+                    + "cliente tienes asignadas algunas compras\n"
+                    + "por lo tanto esas compras no pueden"
+                    + "quedar sin un comprador","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public ResultSet FacturaCliente(String nombre) throws ClassNotFoundException, SQLException {

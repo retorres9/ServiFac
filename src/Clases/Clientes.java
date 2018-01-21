@@ -11,8 +11,8 @@ public class Clientes {
         BLCLientes*/
     }
 
-    public Clientes(String strNombre) {
-        this.strNombre = strNombre;
+    public Clientes(String strCedula) {
+        this.strCedula = strCedula;
     }
 
     public Clientes(double dblDeuda, String strCedula) {

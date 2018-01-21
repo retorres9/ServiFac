@@ -182,13 +182,13 @@ public class DATProveedor {
         return listadoBusq;
     }
 
-    public void updateDeuda(double deuda, String empresa) throws ClassNotFoundException, SQLException {
+    public void updateDeuda(Proveedor proveedor) throws ClassNotFoundException, SQLException {
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
             String sentencia = "UPDATE proveedores SET Deuda = ? WHERE ruc = ?";
             ps = con.prepareStatement(sentencia);
-            ps.setDouble(1, deuda);
-            ps.setString(2, empresa);
+            ps.setDouble(1, proveedor.getDblDeuda());
+            ps.setString(2, proveedor.getRuc());
             ps.executeUpdate();
         } catch (SQLException ex){
             ex.printStackTrace();

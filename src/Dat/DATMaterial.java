@@ -57,7 +57,11 @@ public class DATMaterial {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.Cantidad_Minima, Empresa FROM producto p, ubicacion u WHERE p.id_ubicacion <= u.id_ubicacion";
+            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, "
+                    + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
+                    + "p.Cantidad_Minima, pr.Empresa FROM producto p, ubicacion u,"
+                    + " proveedores pr WHERE p.id_ubicacion = u.id_ubicacion AND"
+                    + " p.ruc = pr.ruc ORDER BY p.Nombre_Producto";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -67,7 +71,9 @@ public class DATMaterial {
                 double precioProdMayor = rs.getDouble(4);
                 String ubi = rs.getString(5);
                 int cant = rs.getInt(6);
-                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant);
+                int cantMin = rs.getInt(7);
+                String empresa = rs.getString(8);
+                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant, cantMin, empresa);
                 listadoMinimos.add(prod);
             }
         } catch (SQLException ex) {

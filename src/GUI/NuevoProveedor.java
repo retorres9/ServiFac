@@ -81,7 +81,6 @@ public final class NuevoProveedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(700, 550));
-        setPreferredSize(new java.awt.Dimension(700, 550));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -89,14 +88,19 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel1.setText("Empresa:");
 
+        jLabel2.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel2.setText("Nombre de cuenta:");
 
+        jLabel3.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel3.setText("Tipo de cuenta:");
 
+        jLabel4.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel4.setText("Número de cuenta:");
 
+        jLabel5.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel5.setText("Deuda:");
 
         txtEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -123,6 +127,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Roboto Condensed Light", 1, 13)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/save.png"))); // NOI18N
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +136,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Roboto Condensed Light", 1, 13)); // NOI18N
         jButton2.setText("Atrás");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +144,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel6.setText("Teléfono:");
 
         txtTelf.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -151,6 +158,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel8.setText("Ingreso de proveedor");
 
+        jLabel9.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel9.setText("RUC:");
 
         txtRuc.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -293,8 +301,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
                         .addGap(112, 112, 112)
                         .addComponent(jButton2)
                         .addGap(77, 77, 77)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -339,7 +346,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();

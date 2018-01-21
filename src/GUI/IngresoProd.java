@@ -101,30 +101,39 @@ public final class IngresoProd extends javax.swing.JFrame {
     public void muestraPrecioxMayor() {
         if (txtPrecioCompra.getText().isEmpty() || txtGananciaMayor.getText().isEmpty()) {
         } else {
-            double precio = Double.parseDouble(txtPrecioCompra.getText());
-            double ganancia = Double.parseDouble(txtGananciaMayor.getText());
-            precioVentaMayor = precio + (precio * (ganancia / 100));
-            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-            simbolos.setDecimalSeparator('.');
-            DecimalFormat dcmlCambioMayor = new DecimalFormat("0.00", simbolos);
-            String strPrecioMayor = dcmlCambioMayor.format(precioVentaMayor);
-            precioVentaMayor = Double.parseDouble(strPrecioMayor);
-            lblPrecioMayor.setText("Precio de venta al por mayor: $" + precioVentaMayor);
+            try {
+                double precio = Double.parseDouble(txtPrecioCompra.getText());
+                double ganancia = Double.parseDouble(txtGananciaMayor.getText());
+                precioVentaMayor = precio + (precio * (ganancia / 100));
+                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                simbolos.setDecimalSeparator('.');
+                DecimalFormat dcmlCambioMayor = new DecimalFormat("0.00", simbolos);
+                String strPrecioMayor = dcmlCambioMayor.format(precioVentaMayor);
+                precioVentaMayor = Double.parseDouble(strPrecioMayor);
+                lblPrecioMayor.setText("Precio de venta al por mayor: $" + precioVentaMayor);
+            } catch (NumberFormatException ex) {
+                
+            }
+
         }
     }
 
     public void muestraPrecio() {
         if (txtPrecioCompra.getText().isEmpty() || txtGanancia.getText().isEmpty()) {
         } else {
-            double precioInput = Double.parseDouble(txtPrecioCompra.getText());
-            double ganancia = Double.parseDouble(txtGanancia.getText());
-            precioVenta = precioInput + (precioInput * (ganancia / 100));
-            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-            simbolos.setDecimalSeparator('.');
-            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-            String strPrecio = dcmlCambio.format(precioVenta);
-            precioVenta = Double.parseDouble(strPrecio);
-            lblPrecioPublico.setText("Precio de venta al público: $" + precioVenta);
+            try {
+                double precioInput = Double.parseDouble(txtPrecioCompra.getText());
+                double ganancia = Double.parseDouble(txtGanancia.getText());
+                precioVenta = precioInput + (precioInput * (ganancia / 100));
+                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                simbolos.setDecimalSeparator('.');
+                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+                String strPrecio = dcmlCambio.format(precioVenta);
+                precioVenta = Double.parseDouble(strPrecio);
+                lblPrecioPublico.setText("Precio de venta al público: $" + precioVenta);
+            } catch (NumberFormatException ex) {
+
+            }
         }
     }
 
@@ -197,11 +206,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (cbxAyuda.isSelected()) {
             txtCod.setText("");
             txtCantidad.setText("");
-            txtCantMin.setText("");
-            txtPrecioCompra.setText("");
             lblPrecioMayor.setText("");
-            txtGanancia.setText("");
-            txtGananciaMayor.setText("");
             cbxGenerador.setSelected(false);
         } else {
             txtGanancia.setText("");
@@ -210,8 +215,8 @@ public final class IngresoProd extends javax.swing.JFrame {
             txtCod.setText("");
             txtNombreProd.setText("");
             txtPrecioCompra.setText("");
-            lblPrecioMayor.setText("");
-            lblPrecioPublico.setText("");
+            lblPrecioMayor.setText("Precio de venta al por mayor:");
+            lblPrecioPublico.setText("Precio de venta al público:");
             txtCantMin.setText("");
             cbxGenerador.setSelected(false);
         }
@@ -302,11 +307,12 @@ public final class IngresoProd extends javax.swing.JFrame {
             }
             if (!txtExistenciasBodega.getText().isEmpty()) {
                 guardarBodega();
-                //JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
             }
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "No se puede agregar un numero con dos puntos decimales", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

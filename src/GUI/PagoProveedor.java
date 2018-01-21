@@ -210,6 +210,8 @@ public final class PagoProveedor extends javax.swing.JFrame {
         txtNumCuenta = new javax.swing.JLabel();
         txtTelf = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtRuc = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
@@ -325,6 +327,10 @@ public final class PagoProveedor extends javax.swing.JFrame {
 
         jLabel6.setText("Teléfono:");
 
+        jLabel9.setText("RUC:");
+
+        txtRuc.setText("--------------------");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -340,15 +346,18 @@ public final class PagoProveedor extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
+                        .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTelf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNumCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,11 +368,18 @@ public final class PagoProveedor extends javax.swing.JFrame {
                     .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(txtEmpresa))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtNumCuenta)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtRuc))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtNumCuenta))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtTelf))
@@ -581,6 +597,8 @@ public final class PagoProveedor extends javax.swing.JFrame {
         String strValor;
         strValor = (String) tblProv.getValueAt(fila, 0);
         txtEmpresa.setText(strValor);
+        strValor = (String) tblProv.getValueAt(fila, 1);
+        txtRuc.setText(strValor);
         strValor = (String) tblProv.getValueAt(fila, 4);
         txtNumCuenta.setText(strValor);
         strValor = (String) tblProv.getValueAt(fila, 5).toString();
@@ -620,16 +638,16 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 if (monto <= deuda) {
                     deuda2 = deuda - monto;
                     txtDeuda.setText(Double.toString(deuda2));
-                    String nombre = txtEmpresa.getText();
-                    manejadorProveedor = new Proveedor(nombre, deuda2);
-                    objP.updateDeuda(manejadorProveedor);
+                    String ruc = txtRuc.getText();
+                    manejadorProveedor = new Proveedor(ruc, deuda2);
+                    proveedor.updateDeuda(manejadorProveedor);
                 }
             } else if (ocp2.isSelected()) {
                 deuda2 = deuda + Double.parseDouble(txtMonto.getText());
                 txtDeuda.setText(Double.toString(deuda2));
-                String nombre = txtEmpresa.getText();
-                manejadorProveedor = new Proveedor(nombre, deuda2);
-                objP.updateDeuda(manejadorProveedor);
+                String ruc = txtRuc.getText();
+                manejadorProveedor = new Proveedor(ruc, deuda);
+                proveedor.updateDeuda(manejadorProveedor);
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
@@ -651,7 +669,6 @@ public final class PagoProveedor extends javax.swing.JFrame {
                         + txtEmpresa.getText() + "?", "Aviso!", JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.YES_OPTION) {
                     Credito();
-                    cargaTablaPagos();
                     cargarTabla();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
@@ -662,7 +679,6 @@ public final class PagoProveedor extends javax.swing.JFrame {
                         + txtEmpresa.getText() + "?", "Aviso!", JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.YES_OPTION) {
                     Credito();
-                    cargaTablaPagos();
                     cargarTabla();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
@@ -803,6 +819,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -831,6 +848,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel txtEmpresa;
     private javax.swing.JTextField txtMonto;
     private javax.swing.JLabel txtNumCuenta;
+    private javax.swing.JLabel txtRuc;
     private javax.swing.JLabel txtTelf;
     private javax.swing.JLabel txtTexto;
     // End of variables declaration//GEN-END:variables

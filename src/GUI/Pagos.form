@@ -419,17 +419,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="txtCedula" min="-2" pref="147" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnActualizaCedula" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="txtDeuda" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="txtTelf" min="-2" pref="147" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnActualizaTelf" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtNombre" max="32767" attributes="0"/>
@@ -439,6 +429,17 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnActualizaDir" min="-2" max="-2" attributes="0"/>
                               <Component id="btnActualizarNombre" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txtTelf" pref="0" max="32767" attributes="0"/>
+                              <Component id="txtCedula" min="-2" pref="118" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnActualizaTelf" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnActualizaCedula" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

@@ -24,7 +24,7 @@ public final class Pagos extends javax.swing.JFrame {
     int fila, idVenta;
     Venta objV = new Venta();
     String strTotal, nombre;
-    Factura objFact = new Factura();
+    //Factura objFact = new Factura();
     AbonoCliente objAc = new AbonoCliente();
     String vendedor = Configuracion.vendedor_venta();
     DefaultTableModel modelo = new DefaultTableModel();
@@ -33,9 +33,8 @@ public final class Pagos extends javax.swing.JFrame {
 
     public Pagos() {
         initComponents();
-        cargaColumnas();
-        setAnchoColumnas();
         cliente = new DATClientes();
+        cargaColumnas();
         cargaCombo();
         iconos();
         this.setLocationRelativeTo(null);
@@ -45,6 +44,7 @@ public final class Pagos extends javax.swing.JFrame {
         permisos();
         txtVendedor.setText(vendedor);
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -238,15 +238,7 @@ public final class Pagos extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizaCedula))
                     .addComponent(txtDeuda)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizaTelf))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -254,7 +246,15 @@ public final class Pagos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizaDir)
-                            .addComponent(btnActualizarNombre))))
+                            .addComponent(btnActualizarNombre)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnActualizaTelf)
+                            .addComponent(btnActualizaCedula))))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -614,8 +614,8 @@ public final class Pagos extends javax.swing.JFrame {
                     "Aviso!",
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
-                    pago();
-                    cargarTabla();
+                pago();
+                cargarTabla();
 //                    pagoVentaXVenta();
                 //vistaReporte();
             } else {
@@ -637,16 +637,13 @@ public final class Pagos extends javax.swing.JFrame {
             ArrayList<Clientes> listadoClienteNom = cliente.ConsultarPorNombre(dato);
             int cantidadListado = listadoClienteNom.size();
             modelo.setNumRows(cantidadListado);
-            System.out.println(dato);
             for (int i = 0; i < cantidadListado; i++) {
                 objCliente = listadoClienteNom.get(i);
                 String nombreCli = objCliente.getStrNombre();
-                System.out.println(nombreCli);
                 String cedula = objCliente.getStrCedula();
                 int telf = objCliente.getIntTelf();
                 String strTelf = String.valueOf(telf);
                 if (strTelf.length() == 9) {
-                    System.out.println("bandera");
                     strTelf = "0" + strTelf;
                     telf = Integer.parseInt(strTelf);
                 }
@@ -695,15 +692,13 @@ public final class Pagos extends javax.swing.JFrame {
 
     private void btnActualizarNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarNombreMouseClicked
         try {
-            System.out.println(txtCedula.getText());
             String n;
-            n = JOptionPane.showInputDialog(null, "Actualice el nuevo nombre del cliente:\n" + txtNombre.getText());
+            n = JOptionPane.showInputDialog(null, "Actualice el nuevo nombre del cliente:\n" + txtNombre.getText().toUpperCase());
             int telf = Integer.parseInt(txtTelf.getText());
             String direccion = txtDireccion.getText();
             String cedula = txtCedula.getText();
             objCliente = new Clientes(n, cedula, telf, direccion);
             cliente.actualizarCliente(objCliente);
-            System.out.println(cedula);
             txtNombre.setText(n);
             cargarTabla();
         } catch (NullPointerException ex) {
@@ -738,7 +733,6 @@ public final class Pagos extends javax.swing.JFrame {
             String telf;
             telf = JOptionPane.showInputDialog(null, "Actualice el nuevo número de teléfono del cliente:\n" + txtNombre.getText());
             int nuevoTelf = Integer.parseInt(telf);
-            System.out.println(telf.length());
             if (telf.length() != 7 && telf.length() != 10) {
                 JOptionPane.showMessageDialog(null, "El número ingresado no es un número de teléfono valido", "Aviso", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -825,8 +819,7 @@ public final class Pagos extends javax.swing.JFrame {
     private void btnActualizaDirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaDirMouseClicked
         String direccion;
         try {
-            direccion = JOptionPane.showInputDialog(null, "Ingrese la nueva dirección para el cliente:\n" + txtNombre.getText());
-            System.out.println(direccion);
+            direccion = JOptionPane.showInputDialog(null, "Ingrese la nueva dirección para el cliente:\n" + txtNombre.getText().toUpperCase());
             String nom = txtNombre.getText();
             String ced = txtCedula.getText();
             int telf = Integer.parseInt(ced);
@@ -840,7 +833,7 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizaDirMouseClicked
 
     public void cargarTabla() {
-        ArrayList<Clientes> listadoClientes = cliente.ConsultarPagosGui();
+        ArrayList<Clientes> listadoClientes = cliente.ObtenerClientes();
         int cantLista = listadoClientes.size();
         modelo.setNumRows(cantLista);
         for (int i = 0; i < cantLista; i++) {
@@ -851,9 +844,7 @@ public final class Pagos extends javax.swing.JFrame {
             String strTelf = String.valueOf(telf);
             if (strTelf.length() == 9) {
                 strTelf = "0" + strTelf;
-                System.out.println(strTelf);
                 telf = Integer.parseInt(strTelf);
-                System.out.println(telf);
             }
             double deuda = objCliente.getDblDeuda();
             String direccion = objCliente.getStrDireccion();
@@ -903,6 +894,7 @@ public final class Pagos extends javax.swing.JFrame {
             cliente.agregarDeuda(objCliente);
         }
     }
+
     /**
      * @param args the command line arguments
      */

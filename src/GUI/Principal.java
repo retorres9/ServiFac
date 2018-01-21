@@ -17,7 +17,7 @@ public final class Principal extends javax.swing.JFrame {
 
     Usuario objU = new Usuario();
     Configuracion config = new Configuracion();
-    Validacion objV = new Validacion();
+    Login objV = new Login();
     DATMaterial objProd = new DATMaterial();
 
     public Principal() {
@@ -594,7 +594,7 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtConfigMouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        Validacion valid = new Validacion();
+        Login valid = new Login();
         int n = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar la seción?", "Aviso!", JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             this.setVisible(false);

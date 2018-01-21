@@ -73,15 +73,15 @@ public final class Minimos extends javax.swing.JFrame {
             int listadoProductos = listaProductos.size();
             modelo.setNumRows(listadoProductos);
             for (int i = 0; i < listadoProductos; i++) {
-                Producto producto = listaProductos.get(i);
-                String nombreProd = producto.getStrNombreProd();
-                String cod = producto.getStrCod();
-                Double precio = producto.getFltPrecio();
-                Double precioMayor = producto.getFltPrecioMayor();
-                String ubi = producto.getStrUbicacion();
-                Integer cant = producto.getIntCantidad();
-                Integer cantMin = producto.getIntCantidadMinima();
-                String prov = producto.getStrEmpresa();
+                manejadorProd = listaProductos.get(i);
+                String nombreProd = manejadorProd.getStrNombreProd();
+                String cod = manejadorProd.getStrCod();
+                Double precio = manejadorProd.getFltPrecio();
+                Double precioMayor = manejadorProd.getFltPrecioMayor();
+                String ubi = manejadorProd.getStrUbicacion();
+                Integer cant = manejadorProd.getIntCantidad();
+                Integer cantMin = manejadorProd.getIntCantidadMinima();
+                String prov = manejadorProd.getStrEmpresa();
                 modelo.setValueAt(nombreProd, i, 0);
                 modelo.setValueAt(cod, i, 1);
                 modelo.setValueAt(precio, i, 2);

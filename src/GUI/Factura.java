@@ -63,6 +63,8 @@ public final class Factura extends javax.swing.JFrame {
         permisos();
         txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
     }
+    
+    
 
     public void contador() {
         try {

@@ -23,6 +23,11 @@ public class Proveedor {
         this.strEmpresa = strEmpresa;
         this.ruc = ruc;
     }
+    
+    public Proveedor(String ruc, double dblDeuda) {
+        this.dblDeuda = dblDeuda;
+        this.ruc = ruc;
+    }
 
     public String getRuc() {
         return ruc;
@@ -41,11 +46,6 @@ public class Proveedor {
     }
 
     public Proveedor() {
-    }
-
-    public Proveedor(String strEmpresa, double dblDeuda) {
-        this.strEmpresa = strEmpresa;
-        this.dblDeuda = dblDeuda;
     }
 
     public Proveedor(String strEmpresa) {

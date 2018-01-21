@@ -20,7 +20,20 @@ public class Producto {
     private File fotoProd;
     private String iva;
     private int bodega;
+    /*Atributos para relacionar tablas*/
     private String strUbicacion;
+    private String strEmpresa;
+    
+    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadMinima, String strEmpresa) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.fltPrecioMayor = fltPrecioMayor;
+        this.strUbicacion = strUbicacion;
+        this.intCantidad = intCantidad;
+        this.intCantidadMinima = intCantidadMinima;
+        this.strEmpresa = strEmpresa;
+    }
 
     public String getStrUbicacion() {
         return strUbicacion;
@@ -232,11 +245,11 @@ public class Producto {
     }
 
     public String getStrEmpresa() {
-        return strRUC;
+        return strEmpresa;
     }
 
     public void setStrEmpresa(String strEmpresa) {
-        this.strRUC = strEmpresa;
+        this.strEmpresa = strEmpresa;
     }
 
     public double getPrecioCompra() {
