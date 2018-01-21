@@ -35,6 +35,13 @@ public class Producto {
         this.strEmpresa = strEmpresa;
     }
 
+    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.fltPrecioMayor = fltPrecioMayor;
+    }
+
     public String getStrUbicacion() {
         return strUbicacion;
     }

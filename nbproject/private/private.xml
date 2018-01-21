@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/BusqProd.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/EliminarProducto.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATClientes.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/EliminarCliente.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/NumeroLetras.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Factura.java</file>
         </group>
     </open-files>
 </project-private>

@@ -4,6 +4,7 @@ import Clases.AbonoCliente;
 import Clases.Clientes;
 import Clases.Configuracion;
 import Clases.Venta;
+import Dat.DATAbonoCliente;
 import Dat.DATClientes;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -28,15 +29,17 @@ public final class Pagos extends javax.swing.JFrame {
     Venta objV = new Venta();
     String strTotal, nombre;
     //Factura objFact = new Factura();
-    AbonoCliente objAc = new AbonoCliente();
+    AbonoCliente abono = new AbonoCliente();
     String vendedor = Configuracion.vendedor_venta();
     DefaultTableModel modelo = new DefaultTableModel();
+    DATAbonoCliente manejadorAbono;
     DATClientes cliente;
     Clientes objCliente;
 
     public Pagos() {
         initComponents();
         cliente = new DATClientes();
+        manejadorAbono = new DATAbonoCliente();
         cargaColumnas();
         cargaCombo();
         iconos();
@@ -47,7 +50,6 @@ public final class Pagos extends javax.swing.JFrame {
         permisos();
         txtVendedor.setText(vendedor);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -620,7 +622,7 @@ public final class Pagos extends javax.swing.JFrame {
                 pago();
                 cargarTabla();
 //                    pagoVentaXVenta();
-                //vistaReporte();
+                vistaReporte();
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
             }
@@ -873,19 +875,12 @@ public final class Pagos extends javax.swing.JFrame {
         return formateador.format(ahora);
     }
 
-//    public void vistaReporte() {//Este metodo es para llemar en la interfaz de Reportes
-//        try {
-//            int cedulaCliente = Integer.parseInt(txtCedula.getText());
-//            double monto = Double.parseDouble(txtMonto.getText());
-//            String fecha = getFechaActual();
-//            objAc = new AbonoCliente(cedulaCliente, vendedor, monto, fecha);
-//            manejadorAbono.abonoCliente(objAc);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void vistaReporte() { //Este metodo es para llemar en la interfaz de Reportes
+        String cedulaCliente = txtCedula.getText();
+        double monto = Double.parseDouble(txtMonto.getText());
+        abono = new AbonoCliente(cedulaCliente, vendedor, monto, getFechaActual());
+        manejadorAbono.abonoCliente(abono);
+    }
     public void pago() {
         double deuda2;
         double monto = Double.parseDouble(txtMonto.getText());

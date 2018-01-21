@@ -344,12 +344,34 @@ public class DATMaterial {
         
     }
 //
-//    public ResultSet Venta(String codigo) throws ClassNotFoundException, SQLException {
-//        String Sentencia = "SELECT Nombre_Producto, Precio, Codigo FROM producto WHERE Cantidad > 0 AND Codigo = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setString(1, codigo);
-//        return ps.executeQuery();
-//    }
+    public ArrayList<Producto> cargaProductoFact(String codigo) {
+        ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT Nombre_Producto, Precio, precio_mayor, Codigo FROM producto WHERE Codigo = ? AND Cantidad > 0";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, codigo);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String nombre = rs.getString(1);
+                double precio = rs.getDouble(2);
+                double precioMayor = rs.getDouble(3);
+                String cod = rs.getString(4);
+                Producto prod = new Producto(nombre, cod, precio, precioMayor);
+                listadoProducto.add(prod);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoProducto;
+    }
 //
 //    public ResultSet comprobarCant(String nombre) throws ClassNotFoundException, SQLException {
 //        String sentencia = "SELECT Cantidad FROM producto Where Nombre_Producto = ?";

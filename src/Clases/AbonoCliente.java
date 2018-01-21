@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class AbonoCliente {
 
-    private int intCedula;
+    private String strCedula;
     private String strUsuario;
     private double dblMontoAbono;
-    private Date fechaAbono;
+    private String fechaAbono;
 
-    public AbonoCliente(int intCedula, String strUsuario, double dblMontoAbono, Date fechaAbono) {
-        this.intCedula = intCedula;
+    public AbonoCliente(String strCedula, String strUsuario, double dblMontoAbono, String fechaAbono) {
+        this.strCedula = strCedula;
         this.strUsuario = strUsuario;
         this.dblMontoAbono = dblMontoAbono;
         this.fechaAbono = fechaAbono;
@@ -20,12 +20,12 @@ public class AbonoCliente {
         
     }
 
-    public int getIntCedula() {
-        return intCedula;
+    public String getStrCedula() {
+        return strCedula;
     }
 
-    public void setIntCedula(int intCedula) {
-        this.intCedula = intCedula;
+    public void setStrCedula(String strCedula) {
+        this.strCedula = strCedula;
     }
 
     public String getStrUsuario() {
@@ -44,14 +44,11 @@ public class AbonoCliente {
         this.dblMontoAbono = dblMontoAbono;
     }
 
-    public Date getFechaAbono() {
+    public String getFechaAbono() {
         return fechaAbono;
     }
 
-    public void setFechaAbono(Date strFecha) {
+    public void setFechaAbono(String strFecha) {
         this.fechaAbono = strFecha;
-    }
-    
-    
-    
+    }    
 }

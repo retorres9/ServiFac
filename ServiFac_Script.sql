@@ -2,7 +2,6 @@ CREATE DATABASE empresa;
 
 USE empresa;
 select * from producto;
-SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE  p.id_ubicacion = u.id_ubicacion AND Nombre_Producto REGEXP CONCAT('^',"") OR Codigo REGEXP CONCAT ('^',"") ORDER BY Nombre_Producto Asc;
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
@@ -11,7 +10,6 @@ usuario VARCHAR(15) NOT NULL UNIQUE,
 contrasena VARCHAR(128) NOT NULL,
 rol INT(10) 
 );
-select * from usuario;
 
 CREATE TABLE clientes(
 nombres VARCHAR(50) NOT NULL UNIQUE,
@@ -88,13 +86,16 @@ id_bodega INT (3),
 codigo VARCHAR(13),
 cantidad INT (4)
 );
+UPDATE clientes SET deuda = 100 WHERE nombres ="ROBERTH TORRES";
+SELECT * FROM abono_cliente;
 
+DROP TABLE abono_cliente;
 CREATE TABLE abono_cliente(
 id_Abono INT(10) PRIMARY KEY AUTO_INCREMENT,
-cedula INT(10) NOT NULL,
+cedula VARCHAR(13) NOT NULL,
 usuario VARCHAR(15) NOT NULL,
 monto_abono DECIMAL(7,2) NOT NULL,
-fecha DATE
+fecha VARCHAR(10) NOT NULL
 );
 -- Revisar pago_proveedor
 CREATE TABLE pago_proveedor(

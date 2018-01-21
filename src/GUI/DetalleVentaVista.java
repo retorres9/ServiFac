@@ -122,71 +122,71 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     }
 
     private void updateTablaVentas() {
-        try {
-            BLVenta dl = new BLVenta();
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Nro Venta");
-            dtm.addColumn("Cédula");
-            dtm.addColumn("Cliente");
-            dtm.addColumn("Costo Total");
-            dtm.addColumn("Valor Cancelado");
-            dtm.addColumn("Fecha");
-            setAnchoColumnas();
-            String fecha = calendario.getText();
-            for (int i = 0; i < dl.vistaVenta(fecha).size(); i++) {
-                dtm.addRow(dl.vistaVenta(fecha).get(i));
-            }
-            tblVentas.setModel(dtm);
-        } catch (SQLException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            BLVenta dl = new BLVenta();
+//            DefaultTableModel dtm = new DefaultTableModel();
+//            dtm.addColumn("Nro Venta");
+//            dtm.addColumn("Cédula");
+//            dtm.addColumn("Cliente");
+//            dtm.addColumn("Costo Total");
+//            dtm.addColumn("Valor Cancelado");
+//            dtm.addColumn("Fecha");
+//            setAnchoColumnas();
+//            String fecha = calendario.getText();
+//            for (int i = 0; i < dl.vistaVenta(fecha).size(); i++) {
+//                dtm.addRow(dl.vistaVenta(fecha).get(i));
+//            }
+//            tblVentas.setModel(dtm);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     private void updateTablaPagosCL() {
-        try {
-            BLAbonoCliente blc = new BLAbonoCliente();
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Cliente");
-            dtm.addColumn("Cédula");
-            dtm.addColumn("Monto de Abono");
-            dtm.addColumn("Deuda");
-            dtm.addColumn("Fecha");
-            setAnchoColumnas();
-            String fecha = calendario.getText();
-            for (int i = 0; i < blc.verAbono(fecha).size(); i++) {
-                dtm.addRow(blc.verAbono(fecha).get(i));
-            }
-            tblPagoCl.setModel(dtm);
-        } catch (SQLException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            BLAbonoCliente blc = new BLAbonoCliente();
+//            DefaultTableModel dtm = new DefaultTableModel();
+//            dtm.addColumn("Cliente");
+//            dtm.addColumn("Cédula");
+//            dtm.addColumn("Monto de Abono");
+//            dtm.addColumn("Deuda");
+//            dtm.addColumn("Fecha");
+//            setAnchoColumnas();
+//            String fecha = calendario.getText();
+//            for (int i = 0; i < blc.verAbono(fecha).size(); i++) {
+//                dtm.addRow(blc.verAbono(fecha).get(i));
+//            }
+//            tblPagoCl.setModel(dtm);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     private void updateTablaPagoPR() {
-        try {
-            BLPagoProveedor blpp = new BLPagoProveedor();
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Nro Venta");
-            dtm.addColumn("Cédula");
-            dtm.addColumn("Cliente");
-            dtm.addColumn("Costo Total");
-            dtm.addColumn("Valor Cancelado");
-            dtm.addColumn("Fecha");
-            setAnchoColumnas();
-            String fecha = calendario.getText();
-            for (int i = 0; i < blpp.verPagoPorFecha(fecha).size(); i++) {
-                dtm.addRow(blpp.verPagoPorFecha(fecha).get(i));
-            }
-            tblPagoPr.setModel(dtm);
-        } catch (SQLException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            BLPagoProveedor blpp = new BLPagoProveedor();
+//            DefaultTableModel dtm = new DefaultTableModel();
+//            dtm.addColumn("Nro Venta");
+//            dtm.addColumn("Cédula");
+//            dtm.addColumn("Cliente");
+//            dtm.addColumn("Costo Total");
+//            dtm.addColumn("Valor Cancelado");
+//            dtm.addColumn("Fecha");
+//            setAnchoColumnas();
+//            String fecha = calendario.getText();
+//            for (int i = 0; i < blpp.verPagoPorFecha(fecha).size(); i++) {
+//                dtm.addRow(blpp.verPagoPorFecha(fecha).get(i));
+//            }
+//            tblPagoPr.setModel(dtm);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public static String getFechaActual() {
