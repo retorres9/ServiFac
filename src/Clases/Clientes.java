@@ -15,6 +15,12 @@ public class Clientes {
         this.strCedula = strCedula;
     }
 
+    public Clientes(String strNombre, double dblDeuda, String strDireccion) {
+        this.strNombre = strNombre;
+        this.dblDeuda = dblDeuda;
+        this.strDireccion = strDireccion;
+    }
+
     public Clientes(double dblDeuda, String strCedula) {
         this.strCedula = strCedula;
         this.dblDeuda = dblDeuda;

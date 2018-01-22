@@ -6,6 +6,7 @@ import Clases.Producto;
 import Clases.DetalleVenta;
 import Clases.NumeroLetras;
 import Clases.Venta;
+import Dat.DATClientes;
 import Dat.DATMaterial;
 import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
@@ -48,17 +49,19 @@ public final class Factura extends javax.swing.JFrame {
     int cantInicial;
     boolean flag = true;
     String n, vendedor;
-    Clientes manejadorCliente = new Clientes();
+    Clientes cliente = new Clientes();
     DetalleVenta manejadorReporte = new DetalleVenta();
     Producto producto = new Producto();
     Venta manejadorVenta = new Venta();
     DefaultTableModel modelo = new DefaultTableModel();
     DATMaterial manejadorProd;
+    DATClientes manejadorCliente;
 
     public Factura() {
         initComponents();
         cargarEncabezado();
         manejadorProd = new DATMaterial();
+        manejadorCliente = new DATClientes();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
@@ -66,6 +69,7 @@ public final class Factura extends javax.swing.JFrame {
         //contador();
         permisos();
         txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
+        txtCod.requestFocus();
     }
 
     public void cargarEncabezado() {
@@ -258,7 +262,6 @@ public final class Factura extends javax.swing.JFrame {
 //        resetFact();
 //    }
     public void resetFact() {
-        DefaultTableModel modelo = (DefaultTableModel) tblVentas.getModel();
         int a = tblVentas.getRowCount() - 1;
         for (int j = a; tblVentas.getRowCount() > 0; j--) {
             modelo.removeRow(j);
@@ -285,13 +288,13 @@ public final class Factura extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
+        txtCod = new javax.swing.JTextField();
         txtImprimir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         cmbTipComp = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
-        txtCod = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         txtDireccionCl = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -357,6 +360,13 @@ public final class Factura extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja.png"))); // NOI18N
 
+        txtCod.setFocusCycleRoot(true);
+        txtCod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodKeyPressed(evt);
+            }
+        });
+
         txtImprimir.setText("Imprimir");
         txtImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -368,6 +378,7 @@ public final class Factura extends javax.swing.JFrame {
         jPanel1.setToolTipText("");
 
         cmbTipComp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Factura", "Nota de Venta" }));
+        cmbTipComp.setFocusable(false);
         cmbTipComp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbTipCompActionPerformed(evt);
@@ -379,6 +390,7 @@ public final class Factura extends javax.swing.JFrame {
         jLabel8.setText("Tipo de Venta:");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito" }));
+        jComboBox2.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -409,12 +421,6 @@ public final class Factura extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        txtCod.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCodKeyPressed(evt);
-            }
-        });
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(51, 51, 51))); // NOI18N
 
         txtDireccionCl.setText(" ");
@@ -431,6 +437,13 @@ public final class Factura extends javax.swing.JFrame {
         jLabel13.setText("Nombre:");
 
         jLabel11.setText("Cedula:");
+
+        txtCed.setText("1111111111111");
+        txtCed.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCedFocusGained(evt);
+            }
+        });
 
         jButton2.setText("Buscar por nombre");
         jButton2.setToolTipText("Presione para buscar por nombre");
@@ -462,7 +475,7 @@ public final class Factura extends javax.swing.JFrame {
                         .addGap(8, 8, 8)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
@@ -504,6 +517,7 @@ public final class Factura extends javax.swing.JFrame {
         txtTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTotal.setText("0.00");
 
+        txtTotalLetras.setEditable(false);
         txtTotalLetras.setColumns(20);
         txtTotalLetras.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtTotalLetras.setRows(5);
@@ -696,7 +710,7 @@ public final class Factura extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel7)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -740,39 +754,32 @@ public final class Factura extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public static String getFechaActual() {
-        Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-        return formateador.format(ahora);
-    }
-
     public void cargaCliente() {
-        try {
-            String nom = txtCed.getText();
-            ArrayList<Object[]> datos = new ArrayList<>();
-            datos = objC.ClienteFactura(nom);
-            for (Object dato[] : datos) {
-                String cli = String.valueOf(dato[0]);
-                txtCliente.setText(cli);
-                String dir = String.valueOf(dato[1]);
-                txtDireccionCl.setText(dir);
-                String strDeuda = String.valueOf(dato[2]);
-                deuda = Double.parseDouble(strDeuda);
-            }
-            if (txtCliente.getText().equals(" ")) {
-                int opc = JOptionPane.showConfirmDialog(null, "Cliente no registrado\n¿Desea ingrear un nuevo Cliente?", "Aviso!", JOptionPane.YES_NO_OPTION);
-                if (opc == JOptionPane.YES_OPTION) {
-                    NewCliente objCl = new NewCliente();
-                    NewCliente.valid = 0;
-                    objCl.setVisible(true);
-                } else {
-
+        String nom = txtCed.getText();
+        ArrayList<Clientes> busqCliente = manejadorCliente.FacturaCliente(nom);
+        int listaCliente = busqCliente.size();
+        for (int i = 0; i < listaCliente; i++) {
+            cliente = busqCliente.get(i);
+            String nombre = cliente.getStrNombre();
+            String dir = cliente.getStrDireccion();
+            txtCliente.setText(nombre);
+            txtDireccionCl.setText(dir);
+        }
+        if (txtCliente.getText().equals(" ")) {
+            int opc = JOptionPane.showConfirmDialog(null, "Cliente no registrado\n¿Desea ingrear un nuevo Cliente?", "Aviso!", JOptionPane.YES_NO_OPTION);
+            if (opc == JOptionPane.YES_OPTION) {
+                NuevoClienteDialog clienteDialogo = new NuevoClienteDialog(this, true);
+                clienteDialogo.setVisible(true);
+                if (clienteDialogo != null) {
+                if (!clienteDialogo.getInformacion().equals("")) {
+                    
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+//                    NewCliente.valid = 0;
+//                    objCl.setVisible(true);
+            } else {
+                
+            }
         }
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -939,6 +946,10 @@ public final class Factura extends javax.swing.JFrame {
         objBusqNom.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void txtCedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedFocusGained
+        txtCed.setText("");
+    }//GEN-LAST:event_txtCedFocusGained
+
     public void cargarProducto() {
         double totProd;
         int n = 1;
@@ -972,12 +983,12 @@ public final class Factura extends javax.swing.JFrame {
         modelo.addRow(new Object[0]);
     }
 
-    public void total() {
+    public void total() { //Para sumar el precio total y asignarlo a el textfield de total
         double total1 = 0;
         int totalRow = tblVentas.getRowCount();
         totalRow -= 1;
         for (int j = 0; j <= (totalRow); j++) {
-            String strTotal = (String) tblVentas.getValueAt(j, 3).toString();
+            String strTotal = (String) tblVentas.getValueAt(j, 4).toString();
             double total = Double.parseDouble(strTotal);
             total1 += total;
             DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
@@ -994,10 +1005,10 @@ public final class Factura extends javax.swing.JFrame {
             String entero = (number[0]);
             String decimal = (number[1]);
             if (number[0].equals("1")) {
-                txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal );
+                txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal+"/100" );
             } else {
 
-                txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal);
+                txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal+"/100");
             }
 
         }

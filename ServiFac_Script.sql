@@ -1,7 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-select * from producto;
+select * from clientes;
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
@@ -14,7 +14,7 @@ rol INT(10)
 CREATE TABLE clientes(
 nombres VARCHAR(50) NOT NULL UNIQUE,
 cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
-telefono INT(10) NOT NULL,#ANALIZAR cambiar a varchar
+telefono VARCHAR(10) NOT NULL,#ANALIZAR cambiar a varchar
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL
 );

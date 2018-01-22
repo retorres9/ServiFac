@@ -243,11 +243,31 @@ public class DATClientes {
         }
     }
 
-    public ResultSet FacturaCliente(String nombre) throws ClassNotFoundException, SQLException {
-        //Statement st = c.getConnection().createStatement();
-        String Sentencia = "SELECT Nombres, Direccion, Deuda FROM clientes WHERE Cedula = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-        ps.setString(1, nombre);
-        return ps.executeQuery();
+    public ArrayList<Clientes> FacturaCliente(String nombre) {
+        ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT nombres, direccion, deuda FROM clientes WHERE cedula_cliente = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String nombreCli = rs.getString(1);
+                String direccion = rs.getString(2);
+                double deuda = rs.getDouble(3);
+                cliente = new Clientes(nombreCli, deuda, direccion);
+                listaCliente.add(cliente);
+            }
+        } catch (SQLException ex){
+            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+               // Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listaCliente;
     }
 }
