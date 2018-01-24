@@ -201,8 +201,7 @@ public class DATClientes {
                 ps.close();
                 con.close();
             } catch (SQLException ex) {
-                //Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
-                //ex.printStackTrace();
+                
             }
         }
     }

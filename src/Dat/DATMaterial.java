@@ -18,7 +18,6 @@ public class DATMaterial {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    //int longitudbytes = 9;
 
     public ArrayList<Producto> Consultar() throws ClassNotFoundException {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
@@ -118,8 +117,8 @@ public class DATMaterial {
         }
         return listaProductosNombre;
     }
-    
-     public ArrayList<Producto> ConsultarPorCodigo(String nombre) throws SQLException {
+
+    public ArrayList<Producto> ConsultarPorCodigo(String nombre) throws SQLException {
         ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -161,16 +160,16 @@ public class DATMaterial {
 //        ps.setString(1, codigo);
 //        return ps.executeQuery();
 //    }
-    
-    public void actualizarUbicacion(Producto producto){
-        try{
+
+    public void actualizarUbicacion(Producto producto) {
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET id_ubicacion = ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, producto.getIntUbicacion());
             ps.setString(2, producto.getStrNombreProd());
             ps.executeUpdate();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             try {
@@ -245,15 +244,6 @@ public class DATMaterial {
     }
 //
 
-//    public int UpdateCantFactura(String nombre, int strCant) throws ClassNotFoundException, SQLException {
-//        String Sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setInt(1, strCant);
-//        ps.setString(2, nombre);
-//        return ps.executeUpdate();
-//    }
-////
-
     public void UpdateProducto(Producto producto) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -324,14 +314,14 @@ public class DATMaterial {
         return cant;
     }
 
-    public void eliminarProducto(String nombre){
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+    public void eliminarProducto(String nombre) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "DELETE FROM producto WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             ps.executeUpdate();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede eliminar el producto");
         } finally {
             try {
@@ -341,18 +331,18 @@ public class DATMaterial {
                 Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-//
+
     public ArrayList<Producto> cargaProductoFact(String codigo) {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT Nombre_Producto, Precio, precio_mayor, Codigo FROM producto WHERE Codigo = ? AND Cantidad > 0";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String nombre = rs.getString(1);
                 double precio = rs.getDouble(2);
                 double precioMayor = rs.getDouble(3);
@@ -372,11 +362,43 @@ public class DATMaterial {
         }
         return listadoProducto;
     }
-//
-//    public ResultSet comprobarCant(String nombre) throws ClassNotFoundException, SQLException {
-//        String sentencia = "SELECT Cantidad FROM producto Where Nombre_Producto = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-//        ps.setString(1, nombre);
-//        return ps.executeQuery();
-//    }
+
+    public ArrayList<Producto> comprobarCant(String nombre) {
+        ArrayList<Producto> cantidadProd = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT Cantidad FROM producto Where Nombre_Producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int cant = rs.getInt(1);
+                Producto prod = new Producto(cant);
+                cantidadProd.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cantidadProd;
+    }
+
+    public void UpdateCantFactura(Producto prod) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, prod.getIntUbicacion());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
+            ps.setString(2, prod.getStrNombreProd());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

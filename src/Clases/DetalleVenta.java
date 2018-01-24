@@ -1,9 +1,9 @@
 package Clases;
 
 public class DetalleVenta {
-    private int intCed;
+    private String strCed;
     private int intCant;
-    private int intCod;
+    private String strCod;
     private double dblPrecioVenta;
     private String strUsuario;
     private int id_Venta;
@@ -11,21 +11,21 @@ public class DetalleVenta {
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int intCed, int intCant, int intCod, double dblPrecioVenta, String strUsuario, int id_Venta) {
-        this.intCed = intCed;
+    public DetalleVenta(String strCed, int intCant, String strCod, double dblPrecioVenta, String strUsuario, int id_Venta) {
+        this.strCod = strCod;
         this.intCant = intCant;
-        this.intCod = intCod;
+        this.strCed = strCed;
         this.dblPrecioVenta = dblPrecioVenta;
         this.strUsuario = strUsuario;
         this.id_Venta = id_Venta;
     }
 
-    public int getIntCed() {
-        return intCed;
+    public String getStrCed() {
+        return strCed;
     }
 
-    public void setIntCed(int intCed) {
-        this.intCed = intCed;
+    public void setStrCed(String strCed) {
+        this.strCed = strCed;
     }
 
     public int getIntCant() {
@@ -36,12 +36,12 @@ public class DetalleVenta {
         this.intCant = intCant;
     }
 
-    public int getIntCod() {
-        return intCod;
+    public String getStrCod() {
+        return strCod;
     }
 
-    public void setIntCod(int intCod) {
-        this.intCod = intCod;
+    public void setStrCod(String strCod) {
+        this.strCod = strCod;
     }
 
     public double getDblPrecioVenta() {

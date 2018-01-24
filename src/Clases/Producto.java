@@ -41,6 +41,10 @@ public class Producto {
         this.fltPrecio = fltPrecio;
         this.fltPrecioMayor = fltPrecioMayor;
     }
+    
+    public Producto(int intCantidad){
+        this.intCantidad = intCantidad;
+    }
 
     public String getStrUbicacion() {
         return strUbicacion;

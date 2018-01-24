@@ -1,6 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+
 select * from clientes;
 
 CREATE TABLE usuario(
@@ -63,7 +64,7 @@ CREATE TABLE venta(
 id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
 total_Venta DECIMAL(7,2) NOT NULL,
 valor_Cancelado DECIMAL(7,2) NOT NULL,
-fecha DATE,
+fecha VARCHAR(10),
 cedula_usuario INT(150) NOT NULL
 );
 

@@ -5,9 +5,9 @@ public class Venta {
     private double dblTotalVenta;
     private String strFecha;
     private double dblValCancelado;
-    private int cedulaUser;
+    private String cedulaUser;
 
-    public Venta(int intIdVenta, double dblTotalVenta, double dblValCancelado, String strFecha, int cedulaUser) {
+    public Venta(int intIdVenta, double dblTotalVenta, double dblValCancelado, String strFecha, String cedulaUser) {
         this.intIdVenta = intIdVenta;
         this.dblTotalVenta = dblTotalVenta;
         this.dblValCancelado = dblValCancelado;
@@ -56,11 +56,11 @@ public class Venta {
         this.strFecha = strFecha;
     }
 
-    public int getCedulaUser() {
+    public String getCedulaUser() {
         return cedulaUser;
     }
 
-    public void setCedulaUser(int cedulaUser) {
+    public void setCedulaUser(String cedulaUser) {
         this.cedulaUser = cedulaUser;
     }
     

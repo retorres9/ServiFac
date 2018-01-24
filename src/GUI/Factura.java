@@ -8,6 +8,8 @@ import Clases.NumeroLetras;
 import Clases.Venta;
 import Dat.DATClientes;
 import Dat.DATMaterial;
+import Dat.DATReporte;
+import Dat.DATVenta;
 import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
 import java.awt.Image;
@@ -51,18 +53,22 @@ public final class Factura extends javax.swing.JFrame {
     boolean banderaFila = true;
     String n, vendedor;
     Clientes cliente = new Clientes();
-    DetalleVenta manejadorReporte = new DetalleVenta();
+    DetalleVenta detalle = new DetalleVenta();
     Producto producto = new Producto();
-    Venta manejadorVenta = new Venta();
+    Venta venta = new Venta();
+    DATVenta manejadorVenta;
     DefaultTableModel modelo = new DefaultTableModel();
     DATMaterial manejadorProd;
     DATClientes manejadorCliente;
+    DATReporte manejadorDetalle;
 
     public Factura() {
         initComponents();
         cargarEncabezado();
         manejadorProd = new DATMaterial();
         manejadorCliente = new DATClientes();
+        manejadorVenta = new DATVenta();
+        manejadorDetalle = new DATReporte();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
@@ -231,37 +237,35 @@ public final class Factura extends javax.swing.JFrame {
         //inputStream.close();
     }
 
-//    public void ventaProd() {
-//        vendedor = Configuracion.vendedor_venta();
-//        System.out.println(vendedor);
-//        for (int i = 0; i < tblVentas.getRowCount(); i++) {
-//            try {
-//                int cantExist = 0;
-//                int cantVenta = (int) tblVentas.getValueAt(i, 0);
-//                String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
-//                String strCodigo = (String) tblVentas.getValueAt(i, 4);
-//                int codigo = Integer.parseInt(strCodigo);
-//                String strPrecio = (String) tblVentas.getValueAt(i, 2);
-//                double precio_Venta = Double.parseDouble(strPrecio);
-//                ArrayList<Object[]> datos = new ArrayList<>();
-//                datos = objM.comprobarCant(descripcionVenta);
-//                for (Object[] dato1 : datos) {
-//                    String cantProdObj = String.valueOf(dato1[0]);
-//                    cantExist = Integer.parseInt(cantProdObj);
-//                }
-//                cantExist = cantExist - cantVenta;
-//                manejadorProducto = new Producto(descripcionVenta, cantExist);
-//                objM.updateCantFactura(manejadorProducto);
-//                int cedula = Integer.parseInt(txtCed.getText());
-//                System.out.println(cont);
-//                manejadorReporte = new DetalleVenta(cedula, cantVenta, codigo, precio_Venta, vendedor, cont);
-//                objR.creaReport(manejadorReporte);
-//            } catch (ClassNotFoundException | SQLException ex) {
-//                Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        resetFact();
-//    }
+    public void ventaProd() {
+        vendedor = Configuracion.vendedor_venta();
+        for (int i = 0; i < tblVentas.getRowCount(); i++) {
+            try {
+                int cantExist = 0;
+                int cantVenta = (int) tblVentas.getValueAt(i, 0);
+                String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
+                String strCodigo = (String) tblVentas.getValueAt(i, 4);
+                String strPrecio = (String) tblVentas.getValueAt(i, 2);
+                double precio_Venta = Double.parseDouble(strPrecio);
+                ArrayList<Producto> cantProd = manejadorProd.comprobarCant(descripcionVenta);
+                int intCantProd = cantProd.size();
+                for (int j = 0; j<intCantProd; j++) {
+                    producto = cantProd.get(i);
+                    cantExist = producto.getIntCantidad();
+                }
+                cantExist = cantExist - cantVenta;
+                producto = new Producto(descripcionVenta, cantExist);
+                manejadorProd.UpdateCantFactura(producto);
+                int cedula = Integer.parseInt(txtCed.getText());
+                detalle = new DetalleVenta(cedula, cantVenta, codigo, precio_Venta, vendedor, cont);
+                manejadorDetalle.creaReport(detalle);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        resetFact();
+    }
+    
     public void resetFact() {
         int a = tblVentas.getRowCount() - 1;
         for (int j = a; tblVentas.getRowCount() > 0; j--) {
@@ -275,36 +279,30 @@ public final class Factura extends javax.swing.JFrame {
             double num, numTotal;
             String strNum = JOptionPane.showInputDialog(null, "Ingrese el monto recibido");
             num = Double.parseDouble(strNum);
-            System.out.println(num);
             numTotal = Double.parseDouble(txtTotal.getText());
-            System.out.println(numTotal);
             double cambio = num - numTotal;
-            System.out.println(cambio);
             DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
             simbolos.setDecimalSeparator('.');
             DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
             String decimal = dcmlCambio.format(cambio);
             double dblDecimal = Double.parseDouble(decimal);
-            System.out.println(dblDecimal);
             dblDecimal = Math.abs(dblDecimal);
-            System.out.println(dblDecimal);
-            int usuario = Integer.parseInt(txtUsuario.getText());//cedula
             double EPSILON = 0.0000001;
-            if (Math.abs(dblDecimal) < EPSILON) {
+            System.out.println(dblDecimal);
+            if (dblDecimal < EPSILON) {
                 JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
-            } else if (dblDecimal > 0 && num > numTotal) {
+            } else if ((dblDecimal > 0) && (num > numTotal)) {
                 JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
             } else {
                 JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
-                System.out.println(deuda);
-                deuda = deuda + dblDecimal;
-                System.out.println(deuda);
-//                manejadorCliente = new Clientes(deuda, txtCliente.getText());
-//                objC.InsertarDeuda(manejadorCliente);
+                double nuevaDeuda = deuda + dblDecimal;
+                cliente = new Clientes(nuevaDeuda, txtCed.getText());
+                manejadorCliente.agregarDeuda(cliente);
             }
-            //manejadorVenta = new Venta(cont, numTotal, num, getFecha(), usuario);//OJO
+            venta = new Venta(cont, numTotal, num, getFecha(), txtCed.getText());//OJO
+            manejadorVenta.crearVenta(venta);
         } catch (NumberFormatException ex) {
-
+            ex.printStackTrace();
         }
 
     }
@@ -795,6 +793,7 @@ public final class Factura extends javax.swing.JFrame {
             String dir = cliente.getStrDireccion();
             txtCliente.setText(nombre);
             txtDireccionCl.setText(dir);
+            deuda = cliente.getDblDeuda();
         }
         if (txtCliente.getText().equals(" ")) {
             int opc = JOptionPane.showConfirmDialog(null, "Cliente no registrado\n¿Desea ingrear un nuevo Cliente?", "Aviso!", JOptionPane.YES_NO_OPTION);
@@ -817,13 +816,13 @@ public final class Factura extends javax.swing.JFrame {
     private void txtImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImprimirActionPerformed
         if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
             venta();
-            //ventaProd();
+            ventaProd();
             //imprimirFactura();
             //this.contador();
         } else {
             venta();
             //imprimirFactura();
-            //ventaProd();
+            ventaProd();
             //this.contador();
         }
     }//GEN-LAST:event_txtImprimirActionPerformed
@@ -834,16 +833,7 @@ public final class Factura extends javax.swing.JFrame {
         } else {
             verificar();
             if (flag == true) {
-                if (tblVentas.getRowCount() == 0) {
-                    banderaFila = false;
-                }
-                if (banderaFila == true) {
-                    crearFilas();
-                    cargarProducto();
-                } else {
-                    
-                }
-
+                cargarProducto();
             }
             flag = true;
         }
@@ -981,12 +971,16 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCedFocusGained
 
     public void cargarProducto() {
-        if (banderaFila = true) {
-            double totProd;
-            int n = 1;
-            String dato = txtCod.getText();
-            ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
-            int cantLista = listadoProducto.size();
+
+        double totProd;
+        int n = 1;
+        String dato = txtCod.getText();
+        ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
+        int cantLista = listadoProducto.size();
+        if (cantLista == 0) {
+
+        } else {
+            crearFilas();
             for (int i = 0; i < cantLista; i++) {
                 producto = listadoProducto.get(i);
                 String prod = producto.getStrNombreProd();
@@ -1007,14 +1001,15 @@ public final class Factura extends javax.swing.JFrame {
                 modelo.setValueAt(codigo, fila, 5);
             }
             fila++;
-        } else {
-
         }
+        
 
     }
 
     public void crearFilas() {
+
         modelo.addRow(new Object[0]);
+
     }
 
     public void total() { //Para sumar el precio total y asignarlo a el textfield de total
@@ -1051,6 +1046,7 @@ public final class Factura extends javax.swing.JFrame {
 
         }
     }
+    boolean verif = true;
 
     public void verificar() {//Para actualizar la cantidad si se repite el producto
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
@@ -1068,7 +1064,7 @@ public final class Factura extends javax.swing.JFrame {
                 modelo.setValueAt(cant2, i, 0);
                 modelo.setValueAt(precio2, i, 4);
                 flag = false;
-
+                verif = false;
                 total();
                 break;
             } else {
