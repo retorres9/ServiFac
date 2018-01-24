@@ -30,7 +30,7 @@ public class DATClientes {
             while (rs.next()) {
                 String nombre = rs.getString(1);
                 String cedula = rs.getString(2);
-                int telf = rs.getInt(3);
+                String telf = rs.getString(3);
                 double deuda = rs.getDouble(4);
                 String direccion = rs.getString(5);
                 cliente = new Clientes(nombre, cedula, telf, deuda, direccion);
@@ -49,33 +49,33 @@ public class DATClientes {
         return listadoClientes;
     }
 
-    public ArrayList<Clientes> ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
-        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
-                + "FROM clientes c, detalle_venta dv, venta v "
-                + "WHERE c.Cedula_Cliente = dv.Cedula AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres Asc, dv.Id_Venta";
-            ps = con.prepareStatement(Sentencia);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                
-            }
-        }
-        
-        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-        ps.setString(1, nombre);
-        return ps.executeQuery();
-    }
-
-    public ResultSet Consultar() throws ClassNotFoundException, SQLException {
-        Statement st = c.getConnection().createStatement();
-        String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v. Valor_Cancelado, v.Fecha "
-                + "FROM clientes c, detalle_venta dv, venta v "
-                + "WHERE c.Cedula = dv.Cedula AND v.Id_Venta = dv.Id_Venta ORDER BY c.Nombres Asc, dv.Id_Venta";
-        ResultSet re = st.executeQuery(Sentencia);
-        return re;
-    }
+//    public ArrayList<Clientes> ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
+//        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
+//        try{
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+//            String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
+//                + "FROM clientes c, detalle_venta dv, venta v "
+//                + "WHERE c.Cedula_Cliente = dv.Cedula AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres Asc, dv.Id_Venta";
+//            ps = con.prepareStatement(Sentencia);
+//            rs = ps.executeQuery();
+//            while(rs.next()){
+//                
+//            }
+//        }
+//        
+//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
+//        ps.setString(1, nombre);
+//        return ps.executeQuery();
+//    }
+//
+//    public ResultSet Consultar() throws ClassNotFoundException, SQLException {
+//        Statement st = c.getConnection().createStatement();
+//        String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v. Valor_Cancelado, v.Fecha "
+//                + "FROM clientes c, detalle_venta dv, venta v "
+//                + "WHERE c.Cedula = dv.Cedula AND v.Id_Venta = dv.Id_Venta ORDER BY c.Nombres Asc, dv.Id_Venta";
+//        ResultSet re = st.executeQuery(Sentencia);
+//        return re;
+//    }
 
     public ArrayList<Clientes> ConsultarPorNombre(String nombre) {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
@@ -88,7 +88,7 @@ public class DATClientes {
             while (rs.next()) {
                 String nombreCliente = rs.getString(1);
                 String cedula = rs.getString(2);
-                int telf = rs.getInt(3);
+                String telf = rs.getString(3);
                 double deuda = rs.getDouble(4);
                 String direccion = rs.getString(5);
                 cliente = new Clientes(nombreCliente, cedula, telf, deuda, direccion);
@@ -118,7 +118,7 @@ public class DATClientes {
             while (rs.next()) {
                 String nombreCliente = rs.getString(1);
                 String cedula = rs.getString(2);
-                int telf = rs.getInt(3);
+                String telf = rs.getString(3);
                 double deuda = rs.getDouble(4);
                 String direccion = rs.getString(5);
                 cliente = new Clientes(nombreCliente, cedula, telf, deuda, direccion);
@@ -145,7 +145,7 @@ public class DATClientes {
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrNombre());
             ps.setString(2, cliente.getStrCedula());
-            ps.setInt(3, cliente.getIntTelf());
+            ps.setString(3, cliente.getStrTelf());
             ps.setDouble(4, cliente.getDblDeuda());
             ps.setString(5, cliente.getStrDireccion());
             ps.executeUpdate();
@@ -189,7 +189,7 @@ public class DATClientes {
             String sentencia = "UPDATE clientes SET Nombres = ?, Telefono = ?, Direccion = ? WHERE Cedula_Cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrNombre());
-            ps.setInt(2, cliente.getIntTelf());
+            ps.setString(2, cliente.getStrTelf());
             ps.setString(3, cliente.getStrDireccion());
             ps.setString(4, cliente.getStrCedula());
             ps.executeUpdate();

@@ -43,18 +43,28 @@ public final class NewCliente extends javax.swing.JFrame {
     }
 
     public void guardarCliente() {
+        double deuda = 0.00;
         try {
             String nombre = txtNombre.getText().toUpperCase();
             String dir = txtDireccion.getText().toUpperCase();
             String cedula = txtCedula.getText();
-            int telf = Integer.parseInt(txtTelf.getText());
-            double deuda = Double.parseDouble(txtDeuda.getText());
-
+            String telf = txtTelf.getText();
+            if (txtDeuda.getText().isEmpty()){
+                
+            } else {
+                deuda = Double.parseDouble(txtDeuda.getText());
+            }
+            
+            
             objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
             try {
                 if (cliente.InsertarCliente(objCliente)) {
                     JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
-                    this.dispose();
+                    txtNombre.setText("");
+                    txtDireccion.setText("");
+                    txtCedula.setText("");
+                    txtTelf.setText("");
+                    txtDeuda.setText("");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);

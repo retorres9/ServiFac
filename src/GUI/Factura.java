@@ -48,6 +48,7 @@ public final class Factura extends javax.swing.JFrame {
     int filasSelec;
     int cantInicial;
     boolean flag = true;
+    boolean banderaFila = true;
     String n, vendedor;
     Clientes cliente = new Clientes();
     DetalleVenta manejadorReporte = new DetalleVenta();
@@ -162,7 +163,7 @@ public final class Factura extends javax.swing.JFrame {
         printer.printTextWrap(1, 2, 30, 60, "FACTURA DE VENTA");
         //printer.printTextWrap(linI, linE, colI, colE, null);
         //printer.printTextWrap(2, 3, 1, 22, "Num. Boleta : " + txtVentaNumeroFactura.getText());
-        printer.printTextWrap(2, 3, 25, 55, "Fecha de Emision: " + getFechaActual());
+        printer.printTextWrap(2, 3, 25, 55, "Fecha de Emision: " + getFecha());
         printer.printTextWrap(2, 3, 40, 60, "Hora: 12:22:51");
         printer.printTextWrap(3, 3, 1, 60, "Vendedor.  : " + vendedor);
         printer.printTextWrap(4, 4, 1, 60, "CLIENTE: " + txtCliente.getText());
@@ -269,15 +270,45 @@ public final class Factura extends javax.swing.JFrame {
         }
     }
 
-//    public void venta() {
-//        try  catch (NumberFormatException ex) {
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//    }
+    public void venta() {
+        try {
+            double num, numTotal;
+            String strNum = JOptionPane.showInputDialog(null, "Ingrese el monto recibido");
+            num = Double.parseDouble(strNum);
+            System.out.println(num);
+            numTotal = Double.parseDouble(txtTotal.getText());
+            System.out.println(numTotal);
+            double cambio = num - numTotal;
+            System.out.println(cambio);
+            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+            simbolos.setDecimalSeparator('.');
+            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+            String decimal = dcmlCambio.format(cambio);
+            double dblDecimal = Double.parseDouble(decimal);
+            System.out.println(dblDecimal);
+            dblDecimal = Math.abs(dblDecimal);
+            System.out.println(dblDecimal);
+            int usuario = Integer.parseInt(txtUsuario.getText());//cedula
+            double EPSILON = 0.0000001;
+            if (Math.abs(dblDecimal) < EPSILON) {
+                JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
+            } else if (dblDecimal > 0 && num > numTotal) {
+                JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
+            } else {
+                JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
+                System.out.println(deuda);
+                deuda = deuda + dblDecimal;
+                System.out.println(deuda);
+//                manejadorCliente = new Clientes(deuda, txtCliente.getText());
+//                objC.InsertarDeuda(manejadorCliente);
+            }
+            //manejadorVenta = new Venta(cont, numTotal, num, getFecha(), usuario);//OJO
+        } catch (NumberFormatException ex) {
+
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -771,14 +802,11 @@ public final class Factura extends javax.swing.JFrame {
                 NuevoClienteDialog clienteDialogo = new NuevoClienteDialog(this, true);
                 clienteDialogo.setVisible(true);
                 if (clienteDialogo != null) {
-                if (!clienteDialogo.getInformacion().equals("")) {
-                    
+                    if (!clienteDialogo.getInformacion().equals("")) {
+
+                    }
                 }
-            }
-//                    NewCliente.valid = 0;
-//                    objCl.setVisible(true);
-            } else {
-                
+            } else {/*No se hace nada*/
             }
         }
     }
@@ -789,32 +817,34 @@ public final class Factura extends javax.swing.JFrame {
     private void txtImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImprimirActionPerformed
         if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
             venta();
-            ventaProd();
+            //ventaProd();
             //imprimirFactura();
-            this.contador();
+            //this.contador();
         } else {
             venta();
-            imprimirFactura();
-            ventaProd();
-            this.contador();
+            //imprimirFactura();
+            //ventaProd();
+            //this.contador();
         }
     }//GEN-LAST:event_txtImprimirActionPerformed
 
     public void comparaProducto() {
-        //            datos = objM.venta(dato);
-//            String compare = "";
-//            for (Object[] dato1 : datos) {
-//                compare = String.valueOf(dato1[2]);
-//            }
         if (txtCod.getText().isEmpty() || txtCod.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "bandera");
         } else {
             verificar();
             if (flag == true) {
-                crearFilas();
-                cargarProducto();
+                if (tblVentas.getRowCount() == 0) {
+                    banderaFila = false;
+                }
+                if (banderaFila == true) {
+                    crearFilas();
+                    cargarProducto();
+                } else {
+                    
+                }
+
             }
-            
             flag = true;
         }
         total();
@@ -823,6 +853,7 @@ public final class Factura extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println(txtCod.getText());
             comparaProducto();
+            txtCod.setText("");
         }
     }//GEN-LAST:event_txtCodKeyPressed
 
@@ -875,7 +906,6 @@ public final class Factura extends javax.swing.JFrame {
                             + "la cantidad disponible");
                     total();
                 } else {
-                    //System.out.println(cantProd2 + "<2" + newCant);
                     double newPrecioTot = newCant * precioUni;
                     modelo.setValueAt(newCant, filaSeleccionada, 0);
                     modelo.setValueAt(newPrecioTot, filaSeleccionada, 3);
@@ -942,8 +972,8 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        BusquedaNombre objBusqNom = new BusquedaNombre();
-        objBusqNom.setVisible(true);
+        BusqClienteDialgo busq = new BusqClienteDialgo(this, true);
+        busq.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtCedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedFocusGained
@@ -951,31 +981,35 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCedFocusGained
 
     public void cargarProducto() {
-        double totProd;
-        int n = 1;
-        String dato = txtCod.getText();
-        ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
-        int cantLista = listadoProducto.size();
-        for (int i = 0; i < cantLista; i++) {
-            producto = listadoProducto.get(i);
-            String prod = producto.getStrNombreProd();
-            double precio = producto.getFltPrecio();
-            double precioMayor = producto.getFltPrecioMayor();
-            String codigo = producto.getStrCod();
+        if (banderaFila = true) {
+            double totProd;
+            int n = 1;
+            String dato = txtCod.getText();
+            ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
+            int cantLista = listadoProducto.size();
+            for (int i = 0; i < cantLista; i++) {
+                producto = listadoProducto.get(i);
+                String prod = producto.getStrNombreProd();
+                double precio = producto.getFltPrecio();
+                double precioMayor = producto.getFltPrecioMayor();
+                String codigo = producto.getStrCod();
 
-            modelo.setValueAt(n, fila, 0);
-            modelo.setValueAt(prod, fila, 1);
-            modelo.setValueAt(precio, fila, 2);
-            modelo.setValueAt(precioMayor, fila, 3);
-            totProd = n * precio;
-            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-            simbolos.setDecimalSeparator('.');
-            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-            String strPrec = dcmlCambio.format(totProd);
-            modelo.setValueAt(strPrec, fila, 4);
-            modelo.setValueAt(codigo, fila, 5);
+                modelo.setValueAt(n, fila, 0);
+                modelo.setValueAt(prod, fila, 1);
+                modelo.setValueAt(precio, fila, 2);
+                modelo.setValueAt(precioMayor, fila, 3);
+                totProd = n * precio;
+                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                simbolos.setDecimalSeparator('.');
+                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+                String strPrec = dcmlCambio.format(totProd);
+                modelo.setValueAt(strPrec, fila, 4);
+                modelo.setValueAt(codigo, fila, 5);
+            }
+            fila++;
+        } else {
+
         }
-        fila++;
 
     }
 
@@ -984,32 +1018,36 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void total() { //Para sumar el precio total y asignarlo a el textfield de total
-        double total1 = 0;
-        int totalRow = tblVentas.getRowCount();
-        totalRow -= 1;
-        for (int j = 0; j <= (totalRow); j++) {
-            String strTotal = (String) tblVentas.getValueAt(j, 4).toString();
-            double total = Double.parseDouble(strTotal);
-            total1 += total;
-            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-            simbolos.setDecimalSeparator('.');
-            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-            String strTotalLbl = dcmlCambio.format(total1);
-            txtTotal.setText(strTotalLbl);
-        }
-        NumeroLetras numero = new NumeroLetras();
-        this.txtTotal.getText();
-
-        String number[] = txtTotal.getText().split("\\.");
-        if (number.length == 2) {
-            String entero = (number[0]);
-            String decimal = (number[1]);
-            if (number[0].equals("1")) {
-                txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal+"/100" );
-            } else {
-
-                txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal+"/100");
+        try {
+            double total1 = 0;
+            int totalRow = tblVentas.getRowCount();
+            totalRow -= 1;
+            for (int j = 0; j <= (totalRow); j++) {
+                String strTotal = (String) tblVentas.getValueAt(j, 4).toString();
+                double total = Double.parseDouble(strTotal);
+                total1 += total;
+                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                simbolos.setDecimalSeparator('.');
+                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+                String strTotalLbl = dcmlCambio.format(total1);
+                txtTotal.setText(strTotalLbl);
             }
+            NumeroLetras numero = new NumeroLetras();
+            this.txtTotal.getText();
+
+            String number[] = txtTotal.getText().split("\\.");
+            if (number.length == 2) {
+                String entero = (number[0]);
+                String decimal = (number[1]);
+                if (number[0].equals("1")) {
+                    txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal + "/100");
+                } else {
+
+                    txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES /" + decimal + "/100");
+                }
+
+            }
+        } catch (NullPointerException ex) {
 
         }
     }
@@ -1030,6 +1068,7 @@ public final class Factura extends javax.swing.JFrame {
                 modelo.setValueAt(cant2, i, 0);
                 modelo.setValueAt(precio2, i, 4);
                 flag = false;
+
                 total();
                 break;
             } else {

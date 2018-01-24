@@ -41,7 +41,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             String nombre = txtNombre.getText().toUpperCase();
             String dir = txtDireccion.getText().toUpperCase();
             String cedula = txtCedula.getText();
-            int telf = Integer.parseInt(txtTelf.getText());
+            String telf = txtTelf.getText();
             double deuda = Double.parseDouble(txtDeuda.getText());
 
             objCliente = new Clientes(nombre, cedula, telf, deuda, dir);

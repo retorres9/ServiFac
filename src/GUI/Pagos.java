@@ -646,12 +646,7 @@ public final class Pagos extends javax.swing.JFrame {
                 objCliente = listadoClienteNom.get(i);
                 String nombreCli = objCliente.getStrNombre();
                 String cedula = objCliente.getStrCedula();
-                int telf = objCliente.getIntTelf();
-                String strTelf = String.valueOf(telf);
-                if (strTelf.length() == 9) {
-                    strTelf = "0" + strTelf;
-                    telf = Integer.parseInt(strTelf);
-                }
+                String telf = objCliente.getStrTelf();
                 double deuda = objCliente.getDblDeuda();
                 String direccion = objCliente.getStrDireccion();
                 modelo.setValueAt(nombreCli, i, 0);
@@ -670,7 +665,7 @@ public final class Pagos extends javax.swing.JFrame {
                     objCliente = listadoClienteCed.get(i);
                     String nombreCli = objCliente.getStrNombre();
                     String cedula = objCliente.getStrCedula();
-                    int telf = objCliente.getIntTelf();
+                    String telf = objCliente.getStrTelf();
                     double deuda = objCliente.getDblDeuda();
                     String direccion = objCliente.getStrDireccion();
                     modelo.setValueAt(nombreCli, i, 0);
@@ -698,7 +693,7 @@ public final class Pagos extends javax.swing.JFrame {
         try {
             String n;
             n = JOptionPane.showInputDialog(null, "Actualice el nuevo nombre del cliente:\n" + txtNombre.getText().toUpperCase());
-            int telf = Integer.parseInt(txtTelf.getText());
+            String telf = txtTelf.getText();
             String direccion = txtDireccion.getText();
             String cedula = txtCedula.getText();
             objCliente = new Clientes(n, cedula, telf, direccion);
@@ -740,14 +735,13 @@ public final class Pagos extends javax.swing.JFrame {
         try {
             String telf;
             telf = JOptionPane.showInputDialog(null, "Actualice el nuevo número de teléfono del cliente:\n" + txtNombre.getText());
-            int nuevoTelf = Integer.parseInt(telf);
             if (telf.length() != 7 && telf.length() != 10) {
                 JOptionPane.showMessageDialog(null, "El número ingresado no es un número de teléfono valido", "Aviso", JOptionPane.ERROR_MESSAGE);
             } else {
                 String nombreCli = txtNombre.getText();
                 String direccion = txtDireccion.getText();
                 String cedula = txtCedula.getText();
-                objCliente = new Clientes(nombreCli, cedula, nuevoTelf, direccion);
+                objCliente = new Clientes(nombreCli, cedula, telf, direccion);
                 cliente.actualizarCliente(objCliente);
                 txtTelf.setText(telf);
                 cargarTabla();
@@ -832,7 +826,7 @@ public final class Pagos extends javax.swing.JFrame {
             direccion = JOptionPane.showInputDialog(null, "Ingrese la nueva dirección para el cliente:\n" + txtNombre.getText().toUpperCase());
             String nom = txtNombre.getText();
             String ced = txtCedula.getText();
-            int telf = Integer.parseInt(ced);
+            String telf = txtTelf.getText();
             objCliente = new Clientes(nom, ced, telf, direccion);
             cliente.actualizarCliente(objCliente);
             txtDireccion.setText(direccion);
@@ -852,12 +846,7 @@ public final class Pagos extends javax.swing.JFrame {
             objCliente = listadoClientes.get(i);
             String nombres = objCliente.getStrNombre();
             String cedula = objCliente.getStrCedula();
-            int telf = objCliente.getIntTelf();
-            String strTelf = String.valueOf(telf);
-            if (strTelf.length() == 9) {
-                strTelf = "0" + strTelf;
-                telf = Integer.parseInt(strTelf);
-            }
+            String telf = txtTelf.getText();
             double deuda = objCliente.getDblDeuda();
             String direccion = objCliente.getStrDireccion();
             modelo.setValueAt(nombres, i, 0);

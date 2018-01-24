@@ -294,7 +294,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
                 objCliente = listadoBusq.get(i);
                 String nombreCliente = objCliente.getStrNombre();
                 String cedula = objCliente.getStrCedula();
-                int telf = objCliente.getIntTelf();
+                String telf = objCliente.getStrTelf();
                 double deuda = objCliente.getDblDeuda();
                 String direccion = objCliente.getStrDireccion();
 
@@ -312,7 +312,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
                 objCliente = listadoBusq.get(i);
                 String nombreCliente = objCliente.getStrNombre();
                 String cedula = objCliente.getStrCedula();
-                int telf = objCliente.getIntTelf();
+                String telf = objCliente.getStrTelf();
                 double deuda = objCliente.getDblDeuda();
                 String direccion = objCliente.getStrDireccion();
 
@@ -455,7 +455,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
             objCliente = listadoClientes.get(i);
             String nombreCliente = objCliente.getStrNombre();
             String cedula = objCliente.getStrCedula();
-            int telf = objCliente.getIntTelf();
+            String telf = objCliente.getStrTelf();
             double deuda = objCliente.getDblDeuda();
             String direccion = objCliente.getStrDireccion();
 

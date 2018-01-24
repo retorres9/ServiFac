@@ -95,64 +95,52 @@ public final class PagoProveedor extends javax.swing.JFrame {
     }
 
     public void cargarTablaBusquedaNombre(String busq) {
-        try {
-            setAnchoColumnas();
-            ArrayList<Proveedor> listadoProv = proveedor.buscarNombreCuenta(busq);
-            int cantLista = listadoProv.size();
-            modelo.setNumRows(cantLista);
-            for (int i = 0; i < cantLista; i++) {
-                manejadorProveedor = listadoProv.get(i);
-                String empresa = manejadorProveedor.getStrEmpresa();
-                String ruc = manejadorProveedor.getRuc();
-                String nombre = manejadorProveedor.getStrNombreCuenta();
-                String tipo = manejadorProveedor.getStrTipo();
-                String numero = manejadorProveedor.getStrNumCuenta();
-                double deuda = manejadorProveedor.getDblDeuda();
-                String telf = manejadorProveedor.getStrTelf();
-
-                modelo.setValueAt(empresa, i, 0);
-                modelo.setValueAt(ruc, i, 1);
-                modelo.setValueAt(nombre, i, 2);
-                modelo.setValueAt(tipo, i, 3);
-                modelo.setValueAt(numero, i, 4);
-                modelo.setValueAt(deuda, i, 5);
-                modelo.setValueAt(telf, i, 6);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        setAnchoColumnas();
+        ArrayList<Proveedor> listadoProv = proveedor.buscarNombreCuenta(busq);
+        int cantLista = listadoProv.size();
+        modelo.setNumRows(cantLista);
+        for (int i = 0; i < cantLista; i++) {
+            manejadorProveedor = listadoProv.get(i);
+            String empresa = manejadorProveedor.getStrEmpresa();
+            String ruc = manejadorProveedor.getRuc();
+            String nombre = manejadorProveedor.getStrNombreCuenta();
+            String tipo = manejadorProveedor.getStrTipo();
+            String numero = manejadorProveedor.getStrNumCuenta();
+            double deuda = manejadorProveedor.getDblDeuda();
+            String telf = manejadorProveedor.getStrTelf();
+            
+            modelo.setValueAt(empresa, i, 0);
+            modelo.setValueAt(ruc, i, 1);
+            modelo.setValueAt(nombre, i, 2);
+            modelo.setValueAt(tipo, i, 3);
+            modelo.setValueAt(numero, i, 4);
+            modelo.setValueAt(deuda, i, 5);
+            modelo.setValueAt(telf, i, 6);
         }
     }
 
     public void cargarTablaBusquedaEmpresa(String busq) {
-        try {
-            setAnchoColumnas();
-            ArrayList<Proveedor> listadoProv = proveedor.buscarEmpresa(busq);
-            int cantLista = listadoProv.size();
-            modelo.setNumRows(cantLista);
-            for (int i = 0; i < cantLista; i++) {
-                manejadorProveedor = listadoProv.get(i);
-                String empresa = manejadorProveedor.getStrEmpresa();
-                String ruc = manejadorProveedor.getRuc();
-                String nombre = manejadorProveedor.getStrNombreCuenta();
-                String tipo = manejadorProveedor.getStrTipo();
-                String numero = manejadorProveedor.getStrNumCuenta();
-                double deuda = manejadorProveedor.getDblDeuda();
-                String telf = manejadorProveedor.getStrTelf();
-
-                modelo.setValueAt(empresa, i, 0);
-                modelo.setValueAt(ruc, i, 1);
-                modelo.setValueAt(nombre, i, 2);
-                modelo.setValueAt(tipo, i, 3);
-                modelo.setValueAt(numero, i, 4);
-                modelo.setValueAt(deuda, i, 5);
-                modelo.setValueAt(telf, i, 6);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        setAnchoColumnas();
+        ArrayList<Proveedor> listadoProv = proveedor.buscarEmpresa(busq);
+        int cantLista = listadoProv.size();
+        modelo.setNumRows(cantLista);
+        for (int i = 0; i < cantLista; i++) {
+            manejadorProveedor = listadoProv.get(i);
+            String empresa = manejadorProveedor.getStrEmpresa();
+            String ruc = manejadorProveedor.getRuc();
+            String nombre = manejadorProveedor.getStrNombreCuenta();
+            String tipo = manejadorProveedor.getStrTipo();
+            String numero = manejadorProveedor.getStrNumCuenta();
+            double deuda = manejadorProveedor.getDblDeuda();
+            String telf = manejadorProveedor.getStrTelf();
+            
+            modelo.setValueAt(empresa, i, 0);
+            modelo.setValueAt(ruc, i, 1);
+            modelo.setValueAt(nombre, i, 2);
+            modelo.setValueAt(tipo, i, 3);
+            modelo.setValueAt(numero, i, 4);
+            modelo.setValueAt(deuda, i, 5);
+            modelo.setValueAt(telf, i, 6);
         }
     }
 
