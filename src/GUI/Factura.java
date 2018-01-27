@@ -93,7 +93,7 @@ public final class Factura extends javax.swing.JFrame {
         for (int i = 0; i < cant; i++) {
             venta = cantProducto.get(i);
             cont = venta.getIntIdVenta();
-        }        
+        }
     }
 
     public void permisos() {
@@ -365,6 +365,9 @@ public final class Factura extends javax.swing.JFrame {
         tblVentas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tblVentasKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblVentasKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tblVentas);
@@ -768,9 +771,10 @@ public final class Factura extends javax.swing.JFrame {
             cantInicial = (int) tblVentas.getValueAt(numFilas, 0);
             ArrayList<Producto> datos = manejadorProd.comprobarCant(filaDesc);
             int cantDatos = datos.size();
-            for (int i = 0; i < cantDatos;i++) {
+            for (int i = 0; i < cantDatos; i++) {
                 producto = datos.get(i);
                 int cant = producto.getIntCantidad();
+                System.out.println(cant);
                 cantProd2 = cant;
                 System.out.println(cantProd2);
             }
@@ -821,12 +825,12 @@ public final class Factura extends javax.swing.JFrame {
             venta();
             ventaProd();
             //imprimirFactura();
-            //this.contador();
+            this.contador();
         } else {
             venta();
             //imprimirFactura();
             ventaProd();
-            //this.contador();
+            this.contador();
         }
     }//GEN-LAST:event_txtImprimirActionPerformed
 
@@ -873,7 +877,6 @@ public final class Factura extends javax.swing.JFrame {
     private void tblVentasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVentasKeyPressed
         int filaSeleccionada = tblVentas.getSelectedRow();
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-
             if (filaSeleccionada >= 0) {
                 int[] filasselec = tblVentas.getSelectedRows();
                 for (int i = 0; i < filasselec.length; i++) {
@@ -882,30 +885,6 @@ public final class Factura extends javax.swing.JFrame {
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-            }
-        }
-
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String codTabla = (String) tblVentas.getValueAt(filaSeleccionada, 4);
-            String comparacion = txtCod.getText();
-            if (filaSeleccionada >= 0 && comparacion.equals(codTabla)) {
-                String precioUnit = (String) tblVentas.getValueAt(filaSeleccionada, 2);
-                double precioUni = Double.parseDouble(precioUnit);
-                String newCantidad = (String) tblVentas.getValueAt(filaSeleccionada, 0);
-                int newCant = Integer.parseInt(newCantidad);
-                if (newCant >= cantProd2) {
-                    modelo.setValueAt(cantInicial, filaSeleccionada, 0);
-                    JOptionPane.showMessageDialog(null, "La cantidad ingresada exede\n"
-                            + "la cantidad disponible");
-                    total();
-                } else {
-                    double newPrecioTot = newCant * precioUni;
-                    modelo.setValueAt(newCant, filaSeleccionada, 0);
-                    modelo.setValueAt(newPrecioTot, filaSeleccionada, 3);
-                    total();
-                }
-            } else {
-
             }
         }
     }//GEN-LAST:event_tblVentasKeyPressed
@@ -970,7 +949,9 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtCedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedFocusGained
-        txtCed.setText("");
+        if (txtCed.getText().equals("1111111111111")) {
+            txtCed.setText("");
+        }
     }//GEN-LAST:event_txtCedFocusGained
 
     private void txtCedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedKeyReleased
@@ -978,6 +959,36 @@ public final class Factura extends javax.swing.JFrame {
             cargaCliente();
         }
     }//GEN-LAST:event_txtCedKeyReleased
+
+    private void tblVentasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVentasKeyReleased
+        int filaSeleccionada = tblVentas.getSelectedRow();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
+                if (filaSeleccionada >= 0) {
+                    System.out.println("band");
+                    double precioUnit = (Double) tblVentas.getValueAt(filaSeleccionada, 2);
+                    String newCantidad = tblVentas.getValueAt(filaSeleccionada, 0).toString();
+                    int newCant = Integer.parseInt(newCantidad);
+                    if (newCant >= cantProd2) {
+                        modelo.setValueAt(cantInicial, filaSeleccionada, 0);
+                        JOptionPane.showMessageDialog(null, "La cantidad ingresada exede\n"
+                                + "la cantidad disponible");
+                        total();
+                    } else {
+                        double newPrecioTot = newCant * precioUnit;
+                        modelo.setValueAt(newCant, filaSeleccionada, 0);
+                        modelo.setValueAt(newPrecioTot, filaSeleccionada, 4);
+                        total();
+                    }
+                } else {
+                    
+                }
+            } catch (NumberFormatException ex) {
+                modelo.setValueAt(cantInicial, filaSeleccionada, 0);
+            }
+            
+        }
+    }//GEN-LAST:event_tblVentasKeyReleased
 
     public void cargarProducto() {
 

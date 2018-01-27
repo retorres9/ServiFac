@@ -367,7 +367,7 @@ public class DATMaterial {
         ArrayList<Producto> cantidadProd = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Cantidad FROM producto Where Nombre_Producto = ?";
+            String sentencia = "SELECT cantidad FROM producto Where nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
