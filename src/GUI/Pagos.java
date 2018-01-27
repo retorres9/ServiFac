@@ -556,8 +556,8 @@ public final class Pagos extends javax.swing.JFrame {
         nombre = txtNombre.getText();
         String cedula = (String) tblClientes.getModel().getValueAt(fila, 1);
         txtCedula.setText(cedula);
-        int telf = (int) tblClientes.getModel().getValueAt(fila, 2);
-        txtTelf.setText(Integer.toString(telf));
+        String telf = (String) tblClientes.getModel().getValueAt(fila, 2);
+        txtTelf.setText(telf);
         String deuda = (String) tblClientes.getModel().getValueAt(fila, 3).toString();
         txtDeuda.setText(deuda);
         String direccion = (String) tblClientes.getValueAt(fila, 4);
@@ -846,7 +846,8 @@ public final class Pagos extends javax.swing.JFrame {
             objCliente = listadoClientes.get(i);
             String nombres = objCliente.getStrNombre();
             String cedula = objCliente.getStrCedula();
-            String telf = txtTelf.getText();
+            String telf = objCliente.getStrTelf();
+            System.out.println(telf);
             double deuda = objCliente.getDblDeuda();
             String direccion = objCliente.getStrDireccion();
             modelo.setValueAt(nombres, i, 0);

@@ -413,9 +413,13 @@ public final class NewCliente extends javax.swing.JFrame {
                     "Aviso!",
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
+                Principal prin = new Principal();
+                prin.setVisible(true);
                 this.dispose();
             }
         } else {
+            Principal prin = new Principal();
+            prin.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnAtrasActionPerformed
