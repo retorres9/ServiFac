@@ -2,8 +2,6 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-select * from clientes;
-
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
 nombre VARCHAR(50) NOT NULL UNIQUE,

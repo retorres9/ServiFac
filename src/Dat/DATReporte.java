@@ -2,11 +2,12 @@ package Dat;
 
 import Clases.DetalleVenta;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DATReporte {
 
@@ -14,7 +15,7 @@ public class DATReporte {
     PreparedStatement ps;
     ResultSet rs;
 
-    public void CreaReport(DetalleVenta detalle) throws ClassNotFoundException, SQLException {
+    public void creaReporte(DetalleVenta detalle) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO detalle_venta (Cedula_Cliente, Cantidad, Codigo, Precio_Venta, Usuario, Id_Venta) "
@@ -22,15 +23,21 @@ public class DATReporte {
             ps = con.prepareStatement(sentencia);
             ps.setString(1, detalle.getStrCed());
             ps.setInt(2, detalle.getIntCant());
-            ps.setString(3, detalle.getIntCod());
-            ps.setDouble(4, precio_venta);
-            ps.setString(5, usuario);
-            ps.setDouble(6, id_Venta);
+            ps.setString(3, detalle.getStrCod());
+            ps.setDouble(4, detalle.getDblPrecioVenta());
+            ps.setString(5, detalle.getStrUsuario());
+            ps.setDouble(6, detalle.getId_Venta());
+            ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-
-        return ps.executeUpdate();
     }
 
     public ResultSet detalleVenta(int idVenta) throws SQLException, ClassNotFoundException {

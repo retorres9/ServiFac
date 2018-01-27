@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ public class DATVenta {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    Venta venta = new Venta();
 
     public void crearVenta(Venta venta) {
         try {
@@ -48,10 +50,22 @@ public class DATVenta {
         return ps.executeQuery();
     }
 
-    public ResultSet CuentaVentas() throws ClassNotFoundException, SQLException {
-        String sentencia = "SELECT MAX(Id_Venta)+1 FROM venta";
-        PreparedStatement pst = c.getConnection().prepareStatement(sentencia);
-        return pst.executeQuery();
+    public ArrayList<Venta> CuentaVentas() {        
+        ArrayList<Venta> cantVenta = new ArrayList<Venta>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT MAX(Id_Venta)+1 FROM venta";
+            ps = con.prepareStatement(sentencia);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                int cant = rs.getInt(1);
+                venta = new Venta(cant);
+                cantVenta.add(venta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cantVenta;
     }
 
     public ResultSet cargaVentasNoCalcel() throws SQLException, ClassNotFoundException {

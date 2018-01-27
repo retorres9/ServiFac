@@ -20,6 +20,10 @@ public class Venta {
         this.dblValCancelado = dblValCancelado;
     }
     
+    public  Venta(int intIdVenta){
+        this.intIdVenta = intIdVenta;
+    }
+    
     public Venta() {
         
     }
