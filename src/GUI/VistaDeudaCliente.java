@@ -1,63 +1,60 @@
 package GUI;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Clases.Venta;
+import Dat.DATVenta;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public class VistaDeudaCliente extends javax.swing.JFrame {
 
-    String nombre, total, cedula, venta;
-    
+    String nombre, total, cedula, idVenta;
+    DefaultTableModel modelo = new DefaultTableModel();
+    Venta venta = new Venta();
+    DATVenta manejadorVenta;
+
     public VistaDeudaCliente() {
         initComponents();
+        manejadorVenta = new DATVenta();
         cargarTabla();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
     }
 
-    public static void cargarTabla(){
-        String nombre = "Roberth Torres";
-        int fila=0;
-        try {
-            
-            BLClientes manejadorClientes = new BLClientes();
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn("Nro Venta");
-            modelo.addColumn("Deuda");
-            modelo.addColumn("Total Venta");
-            modelo.addColumn("Valor Cancelado");
-            modelo.addColumn("Fecha");
-            modelo.addColumn("nombre");
-            String fecha = txtNombreCliente.getText();
-            for (int i = 0; i < manejadorClientes.getClientexNombre(fecha).size(); i++) {
-                modelo.addRow(manejadorClientes.getClientexNombre(fecha).get(i));
-            }
-            tblDeudaCliente.setModel(modelo);
-            /*for (Object[] dato : datos) {
-                String idVenta = String.valueOf(dato[0]);
-                String deuda = String.valueOf(dato[1]);
-                String totalVenta = String.valueOf(dato[2]);
-                String valorCancelado = String.valueOf(dato[3]);
-                String fecha = String.valueOf(dato[4]);
-                String nombres = String.valueOf(dato[5]);
-                modelo.setValueAt(idVenta, fila, 0);
-                modelo.setValueAt(deuda, fila, 1);
-                modelo.setValueAt(totalVenta, fila, 2);
-                modelo.setValueAt(valorCancelado, fila, 3);
-                modelo.setValueAt(fecha, fila, 4);
-                modelo.setValueAt(nombres, fila, 4);
-                fila++;
-            }*/
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VistaDeudaCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(VistaDeudaCliente.class.getName()).log(Level.SEVERE, null, ex);
+    public void cargaEncabezado() {
+        modelo.addColumn("Nro Venta");
+        modelo.addColumn("Deuda");
+        modelo.addColumn("Total Venta");
+        modelo.addColumn("Valor Cancelado");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("nombre");
+    }
+
+    public void cargarTabla() {
+        int fila = 0;
+        String fecha = txtNombreCliente.getText();
+        ArrayList<Venta> listadoVenta = manejadorVenta.ConsultarComprasCL(fecha);//cambio
+        int cantLista = listadoVenta.size();
+        modelo.setNumRows(cantLista);
+        for (int i = 0; i < cantLista; i++) {
+            venta = listadoVenta.get(i);
+            int intIdVenta = venta.getIntIdVenta();
+            double deuda = venta.getDeudaCliente();
+            double totalDeuda = venta.getDblTotalVenta();
+            double totalCancelado = venta.getDblValCancelado();
+            String fechaVenta = venta.getStrFecha();
+            String cliente = venta.getStrCliente();
+
+            modelo.setValueAt(intIdVenta, fila, 0);
+            modelo.setValueAt(deuda, fila, 1);
+            modelo.setValueAt(totalDeuda, fila, 2);
+            modelo.setValueAt(totalCancelado, fila, 3);
+            modelo.setValueAt(fechaVenta, fila, 4);
+            modelo.setValueAt(cliente, fila, 4);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,14 +72,7 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Roboto Cn", 0, 36)); // NOI18N
         jLabel1.setText("Compras Realizadas por:");
 
-        tblDeudaCliente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
-            }
-        ));
+        tblDeudaCliente.setModel(modelo);
         tblDeudaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDeudaClienteMouseClicked(evt);
@@ -91,7 +81,6 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblDeudaCliente);
 
         txtNombreCliente.setFont(new java.awt.Font("Roboto Cn", 0, 36)); // NOI18N
-        txtNombreCliente.setText("Roberth Torres");
 
         jButton1.setText("Ver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -131,9 +120,9 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombreCliente))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
@@ -148,8 +137,8 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
 
     private void tblDeudaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDeudaClienteMouseClicked
         int fila = tblDeudaCliente.getSelectedRow();
-        if(tblDeudaCliente.getSelectedRows().length>0){
-            venta = (String) tblDeudaCliente.getValueAt(fila, 0).toString();
+        if (tblDeudaCliente.getSelectedRows().length > 0) {
+            idVenta = (String) tblDeudaCliente.getValueAt(fila, 0).toString();
             nombre = txtNombreCliente.getText();
             cedula = (String) tblDeudaCliente.getValueAt(fila, 1).toString();
             total = (String) tblDeudaCliente.getValueAt(fila, 3).toString();
@@ -161,7 +150,7 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
         VistaFactura.txtCliente.setText(nombre);
         VistaFactura.txtCedula.setText(cedula);
         VistaFactura.txtTotal.setText(total);
-        VistaFactura.txtVenta.setText(venta);
+        VistaFactura.txtVenta.setText(idVenta);
         VistaFactura.cargarTabla();
         vf.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -184,16 +173,24 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaDeudaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDeudaCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaDeudaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDeudaCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaDeudaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDeudaCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaDeudaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaDeudaCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

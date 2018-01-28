@@ -26,8 +26,8 @@ public class DATReporte {
             ps.setString(3, detalle.getStrCod());
             ps.setDouble(4, detalle.getDblPrecioVenta());
             ps.setString(5, detalle.getStrUsuario());
-            ps.setDouble(6, detalle.getId_Venta());
-            ps.executeQuery();
+            ps.setInt(6, detalle.getId_Venta());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

@@ -1,6 +1,8 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+select * from venta;
+INSERT INTO detalle_venta (Cedula_Cliente, Cantidad, Codigo, Precio_Venta, Usuario, Id_Venta) VALUES (1105970717,1,"129827",33.6,"retorres9",1);
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
@@ -47,27 +49,27 @@ CREATE TABLE categoria(
 id_categoria INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_categoria VARCHAR(20) UNIQUE NOT NULL
 );
-
+drop table proveedores;
 CREATE TABLE proveedores(
 empresa VARCHAR(50) NOT NULL UNIQUE,
-ruc VARCHAR(13) NOT NULL PRIMARY KEY,
+ruc VARCHAR(15) NOT NULL PRIMARY KEY,
 nombre_cuenta VARCHAR(30) NOT NULL,
 tipo_cuenta VARCHAR(20) NOT NULL,
 numero_cuenta VARCHAR(15),
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 telefono VARCHAR(10)
 );
-
+drop table venta;
 CREATE TABLE venta(
 id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
 total_Venta DECIMAL(7,2) NOT NULL,
 valor_Cancelado DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10),
-cedula_usuario INT(150) NOT NULL
+cedula_usuario VARCHAR(10) NOT NULL
 );
-
+DROP TABLE detalle_venta;
 CREATE TABLE detalle_venta(
-cedula_cliente INT(10),
+cedula_cliente VARCHAR(13),
 cantidad INT(7),
 codigo VARCHAR (13),
 precio_venta DECIMAL(8,2) NOT NULL,

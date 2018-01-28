@@ -242,8 +242,8 @@ public final class Factura extends javax.swing.JFrame {
             int cantExist = 0;
             int cantVenta = (int) tblVentas.getValueAt(i, 0);
             String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
-            String strCodigo = (String) tblVentas.getValueAt(i, 4);
-            String strPrecio = (String) tblVentas.getValueAt(i, 2);
+            String strCodigo = (String) tblVentas.getValueAt(i, 5);
+            String strPrecio = tblVentas.getValueAt(i, 2).toString();
             double precio_Venta = Double.parseDouble(strPrecio);
             ArrayList<Producto> cantProd = manejadorProd.comprobarCant(descripcionVenta);
             int intCantProd = cantProd.size();

@@ -6,6 +6,10 @@ public class Venta {
     private String strFecha;
     private double dblValCancelado;
     private String cedulaUser;
+    
+    /*Atributos para consultas cruzadas*/
+    private double deudaCliente;
+    private String strCliente;
 
     public Venta(int intIdVenta, double dblTotalVenta, double dblValCancelado, String strFecha, String cedulaUser) {
         this.intIdVenta = intIdVenta;
@@ -13,6 +17,32 @@ public class Venta {
         this.dblValCancelado = dblValCancelado;
         this.strFecha = strFecha;
         this.cedulaUser = cedulaUser;
+    }
+
+    public double getDeudaCliente() {
+        return deudaCliente;
+    }
+
+    public void setDeudaCliente(double deudaCliente) {
+        this.deudaCliente = deudaCliente;
+    }
+
+    public String getStrCliente() {
+        return strCliente;
+    }
+
+    public void setStrCliente(String strCliente) {
+        this.strCliente = strCliente;
+    }
+
+    public Venta(int intIdVenta, double dblTotalVenta, String strFecha, double dblValCancelado, String cedulaUser, double deudaCliente, String strCliente) {
+        this.intIdVenta = intIdVenta;
+        this.dblTotalVenta = dblTotalVenta;
+        this.strFecha = strFecha;
+        this.dblValCancelado = dblValCancelado;
+        this.cedulaUser = cedulaUser;
+        this.deudaCliente = deudaCliente;
+        this.strCliente = strCliente;
     }
 
     public  Venta(int intIdVenta ,double dblValCancelado){
