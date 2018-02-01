@@ -1,8 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-select * from venta;
-INSERT INTO detalle_venta (Cedula_Cliente, Cantidad, Codigo, Precio_Venta, Usuario, Id_Venta) VALUES (1105970717,1,"129827",33.6,"retorres9",1);
+select * from usuario;
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
@@ -115,7 +114,7 @@ FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id_ubicacion);
 ALTER TABLE detalle_venta
 ADD CONSTRAINT cedula_fk 
 FOREIGN KEY (cedula_cliente) REFERENCES clientes(cedula_cliente);
-
+#ALTER TABLE detalle_venta drop foreign key codigo_fk;
 ALTER TABLE detalle_venta
 ADD CONSTRAINT codigo_fk 
 FOREIGN KEY (codigo) REFERENCES producto(codigo);

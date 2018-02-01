@@ -14,4 +14,5 @@ public class Constantes {
     public static final String VALIDACION = Configuracion.validacion();
     public static final String IVA = Configuracion.iva();
     public static final String CLAVE_ADMIN = Configuracion.claveAdmin();
+    public static final String USUARIO = Configuracion.usuario();
 }

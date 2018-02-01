@@ -814,9 +814,19 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+//        VistaDeudaCliente vf = new VistaDeudaCliente();
+//        if (tblClientes.getSelectedRows().length > 0) {
+//            VistaDeudaCliente.txtNombreCliente.setText(txtNombre.getText());
+//            vf.setVisible(true);
+//        }
         VistaDeudaCliente vf = new VistaDeudaCliente();
-        if (tblClientes.getSelectedRows().length > 0) {
-            VistaDeudaCliente.txtNombreCliente.setText(nombre);
+        if (tblClientes.getSelectedRowCount()> 0 ){
+            int filaSelec = tblClientes.getSelectedRow();
+            System.out.println(filaSelec);
+            String nombreCli = (String) tblClientes.getValueAt(filaSelec, 0);
+            System.out.println(nombreCli);
+            vf.setCliente(nombreCli);
+            vf.cargarTabla();
             vf.setVisible(true);
         }
     }//GEN-LAST:event_btnVerActionPerformed
@@ -853,7 +863,6 @@ public final class Pagos extends javax.swing.JFrame {
             String nombres = objCliente.getStrNombre();
             String cedula = objCliente.getStrCedula();
             String telf = objCliente.getStrTelf();
-            System.out.println(telf);
             double deuda = objCliente.getDblDeuda();
             String direccion = objCliente.getStrDireccion();
             modelo.setValueAt(nombres, i, 0);

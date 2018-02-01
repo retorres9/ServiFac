@@ -21,6 +21,9 @@ public class Usuario {
     public Usuario(int rol){
         this.rol = rol;
     }
+    public Usuario(String cedulaUsuario){
+        this.cedulaUsuario = cedulaUsuario;
+    }
 
     public Usuario(String usuario, String contrasena) {
         this.usuario = usuario;

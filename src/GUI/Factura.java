@@ -5,10 +5,12 @@ import Clases.Configuracion;
 import Clases.Producto;
 import Clases.DetalleVenta;
 import Clases.NumeroLetras;
+import Clases.Usuario;
 import Clases.Venta;
 import Dat.DATClientes;
 import Dat.DATMaterial;
 import Dat.DATReporte;
+import Dat.DATUsuario;
 import Dat.DATVenta;
 import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
@@ -50,24 +52,29 @@ public final class Factura extends javax.swing.JFrame {
     int cantInicial;
     boolean flag = true;
     boolean banderaFila = true;
+    String cedUsuario;
     String n, vendedor;
     Clientes cliente = new Clientes();
     DetalleVenta detalle = new DetalleVenta();
     Producto producto = new Producto();
     Venta venta = new Venta();
+    Usuario usuario = new Usuario();
     DATVenta manejadorVenta;
     DefaultTableModel modelo = new DefaultTableModel();
     DATMaterial manejadorProd;
     DATClientes manejadorCliente;
     DATReporte manejadorDetalle;
-
+    DATUsuario manejadorUsuario;
+    
     public Factura() {
         initComponents();
         cargarEncabezado();
+        txtUsuario.setText(Constantes.Constantes.USUARIO);
         manejadorProd = new DATMaterial();
         manejadorCliente = new DATClientes();
         manejadorVenta = new DATVenta();
         manejadorDetalle = new DATReporte();
+        manejadorUsuario = new DATUsuario();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
@@ -76,6 +83,7 @@ public final class Factura extends javax.swing.JFrame {
         permisos();
         txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
         txtCod.requestFocus();
+        usuario();
     }
 
     public void cargarEncabezado() {
@@ -93,6 +101,15 @@ public final class Factura extends javax.swing.JFrame {
         for (int i = 0; i < cant; i++) {
             venta = cantProducto.get(i);
             cont = venta.getIntIdVenta();
+        }
+    }
+    
+    public void usuario(){
+        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
+        int cantUser = cedula.size();
+        for (int i = 0; i < cantUser; i++) {
+            usuario = cedula.get(i);
+            cedUsuario = usuario.getCedulaUsuario();
         }
     }
 
@@ -294,7 +311,7 @@ public final class Factura extends javax.swing.JFrame {
                 cliente = new Clientes(nuevaDeuda, txtCed.getText());
                 manejadorCliente.agregarDeuda(cliente);
             }
-            venta = new Venta(cont, numTotal, num, getFecha(), txtCed.getText());//OJO
+            venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
             manejadorVenta.crearVenta(venta);
         } catch (NumberFormatException ex) {
             ex.printStackTrace();

@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -44,6 +45,31 @@ public class DATUsuario {
 
     }
 
+    public ArrayList<Usuario> obtenerCedula(String user){
+        ArrayList<Usuario> cedula = new ArrayList<Usuario>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT cedula_usuario FROM usuario WHERE usuario = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, user);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String ced = rs.getString(1);
+                Usuario usuario = new Usuario(ced);
+                cedula.add(usuario);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return cedula;
+    }
 //    public int compUsuario() throws ClassNotFoundException, SQLException{
 //        String sentencia = "SELECT Usuario, Contrasena FROM usuario WHERE Usuario = ? && Contrasena = ?";
 //        PreparedStatement st = c.getConnection().prepareStatement(sentencia);

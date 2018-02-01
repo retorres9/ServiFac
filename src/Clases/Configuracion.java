@@ -281,4 +281,18 @@ public class Configuracion {
         }
         return s1;
     }
+    
+    public static String usuario() {
+        String s1 = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("Usuario.txt"));
+            s1 = br.readLine();
+            br.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s1;
+    }
 }

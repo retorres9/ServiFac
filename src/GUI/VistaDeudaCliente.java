@@ -6,20 +6,31 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
-public class VistaDeudaCliente extends javax.swing.JFrame {
+public final class VistaDeudaCliente extends javax.swing.JFrame {
 
-    String nombre, total, cedula, idVenta;
+    public String nombre, total, cedula, idVenta;
     DefaultTableModel modelo = new DefaultTableModel();
     Venta venta = new Venta();
     DATVenta manejadorVenta;
+    String nombreCli;
 
     public VistaDeudaCliente() {
         initComponents();
         manejadorVenta = new DATVenta();
+        cargaEncabezado();
         cargarTabla();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
+        nombre = getCliente();
+    }
+    
+    public String getCliente(){
+        return nombre;
+    }
+    public void setCliente(String nombre){
+        System.out.println(nombre);
+        this.nombre = nombre;
     }
 
     public void cargaEncabezado() {
@@ -32,11 +43,12 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        int fila = 0;
-        String fecha = txtNombreCliente.getText();
-        ArrayList<Venta> listadoVenta = manejadorVenta.ConsultarComprasCL(fecha);//cambio
+        String cliente = txtNombreCliente.getText();
+        
+        ArrayList<Venta> listadoVenta = manejadorVenta.ConsultarComprasCL(nombre);//cambio
         int cantLista = listadoVenta.size();
         modelo.setNumRows(cantLista);
+        System.out.println(cantLista);
         for (int i = 0; i < cantLista; i++) {
             venta = listadoVenta.get(i);
             int intIdVenta = venta.getIntIdVenta();
@@ -44,14 +56,14 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
             double totalDeuda = venta.getDblTotalVenta();
             double totalCancelado = venta.getDblValCancelado();
             String fechaVenta = venta.getStrFecha();
-            String cliente = venta.getStrCliente();
+            String nomCliente = venta.getStrCliente();
 
-            modelo.setValueAt(intIdVenta, fila, 0);
-            modelo.setValueAt(deuda, fila, 1);
-            modelo.setValueAt(totalDeuda, fila, 2);
-            modelo.setValueAt(totalCancelado, fila, 3);
-            modelo.setValueAt(fechaVenta, fila, 4);
-            modelo.setValueAt(cliente, fila, 4);
+            modelo.setValueAt(intIdVenta, i, 0);
+            modelo.setValueAt(deuda, i, 1);
+            modelo.setValueAt(totalDeuda, i, 2);
+            modelo.setValueAt(totalCancelado, i, 3);
+            modelo.setValueAt(fechaVenta, i, 4);
+            modelo.setValueAt(nomCliente, i, 5);
         }
     }
 
@@ -139,7 +151,7 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
         int fila = tblDeudaCliente.getSelectedRow();
         if (tblDeudaCliente.getSelectedRows().length > 0) {
             idVenta = (String) tblDeudaCliente.getValueAt(fila, 0).toString();
-            nombre = txtNombreCliente.getText();
+            nombreCli = txtNombreCliente.getText();
             cedula = (String) tblDeudaCliente.getValueAt(fila, 1).toString();
             total = (String) tblDeudaCliente.getValueAt(fila, 3).toString();
         }
@@ -147,7 +159,7 @@ public class VistaDeudaCliente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         VistaFactura vf = new VistaFactura();
-        VistaFactura.txtCliente.setText(nombre);
+        VistaFactura.txtCliente.setText(nombreCli);
         VistaFactura.txtCedula.setText(cedula);
         VistaFactura.txtTotal.setText(total);
         VistaFactura.txtVenta.setText(idVenta);
