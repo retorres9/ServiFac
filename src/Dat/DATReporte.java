@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,13 +41,29 @@ public class DATReporte {
         }
     }
 
-    public ResultSet detalleVenta(int idVenta) throws SQLException, ClassNotFoundException {
-        String sentencia = "SELECT dv.Cantidad, p.Nombre_Producto, p.Precio, v.Fecha , v.Id_Venta "
-                + "FROM detalle_venta dv, producto p, venta v "
-                + "WHERE dv.Codigo = p.Codigo AND dv.Id_Venta = v.Id_Venta AND v.Id_Venta = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setInt(1, idVenta);
-        return ps.executeQuery();
+    public ArrayList<DetalleVenta> detalleVenta(int idVenta) {
+        ArrayList<DetalleVenta> factura = new ArrayList<DetalleVenta>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT dv.Cantidad, p.Nombre_Producto, p.Precio, v.Fecha , dv.Id_Venta "
+                    + "FROM detalle_venta dv, producto p, venta v "
+                    + "WHERE dv.Codigo = p.Codigo AND dv.Id_Venta = v.Id_Venta AND v.Id_Venta = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, idVenta);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int cant = rs.getInt(1);
+                String prod = rs.getString(2);
+                double precio = rs.getDouble(3);
+                String fecha = rs.getString(4);
+                int id = rs.getInt(5);
+                DetalleVenta detalle = new DetalleVenta(cant, id, prod, precio, fecha);
+                factura.add(detalle);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return factura;
     }
 
     public ResultSet reporte(String fecha) throws ClassNotFoundException, SQLException {

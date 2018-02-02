@@ -49,18 +49,18 @@ public class DATVenta {
         ps.setString(1, fecha);
         return ps.executeQuery();
     }
-    
+
     public ArrayList<Venta> ConsultarComprasCL(String nombre) {
         ArrayList<Venta> listadoVentas = new ArrayList<Venta>();
-        try{
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
-                + "FROM clientes c, detalle_venta dv, venta v "
-                + "WHERE c.cedula_cliente = dv.cedula_cliente AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres";
+                    + "FROM clientes c, detalle_venta dv, venta v "
+                    + "WHERE c.cedula_cliente = dv.cedula_cliente AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt(1);
                 double deuda = rs.getDouble(2);
                 double totalVenta = rs.getDouble(3);
@@ -83,14 +83,14 @@ public class DATVenta {
         return listadoVentas;
     }
 
-    public ArrayList<Venta> CuentaVentas() {        
+    public ArrayList<Venta> CuentaVentas() {
         ArrayList<Venta> cantVenta = new ArrayList<Venta>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT MAX(Id_Venta)+1 FROM venta";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int cant = rs.getInt(1);
                 venta = new Venta(cant);
                 cantVenta.add(venta);

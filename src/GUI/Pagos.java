@@ -28,9 +28,8 @@ public final class Pagos extends javax.swing.JFrame {
     int fila, idVenta;
     Venta objV = new Venta();
     String strTotal, nombre;
-    //Factura objFact = new Factura();
     AbonoCliente abono = new AbonoCliente();
-    String vendedor = Configuracion.vendedor_venta();
+    String vendedor = Constantes.Constantes.USUARIO;
     DefaultTableModel modelo = new DefaultTableModel();
     DATAbonoCliente manejadorAbono;
     DATClientes cliente;
@@ -814,17 +813,11 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-//        VistaDeudaCliente vf = new VistaDeudaCliente();
-//        if (tblClientes.getSelectedRows().length > 0) {
-//            VistaDeudaCliente.txtNombreCliente.setText(txtNombre.getText());
-//            vf.setVisible(true);
-//        }
         VistaDeudaCliente vf = new VistaDeudaCliente();
-        if (tblClientes.getSelectedRowCount()> 0 ){
+        if (tblClientes.getSelectedRowCount() > 0) {
             int filaSelec = tblClientes.getSelectedRow();
-            System.out.println(filaSelec);
             String nombreCli = (String) tblClientes.getValueAt(filaSelec, 0);
-            System.out.println(nombreCli);
+            VistaDeudaCliente.txtNombreCliente.setText(nombreCli);
             vf.setCliente(nombreCli);
             vf.cargarTabla();
             vf.setVisible(true);

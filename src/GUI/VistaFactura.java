@@ -1,53 +1,66 @@
 package GUI;
 
-
-import java.sql.SQLException;
+import Clases.DetalleVenta;
+import Dat.DATReporte;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public final class VistaFactura extends javax.swing.JFrame {
-    
+
+    DetalleVenta detalle = new DetalleVenta();
+    DATReporte manejadorDetalle;
+    DefaultTableModel modelo = new DefaultTableModel();
+    String strId;
+
     public VistaFactura() {
         initComponents();
+        strId = getId();
+        encabezados();
+        manejadorDetalle = new DATReporte();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
+        //cargarTabla();
     }
 
-    public static void cargarTabla(){
-        String strId = txtVenta.getText();
-        int fila=0;
-        int id = Integer.parseInt(strId);
-        try{
-            BLReporte objR = new BLReporte();
-            DefaultTableModel modelo = (DefaultTableModel)tblFactura.getModel();
-            ArrayList<Object[]> datos = new ArrayList<>();
-            datos = objR.verFact(id);
-            for (Object[] dato : datos) {
-                String strCant = String.valueOf(dato[0]);
-                String strDesc = String.valueOf(dato[1]);
-                String strPrecio = String.valueOf(dato[2]);
-                String strFecha = String.valueOf(dato[3]);
-                modelo.setValueAt(strCant, fila, 0);
-                modelo.setValueAt(strDesc, fila, 1);
-                modelo.setValueAt(strPrecio, fila, 2);
-                int intCant = Integer.parseInt(strCant);
-                double dblPrecio = Double.parseDouble(strPrecio);
-                double precioTot = intCant * dblPrecio;
-                modelo.setValueAt(precioTot, fila, 3);
-                modelo.setValueAt(strFecha, fila, 4);
-                fila++;
-                
-            }   
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(DetalleVentaVista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+    public void encabezados() {
+        modelo.addColumn("Cant.");
+        modelo.addColumn("Descripción");
+        modelo.addColumn("Pr. Vneta");
+        modelo.addColumn("Total");
+        modelo.addColumn("Fecha");
     }
+
+    public void setId(String strId) {
+        this.strId = strId;
+    }
+
+    public String getId() {
+        return strId;
+    }
+
+    public void cargarTabla() {
+        int fila = 0;
+        int id = Integer.parseInt(strId);
+        ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
+        int cant = listadoFactura.size();
+        modelo.setNumRows(cant);
+        for (int i = 0; i < cant; i++) {
+            detalle = listadoFactura.get(i);
+            int cantidad = detalle.getIntCant();
+            String desc = detalle.getNombreProd();
+            double prec = detalle.getDblPrecioVenta();
+            double total = cant * prec;
+            String fecha = detalle.getFecha();
+            modelo.setValueAt(cantidad, i, 0);
+            modelo.setValueAt(desc, i, 1);
+            modelo.setValueAt(prec, i, 2);
+            modelo.setValueAt(total, i, 3);
+            modelo.setValueAt(fecha, i, 4);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -69,17 +82,7 @@ public final class VistaFactura extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tblFactura.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Cantidad", "Descripcion", "Precio Unit", "Precio Total", "Fecha"
-            }
-        ));
+        tblFactura.setModel(modelo);
         jScrollPane1.setViewportView(tblFactura);
 
         jLabel1.setText("Cliente:");
