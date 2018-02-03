@@ -35,13 +35,12 @@ public class Venta {
         this.strCliente = strCliente;
     }
 
-    public Venta(int intIdVenta, double dblTotalVenta, String strFecha, double dblValCancelado, String cedulaUser, double deudaCliente, String strCliente) {
+    public Venta(int intIdVenta, double dblTotalVenta, String strFecha, double dblValCancelado, String cedulaUser,  String strCliente) {
         this.intIdVenta = intIdVenta;
         this.dblTotalVenta = dblTotalVenta;
         this.strFecha = strFecha;
         this.dblValCancelado = dblValCancelado;
         this.cedulaUser = cedulaUser;
-        this.deudaCliente = deudaCliente;
         this.strCliente = strCliente;
     }
 

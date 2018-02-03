@@ -15,8 +15,8 @@ public class DetalleVenta {
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int intCant, String strCod, double dblPrecioVenta, String strUsuario, int id_Venta) {
-        this.strCod = strCod;
+    public DetalleVenta(String strCed, int intCant, String strCod, double dblPrecioVenta, String strUsuario, int id_Venta) {
+        this.strCed = strCed;
         this.intCant = intCant;
         this.dblPrecioVenta = dblPrecioVenta;
         this.strUsuario = strUsuario;
