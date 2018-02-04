@@ -19,7 +19,6 @@ public final class EliminarProveedor extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     DATProveedor manejadorProv;
     Proveedor prov = new Proveedor();
-    //Proveedor objP = new Proveedor();
 
     public EliminarProveedor() {
         initComponents();

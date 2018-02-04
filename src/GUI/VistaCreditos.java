@@ -1,20 +1,26 @@
 package GUI;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public final class VistaCreditos extends javax.swing.JFrame {
 
-    
+    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableCellRenderer celda = new DefaultTableCellRenderer();
     
     public VistaCreditos() {
         initComponents();
+        encabezados();
         cargarTabla();
     }
-
     
+    public void encabezados(){
+        modelo.addColumn("Empresa");
+        modelo.addColumn("Deuda");
+        modelo.addColumn("Pagos");
+        modelo.addColumn("Fecha");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -63,18 +69,12 @@ public final class VistaCreditos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void cargarTabla(){
-        try {
-            String empresa;
-            empresa = txtEmpresa.getText();
-            BLPagoProveedor objPp = new BLPagoProveedor();
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn("Empresa");
-            modelo.addColumn("Deuda");
-            modelo.addColumn("Pagos");
-            modelo.addColumn("Fecha");
-            for (int i = 0; i<objPp.verPagos(empresa).size();i++) {
-                modelo.addRow(objPp.verPagos(empresa).get(i));
+    public static void cargarTabla() {
+        String empresa;
+        empresa = txtEmpresa.getText();
+        ArrayList<PagosProveedorClase> lista = man
+        for (int i = 0; i < objPp.verPagos(empresa).size(); i++) {
+            modelo.addRow(objPp.verPagos(empresa).get(i));
 //                String strEmpresa = String.valueOf(dato[0]);
 //                String strDeuda = String.valueOf(dato[1]);
 //                String strMontocancelado = String.valueOf(dato[2]);
@@ -84,15 +84,11 @@ public final class VistaCreditos extends javax.swing.JFrame {
 //                modelo.setValueAt(strMontocancelado, fila, 2);
 //                modelo.setValueAt(strFecha, fila, 3);
 //                fila++;
-            }
-            tblVistaCreditos.setModel(modelo);
-        } catch (SQLException ex) {
-            Logger.getLogger(VistaCreditos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VistaCreditos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        tblVistaCreditos.setModel(modelo);
+
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

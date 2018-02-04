@@ -81,7 +81,7 @@ public class DATProveedor {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT * FROM proveedores";
+            String sentencia = "SELECT * FROM proveedores WHERE estado = true AND empresa NOT LIKE '(Vacio)'" ;
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -129,7 +129,7 @@ public class DATProveedor {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT Empresa, ruc, Nombre_Cuenta, Tipo_Cuenta,"
-                    + "Numero_Cuenta, Deuda, Telefono FROM proveedores WHERE Empresa REGEXP CONCAT ('^',?)";
+                    + "Numero_Cuenta, Deuda, Telefono FROM proveedores WHERE estado = true AND Empresa REGEXP CONCAT ('^',?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
@@ -162,7 +162,7 @@ public class DATProveedor {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT Empresa, ruc, Nombre_Cuenta, Tipo_Cuenta,"
-                    + "Numero_Cuenta, Deuda, Telefono FROM proveedores WHERE Nombre_Cuenta REGEXP CONCAT ('^',?)";
+                    + "Numero_Cuenta, Deuda, Telefono FROM proveedores WHERE estado = true AND Nombre_Cuenta REGEXP CONCAT ('^',?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombreEmpresa);
             rs = ps.executeQuery();
@@ -210,7 +210,7 @@ public class DATProveedor {
     public void eliminarProveedor(String empresa) {
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
-            String sentencia = "DELETE FROM proveedores WHERE  Empresa = ?";
+            String sentencia = "UPDATE proveedores SET estado = false WHERE  Empresa = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, empresa);
             ps.executeUpdate();

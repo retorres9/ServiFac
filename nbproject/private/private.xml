@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/VistaDeudaCliente.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/DetalleVenta.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/PagoProveedor.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Pagos.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/DetalleVentaVista.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATVenta.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Factura.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/VistaFactura.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATReporte.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Venta.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/BusqClienteDialgo.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATProveedor.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoClienteDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Prueba.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/VistaCreditos.java</file>
         </group>
     </open-files>
 </project-private>

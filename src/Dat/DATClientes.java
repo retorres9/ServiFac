@@ -24,7 +24,7 @@ public class DATClientes {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion FROM clientes ORDER BY nombres";
+            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion FROM clientes  ORDER BY nombres";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -81,7 +81,7 @@ public class DATClientes {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Nombres REGEXP CONCAT('^',?) ORDER BY Nombres";
+            String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE DEUDA > 0.00 AND estado = true AND Nombres REGEXP CONCAT('^',?) ORDER BY Nombres";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
@@ -111,7 +111,7 @@ public class DATClientes {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0 AND Cedula_Cliente REGEXP CONCAT('^',?) ORDER BY Nombres";
+            String Sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0.00 AND Cedula_Cliente REGEXP CONCAT('^',?) ORDER BY Nombres";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, cedulaCli);
             rs = ps.executeQuery();
@@ -229,7 +229,7 @@ public class DATClientes {
     public void eliminarCliente(Clientes cliente) throws ClassNotFoundException, SQLException {
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
-            String sentencia = "DELETE FROM clientes WHERE cedula_cliente = ?";
+            String sentencia = "UPDATE clientes SET estado = false WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrCedula());
             ps.executeUpdate();

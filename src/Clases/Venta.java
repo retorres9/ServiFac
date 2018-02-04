@@ -19,6 +19,12 @@ public class Venta {
         this.cedulaUser = cedulaUser;
     }
 
+    public Venta(int intIdVenta, double dblTotalVenta, double dblValCancelado) {
+        this.intIdVenta = intIdVenta;
+        this.dblTotalVenta = dblTotalVenta;
+        this.dblValCancelado = dblValCancelado;
+    }
+
     public double getDeudaCliente() {
         return deudaCliente;
     }

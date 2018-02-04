@@ -2,38 +2,48 @@ package Clases;
 
 public class PagoProveedorClase {
 
-    private String strEmpresa;
-    private String strUsuario;
+    private String strRuc;
+    private String strCedulaUsuario;
     private double dblMontoCancelado;
     private String strFecha;
     private String strTipo;
+    private String strDescripcion;
 
-    public PagoProveedorClase(String strEmpresa, String strUsuario, double dblMontoCancelado, String strFecha, String strTipo) {
-        this.strEmpresa = strEmpresa;
-        this.strUsuario = strUsuario;
+    public PagoProveedorClase(String strEmpresa, String strUsuario, double dblMontoCancelado, String strFecha, String strTipo, String strDescripcion) {
+        this.strRuc = strEmpresa;
+        this.strCedulaUsuario = strUsuario;
         this.dblMontoCancelado = dblMontoCancelado;
         this.strFecha = strFecha;
         this.strTipo = strTipo;
+        this.strDescripcion = strDescripcion;
+    }
+
+    public String getStrDescripcion() {
+        return strDescripcion;
+    }
+
+    public void setStrDescripcion(String strDescripcion) {
+        this.strDescripcion = strDescripcion;
     }
 
     public PagoProveedorClase() {
         
     }
 
-    public String getStrEmpresa() {
-        return strEmpresa;
+    public String getStrRuc() {
+        return strRuc;
     }
 
-    public void setStrEmpresa(String strEmpresa) {
-        this.strEmpresa = strEmpresa;
+    public void setStrRuc(String strRuc) {
+        this.strRuc = strRuc;
     }
 
-    public String getStrUsuario() {
-        return strUsuario;
+    public String getStrCedUsuario() {
+        return strCedulaUsuario;
     }
 
-    public void setStrUsuario(String strUsuario) {
-        this.strUsuario = strUsuario;
+    public void setStrCedUsuario(String strCedulaUsuario) {
+        this.strCedulaUsuario = strCedulaUsuario;
     }
 
     public double getDblMontoCancelado() {

@@ -6,6 +6,7 @@ import Clases.Configuracion;
 import Clases.Venta;
 import Dat.DATAbonoCliente;
 import Dat.DATClientes;
+import Dat.DATVenta;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,7 @@ public final class Pagos extends javax.swing.JFrame {
     BusqProd objBuspProd = new BusqProd();
     IngresoProd objIngrProd = new IngresoProd();
     int fila, idVenta;
-    Venta objV = new Venta();
+    Venta objVenta = new Venta();
     String strTotal, nombre;
     AbonoCliente abono = new AbonoCliente();
     String vendedor = Constantes.Constantes.USUARIO;
@@ -34,11 +35,13 @@ public final class Pagos extends javax.swing.JFrame {
     DATAbonoCliente manejadorAbono;
     DATClientes cliente;
     Clientes objCliente;
+    DATVenta manejadorVenta;
 
     public Pagos() {
         initComponents();
         cliente = new DATClientes();
         manejadorAbono = new DATAbonoCliente();
+        manejadorVenta = new DATVenta();
         cargaColumnas();
         setAnchoColumnas();
         cargaCombo();
@@ -571,40 +574,32 @@ public final class Pagos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-//    public void pagoVentaXVenta() {
-//        try {
-//            double monto = Double.parseDouble(txtMonto.getText());
-//            double cantPaga, totalventa;
-//            int idVenta;
-//            ArrayList<Object[]> datos = new ArrayList<>();
-//            datos = manejadorVenta.cargaVentasNoCancel();
-//            for (Object[] dato : datos) {
-//                String strVenta = String.valueOf(dato[0]);
-//                String strTotalVenta = String.valueOf(dato[1]);
-//                String strCantPaga = String.valueOf(dato[2]);
-//                idVenta = Integer.parseInt(strVenta);
-//                cantPaga = Double.parseDouble(strCantPaga);
-//                totalventa = Double.parseDouble(strTotalVenta);
-//                double aux = totalventa - cantPaga;
-//                if (monto <= aux) {
-//                    cantPaga = cantPaga + monto;
-//                    objV = new Venta(idVenta, cantPaga);
-//                    manejadorVenta.actualizaDeudaCompra(objV);
-//                    break;
-//                } else {
-//                    //se borra la siguiente linea de este if  --if (aux < monto)--
-//                    monto = monto - aux;
-//                    cantPaga = totalventa;
-//                    objV = new Venta(idVenta, cantPaga);
-//                    manejadorVenta.actualizaDeudaCompra(objV);
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void pagoVentaXVenta() {
+        double monto = Double.parseDouble(txtMonto.getText());
+        double cantPaga, totalVenta;
+        int idVenta;
+        ArrayList<Venta> datos = manejadorVenta.cargaVentasNoCancel(txtCedula.getText());
+        int cant = datos.size();
+
+        for (int i = 0; i < cant; i++) {
+            objVenta = datos.get(i);
+            int intIdVenta = objVenta.getIntIdVenta();
+            totalVenta = objVenta.getDblTotalVenta();
+            cantPaga = objVenta.getDblValCancelado();
+            double aux = totalVenta - cantPaga;
+            if (monto <= aux) {
+                cantPaga = cantPaga + monto;
+                manejadorVenta.actualizaPago(intIdVenta, cantPaga);
+                break;
+            } else {
+                //se borra la siguiente linea de este if  --if (aux < monto)--
+                monto = monto - aux;
+                cantPaga = totalVenta;
+                manejadorVenta.actualizaPago(intIdVenta, cantPaga);
+            }
+        }
+    }
+
     public void actualCuenta() {
         if (txtMonto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un monto");
@@ -616,7 +611,7 @@ public final class Pagos extends javax.swing.JFrame {
             if (n == JOptionPane.YES_OPTION) {
                 pago();
                 cargarTabla();
-//                    pagoVentaXVenta();
+                pagoVentaXVenta();
                 vistaReporte();
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
@@ -839,7 +834,6 @@ public final class Pagos extends javax.swing.JFrame {
                 txtDireccion.setText(direccion);
                 cargarTabla();
             }
-
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "No ha ingresado ninguna dirección", "Erroe", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
@@ -864,7 +858,6 @@ public final class Pagos extends javax.swing.JFrame {
             modelo.setValueAt(deuda, i, 3);
             modelo.setValueAt(direccion, i, 4);
         }
-
     }
 
     public static String getFechaActual() {

@@ -2,13 +2,15 @@ CREATE DATABASE empresa;
 
 USE empresa;
 select * from usuario;
-
+SELECT DISTINCT dv.Id_Venta, v.Total_Venta, v.Valor_Cancelado FROM venta v, detalle_venta dv 
+WHERE dv.Id_Venta=v.Id_Venta AND Total_Venta>Valor_Cancelado AND cedula_cliente = "1105970717" ORDER BY Id_Venta;
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
 nombre VARCHAR(50) NOT NULL UNIQUE,
 usuario VARCHAR(15) NOT NULL UNIQUE,
 contrasena VARCHAR(128) NOT NULL,
-rol INT(10) 
+rol INT(10) ,
+estado boolean default true
 );
 
 CREATE TABLE clientes(
@@ -16,7 +18,8 @@ nombres VARCHAR(50) NOT NULL UNIQUE,
 cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
 telefono VARCHAR(10) NOT NULL,#ANALIZAR cambiar a varchar
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
-direccion TEXT NOT NULL
+direccion TEXT NOT NULL,
+estado boolean default true
 );
 
 CREATE TABLE producto(
@@ -56,8 +59,11 @@ nombre_cuenta VARCHAR(30) NOT NULL,
 tipo_cuenta VARCHAR(20) NOT NULL,
 numero_cuenta VARCHAR(15),
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
-telefono VARCHAR(10)
+telefono VARCHAR(10),
+estado boolean default true
 );
+INSERT INTO proveedores (empresa,ruc,nombre_cuenta,tipo_cuenta,numero_cuenta,telefono) VALUES("(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)");
+
 drop table venta;
 CREATE TABLE venta(
 id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
@@ -100,11 +106,12 @@ fecha VARCHAR(10) NOT NULL
 -- Revisar pago_proveedor
 CREATE TABLE pago_proveedor(
 id_pago INT(6) PRIMARY KEY AUTO_INCREMENT,
-empresa VARCHAR(15),
-usuario VARCHAR(15) NOT NULL,
+ruc VARCHAR(15),
+cedula_usuario VARCHAR(10) NOT NULL,
 monto_cancelado DECIMAL(7,2) NOT NULL,
 fecha DATE,
-tipo VARCHAR(7)
+tipo VARCHAR(7),
+descripcion TEXT
 );
 
 ALTER TABLE producto

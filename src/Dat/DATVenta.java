@@ -100,18 +100,52 @@ public class DATVenta {
         return cantVenta;
     }
 
-    public ResultSet cargaVentasNoCalcel() throws SQLException, ClassNotFoundException {
-        String sentencia = "SELECT DISTINCT dv.Id_Venta, v.Total_Venta, v.Valor_Cancelado FROM venta v, detalle_venta dv "
-                + "WHERE dv.Id_Venta=v.Id_Venta AND Total_Venta>Valor_Cancelado ORDER BY Id_Venta";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        return ps.executeQuery();
+    public ArrayList<Venta> cargaVentasNoCancel(String cedula) {
+        ArrayList<Venta> listadoVentas = new ArrayList<Venta>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT DISTINCT dv.Id_Venta, v.Total_Venta, v.Valor_Cancelado FROM venta v, detalle_venta dv "
+                + "WHERE dv.Id_Venta=v.Id_Venta AND Total_Venta>Valor_Cancelado AND cedula = ? ORDER BY Id_Venta";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, cedula);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+                double totalVenta = rs.getDouble(2);
+                double cancelado = rs.getDouble(3);
+                Venta venta = new Venta(id, totalVenta, cancelado);
+                listadoVentas.add(venta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoVentas;
     }
 
-    public int actualizaPago(int venta, double valCancel) throws SQLException, ClassNotFoundException {
-        String sentencia = "UPDATE venta SET Valor_Cancelado = ? WHERE Id_Venta= ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setDouble(1, valCancel);
-        ps.setInt(2, venta);
-        return ps.executeUpdate();
+    public void actualizaPago(int venta, double valCancel) {
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "UPDATE venta SET Valor_Cancelado = ? WHERE Id_Venta= ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, venta);
+            ps.setDouble(2, valCancel);
+            ps.executeUpdate();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } finally{
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

@@ -23,7 +23,11 @@ public class DATMaterial {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor, u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion ORDER BY p.Nombre_Producto Asc";
+            String Sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
+                    + " p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia,"
+                    + " p.ganancia_mayor, u.nombre_ubicacion, p.Cantidad FROM "
+                    + "producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion "
+                    + "AND stock = true ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -91,7 +95,7 @@ public class DATMaterial {
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
                     + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
-                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND Nombre_Producto REGEXP CONCAT('^',?) "
+                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Nombre_Producto REGEXP CONCAT('^',?) "
                     + "ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, nombre);
@@ -125,7 +129,7 @@ public class DATMaterial {
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
                     + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
-                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND Codigo "
+                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Codigo "
                     + "REGEXP CONCAT ('^',?) ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, nombre);
@@ -317,7 +321,7 @@ public class DATMaterial {
     public void eliminarProducto(String nombre) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "DELETE FROM producto WHERE codigo = ?";
+            String sentencia = "UPDATE producto SET stock = false WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             ps.executeUpdate();
