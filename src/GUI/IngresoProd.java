@@ -195,7 +195,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (!txtExistenciasBodega.getText().isEmpty()) {
             Bodega bodega = (Bodega) cmbBodega.getSelectedItem();
             String codigo = txtCod.getText();
-            int Cantidad = Integer.parseInt(txtCantidad.getText());
+            int Cantidad = Integer.parseInt(txtExistenciasBodega.getText());
             System.out.println(bodega.getIntIdBodega());
             bodegaExistencias = new ExistenciasBodega(bodega.getIntIdBodega(), codigo, Cantidad);
             objExistenciasBodega.ingresarEnBodega(bodegaExistencias);
@@ -204,7 +204,6 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     public void reseteoCampos() {
         if (cbxAyuda.isSelected()) {
-            txtCod.setText("");
             txtCantidad.setText("");
             lblPrecioMayor.setText("");
             cbxGenerador.setSelected(false);
@@ -212,7 +211,6 @@ public final class IngresoProd extends javax.swing.JFrame {
             txtGanancia.setText("");
             txtGananciaMayor.setText("");
             txtCantidad.setText("");
-            txtCod.setText("");
             txtNombreProd.setText("");
             txtPrecioCompra.setText("");
             lblPrecioMayor.setText("Precio de venta al por mayor:");
@@ -307,12 +305,15 @@ public final class IngresoProd extends javax.swing.JFrame {
             }
             if (!txtExistenciasBodega.getText().isEmpty()) {
                 guardarBodega();
+                txtCod.setText("");
+                txtExistenciasBodega.setText("");
             }
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
         } catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(null, "No se puede agregar un numero con dos puntos decimales", "Error", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "No se puede agregar un numero con dos puntos decimales", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 

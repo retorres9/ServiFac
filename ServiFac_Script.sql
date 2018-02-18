@@ -1,9 +1,10 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-select * from usuario;
-SELECT DISTINCT dv.Id_Venta, v.Total_Venta, v.Valor_Cancelado FROM venta v, detalle_venta dv 
-WHERE dv.Id_Venta=v.Id_Venta AND Total_Venta>Valor_Cancelado AND cedula_cliente = "1105970717" ORDER BY Id_Venta;
+select * FROM existenciasbodega;
+
+describe usuario;
+
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
 nombre VARCHAR(50) NOT NULL UNIQUE,
@@ -12,6 +13,7 @@ contrasena VARCHAR(128) NOT NULL,
 rol INT(10) ,
 estado boolean default true
 );
+ALTER TABLE usuario add COLUMN estado boolean default true;
 
 CREATE TABLE clientes(
 nombres VARCHAR(50) NOT NULL UNIQUE,
@@ -86,12 +88,13 @@ CREATE TABLE bodega(
 id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL UNIQUE
 );
-
+describe existenciasbodega;
 CREATE TABLE existenciasBodega(
 id_bodega INT (3),
 codigo VARCHAR(13),
 cantidad INT (4)
 );
+ALTER TABLE existenciasbodega CHANGE cantidad cantidad INT(7);
 UPDATE clientes SET deuda = 100 WHERE nombres ="ROBERTH TORRES";
 SELECT * FROM abono_cliente;
 
@@ -104,6 +107,7 @@ monto_abono DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10) NOT NULL
 );
 -- Revisar pago_proveedor
+#describe pago_proveedor;
 CREATE TABLE pago_proveedor(
 id_pago INT(6) PRIMARY KEY AUTO_INCREMENT,
 ruc VARCHAR(15),
@@ -113,6 +117,8 @@ fecha DATE,
 tipo VARCHAR(7),
 descripcion TEXT
 );
+#ALTER TABLE pago_proveedor change fecha fecha_ varchar(10);
+ALTER TABLE pago_proveedor add column descripcion TEXT;
 
 ALTER TABLE producto
 ADD CONSTRAINT produbic_fk
@@ -133,3 +139,15 @@ FOREIGN KEY (id_venta) REFERENCES venta(id_venta);
 ALTER TABLE venta
 ADD CONSTRAINT usuario_fk
 FOREIGN KEY (cedula_usuario) REFERENCES usuario(cedula_usuario);
+
+ALTER TABLE existenciasbodega
+ADD constraint idBodega_fk
+FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
+
+ALTER TABLE producto
+ADD CONSTRAINT bodega_fk
+FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
+
+ALTER TABLE existenciasbodega
+ADD CONSTRAINT codigoBodega_fk
+FOREIGN KEY (codigo) REFERENCES producto(codigo);

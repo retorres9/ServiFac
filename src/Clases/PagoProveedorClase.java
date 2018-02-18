@@ -9,6 +9,11 @@ public class PagoProveedorClase {
     private String strTipo;
     private String strDescripcion;
 
+    /*Variables para consultas cruzadas*/
+    private double deuda;
+    private String usuario;
+    private String fecha;
+
     public PagoProveedorClase(String strEmpresa, String strUsuario, double dblMontoCancelado, String strFecha, String strTipo, String strDescripcion) {
         this.strRuc = strEmpresa;
         this.strCedulaUsuario = strUsuario;
@@ -16,6 +21,14 @@ public class PagoProveedorClase {
         this.strFecha = strFecha;
         this.strTipo = strTipo;
         this.strDescripcion = strDescripcion;
+    }
+
+    public PagoProveedorClase(String strRuc, double dblMontoCancelado, double deuda, String usuario, String fecha) {
+        this.strRuc = strRuc;
+        this.dblMontoCancelado = dblMontoCancelado;
+        this.deuda = deuda;
+        this.usuario = usuario;
+        this.fecha = fecha;
     }
 
     public String getStrDescripcion() {
@@ -27,7 +40,7 @@ public class PagoProveedorClase {
     }
 
     public PagoProveedorClase() {
-        
+
     }
 
     public String getStrRuc() {
@@ -69,5 +82,37 @@ public class PagoProveedorClase {
     public void setStrTipo(String strTipo) {
         this.strTipo = strTipo;
     }
-    
+
+    public String getStrCedulaUsuario() {
+        return strCedulaUsuario;
+    }
+
+    public void setStrCedulaUsuario(String strCedulaUsuario) {
+        this.strCedulaUsuario = strCedulaUsuario;
+    }
+
+    public double getDeuda() {
+        return deuda;
+    }
+
+    public void setDeuda(double deuda) {
+        this.deuda = deuda;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
 }

@@ -55,6 +55,43 @@ public class DATMaterial {
         }
         return listaProductos;
     }
+    
+    public ArrayList<Producto> existenciasBodega(){
+        ArrayList<Producto> listadoEnBodega = new ArrayList<Producto>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
+                    + " p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia,"
+                    + " p.ganancia_mayor, b.nombre_bodega, eb.cantidad FROM "
+                    + "producto p, existenciasbodega eb, bodega b WHERE eb.id_bodega = b.id_bodega "
+                    + "AND p.codigo = eb.codigo AND stock = true ORDER BY p.Nombre_Producto Asc";
+            ps = con.prepareStatement(sentencia);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String nombre = rs.getString(1);
+                String codigo = rs.getString(2);
+                double precioCompra = rs.getDouble(3);
+                double precio = rs.getDouble(4);
+                double precioMayor = rs.getDouble(5);
+                double ganancia = rs.getDouble(6);
+                double gananciaMayor = rs.getDouble(7);
+                String bodega = rs.getString(8);
+                int cant = rs.getInt(9);
+                Producto prod = new Producto(nombre, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, bodega);
+                listadoEnBodega.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoEnBodega;
+    }
 
     public ArrayList<Producto> ConsultarMinimo() throws SQLException {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();

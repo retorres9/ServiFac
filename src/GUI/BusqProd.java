@@ -24,6 +24,7 @@ public final class BusqProd extends javax.swing.JFrame {
     Producto producto;
     Usuario objU = new Usuario();
     DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modelo2 = new DefaultTableModel();
     DATMaterial material = new DATMaterial();
 
     public BusqProd() {
@@ -31,6 +32,9 @@ public final class BusqProd extends javax.swing.JFrame {
         iconos();
         material = new DATMaterial();
         insertarColumnas();
+        encabezadoBodega();
+        setAnchoColumnas();
+        setAnchoColumnas2();
         CargaCombo();
         this.txtPrecio.setEditable(false);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
@@ -39,7 +43,7 @@ public final class BusqProd extends javax.swing.JFrame {
         txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
         permisos();
         updateTabla();
-        setAnchoColumnas();
+        cargarTabblaBodega();
         btnActualizaPrecio.setText("");
     }
 
@@ -53,6 +57,18 @@ public final class BusqProd extends javax.swing.JFrame {
         modelo.addColumn("Ganancia por mayor %");
         modelo.addColumn("Ubicación");
         modelo.addColumn("Cantidad");
+    }
+    
+    public void encabezadoBodega() {
+        modelo2.addColumn("Nombre producto");
+        modelo2.addColumn("Codigo");
+        modelo2.addColumn("Precio de Compra");
+        modelo2.addColumn("Precio");
+        modelo2.addColumn("Precio por mayor");
+        modelo2.addColumn("Ganancia %");
+        modelo2.addColumn("Ganancia por mayor %");
+        modelo2.addColumn("Bodega");
+        modelo2.addColumn("Cantidad");
     }
 
     public void permisos() {
@@ -145,6 +161,46 @@ public final class BusqProd extends javax.swing.JFrame {
             columnaTabla.setPreferredWidth(anchoColumna);
         }
     }
+    public static void setAnchoColumnas2() {
+        JViewport scroll = (JViewport) tblProd.getParent();
+        int ancho = scroll.getWidth();
+        int anchoColumna = 0;
+        TableColumnModel modeloColumna = tblProd.getColumnModel();
+        TableColumn columnaTabla;
+        for (int i = 0; i < tblProd.getColumnCount(); i++) {
+            columnaTabla = modeloColumna.getColumn(i);
+            switch (i) {
+                case 0:
+                    anchoColumna = (65 * ancho) / 100;
+                    break;
+                case 1:
+                    anchoColumna = (40 * ancho) / 100;
+                    break;
+                case 2:
+                    anchoColumna = (40 * ancho) / 100;
+                    break;
+                case 3:
+                    anchoColumna = (25 * ancho) / 100;
+                    break;
+                case 4:
+                    anchoColumna = (40 * ancho) / 100;
+                    break;
+                case 5:
+                    anchoColumna = (30 * ancho) / 100;
+                    break;
+                case 6:
+                    anchoColumna = (50 * ancho) / 100;
+                    break;
+                case 7:
+                    anchoColumna = (35 * ancho) / 100;
+                    break;
+                case 8:
+                    anchoColumna = (25 * ancho) / 100;
+                    break;
+            }
+            columnaTabla.setPreferredWidth(anchoColumna);
+        }
+    }    
 
     public void updateTabla() {
         try {
@@ -179,21 +235,50 @@ public final class BusqProd extends javax.swing.JFrame {
         }
 
     }
+    
+    public void cargarTabblaBodega() {
+        setAnchoColumnas2();
+        ArrayList<Producto> listadoBodega = material.existenciasBodega();
+        int cantLista = listadoBodega.size();
+        modelo2.setNumRows(cantLista);
+        for (int i = 0; i < cantLista; i++) {
+            producto = listadoBodega.get(i);
+            String nombreProd = producto.getStrNombreProd();
+            String cod = producto.getStrCod();
+            Double preciCompra = producto.getPrecioCompra();
+            Double precio = producto.getFltPrecio();
+            Double precioMayor = producto.getFltPrecioMayor();
+            Double ganancia = producto.getGanancia();
+            Double gananciaMayor = producto.getGananciaMayor();
+            String ubi = producto.getStrUbicacion();
+            Integer cant = producto.getIntCantidad();
+            
+            modelo2.setValueAt(nombreProd, i, 0);
+            modelo2.setValueAt(cod, i, 1);
+            modelo2.setValueAt(preciCompra, i, 2);
+            modelo2.setValueAt(precio, i, 3);
+            modelo2.setValueAt(precioMayor, i, 4);
+            modelo2.setValueAt(ganancia, i, 5);
+            modelo2.setValueAt(gananciaMayor, i, 6);
+            modelo2.setValueAt(ubi, i, 7);
+            modelo2.setValueAt(cant, i, 8);
+        }
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblProd = new javax.swing.JTable();
         txtEmpresa = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
         cmbBusq = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnActualizaPrecio = new javax.swing.JLabel();
@@ -212,6 +297,14 @@ public final class BusqProd extends javax.swing.JFrame {
         txtPrecioM = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProd = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblBodega = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -236,18 +329,6 @@ public final class BusqProd extends javax.swing.JFrame {
             }
         });
 
-        tblProd.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        tblProd.setModel(modelo);
-        tblProd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblProdMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblProd);
-        if (tblProd.getColumnModel().getColumnCount() > 0) {
-            tblProd.getColumnModel().getColumn(0).setPreferredWidth(20);
-        }
-
         txtEmpresa.setFont(new java.awt.Font("Roboto Cn", 1, 36)); // NOI18N
         txtEmpresa.setText("Nombre Empresa");
 
@@ -258,20 +339,13 @@ public final class BusqProd extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lupa.png"))); // NOI18N
+
         jLabel6.setText("Buscar por:");
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyReleased(evt);
-            }
-        });
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lupa.png"))); // NOI18N
-
-        jButton2.setText("Aceptar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -391,7 +465,7 @@ public final class BusqProd extends javax.swing.JFrame {
                                 .addComponent(btnActualizaPrecio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
@@ -406,7 +480,7 @@ public final class BusqProd extends javax.swing.JFrame {
                         .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizaUbicacion)))
-                .addGap(298, 298, 298))
+                .addGap(349, 349, 349))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,9 +495,7 @@ public final class BusqProd extends javax.swing.JFrame {
                         .addComponent(btnActualizaPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(3, 3, 3)
-                            .addComponent(jLabel1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -435,21 +507,112 @@ public final class BusqProd extends javax.swing.JFrame {
                             .addComponent(btnActualizaUbicacion)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtUbicacion)
-                                .addComponent(jLabel8))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnActualizaNombre))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtPrecioM)
-                                .addComponent(jLabel4))
-                            .addComponent(btnActualizaPrecioMayor))))
+                                .addComponent(jLabel8)))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnActualizaNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtPrecioM)
+                        .addComponent(jLabel4))
+                    .addComponent(btnActualizaPrecioMayor))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tblProd.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        tblProd.setModel(modelo);
+        tblProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProdMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblProd);
+        if (tblProd.getColumnModel().getColumnCount() > 0) {
+            tblProd.getColumnModel().getColumn(0).setPreferredWidth(20);
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1063, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel6))
+                    .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jTabbedPane1.addTab("Productos en almacén", jPanel2);
+
+        tblBodega.setModel(modelo2);
+        jScrollPane2.setViewportView(tblBodega);
+
+        jLabel3.setText("Cantidad a mover:");
+
+        jButton2.setText("Aceptar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
+        );
+
+        jTabbedPane1.addTab("Productos en bodega", jPanel3);
 
         jMenu2.setText("Productos");
 
@@ -559,24 +722,14 @@ public final class BusqProd extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jSeparator1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1063, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 53, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(410, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(264, 264, 264)
-                .addComponent(jButton2)
-                .addGap(340, 340, 340))
+                .addGap(679, 679, 679))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -588,22 +741,11 @@ public final class BusqProd extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel6))
-                    .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jButton1)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -707,7 +849,9 @@ public final class BusqProd extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        if(tblBodega.getSelectedRowCount() == 1){
+            
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public static String getFechaActual() {
@@ -901,6 +1045,7 @@ public final class BusqProd extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -918,13 +1063,19 @@ public final class BusqProd extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
+    private javax.swing.JTable tblBodega;
     public static javax.swing.JTable tblProd;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtCantidad;

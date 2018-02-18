@@ -81,7 +81,7 @@ public class DATProveedor {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT * FROM proveedores WHERE estado = true AND empresa NOT LIKE '(Vacio)'" ;
+            String sentencia = "SELECT * FROM proveedores WHERE estado = true AND empresa NOT LIKE '(Vacio)'";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -124,7 +124,7 @@ public class DATProveedor {
         return re;
     }
 
-    public ArrayList<Proveedor> buscarEmpresa(String nombre){
+    public ArrayList<Proveedor> buscarEmpresa(String nombre) {
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -157,7 +157,7 @@ public class DATProveedor {
         return listadoBusq;
     }
 
-    public ArrayList<Proveedor> buscarNombreCuenta(String nombreEmpresa){
+    public ArrayList<Proveedor> buscarNombreCuenta(String nombreEmpresa) {
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -191,32 +191,32 @@ public class DATProveedor {
     }
 
     public void updateDeuda(Proveedor proveedor) throws ClassNotFoundException, SQLException {
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE proveedores SET Deuda = ? WHERE ruc = ?";
             ps = con.prepareStatement(sentencia);
             ps.setDouble(1, proveedor.getDblDeuda());
             ps.setString(2, proveedor.getRuc());
             ps.executeUpdate();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             ps.close();
             con.close();
         }
-        
+
     }
 
     public void eliminarProveedor(String empresa) {
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE proveedores SET estado = false WHERE  Empresa = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, empresa);
             ps.executeUpdate();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede eliminar el proveedor");
-        } finally{
+        } finally {
             try {
                 ps.close();
                 con.close();

@@ -659,8 +659,10 @@ public final class PagoProveedor extends javax.swing.JFrame {
                     objProveedor = new Proveedor(ruc, deuda2);
 
                     manejadorProveedor.updateDeuda(objProveedor);
-                    objPagoProv = new PagoProveedorClase(ruc, usuario, monto, ruc, "Pago", desc);
+                    objPagoProv = new PagoProveedorClase(ruc, usuario, monto, getFecha(), "Pago", desc);
                     manejadorPago.pagoProveedor(objPagoProv);
+                    JOptionPane.showMessageDialog(null, "Pago registrado exitosamente");
+                    txtMonto.setText("");
                 }
             } else if (ocp2.isSelected()) {
                 deuda2 = deuda + Double.parseDouble(txtMonto.getText());
@@ -668,8 +670,10 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 String ruc = txtRuc.getText();
                 objProveedor = new Proveedor(ruc, deuda);
                 manejadorProveedor.updateDeuda(objProveedor);
-                objPagoProv = new PagoProveedorClase(ruc, usuario, monto, ruc, "Crédio", desc);
+                objPagoProv = new PagoProveedorClase(ruc, usuario, monto, getFecha(), "Crédio", desc);
                 manejadorPago.pagoProveedor(objPagoProv);
+                JOptionPane.showMessageDialog(null, "Crédito registrado exitosamente");
+                txtMonto.setText("");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
@@ -677,8 +681,8 @@ public final class PagoProveedor extends javax.swing.JFrame {
             monto = 0;
         }
     }
-    
-    public void metodoGuardar(){
+
+    public void metodoGuardar() {
         if (txtMonto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un monto");
         } else if (!opc1.isSelected() && !ocp2.isSelected()) {
@@ -791,11 +795,9 @@ public final class PagoProveedor extends javax.swing.JFrame {
         if (tblProv.getSelectedRows().length > 0) {
             String empresa = txtEmpresa.getText();
             VistaCreditos.txtEmpresa.setText(empresa);
-            VistaCreditos.cargarTabla();
+            objVc.cargarTabla();
             objVc.setVisible(true);
         }
-
-        objVc.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusGained
@@ -809,7 +811,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescFocusLost
 
     private void txtMontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyReleased
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             metodoGuardar();
         }
     }//GEN-LAST:event_txtMontoKeyReleased

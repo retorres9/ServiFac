@@ -17,6 +17,12 @@ public class Usuario {
         this.contrasena = contrasena;
         this.rol = rol;
     }
+
+    public Usuario(String nombre, String usuario, int rol) {
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.rol = rol;
+    }
     
     public Usuario(int rol){
         this.rol = rol;

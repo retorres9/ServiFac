@@ -17,7 +17,7 @@ public class DATUsuario {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public boolean nuevoUsuario(Usuario usuario) throws SQLException{
+    public boolean nuevoUsuario(Usuario usuario) throws SQLException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol) "
@@ -45,15 +45,15 @@ public class DATUsuario {
 
     }
 
-    public ArrayList<Usuario> obtenerCedula(String user){
+    public ArrayList<Usuario> obtenerCedula(String user) {
         ArrayList<Usuario> cedula = new ArrayList<Usuario>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT cedula_usuario FROM usuario WHERE usuario = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, user);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String ced = rs.getString(1);
                 Usuario usuario = new Usuario(ced);
                 cedula.add(usuario);
@@ -69,6 +69,33 @@ public class DATUsuario {
             }
         }
         return cedula;
+    }
+    
+    public ArrayList<Usuario> listarClientes (){
+        ArrayList<Usuario> listadoUsuarios = new ArrayList<Usuario>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT nombre, usuario, rol FROM usuario ORDER BY nombre";
+            ps = con.prepareStatement(sentencia);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String nombre = rs.getString(1);
+                String user = rs.getString(2);
+                int rol = rs.getInt(3);
+                Usuario usuario = new Usuario(nombre, user, rol);
+                listadoUsuarios.add(usuario);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoUsuarios;
     }
 //    public int compUsuario() throws ClassNotFoundException, SQLException{
 //        String sentencia = "SELECT Usuario, Contrasena FROM usuario WHERE Usuario = ? && Contrasena = ?";

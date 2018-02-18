@@ -65,7 +65,7 @@ public final class Factura extends javax.swing.JFrame {
     DATClientes manejadorCliente;
     DATReporte manejadorDetalle;
     DATUsuario manejadorUsuario;
-    
+
     public Factura() {
         initComponents();
         cargarEncabezado();
@@ -103,8 +103,8 @@ public final class Factura extends javax.swing.JFrame {
             cont = venta.getIntIdVenta();
         }
     }
-    
-    public void usuario(){
+
+    public void usuario() {
         ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
         int cantUser = cedula.size();
         for (int i = 0; i < cantUser; i++) {
@@ -998,19 +998,19 @@ public final class Factura extends javax.swing.JFrame {
                         total();
                     }
                 } else {
-                    
+
                 }
             } catch (NumberFormatException ex) {
                 modelo.setValueAt(cantInicial, filaSeleccionada, 0);
             }
-            
+
         }
     }//GEN-LAST:event_tblVentasKeyReleased
 
     public void cargarProducto() {
 
         double totProd;
-        int n = 1;
+        int cantInicial = 1;
         String dato = txtCod.getText();
         ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
         int cantLista = listadoProducto.size();
@@ -1025,11 +1025,11 @@ public final class Factura extends javax.swing.JFrame {
                 double precioMayor = producto.getFltPrecioMayor();
                 String codigo = producto.getStrCod();
 
-                modelo.setValueAt(n, fila, 0);
+                modelo.setValueAt(cantInicial, fila, 0);
                 modelo.setValueAt(prod, fila, 1);
                 modelo.setValueAt(precio, fila, 2);
                 modelo.setValueAt(precioMayor, fila, 3);
-                totProd = n * precio;
+                totProd = cantInicial * precio;
                 DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
                 simbolos.setDecimalSeparator('.');
                 DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);

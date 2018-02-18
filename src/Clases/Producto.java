@@ -23,6 +23,7 @@ public class Producto {
     /*Atributos para relacionar tablas*/
     private String strUbicacion;
     private String strEmpresa;
+    private String strBodega;
     
     public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad, int intCantidadMinima, String strEmpresa) {
         this.strNombreProd = strNombreProd;
@@ -40,6 +41,14 @@ public class Producto {
         this.strCod = strCod;
         this.fltPrecio = fltPrecio;
         this.fltPrecioMayor = fltPrecioMayor;
+    }
+    
+    public String getStrBodega() {
+        return strBodega;
+    }
+
+    public void setStrBodega(String strBodega) {
+        this.strBodega = strBodega;
     }
     
     public Producto(int intCantidad){
