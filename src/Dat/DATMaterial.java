@@ -64,7 +64,7 @@ public class DATMaterial {
                     + " p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia,"
                     + " p.ganancia_mayor, b.nombre_bodega, eb.cantidad FROM "
                     + "producto p, existenciasbodega eb, bodega b WHERE eb.id_bodega = b.id_bodega "
-                    + "AND p.codigo = eb.codigo AND stock = true ORDER BY p.Nombre_Producto Asc";
+                    + "AND p.codigo = eb.codigo AND stock = true AND eb.cantidad > 0 ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -429,6 +429,26 @@ public class DATMaterial {
             String sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, prod.getIntUbicacion());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
+            ps.setString(2, prod.getStrNombreProd());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void moverBodega(Producto prod){
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET Cantidad = cantidad + ? WHERE nombre_producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, prod.getIntCantidadMinima());
             ps.setString(2, prod.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {

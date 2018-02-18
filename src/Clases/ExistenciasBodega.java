@@ -24,6 +24,11 @@ public class ExistenciasBodega {
         this.cantidad = cantidad;
     }
 
+    public ExistenciasBodega(String codigo, int cantidad) {
+        this.codigo = codigo;
+        this.cantidad = cantidad;
+    }
+
     public int getIdBodega() {
         return idBodega;
     }

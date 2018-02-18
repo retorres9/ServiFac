@@ -1,9 +1,9 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-select * FROM existenciasbodega;
-
-describe usuario;
+select * FROM producto;
+#UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
+#describe usuario;
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
@@ -94,9 +94,10 @@ id_bodega INT (3),
 codigo VARCHAR(13),
 cantidad INT (4)
 );
+update existenciasbodega SET cantidad = 10 WHERE id_bodega = 1;
 ALTER TABLE existenciasbodega CHANGE cantidad cantidad INT(7);
 UPDATE clientes SET deuda = 100 WHERE nombres ="ROBERTH TORRES";
-SELECT * FROM abono_cliente;
+SELECT * FROM existenciasbodega;
 
 DROP TABLE abono_cliente;
 CREATE TABLE abono_cliente(
