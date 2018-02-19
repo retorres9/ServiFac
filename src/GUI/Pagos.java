@@ -24,7 +24,7 @@ import javax.swing.table.TableColumnModel;
 public final class Pagos extends javax.swing.JFrame {
 
     NewCliente objClienteNew = new NewCliente();
-    BusqProd objBuspProd = new BusqProd();
+    Inventario objBuspProd = new Inventario();
     IngresoProd objIngrProd = new IngresoProd();
     int fila, idVenta;
     Venta objVenta = new Venta();
@@ -760,8 +760,8 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        BusqProd objBp = new BusqProd();
-        objBp.setVisible(true);
+        Inventario objInv = new Inventario();
+        objInv.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

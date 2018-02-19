@@ -11,11 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DATPagoProveedor {
-    
+
     Connection con;
     ResultSet rs;
     PreparedStatement ps;
-    
+    PagoProveedorClase pago = new PagoProveedorClase();
+
     public void pagoProveedor(PagoProveedorClase pago) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -39,9 +40,9 @@ public class DATPagoProveedor {
                 Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-    
+
     public ArrayList<PagoProveedorClase> verPagos(String empresa) {
         ArrayList<PagoProveedorClase> listadoPagos = new ArrayList<PagoProveedorClase>();
         try {
@@ -65,15 +66,37 @@ public class DATPagoProveedor {
             Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listadoPagos;
-        
+
     }
 
-//    public ResultSet verPagosPorFecha(String strFecha) throws SQLException, ClassNotFoundException {
-//        String sentencia = "SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, pp.Usuario, pp.Fecha "
-//                + "FROM proveedores p, pago_proveedor pp "
-//                + "WHERE p.Empresa = pp.Empresa AND pp.Fecha = ? AND Tipo ='Pago'";
-//        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-//        ps.setString(1, strFecha);
-//        return ps.executeQuery();
-//    }
+    public ArrayList<PagoProveedorClase> verPagosPorFecha(String strFecha) {
+        ArrayList<PagoProveedorClase> listadoPagos = new ArrayList<PagoProveedorClase>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, pp.cedula_usuario "
+                    + "FROM proveedores p, pago_proveedor pp "
+                    + "WHERE p.ruc = pp.ruc AND pp.Fecha = ? AND Tipo ='Pago'";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, strFecha);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String empresa = rs.getString(1);
+                double deuda = rs.getDouble(2);
+                double monto = rs.getDouble(3);
+                String usuario = rs.getString(4);
+                pago = new PagoProveedorClase(monto, deuda, usuario, empresa);
+                listadoPagos.add(pago);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoPagos;
+    }
 }

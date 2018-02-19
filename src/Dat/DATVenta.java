@@ -41,13 +41,37 @@ public class DATVenta {
 
     }
 
-    public ResultSet vistaVenta(String fecha) throws SQLException, ClassNotFoundException {
-        String sentencia = "SELECT DISTINCT v.Id_Venta,dv.Cedula, c.Nombres, v.Total_Venta, v.Valor_Cancelado, v.Fecha"
-                + " FROM detalle_venta dv, venta v, clientes c "
-                + "WHERE dv.Id_Venta = v.Id_Venta AND dv.Cedula=c.Cedula AND v.Fecha = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setString(1, fecha);
-        return ps.executeQuery();
+    public ArrayList<Venta> vistaVenta(String fecha) {
+        ArrayList<Venta> listadoVentas = new ArrayList<Venta>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT DISTINCT v.Id_Venta,dv.Cedula_Cliente, c.Nombres, v.Total_Venta, v.Valor_Cancelado"
+                    + " FROM detalle_venta dv, venta v, clientes c "
+                    + "WHERE dv.Id_Venta = v.Id_Venta AND dv.Cedula_cliente=c.Cedula_cliente AND v.Fecha = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, fecha);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idVenta = rs.getInt(1);
+                String cedula = rs.getString(2);
+                String nombre = rs.getString(3);
+                double totVenta = rs.getDouble(4);
+                double valCancelado = rs.getDouble(5);
+                String fechaVenta = rs.getString(6);
+                venta = new Venta(idVenta, totVenta, fechaVenta, valCancelado, cedula, nombre);
+                listadoVentas.add(venta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoVentas;
     }
 
     public ArrayList<Venta> ConsultarComprasCL(String nombre) {

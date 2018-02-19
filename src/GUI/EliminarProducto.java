@@ -362,7 +362,7 @@ public final class EliminarProducto extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(BusqProd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
@@ -405,7 +405,7 @@ public final class EliminarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        BusqProd objBp = new BusqProd();
+        Inventario objBp = new Inventario();
         objBp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed

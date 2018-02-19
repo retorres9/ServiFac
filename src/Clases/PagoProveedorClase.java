@@ -13,6 +13,7 @@ public class PagoProveedorClase {
     private double deuda;
     private String usuario;
     private String fecha;
+    private String empresa;
 
     public PagoProveedorClase(String strEmpresa, String strUsuario, double dblMontoCancelado, String strFecha, String strTipo, String strDescripcion) {
         this.strRuc = strEmpresa;
@@ -29,6 +30,21 @@ public class PagoProveedorClase {
         this.deuda = deuda;
         this.usuario = usuario;
         this.fecha = fecha;
+    }
+
+    public PagoProveedorClase(double dblMontoCancelado, double deuda, String usuario, String empresa) {
+        this.dblMontoCancelado = dblMontoCancelado;
+        this.deuda = deuda;
+        this.usuario = usuario;
+        this.empresa = empresa;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
     public String getStrDescripcion() {

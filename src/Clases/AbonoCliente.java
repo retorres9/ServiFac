@@ -8,6 +8,18 @@ public class AbonoCliente {
     private String strUsuario;
     private double dblMontoAbono;
     private String fechaAbono;
+    
+    //Atributos para consultas cruzadas
+    private String nombreCL;
+    private double deuda;
+
+    public AbonoCliente(String strCedula, String strUsuario, double dblMontoAbono,  String nombreCL, double deuda) {
+        this.strCedula = strCedula;
+        this.strUsuario = strUsuario;
+        this.dblMontoAbono = dblMontoAbono;
+        this.nombreCL = nombreCL;
+        this.deuda = deuda;
+    }
 
     public AbonoCliente(String strCedula, String strUsuario, double dblMontoAbono, String fechaAbono) {
         this.strCedula = strCedula;
@@ -18,6 +30,22 @@ public class AbonoCliente {
 
     public AbonoCliente() {
         
+    }
+
+    public String getNombreCL() {
+        return nombreCL;
+    }
+
+    public void setNombreCL(String nombreCL) {
+        this.nombreCL = nombreCL;
+    }
+
+    public double getDeuda() {
+        return deuda;
+    }
+
+    public void setDeuda(double deuda) {
+        this.deuda = deuda;
     }
 
     public String getStrCedula() {

@@ -1,7 +1,10 @@
 CREATE DATABASE empresa;
-
+drop database empresa;
 USE empresa;
 select * FROM producto;
+SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, pp.cedula_usuario 
+FROM proveedores p, pago_proveedor pp 
+WHERE p.ruc = pp.ruc AND pp.Fecha = "18/2/2018" AND Tipo ="Pago";
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -13,7 +16,7 @@ contrasena VARCHAR(128) NOT NULL,
 rol INT(10) ,
 estado boolean default true
 );
-ALTER TABLE usuario add COLUMN estado boolean default true;
+#ALTER TABLE usuario add COLUMN estado boolean default true;
 
 CREATE TABLE clientes(
 nombres VARCHAR(50) NOT NULL UNIQUE,
@@ -23,7 +26,7 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL,
 estado boolean default true
 );
-
+#describe producto;
 CREATE TABLE producto(
 nombre_Producto VARCHAR(40) NOT NULL UNIQUE,#
 codigo VARCHAR (13) PRIMARY KEY,#
@@ -53,7 +56,7 @@ CREATE TABLE categoria(
 id_categoria INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_categoria VARCHAR(20) UNIQUE NOT NULL
 );
-drop table proveedores;
+#describe proveedores;
 CREATE TABLE proveedores(
 empresa VARCHAR(50) NOT NULL UNIQUE,
 ruc VARCHAR(15) NOT NULL PRIMARY KEY,
@@ -64,9 +67,9 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 telefono VARCHAR(10),
 estado boolean default true
 );
-INSERT INTO proveedores (empresa,ruc,nombre_cuenta,tipo_cuenta,numero_cuenta,telefono) VALUES("(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)");
+#INSERT INTO proveedores (empresa,ruc,nombre_cuenta,tipo_cuenta,numero_cuenta,telefono) VALUES("(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)");
 
-drop table venta;
+
 CREATE TABLE venta(
 id_Venta INT(10) PRIMARY KEY AUTO_INCREMENT,
 total_Venta DECIMAL(7,2) NOT NULL,
@@ -74,7 +77,7 @@ valor_Cancelado DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10),
 cedula_usuario VARCHAR(10) NOT NULL
 );
-DROP TABLE detalle_venta;
+
 CREATE TABLE detalle_venta(
 cedula_cliente VARCHAR(13),
 cantidad INT(7),
@@ -88,7 +91,7 @@ CREATE TABLE bodega(
 id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL UNIQUE
 );
-describe existenciasbodega;
+#describe existenciasbodega;
 CREATE TABLE existenciasBodega(
 id_bodega INT (3),
 codigo VARCHAR(13),
@@ -99,10 +102,9 @@ ALTER TABLE existenciasbodega CHANGE cantidad cantidad INT(7);
 UPDATE clientes SET deuda = 100 WHERE nombres ="ROBERTH TORRES";
 SELECT * FROM existenciasbodega;
 
-DROP TABLE abono_cliente;
 CREATE TABLE abono_cliente(
 id_Abono INT(10) PRIMARY KEY AUTO_INCREMENT,
-cedula VARCHAR(13) NOT NULL,
+cedula_cliente VARCHAR(13) NOT NULL,
 usuario VARCHAR(15) NOT NULL,
 monto_abono DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10) NOT NULL
@@ -119,7 +121,7 @@ tipo VARCHAR(7),
 descripcion TEXT
 );
 #ALTER TABLE pago_proveedor change fecha fecha_ varchar(10);
-ALTER TABLE pago_proveedor add column descripcion TEXT;
+#ALTER TABLE pago_proveedor add column descripcion TEXT;
 
 ALTER TABLE producto
 ADD CONSTRAINT produbic_fk
@@ -152,3 +154,25 @@ FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
 ALTER TABLE existenciasbodega
 ADD CONSTRAINT codigoBodega_fk
 FOREIGN KEY (codigo) REFERENCES producto(codigo);
+
+ALTER TABLE abono_cliente
+ADD CONSTRAINT abono_fk
+FOREIGN KEY (cedula_cliente) REFERENCES clientes(cedula_cliente);
+
+ALTER TABLE pago_proveedor
+ADD CONSTRAINT ruc_fk
+FOREIGN KEY (ruc) REFERENCES proveedores(ruc);
+
+ALTER TABLE pago_proveedor
+ADD CONSTRAINT cedulausuario_fk
+FOREIGN KEY (cedula_usuario) REFERENCES usuario(cedula_usuario);
+
+ALTER TABLE producto
+ADD CONSTRAINT rucProducto_fk
+FOREIGN KEY (ruc) REFERENCES proveedores(ruc);
+
+ALTER TABLE producto
+ADD CONSTRAINT categoria_fk
+FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria);
+
+#SHOW CREATE TABLE abono_cliente;
