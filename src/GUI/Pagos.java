@@ -60,7 +60,6 @@ public final class Pagos extends javax.swing.JFrame {
 
         Seleccion = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
         txtMonto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -700,7 +699,7 @@ public final class Pagos extends javax.swing.JFrame {
             }
 
         } catch (NullPointerException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -963,7 +962,7 @@ public final class Pagos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
-    private static javax.swing.JTable tblClientes;
+    private static final javax.swing.JTable tblClientes = new javax.swing.JTable();
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtCedula;
     private javax.swing.JLabel txtDeuda;

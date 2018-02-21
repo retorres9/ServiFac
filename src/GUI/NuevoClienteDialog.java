@@ -56,7 +56,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         } catch (NumberFormatException ex) {
             //JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
               //      + " es valido\nEjemplo (99.99)");
-              ex.printStackTrace();
+              Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

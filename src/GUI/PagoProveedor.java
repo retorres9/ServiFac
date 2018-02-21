@@ -276,7 +276,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Ver");
+        jButton3.setText("Ver detalle");
         jButton3.setToolTipText("Haga clic aquí para ver las transacciones con el proveedor seleccionado");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -94,8 +94,6 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDeudaCliente = new javax.swing.JTable();
-        txtNombreCliente = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -250,7 +248,7 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tblDeudaCliente;
-    public static javax.swing.JLabel txtNombreCliente;
+    public static final javax.swing.JTable tblDeudaCliente = new javax.swing.JTable();
+    public static final javax.swing.JLabel txtNombreCliente = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

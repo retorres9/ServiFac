@@ -171,7 +171,7 @@ public final class Login extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            //JOptionPane.showConfirmDialog(null, "Ha habido un problema con la base de datos", "Aviso", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "Ha habido un problema con la base de datos", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
 
     }

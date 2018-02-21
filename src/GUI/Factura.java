@@ -314,7 +314,7 @@ public final class Factura extends javax.swing.JFrame {
             venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
             manejadorVenta.crearVenta(venta);
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -337,14 +337,11 @@ public final class Factura extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
-        txtDireccionCl = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtCed = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        txtCliente = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -1174,10 +1171,10 @@ public final class Factura extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JTable tblVentas;
-    public static javax.swing.JTextField txtCed;
-    public static javax.swing.JLabel txtCliente;
+    public static final javax.swing.JTextField txtCed = new javax.swing.JTextField();
+    public static final javax.swing.JLabel txtCliente = new javax.swing.JLabel();
     private javax.swing.JTextField txtCod;
-    public static javax.swing.JLabel txtDireccionCl;
+    public static final javax.swing.JLabel txtDireccionCl = new javax.swing.JLabel();
     private javax.swing.JLabel txtEmpresa;
     private javax.swing.JButton txtImprimir;
     private javax.swing.JTextField txtTotal;

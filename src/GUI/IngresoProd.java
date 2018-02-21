@@ -58,7 +58,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     DefaultComboBoxModel<Bodega> modeloBodega;
 
     JBarcodeBean barcode = new JBarcodeBean();
-    public static BufferedImage imagen = null;
+    public  BufferedImage imagen = null;
     DATMaterial conMat;
     Producto producto = new Producto();
     ExistenciasBodega bodegaExistencias = new ExistenciasBodega();
@@ -259,7 +259,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 idBodega = bod.getIntIdBodega();
             }
 
-            if (!cbxGenerador.isSelected() && (bandera = true)) {
+            if (!(cbxGenerador.isSelected()) && (bandera == true)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imagenDefaultProd, iva, idBodega);
                 try {
                     if (conMat.IngresarProducto(producto)) {
@@ -270,7 +270,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Error");
                 }
 
-            } else if ((bandera = true) && cbxGenerador.isSelected()) {
+            } else if ((bandera == true) && cbxGenerador.isSelected()) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva, idBodega);
                 try {
                     if (conMat.IngresarProducto(producto)) {
@@ -280,7 +280,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error");
                 }
-            } else if (!cbxGenerador.isSelected() && (bandera = false)) {
+            } else if (!cbxGenerador.isSelected() && (bandera == false)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imgArticulo, iva, idBodega);
                 try {
                     if (conMat.IngresarProducto(producto)) {
@@ -312,8 +312,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
         } catch(NumberFormatException ex){
-            //JOptionPane.showMessageDialog(null, "No se puede agregar un numero con dos puntos decimales", "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se puede agregar un numero con dos puntos decimales", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1289,7 +1288,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             ImageIO.write(imagen, "png", imgCodigoArticulo);
             System.out.println(imgCodigoArticulo.getAbsolutePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, e);
         }
 
     }

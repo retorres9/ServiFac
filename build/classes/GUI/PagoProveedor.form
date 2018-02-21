@@ -303,7 +303,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver"/>
+        <Property name="text" type="java.lang.String" value="Ver detalle"/>
         <Property name="toolTipText" type="java.lang.String" value="Haga clic aqu&#xed; para ver las transacciones con el proveedor seleccionado"/>
       </Properties>
       <Events>

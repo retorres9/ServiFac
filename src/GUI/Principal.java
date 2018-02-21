@@ -92,8 +92,9 @@ public final class Principal extends javax.swing.JFrame {
         jmConfig = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 600));
-        setPreferredSize(new java.awt.Dimension(1000, 670));
+        setFocusable(false);
+        setMinimumSize(new java.awt.Dimension(1034, 675));
+        setPreferredSize(new java.awt.Dimension(1034, 675));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -113,9 +114,9 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(381, 272, 73, 25);
+        jButton1.setBounds(381, 272, 90, 32);
 
-        jLabel2.setText("Buscar Producto");
+        jLabel2.setText("Inventario");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(541, 252, 87, 16);
 
@@ -126,11 +127,11 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(541, 272, 77, 25);
+        jButton2.setBounds(541, 272, 90, 32);
 
         jLabel3.setText("Ingresar Cliente");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(748, 251, 90, 16);
+        jLabel3.setBounds(730, 250, 100, 16);
 
         jButton3.setText("Aceptar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +140,7 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(748, 271, 77, 25);
+        jButton3.setBounds(730, 270, 80, 32);
 
         jLabel4.setText("Pagos");
         getContentPane().add(jLabel4);
@@ -152,7 +153,7 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(895, 271, 77, 25);
+        jButton4.setBounds(895, 271, 90, 32);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/codigo-de-barras.png"))); // NOI18N
         getContentPane().add(jLabel6);
@@ -205,7 +206,7 @@ public final class Principal extends javax.swing.JFrame {
 
         jLabel9.setText("Ingresar Proveedor");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(40, 552, 100, 16);
+        jLabel9.setBounds(20, 552, 120, 16);
 
         jButton5.setText("Aceptar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -214,11 +215,11 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(40, 572, 77, 25);
+        jButton5.setBounds(40, 572, 90, 32);
 
         jLabel10.setText("Operaciones de Proveedor");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(178, 552, 130, 16);
+        jLabel10.setBounds(168, 552, 160, 16);
 
         jButton6.setText("Aceptar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -227,19 +228,19 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton6);
-        jButton6.setBounds(190, 572, 77, 25);
+        jButton6.setBounds(190, 572, 100, 32);
 
         jLabel11.setText("Productos");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(461, 71, 56, 16);
+        jLabel11.setBounds(461, 71, 59, 16);
 
         jLabel12.setText("Clientes");
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(822, 73, 45, 16);
+        jLabel12.setBounds(822, 73, 46, 16);
 
         jLabel13.setText("Proveedores");
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(148, 375, 71, 16);
+        jLabel13.setBounds(148, 375, 73, 16);
 
         jButton7.setText("Aceptar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -248,11 +249,11 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton7);
-        jButton7.setBounds(56, 269, 77, 25);
+        jButton7.setBounds(56, 269, 90, 32);
 
         jLabel15.setText("Ventas");
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(145, 71, 39, 16);
+        jLabel15.setBounds(145, 71, 40, 16);
 
         txtConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ajustes_principal.png"))); // NOI18N
         txtConfig.setToolTipText("Presione para ir a Configuracion");
@@ -284,7 +285,7 @@ public final class Principal extends javax.swing.JFrame {
 
         jLabel17.setText("Configuración");
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(479, 550, 78, 16);
+        jLabel17.setBounds(479, 550, 79, 16);
 
         jLabel18.setText("Salir");
         getContentPane().add(jLabel18);
@@ -304,7 +305,7 @@ public final class Principal extends javax.swing.JFrame {
 
         jLabel20.setText("Reporte de Ventas");
         getContentPane().add(jLabel20);
-        jLabel20.setBounds(186, 249, 106, 16);
+        jLabel20.setBounds(186, 249, 120, 16);
 
         jButton8.setText("Aceptar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -313,7 +314,7 @@ public final class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton8);
-        jButton8.setBounds(186, 269, 77, 25);
+        jButton8.setBounds(186, 269, 90, 32);
 
         jSeparator10.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator10);

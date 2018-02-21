@@ -304,7 +304,6 @@ public final class Inventario extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProd = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblBodega = new javax.swing.JTable();
@@ -1007,7 +1006,7 @@ public final class Inventario extends javax.swing.JFrame {
             System.out.println(cod);
             updateTabla();
         } catch (NullPointerException | NumberFormatException e) {
-            e.printStackTrace();
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
@@ -1124,7 +1123,7 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JTable tblBodega;
-    public static javax.swing.JTable tblProd;
+    public static final javax.swing.JTable tblProd = new javax.swing.JTable();
     private javax.swing.JTextField txtBodega;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtCantidad;

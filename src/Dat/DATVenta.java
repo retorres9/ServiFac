@@ -29,7 +29,7 @@ public class DATVenta {
             ps.setString(4, venta.getCedulaUser());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -162,7 +162,7 @@ public class DATVenta {
             ps.setDouble(2, valCancel);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();

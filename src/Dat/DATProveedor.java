@@ -65,13 +65,13 @@ public class DATProveedor {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
                 con.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return listaProveedor;
@@ -96,7 +96,7 @@ public class DATProveedor {
                 listaProveedor.add(prov);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
@@ -145,7 +145,7 @@ public class DATProveedor {
                 listadoBusq.add(prov);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -178,7 +178,7 @@ public class DATProveedor {
                 listadoBusq.add(prov);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -199,7 +199,7 @@ public class DATProveedor {
             ps.setString(2, proveedor.getRuc());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ps.close();
             con.close();

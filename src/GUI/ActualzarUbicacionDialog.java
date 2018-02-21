@@ -33,7 +33,8 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
     }
     
     public String getInfo(){
-        return info = lblProd.getText();
+        info = lblProd.getText();
+        return info;
     }
     
     public String getUbic(){
@@ -62,7 +63,6 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        lblProd = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -180,6 +180,6 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    public static javax.swing.JLabel lblProd;
+    public static final javax.swing.JLabel lblProd = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

@@ -36,8 +36,6 @@ public final class VistaCreditos extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblVistaCreditos = new javax.swing.JTable();
-        txtEmpresa = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,7 +135,7 @@ public final class VistaCreditos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tblVistaCreditos;
-    public static javax.swing.JLabel txtEmpresa;
+    public static final javax.swing.JTable tblVistaCreditos = new javax.swing.JTable();
+    public static final javax.swing.JLabel txtEmpresa = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

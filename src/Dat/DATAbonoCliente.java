@@ -29,7 +29,7 @@ public class DATAbonoCliente {
             ps.executeUpdate();
         } catch (SQLException ex) {
             //JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-            ex.printStackTrace();
+            Logger.getLogger(DATAbonoCliente.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();

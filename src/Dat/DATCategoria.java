@@ -35,13 +35,13 @@ public class DATCategoria {
                 listaCategoria.add(objCat);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
                 con.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return listaCategoria;

@@ -55,11 +55,11 @@ public class DATMaterial {
         }
         return listaProductos;
     }
-    
-    public ArrayList<Producto> existenciasBodega(){
+
+    public ArrayList<Producto> existenciasBodega() {
         ArrayList<Producto> listadoEnBodega = new ArrayList<Producto>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
                     + " p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia,"
                     + " p.ganancia_mayor, b.nombre_bodega, eb.cantidad FROM "
@@ -67,7 +67,7 @@ public class DATMaterial {
                     + "AND p.codigo = eb.codigo AND stock = true AND eb.cantidad > 0 ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String nombre = rs.getString(1);
                 String codigo = rs.getString(2);
                 double precioCompra = rs.getDouble(3);
@@ -117,7 +117,7 @@ public class DATMaterial {
                 listadoMinimos.add(prod);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             rs.close();
             con.close();
@@ -211,7 +211,7 @@ public class DATMaterial {
             ps.setString(2, producto.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -277,7 +277,7 @@ public class DATMaterial {
             ps.setString(2, producto.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ps.close();
             con.close();
@@ -294,7 +294,7 @@ public class DATMaterial {
             ps.setString(2, producto.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -318,7 +318,7 @@ public class DATMaterial {
             ps.setString(6, producto.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -442,8 +442,8 @@ public class DATMaterial {
             }
         }
     }
-    
-    public void moverBodega(Producto prod){
+
+    public void moverBodega(Producto prod) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET Cantidad = cantidad + ? WHERE nombre_producto = ?";

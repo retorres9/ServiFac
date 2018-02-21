@@ -72,7 +72,6 @@ public final class VistaFactura extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        int fila = 0;
         int id = Integer.parseInt(strId);
         ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
         int cant = listadoFactura.size();
@@ -101,17 +100,13 @@ public final class VistaFactura extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFactura = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtCliente = new javax.swing.JLabel();
-        txtVenta = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        txtTotal = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
 
@@ -274,10 +269,10 @@ public final class VistaFactura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    public static javax.swing.JTable tblFactura;
-    public static javax.swing.JLabel txtCliente;
+    public static final javax.swing.JTable tblFactura = new javax.swing.JTable();
+    public static final javax.swing.JLabel txtCliente = new javax.swing.JLabel();
     private javax.swing.JLabel txtFecha;
-    public static javax.swing.JLabel txtTotal;
-    public static javax.swing.JLabel txtVenta;
+    public static final javax.swing.JLabel txtTotal = new javax.swing.JLabel();
+    public static final javax.swing.JLabel txtVenta = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

@@ -66,17 +66,17 @@ public class DATReporte {
         return factura;
     }
 
-    public ResultSet reporte(String fecha) throws ClassNotFoundException, SQLException {
-        String sentencia = "SELECT Cantidad, Producto, Costo, Costo_Total, Fecha FROM detalle_venta WHERE Fecha = ?";
-        PreparedStatement st = c.getConnection().prepareStatement(sentencia);
-        st.setString(1, fecha);
-        return st.executeQuery();
-    }
-
-    public ResultSet suma(String fecha) throws ClassNotFoundException, SQLException {
-        String sentencia = "SELECT SUM (Costo_Total) As total FROM detalle_venta WHERE Fecha = ?";
-        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-        ps.setString(1, fecha);
-        return ps.executeQuery();
-    }
+//    public ResultSet reporte(String fecha) throws ClassNotFoundException, SQLException {
+//        String sentencia = "SELECT Cantidad, Producto, Costo, Costo_Total, Fecha FROM detalle_venta WHERE Fecha = ?";
+//        PreparedStatement st = c.getConnection().prepareStatement(sentencia);
+//        st.setString(1, fecha);
+//        return st.executeQuery();
+//    }
+//
+//    public ResultSet suma(String fecha) throws ClassNotFoundException, SQLException {
+//        String sentencia = "SELECT SUM (Costo_Total) As total FROM detalle_venta WHERE Fecha = ?";
+//        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
+//        ps.setString(1, fecha);
+//        return ps.executeQuery();
+//    }
 }

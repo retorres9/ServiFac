@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,7 +75,6 @@ public class DATClientes {
 //        ResultSet re = st.executeQuery(Sentencia);
 //        return re;
 //    }
-
     public ArrayList<Clientes> ConsultarPorNombre(String nombre) {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
@@ -95,7 +93,7 @@ public class DATClientes {
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
@@ -125,7 +123,7 @@ public class DATClientes {
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
@@ -164,7 +162,7 @@ public class DATClientes {
     }
 
     public void agregarDeuda(Clientes cliente) {
-        try{
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE clientes SET Deuda = ? WHERE Cedula_Cliente = ? ";
             ps = con.prepareStatement(sentencia);
@@ -184,8 +182,8 @@ public class DATClientes {
     }
 
     public void actualizarCliente(Clientes cliente) throws SQLException {
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE clientes SET Nombres = ?, Telefono = ?, Direccion = ? WHERE Cedula_Cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrNombre());
@@ -193,7 +191,7 @@ public class DATClientes {
             ps.setString(3, cliente.getStrDireccion());
             ps.setString(4, cliente.getStrCedula());
             ps.executeUpdate();
-        } catch(MySQLIntegrityConstraintViolationException ex){
+        } catch (MySQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "El nombre o número cédula ingresado ya está\n"
                     + "asignado a otro cliente");
         } finally {
@@ -201,14 +199,14 @@ public class DATClientes {
                 ps.close();
                 con.close();
             } catch (SQLException ex) {
-                
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
-    public void actualizarCedulaCliente(Clientes cliente){
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+
+    public void actualizarCedulaCliente(Clientes cliente) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE clientes SET Cedula_Cliente = ? WHERE Nombres = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrCedula());
@@ -227,44 +225,47 @@ public class DATClientes {
     }
 
     public void eliminarCliente(Clientes cliente) throws ClassNotFoundException, SQLException {
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE clientes SET estado = false WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrCedula());
             ps.executeUpdate();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede eliminar el cliente"
                     + " seleccionado.\nEste error se debe a que el\n"
                     + "cliente tienes asignadas algunas compras\n"
                     + "por lo tanto esas compras no pueden"
-                    + "quedar sin un comprador","Error",JOptionPane.ERROR_MESSAGE);
+                    + "quedar sin un comprador", "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            ps.close();
+            con.close();
         }
     }
 
     public ArrayList<Clientes> FacturaCliente(String nombre) {
         ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT nombres, direccion, deuda FROM clientes WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String nombreCli = rs.getString(1);
                 String direccion = rs.getString(2);
                 double deuda = rs.getDouble(3);
                 cliente = new Clientes(nombreCli, deuda, direccion);
                 listaCliente.add(cliente);
             }
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
                 con.close();
             } catch (SQLException ex) {
-               // Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return listaCliente;

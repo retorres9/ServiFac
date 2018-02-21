@@ -37,7 +37,7 @@ public class DATPrueba {
             ps.setBinaryStream(1, fis, (int) prueba.getImagen().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DATPrueba.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -65,13 +65,13 @@ public class DATPrueba {
                 listaCategoria.add(objCat);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
                 con.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return listaCategoria;
