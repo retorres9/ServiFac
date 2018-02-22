@@ -29,6 +29,7 @@ public class BusqClienteDialgo extends javax.swing.JDialog {
             }
         };
         initComponents();
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         manejadorCliente = new DATClientes();
         cargarEncabezado();
         this.setLocationRelativeTo(null);
@@ -96,6 +97,11 @@ public class BusqClienteDialgo extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnSleccion.setText("Seleccionar");
         btnSleccion.addActionListener(new java.awt.event.ActionListener() {
@@ -181,6 +187,10 @@ public class BusqClienteDialgo extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_btnSleccionActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     /**
      * @param args the command line arguments

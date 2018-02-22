@@ -48,6 +48,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
+        System.out.println(usuario);
     }
 
     public void cedula() {
@@ -797,6 +798,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
             VistaCreditos.txtEmpresa.setText(empresa);
             objVc.cargarTabla();
             objVc.setVisible(true);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

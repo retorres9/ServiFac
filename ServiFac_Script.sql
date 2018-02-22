@@ -8,6 +8,8 @@ WHERE p.ruc = pp.ruc AND pp.Fecha = "18/2/2018" AND Tipo ="Pago";
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
+SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, u.Nombre, pp.Fecha FROM proveedores p, pago_proveedor pp, usuario u WHERE p.RUC = pp.ruc AND p.Empresa = "Romar" AND Tipo ='Credito';
+
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
 nombre VARCHAR(50) NOT NULL UNIQUE,
@@ -26,6 +28,8 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL,
 estado boolean default true
 );
+INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion) VALUES ("CONSUMIDOR FINAL","1111111111","1234567",0.00,"");
+update clientes SET direccion = "" where cedula_cliente = "1111111111";
 #describe producto;
 CREATE TABLE producto(
 nombre_Producto VARCHAR(40) NOT NULL UNIQUE,#
@@ -105,10 +109,12 @@ SELECT * FROM existenciasbodega;
 CREATE TABLE abono_cliente(
 id_Abono INT(10) PRIMARY KEY AUTO_INCREMENT,
 cedula_cliente VARCHAR(13) NOT NULL,
-usuario VARCHAR(15) NOT NULL,
+cedula_usuario VARCHAR(15) NOT NULL,
 monto_abono DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10) NOT NULL
 );
+ALTER TABLE abono_cliente CHANGE usuario cedula_usuario VARCHAR (13) NOT NULL;
+DESCRIBE abono_cliente;
 -- Revisar pago_proveedor
 #describe pago_proveedor;
 CREATE TABLE pago_proveedor(

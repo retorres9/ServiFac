@@ -20,7 +20,7 @@ public class DATAbonoCliente {
     public void abonoCliente(AbonoCliente abonoCl) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "INSERT INTO abono_cliente (Cedula, Usuario, Monto_Abono, Fecha) VALUES (?,?,?,?)";
+            String sentencia = "INSERT INTO abono_cliente (Cedula_cliente, cedula_usuario, Monto_Abono, Fecha) VALUES (?,?,?,?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, abonoCl.getStrCedula());
             ps.setString(2, abonoCl.getStrUsuario());

@@ -26,6 +26,7 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         objUbic = new DATUbicacion();
         modeloUbicacion = new DefaultComboBoxModel<Ubicacion>();
         initComponents();
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         objMat = new DATMaterial();
         this.setLocationRelativeTo(null);
         this.setTitle("Actualizar ubicacion");

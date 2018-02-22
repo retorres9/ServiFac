@@ -6,12 +6,9 @@ package GUI;
  */
 import Clases.Proveedor;
 import Dat.DATProveedor;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -29,6 +26,7 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     public NuevoProveedorDialgo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         prov = new DATProveedor();
         combo();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
@@ -139,6 +137,15 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             }
         });
 
+        txtDeuda.setText("0.00");
+        txtDeuda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusLost(evt);
+            }
+        });
         txtDeuda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDeudaKeyTyped(evt);
@@ -337,6 +344,22 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtEmpresaKeyTyped
+
+    private void txtDeudaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusGained
+        if(txtDeuda.getText().equals("0.00")){
+            txtDeuda.setText("");
+        } else {
+            //Do nothing
+        }
+    }//GEN-LAST:event_txtDeudaFocusGained
+
+    private void txtDeudaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusLost
+        if(txtDeuda.getText().equals("")){
+            txtDeuda.setText("0.00");
+        } else {
+           //Do nothing 
+        }
+    }//GEN-LAST:event_txtDeudaFocusLost
 
     /**
      * @param args the command line arguments

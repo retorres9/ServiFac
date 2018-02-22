@@ -1,8 +1,6 @@
 package GUI;
 
 import Clases.Configuracion;
-import Clases.Fechas;
-import Clases.Usuario;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,8 +8,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -20,10 +16,8 @@ import javax.swing.JOptionPane;
 public final class Login extends javax.swing.JFrame {
 
     NuevoUsuario objUs = new NuevoUsuario();
-    Usuario objU = new Usuario();
-    
-    Fechas fe = new Fechas();
-    
+//    Usuario objU = new Usuario();
+
     Configuracion config = new Configuracion();
     int validRol;
 
@@ -155,7 +149,6 @@ public final class Login extends javax.swing.JFrame {
             } else if (valid.equals(user) && valid2.equals(pass)) {
                 config.actualizaValidacion(valid3);
                 config.vendedor(valid);
-                System.out.println("true");
                 Principal objPncl = new Principal();
                 objPncl.setVisible(true);
                 this.setVisible(false);
@@ -174,12 +167,6 @@ public final class Login extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(null, "Ha habido un problema con la base de datos", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
 
-    }
-
-    public static String getFechaActual() {
-        Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-        return formateador.format(ahora);
     }
 
     public void ingreso() {

@@ -3,9 +3,11 @@ package GUI;
 import Clases.AbonoCliente;
 import Clases.Clientes;
 import Clases.Configuracion;
+import Clases.Usuario;
 import Clases.Venta;
 import Dat.DATAbonoCliente;
 import Dat.DATClientes;
+import Dat.DATUsuario;
 import Dat.DATVenta;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -36,15 +38,20 @@ public final class Pagos extends javax.swing.JFrame {
     DATClientes cliente;
     Clientes objCliente;
     DATVenta manejadorVenta;
+    DATUsuario manejadorUsuario;
+    Usuario usuario = new Usuario();
+    String cedUsuario;
 
     public Pagos() {
         initComponents();
         cliente = new DATClientes();
         manejadorAbono = new DATAbonoCliente();
         manejadorVenta = new DATVenta();
+        manejadorUsuario = new DATUsuario();
         cargaColumnas();
         setAnchoColumnas();
         cargaCombo();
+        usuario();
         iconos();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
@@ -52,6 +59,7 @@ public final class Pagos extends javax.swing.JFrame {
         cargarTabla();
         permisos();
         txtVendedor.setText(vendedor);
+        System.out.println(cedUsuario);
     }
 
     @SuppressWarnings("unchecked")
@@ -294,7 +302,7 @@ public final class Pagos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(txtDireccion)))
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnActualizaDir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -404,16 +412,8 @@ public final class Pagos extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(228, 228, 228)
-                        .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(22, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -439,6 +439,14 @@ public final class Pagos extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(197, 197, 197))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,6 +485,15 @@ public final class Pagos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void usuario() {
+        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(vendedor);
+        int cantUser = cedula.size();
+        for (int i = 0; i < cantUser; i++) {
+            usuario = cedula.get(i);
+            cedUsuario = usuario.getCedulaUsuario();
+        }
+    }
 
     public static void setAnchoColumnas() {
         JViewport scroll = (JViewport) tblClientes.getParent();
@@ -555,7 +572,7 @@ public final class Pagos extends javax.swing.JFrame {
         txtCedula.setText(cedula);
         String telf = (String) tblClientes.getModel().getValueAt(fila, 2);
         txtTelf.setText(telf);
-        String deuda = (String) tblClientes.getModel().getValueAt(fila, 3).toString();
+        String deuda = tblClientes.getModel().getValueAt(fila, 3).toString();
         txtDeuda.setText(deuda);
         String direccion = (String) tblClientes.getValueAt(fila, 4);
         txtDireccion.setText(direccion);
@@ -574,29 +591,34 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     public void pagoVentaXVenta() {
-        double monto = Double.parseDouble(txtMonto.getText());
-        double cantPaga, totalVenta;
-        int idVenta;
-        ArrayList<Venta> datos = manejadorVenta.cargaVentasNoCancel(txtCedula.getText());
-        int cant = datos.size();
+        try {
+            double monto = Double.parseDouble(txtMonto.getText());
+            double cantPaga, totalVenta;
+            int idVenta;
+            ArrayList<Venta> datos = manejadorVenta.cargaVentasNoCancel(txtCedula.getText());
+            int cant = datos.size();
 
-        for (int i = 0; i < cant; i++) {
-            objVenta = datos.get(i);
-            int intIdVenta = objVenta.getIntIdVenta();
-            totalVenta = objVenta.getDblTotalVenta();
-            cantPaga = objVenta.getDblValCancelado();
-            double aux = totalVenta - cantPaga;
-            if (monto <= aux) {
-                cantPaga = cantPaga + monto;
-                manejadorVenta.actualizaPago(intIdVenta, cantPaga);
-                break;
-            } else {
-                //se borra la siguiente linea de este if  --if (aux < monto)--
-                monto = monto - aux;
-                cantPaga = totalVenta;
-                manejadorVenta.actualizaPago(intIdVenta, cantPaga);
+            for (int i = 0; i < cant; i++) {
+                objVenta = datos.get(i);
+                int intIdVenta = objVenta.getIntIdVenta();
+                totalVenta = objVenta.getDblTotalVenta();
+                cantPaga = objVenta.getDblValCancelado();
+                double aux = totalVenta - cantPaga;
+                if (monto <= aux) {
+                    cantPaga = cantPaga + monto;
+                    manejadorVenta.actualizaPago(intIdVenta, cantPaga);
+                    break;
+                } else {
+                    //se borra la siguiente linea de este if  --if (aux < monto)--
+                    monto = monto - aux;
+                    cantPaga = totalVenta;
+                    manejadorVenta.actualizaPago(intIdVenta, cantPaga);
+                }
             }
+        } catch (NumberFormatException ex) {
+            //Do nothing
         }
+
     }
 
     public void actualCuenta() {
@@ -615,7 +637,6 @@ public final class Pagos extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha realizado ninguna acción");
             }
-
         }
     }
 
@@ -815,6 +836,7 @@ public final class Pagos extends javax.swing.JFrame {
             vf.setCliente(nombreCli);
             vf.cargarTabla();
             vf.setVisible(true);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnVerActionPerformed
 
@@ -866,28 +888,36 @@ public final class Pagos extends javax.swing.JFrame {
     }
 
     public void vistaReporte() { //Este metodo es para llemar en la interfaz de Reportes
-        String cedulaCliente = txtCedula.getText();
-        double monto = Double.parseDouble(txtMonto.getText());
-        abono = new AbonoCliente(cedulaCliente, vendedor, monto, getFechaActual());
-        manejadorAbono.abonoCliente(abono);
+        try {
+            String cedulaCliente = txtCedula.getText();
+            double monto = Double.parseDouble(txtMonto.getText());
+            abono = new AbonoCliente(cedulaCliente, cedUsuario, monto, getFechaActual());
+            manejadorAbono.abonoCliente(abono);
+        } catch (NumberFormatException ex) {
+            //Do nothing
+        }
     }
 
     public void pago() {
-        double deuda2;
-        double monto = Double.parseDouble(txtMonto.getText());
-        double deuda = Double.parseDouble(txtDeuda.getText());
-        if (deuda <= 0) {
-            JOptionPane.showMessageDialog(null, "No puede realizar esta accion ya que no existe deuda del cliente: " + txtNombre.getText());
-        }
-        if (monto > deuda) {
-            JOptionPane.showMessageDialog(null, "El monto pagado excede el monto adeudado");
-        }
-        if (monto <= deuda) {
-            deuda2 = deuda - monto;
-            txtDeuda.setText(Double.toString(deuda2));
-            String ced = txtCedula.getText();
-            objCliente = new Clientes(deuda2, ced);
-            cliente.agregarDeuda(objCliente);
+        try {
+            double deuda2;
+            double monto = Double.parseDouble(txtMonto.getText());
+            double deuda = Double.parseDouble(txtDeuda.getText());
+            if (deuda <= 0) {
+                JOptionPane.showMessageDialog(null, "No puede realizar esta accion ya que no existe deuda del cliente: " + txtNombre.getText());
+            }
+            if (monto > deuda) {
+                JOptionPane.showMessageDialog(null, "El monto pagado excede el monto adeudado");
+            }
+            if (monto <= deuda) {
+                deuda2 = deuda - monto;
+                txtDeuda.setText(Double.toString(deuda2));
+                String ced = txtCedula.getText();
+                objCliente = new Clientes(deuda2, ced);
+                cliente.agregarDeuda(objCliente);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto");
         }
     }
 

@@ -26,6 +26,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     public NuevoClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         cliente = new DATClientes();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -146,6 +147,15 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel6.setText("Deuda:");
 
+        txtDeuda.setText("0.00");
+        txtDeuda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusLost(evt);
+            }
+        });
         txtDeuda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDeudaKeyTyped(evt);
@@ -328,6 +338,22 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDeudaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusGained
+        if(txtDeuda.getText().equals("0.00")){
+            txtDeuda.setText("");
+        } else {
+            //Do nothing
+        }
+    }//GEN-LAST:event_txtDeudaFocusGained
+
+    private void txtDeudaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusLost
+        if(txtDeuda.getText().equals("")){
+            txtDeuda.setText("0.00");
+        } else {
+           //Do nothing 
+        }
+    }//GEN-LAST:event_txtDeudaFocusLost
 
     /**
      * @param args the command line arguments

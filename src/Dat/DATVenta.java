@@ -129,7 +129,7 @@ public class DATVenta {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT DISTINCT dv.Id_Venta, v.Total_Venta, v.Valor_Cancelado FROM venta v, detalle_venta dv "
-                    + "WHERE dv.Id_Venta=v.Id_Venta AND Total_Venta>Valor_Cancelado AND cedula = ? ORDER BY Id_Venta";
+                    + "WHERE dv.Id_Venta=v.Id_Venta AND Total_Venta>Valor_Cancelado AND cedula_cliente = ? ORDER BY Id_Venta";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cedula);
             rs = ps.executeQuery();

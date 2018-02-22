@@ -226,7 +226,6 @@ public final class Factura extends javax.swing.JFrame {
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (inputStream == null) {
-            //System.out.println("bandera");
             return;
         }
 
@@ -300,7 +299,6 @@ public final class Factura extends javax.swing.JFrame {
             double dblDecimal = Double.parseDouble(decimal);
             dblDecimal = Math.abs(dblDecimal);
             double EPSILON = 0.0000001;
-            System.out.println(dblDecimal);
             if (dblDecimal < EPSILON) {
                 JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
             } else if ((dblDecimal > 0) && (num > numTotal)) {
@@ -788,9 +786,7 @@ public final class Factura extends javax.swing.JFrame {
             for (int i = 0; i < cantDatos; i++) {
                 producto = datos.get(i);
                 int cant = producto.getIntCantidad();
-                System.out.println(cant);
                 cantProd2 = cant;
-                System.out.println(cantProd2);
             }
         }
     }
@@ -817,7 +813,8 @@ public final class Factura extends javax.swing.JFrame {
             deuda = cliente.getDblDeuda();
         }
         if (txtCliente.getText().equals(" ")) {
-            int opc = JOptionPane.showConfirmDialog(null, "Cliente no registrado\n¿Desea ingrear un nuevo Cliente?", "Aviso!", JOptionPane.YES_NO_OPTION);
+            int opc = JOptionPane.showConfirmDialog(null, "Cliente no registrado"
+                    + "\n¿Desea ingrear un nuevo Cliente?", "Aviso!", JOptionPane.YES_NO_OPTION);
             if (opc == JOptionPane.YES_OPTION) {
                 NuevoClienteDialog clienteDialogo = new NuevoClienteDialog(this, true);
                 clienteDialogo.setVisible(true);
@@ -835,22 +832,26 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImprimirActionPerformed
-        if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
-            venta();
-            ventaProd();
-            //imprimirFactura();
-            this.contador();
+        if ((tblVentas.getRowCount() == 0) || (txtCliente.getText().isEmpty())) {
+            //Do nothing
         } else {
-            venta();
-            //imprimirFactura();
-            ventaProd();
-            this.contador();
+            if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
+                venta();
+                ventaProd();
+                //imprimirFactura();
+                this.contador();
+            } else {
+                venta();
+                //imprimirFactura();
+                ventaProd();
+                this.contador();
+            }
         }
     }//GEN-LAST:event_txtImprimirActionPerformed
 
     public void comparaProducto() {
         if (txtCod.getText().isEmpty() || txtCod.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "bandera");
+            //Do nothing
         } else {
             verificar();
             if (flag == true) {
@@ -862,7 +863,6 @@ public final class Factura extends javax.swing.JFrame {
     }
     private void txtCodKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println(txtCod.getText());
             comparaProducto();
             txtCod.setText("");
         }
@@ -979,7 +979,6 @@ public final class Factura extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
                 if (filaSeleccionada >= 0) {
-                    System.out.println("band");
                     double precioUnit = (Double) tblVentas.getValueAt(filaSeleccionada, 2);
                     String newCantidad = tblVentas.getValueAt(filaSeleccionada, 0).toString();
                     int newCant = Integer.parseInt(newCantidad);

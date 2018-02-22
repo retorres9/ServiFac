@@ -352,9 +352,9 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             .addComponent(btnVer)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGap(18, 18, 18)
             .addComponent(txtTotalVentas)
-            .addContainerGap(50, Short.MAX_VALUE))
+            .addContainerGap(43, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Ventas", jPanel1);
@@ -376,20 +376,19 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         .addGroup(jPanel2Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addComponent(txtTotalAbonos)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addContainerGap())
+                    .addContainerGap(945, Short.MAX_VALUE))))
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap(55, Short.MAX_VALUE)
+            .addContainerGap(60, Short.MAX_VALUE)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(26, 26, 26)
+            .addGap(18, 18, 18)
             .addComponent(txtTotalAbonos)
-            .addGap(30, 30, 30))
+            .addGap(38, 38, 38))
     );
 
     jTabbedPane1.addTab("Pago Clientes", jPanel2);
@@ -411,20 +410,19 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addComponent(txtTotalPagoPr)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addContainerGap())
+                    .addContainerGap(955, Short.MAX_VALUE))))
     );
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addGap(56, 56, 56)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+            .addGap(18, 18, 18)
             .addComponent(txtTotalPagoPr)
-            .addGap(21, 21, 21))
+            .addContainerGap(46, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Pago Proveedores", jPanel3);

@@ -121,6 +121,15 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             }
         });
 
+        txtDeuda.setText("0.00");
+        txtDeuda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusLost(evt);
+            }
+        });
         txtDeuda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDeudaKeyTyped(evt);
@@ -476,6 +485,22 @@ public final class NuevoProveedor extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDeudaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusGained
+        if(txtDeuda.getText().equals("0.00")){
+            txtDeuda.setText("");
+        } else {
+            //Do nothing
+        }
+    }//GEN-LAST:event_txtDeudaFocusGained
+
+    private void txtDeudaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusLost
+        if(txtDeuda.getText().equals("")){
+            txtDeuda.setText("0.00");
+        } else {
+           //Do nothing 
+        }
+    }//GEN-LAST:event_txtDeudaFocusLost
 
     public void combo() {
         cmbTipo.addItem("Cta. Corriente");

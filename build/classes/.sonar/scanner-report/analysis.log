@@ -1,0 +1,132 @@
+Environment variables:
+  - =::=::\
+  - =C:=C:\Users\rober\Desktop\ServiFac\src
+  - ALLUSERSPROFILE=C:\ProgramData
+  - ANDROID_HOME=D:\Users\rober\AppData\Local\Android\sdk
+  - APPDATA=C:\Users\rober\AppData\Roaming
+  - COMPUTERNAME=DESKTOP-GF2OJ9B
+  - ComSpec=C:\WINDOWS\system32\cmd.exe
+  - CommonProgramFiles=C:\Program Files\Common Files
+  - CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+  - CommonProgramW6432=C:\Program Files\Common Files
+  - ERROR_CODE=0
+  - ESET_OPTIONS=                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+  - HOMEDRIVE=C:
+  - HOMEPATH=\Users\rober
+  - JAVA_EXEC="C:\ProgramData\Oracle\Java\javapath\java.exe"
+  - LOCALAPPDATA=C:\Users\rober\AppData\Local
+  - LOGONSERVER=\\DESKTOP-GF2OJ9B
+  - NUMBER_OF_PROCESSORS=8
+  - OS=Windows_NT
+  - OneDrive=C:\Users\rober\OneDrive
+  - PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+  - PROCESSOR_ARCHITECTURE=AMD64
+  - PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 94 Stepping 3, GenuineIntel
+  - PROCESSOR_LEVEL=6
+  - PROCESSOR_REVISION=5e03
+  - PROJECT_HOME=C:\Users\rober\Desktop\ServiFac\src
+  - PROMPT=$P$G
+  - PSModulePath=C:\Users\rober\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+  - PUBLIC=C:\Users\Public
+  - Path=C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\nodejs\;D:\Git\cmd;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\Descargas\sonar-scanner-2.6.1\bin;D:\Descargas\sonar-scanner-3.0.3.778-windows\bin;D:\RailsInstaller\Ruby2.3.3\bin;C:\Users\rober\AppData\Local\Microsoft\WindowsApps;C:\Users\rober\AppData\Local\atom\bin;C:\Users\rober\AppData\Roaming\npm
+  - ProgramData=C:\ProgramData
+  - ProgramFiles=C:\Program Files
+  - ProgramFiles(x86)=C:\Program Files (x86)
+  - ProgramW6432=C:\Program Files
+  - SESSIONNAME=Console
+  - SONAR_RUNNER_HOME=D:\Descargas\sonar-scanner-2.6.1\bin\..
+  - SynaProgDir=Synaptics\SynTP
+  - SystemDrive=C:
+  - SystemRoot=C:\WINDOWS
+  - TEMP=C:\Users\rober\AppData\Local\Temp
+  - TMP=C:\Users\rober\AppData\Local\Temp
+  - USERDOMAIN=DESKTOP-GF2OJ9B
+  - USERDOMAIN_ROAMINGPROFILE=DESKTOP-GF2OJ9B
+  - USERNAME=rober
+  - USERPROFILE=C:\Users\rober
+  - VBOX_MSI_INSTALL_PATH=D:\Oracle\VirtualBox\
+  - windir=C:\WINDOWS
+System properties:
+  - awt.toolkit=sun.awt.windows.WToolkit
+  - file.encoding=Cp1252
+  - file.encoding.pkg=sun.io
+  - file.separator=\
+  - java.awt.graphicsenv=sun.awt.Win32GraphicsEnvironment
+  - java.awt.headless=true
+  - java.awt.printerjob=sun.awt.windows.WPrinterJob
+  - java.class.path=D:\Descargas\sonar-scanner-2.6.1\bin\..\lib\sonar-scanner-cli-2.6.1.jar
+  - java.class.version=52.0
+  - java.endorsed.dirs=C:\Program Files\Java\jre1.8.0_161\lib\endorsed
+  - java.ext.dirs=C:\Program Files\Java\jre1.8.0_161\lib\ext;C:\WINDOWS\Sun\Java\lib\ext
+  - java.home=C:\Program Files\Java\jre1.8.0_161
+  - java.io.tmpdir=C:\Users\rober\AppData\Local\Temp\
+  - java.library.path=C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\nodejs\;D:\Git\cmd;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\Descargas\sonar-scanner-2.6.1\bin;D:\Descargas\sonar-scanner-3.0.3.778-windows\bin;D:\RailsInstaller\Ruby2.3.3\bin;C:\Users\rober\AppData\Local\Microsoft\WindowsApps;C:\Users\rober\AppData\Local\atom\bin;C:\Users\rober\AppData\Roaming\npm;.
+  - java.runtime.name=Java(TM) SE Runtime Environment
+  - java.runtime.version=1.8.0_161-b12
+  - java.specification.name=Java Platform API Specification
+  - java.specification.vendor=Oracle Corporation
+  - java.specification.version=1.8
+  - java.vendor=Oracle Corporation
+  - java.vendor.url=http://java.oracle.com/
+  - java.vendor.url.bug=http://bugreport.sun.com/bugreport/
+  - java.version=1.8.0_161
+  - java.vm.info=mixed mode
+  - java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+  - java.vm.specification.name=Java Virtual Machine Specification
+  - java.vm.specification.vendor=Oracle Corporation
+  - java.vm.specification.version=1.8
+  - java.vm.vendor=Oracle Corporation
+  - java.vm.version=25.161-b12
+  - line.separator=
+
+  - os.arch=amd64
+  - os.name=Windows 10
+  - os.version=10.0
+  - path.separator=;
+  - project.home=C:\Users\rober\Desktop\ServiFac\src
+  - scanner.home=D:\Descargas\sonar-scanner-2.6.1\bin\..
+  - sun.arch.data.model=64
+  - sun.boot.class.path=C:\Program Files\Java\jre1.8.0_161\lib\resources.jar;C:\Program Files\Java\jre1.8.0_161\lib\rt.jar;C:\Program Files\Java\jre1.8.0_161\lib\sunrsasign.jar;C:\Program Files\Java\jre1.8.0_161\lib\jsse.jar;C:\Program Files\Java\jre1.8.0_161\lib\jce.jar;C:\Program Files\Java\jre1.8.0_161\lib\charsets.jar;C:\Program Files\Java\jre1.8.0_161\lib\jfr.jar;C:\Program Files\Java\jre1.8.0_161\classes
+  - sun.boot.library.path=C:\Program Files\Java\jre1.8.0_161\bin
+  - sun.cpu.endian=little
+  - sun.cpu.isalist=amd64
+  - sun.desktop=windows
+  - sun.io.unicode.encoding=UnicodeLittle
+  - sun.java.command=org.sonarsource.scanner.cli.Main -X
+  - sun.java.launcher=SUN_STANDARD
+  - sun.jnu.encoding=Cp1252
+  - sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+  - sun.os.patch.level=
+  - sun.stderr.encoding=cp850
+  - sun.stdout.encoding=cp850
+  - user.country=EC
+  - user.dir=C:\Users\rober\Desktop\ServiFac\src
+  - user.home=C:\Users\rober
+  - user.language=es
+  - user.name=rober
+  - user.script=
+  - user.timezone=America/Bogota
+  - user.variant=
+SonarQube plugins:
+  - SonarC# 6.7.1.4347 (csharp)
+  - SonarPython 1.9.0.2010 (python)
+  - SonarJava 5.1.0.13090 (java)
+  - Flex 2.3 (flex)
+  - SonarQube :: Plugins :: SCM :: Git 1.3.0.869 (scmgit)
+  - SonarXML 1.4.3.1027 (xml)
+  - SonarPHP 2.12.1.3018 (php)
+  - SonarTS 1.5.0.2122 (typescript)
+  - SonarQube :: Plugins :: SCM :: SVN 1.6.0.860 (scmsvn)
+  - SonarJS 4.0.0.5862 (javascript)
+Global properties:
+  - sonar.core.id=AWG5BoXX9_xaIgP9On2U
+  - sonar.core.startTime=2018-02-21T10:55:08-0500
+Settings for module: FactService
+  - sonar.projectBaseDir=C:\Users\rober\Desktop\ServiFac\src
+  - sonar.projectKey=FactService
+  - sonar.projectName=Factservice
+  - sonar.projectVersion=1.0
+  - sonar.sourceEncoding=windows-1252
+  - sonar.sources=C:/Users/rober/Desktop/ServiFac/src
+  - sonar.verbose=true
+  - sonar.working.directory=C:\Users\rober\Desktop\ServiFac\src\.sonar

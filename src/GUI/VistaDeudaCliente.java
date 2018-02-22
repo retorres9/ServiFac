@@ -178,10 +178,10 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
     private void tblDeudaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDeudaClienteMouseClicked
         int fila = tblDeudaCliente.getSelectedRow();
         if (tblDeudaCliente.getSelectedRows().length > 0) {
-            idVenta = (String) tblDeudaCliente.getValueAt(fila, 0).toString();
+            idVenta = tblDeudaCliente.getValueAt(fila, 0).toString();
             nombreCli = txtNombreCliente.getText();
-            cedula = (String) tblDeudaCliente.getValueAt(fila, 1).toString();
-            total = (String) tblDeudaCliente.getValueAt(fila, 2).toString();
+            cedula = tblDeudaCliente.getValueAt(fila, 1).toString();
+            total = tblDeudaCliente.getValueAt(fila, 2).toString();
         }
     }//GEN-LAST:event_tblDeudaClienteMouseClicked
 
@@ -196,7 +196,9 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Pagos objPagos = new Pagos();
         this.dispose();
+        objPagos.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

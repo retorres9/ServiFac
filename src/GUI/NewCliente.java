@@ -185,17 +185,21 @@ public final class NewCliente extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
         jLabel10.setText("Direccion:");
 
-        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDireccionActionPerformed(evt);
-            }
-        });
         txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDireccionKeyTyped(evt);
             }
         });
 
+        txtDeuda.setText("0.00");
+        txtDeuda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDeudaFocusLost(evt);
+            }
+        });
         txtDeuda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDeudaKeyTyped(evt);
@@ -526,9 +530,21 @@ public final class NewCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDeudaKeyTyped
 
-    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDireccionActionPerformed
+    private void txtDeudaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusLost
+        if(txtDeuda.getText().equals("")){
+            txtDeuda.setText("0.00");
+        } else {
+           //Do nothing 
+        }
+    }//GEN-LAST:event_txtDeudaFocusLost
+
+    private void txtDeudaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusGained
+        if(txtDeuda.getText().equals("0.00")){
+            txtDeuda.setText("");
+        } else {
+            //Do nothing
+        }
+    }//GEN-LAST:event_txtDeudaFocusGained
 
     /**
      * @param args the command line arguments
