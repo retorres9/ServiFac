@@ -84,7 +84,7 @@ public final class EliminarCliente extends javax.swing.JFrame {
         jLabel3.setText("Cédula:");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/error.png"))); // NOI18N
-        jButton1.setText("Eliminar");
+        jButton1.setText("Dar de baja");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

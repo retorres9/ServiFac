@@ -8,6 +8,8 @@ WHERE p.ruc = pp.ruc AND pp.Fecha = "18/2/2018" AND Tipo ="Pago";
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
+SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, pp.cedula_usuario FROM proveedores p, pago_proveedor pp WHERE p.ruc = pp.ruc AND pp.Fecha = "22/02/2018" AND Tipo ='Pago';
+
 SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, u.Nombre, pp.Fecha FROM proveedores p, pago_proveedor pp, usuario u WHERE p.RUC = pp.ruc AND p.Empresa = "Romar" AND Tipo ='Credito';
 
 CREATE TABLE usuario(
@@ -116,17 +118,18 @@ fecha VARCHAR(10) NOT NULL
 ALTER TABLE abono_cliente CHANGE usuario cedula_usuario VARCHAR (13) NOT NULL;
 DESCRIBE abono_cliente;
 -- Revisar pago_proveedor
-#describe pago_proveedor;
+use empresa;
+describe pago_proveedor;
 CREATE TABLE pago_proveedor(
 id_pago INT(6) PRIMARY KEY AUTO_INCREMENT,
 ruc VARCHAR(15),
 cedula_usuario VARCHAR(10) NOT NULL,
 monto_cancelado DECIMAL(7,2) NOT NULL,
-fecha DATE,
+fecha VARCHAR (10),
 tipo VARCHAR(7),
 descripcion TEXT
 );
-#ALTER TABLE pago_proveedor change fecha fecha_ varchar(10);
+ALTER TABLE pago_proveedor change fecha_ fecha varchar(10);
 #ALTER TABLE pago_proveedor add column descripcion TEXT;
 
 ALTER TABLE producto

@@ -76,7 +76,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         conMat = new DATMaterial();
         objBodega = new DATBodega();
         objExistenciasBodega = new DATExistenciasBodega();
-
+        System.out.println(lblImagen);
         cargarModeloCat();
         cargarModeloProv();
         cargarModeloUbic();
@@ -205,7 +205,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     public void reseteoCampos() {
         if (cbxAyuda.isSelected()) {
             txtCantidad.setText("");
-            lblPrecioMayor.setText("");
+            //lblPrecioMayor.setText("");
             cbxGenerador.setSelected(false);
         } else {
             txtGanancia.setText("");
@@ -270,7 +270,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Error");
                 }
 
-            } else if ((bandera == true) && cbxGenerador.isSelected()) {
+            } else if ((bandera == true) && (cbxGenerador.isSelected() && lblImagen != null)) {
                 producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva, idBodega);
                 try {
                     if (conMat.IngresarProducto(producto)) {

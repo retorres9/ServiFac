@@ -147,7 +147,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo.setValueAt(nombreCliente, i, 2);
             modelo.setValueAt(totalVenta, i, 3);
             modelo.setValueAt(valCancelado, i, 4);
-            modelo.setValueAt(fechaVenta, i, 5);
+            //modelo.setValueAt(fechaVenta, i, 5);
         }
     }
 
@@ -185,11 +185,11 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             double deuda = abono.getDeuda();
             String usuario = abono.getStrUsuario();
 
-            modelo2.setValueAt(cliente, i, 1);
-            modelo2.setValueAt(cedula, i, 2);
-            modelo2.setValueAt(monto, i, 3);
-            modelo2.setValueAt(deuda, i, 4);
-            modelo2.setValueAt(usuario, i, 5);
+            modelo2.setValueAt(cliente, i, 0);
+            modelo2.setValueAt(cedula, i, 1);
+            modelo2.setValueAt(monto, i, 2);
+            modelo2.setValueAt(deuda, i, 3);
+            modelo2.setValueAt(usuario, i, 4);
         }
     }
 
@@ -206,10 +206,10 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             double deuda = pago.getDeuda();
             double monto = pago.getDblMontoCancelado();
             
-            modelo3.setValueAt(empresa, i, 1);
-            modelo3.setValueAt(deuda, i, 2);
-            modelo3.setValueAt(monto, i, 3);
-            modelo3.setValueAt(cliente, i, 4);
+            modelo3.setValueAt(empresa, i, 0);
+            modelo3.setValueAt(deuda, i, 1);
+            modelo3.setValueAt(monto, i, 2);
+            modelo3.setValueAt(cliente, i, 3);
         }
     }
 

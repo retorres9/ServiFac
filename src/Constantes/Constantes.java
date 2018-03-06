@@ -1,7 +1,6 @@
 package Constantes;
 
 import Clases.Configuracion;
-
 public class Constantes {
     //se agrego final a las constantes
     Configuracion config = new Configuracion();

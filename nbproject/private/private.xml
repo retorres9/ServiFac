@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/VistaDeudaCliente.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Inventario.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NewCliente.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Pagos.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoClienteDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Factura.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATConexion.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/IngresoProd.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/factura.jrxml</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/GenerarReporte.java</file>
         </group>
     </open-files>
 </project-private>
