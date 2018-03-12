@@ -1,3 +1,0 @@
-Se utilizó el comando SET GLOBAL wait_timeout = 1; para matar conexiones abiertas de
-la base.
-Si desea chequear los procesos se usa el siguiente codigo SHOW PROCESSLIST;

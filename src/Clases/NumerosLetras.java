@@ -1,21 +1,13 @@
 package Clases;
 
-
-
-import java.io.File;
-import java.io.FileWriter;
-/**
- *
- * @author SDCX
- */
-public class NumeroLetras {
+public class NumerosLetras {
     String[] nUnidades = {"UN", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE", "DIEZ", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE", "DIECISEIS", "DIECISIETE", "DIECIOCHO", "DIECINUEVE", "VEINTE", "VEINTIUN", "VENTIDOS", "VEINTITRES", "VEINTICUATRO", "VEINTICINCO", "VEINTISEIS", "VEINTISIETE", "VEINTIOCHO", "VEINTINUEVE"};
     String[] nDecenas = {"DIEZ", "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA"};
     String[] nCentenas = {"CIENTO", "DOCIENTOS", "TRECIENTOS", "CUATROCIENTOS", "QUINIENTOS", "SEISCIENTOS","SETECIENTOS","OCHOCIENTOS", "NOVECIENTOS"};
     private char[] nValor;
     String valorLetras="",rta="";
     int bloqueTres=0;
-    public NumeroLetras() {
+    public NumerosLetras() {
     }
    public String convertir(int valor){ 
       

@@ -4,7 +4,7 @@ import Clases.Clientes;
 import Clases.Configuracion;
 import Clases.Producto;
 import Clases.DetalleVenta;
-import Clases.NumeroLetras;
+import Clases.NumerosLetras;
 import Clases.Usuario;
 import Clases.Venta;
 import Dat.DATClientes;
@@ -12,12 +12,8 @@ import Dat.DATMaterial;
 import Dat.DATReporte;
 import Dat.DATUsuario;
 import Dat.DATVenta;
-import br.com.adilson.util.Extenso;
-import br.com.adilson.util.PrinterMatrix;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -29,14 +25,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
@@ -194,106 +182,6 @@ public final class Factura extends javax.swing.JFrame {
             }
             columnaTabla.setPreferredWidth(anchoColumna);
         }
-    }
-
-    void imprimirFactura() {
-
-        PrinterMatrix printer = new PrinterMatrix();
-
-        Extenso e = new Extenso();
-
-        e.setNumber(85.85);
-
-        //Definir el tamanho del papel para la impresion  aca 25 lineas y 80 columnas
-        printer.setOutSize(50, 60);
-
-        //Imprimir * de la 2da linea a 25 en la columna 1;
-        // printer.printCharAtLin(2, 25, 1, "*");
-        //Imprimir * 1ra linea de la columa de 1 a 80
-        //printer.printCharAtCol(1, 1, 80, "=");
-        //Imprimir Encabezado nombre del La EMpresa
-        printer.printTextWrap(1, 2, 30, 60, "FACTURA DE VENTA");
-        //printer.printTextWrap(linI, linE, colI, colE, null);
-        //printer.printTextWrap(2, 3, 1, 22, "Num. Boleta : " + txtVentaNumeroFactura.getText());
-        printer.printTextWrap(2, 3, 25, 55, "Fecha de Emision: " + getFecha());
-        printer.printTextWrap(2, 3, 40, 60, "Hora: 12:22:51");
-        printer.printTextWrap(3, 3, 1, 60, "Vendedor.  : " + vendedor);
-        printer.printTextWrap(4, 4, 1, 60, "CLIENTE: " + txtCliente.getText());
-        printer.printTextWrap(5, 5, 1, 60, "RUC/CI.: " + txtCed.getText());
-        printer.printTextWrap(6, 6, 1, 60, "DIRECCION: " + txtDireccionCl.getText());
-        //printer.printCharAtCol(7, 1, 80, "=");
-        //printer.printTextWrap(7, 7, 1, 60, "Cant.      Descripcion                  P  P.Unit.      P.Total");
-        //printer.printCharAtCol(9, 1, 80, "-");
-        int filas = tblVentas.getRowCount();
-        System.out.println(filas);
-        double asd = 0.00;
-        for (int i = 0; i < filas; i++) {
-
-            printer.printTextWrap(9 + i, 10, 1, 60, tblVentas.getValueAt(i, 0).toString());
-            printer.printTextWrap(9 + i, 10, 10, 60, tblVentas.getValueAt(i, 1).toString());
-            printer.printTextWrap(9 + i, 10, 30, 60, tblVentas.getValueAt(i, 2).toString());
-            printer.printTextWrap(9 + i, 10, 40, 60, tblVentas.getValueAt(i, 3).toString());
-            asd = asd + (double) tblVentas.getValueAt(i, 3);
-            //printer.printTextWrap(9 + i, 10, 50, 60, tblVentas.getValueAt(i, 4).toString());
-            System.out.println(tblVentas.getValueAt(i, 0));
-            if (i == 1) {
-                System.out.println("total " + asd);
-
-                asd = 0.00;
-            }
-        }
-
-        if (filas > 5) {
-            //printer.printCharAtCol(filas + 1, 1, 80, "=");
-            printer.printTextWrap(filas + 1, filas + 2, 1, 60, "TOTAL A PAGAR " + txtTotal.getText());
-            System.out.println("++++++++++++++++++++++++++++++");
-            System.out.println(txtTotal.getText());
-            System.out.println("++++++++++++++++++++++++++++++");
-            //printer.printCharAtCol(filas + 2, 1, 80, "=");
-            printer.printTextWrap(filas + 2, filas + 3, 1, 60, txtTotalLetras.getText());
-        } else {
-            //printer.printCharAtCol(25, 1, 80, "=");
-            printer.printTextWrap(26, 26, 1, 60, "TOTAL A PAGAR " + txtTotal.getText());
-            System.out.println("++++++++++++++++++++++++++++++");
-            System.out.println(txtTotal.getText());
-            System.out.println("++++++++++++++++++++++++++++++");
-            //printer.printCharAtCol(27, 1, 80, "=");
-            printer.printTextWrap(27, 28, 1, 60, txtTotalLetras.getText());
-
-        }
-        printer.toFile("impresion.txt");
-
-        FileInputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream("impresion.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (inputStream == null) {
-            return;
-        }
-
-        DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        Doc document = new SimpleDoc(inputStream, docFormat, null);
-
-        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
-
-        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
-
-        if (defaultPrintService != null) {
-            //System.out.println("bandera");
-            DocPrintJob printJob = defaultPrintService.createPrintJob();
-            try {
-                printJob.print(document, attributeSet);
-                System.out.println("bandera");
-            } catch (Exception ex) {
-                Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.err.println("No existen impresoras instaladas");
-        }
-
-        //inputStream.close();
     }
 
     public void ventaProd() {
@@ -571,7 +459,7 @@ public final class Factura extends javax.swing.JFrame {
                         .addGap(8, 8, 8)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
@@ -899,11 +787,9 @@ public final class Factura extends javax.swing.JFrame {
             if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
                 venta();
                 //ventaProd();
-                imprimirFactura();
                 this.contador();
             } else {
                 venta();
-                imprimirFactura();
                 //ventaProd();
                 this.contador();
             }
@@ -1125,7 +1011,7 @@ public final class Factura extends javax.swing.JFrame {
                 String strTotalLbl = dcmlCambio.format(total1);
                 txtTotal.setText(strTotalLbl);
             }
-            NumeroLetras numero = new NumeroLetras();
+            NumerosLetras numero = new NumerosLetras();
             this.txtTotal.getText();
 
             String number[] = txtTotal.getText().split("\\.");
