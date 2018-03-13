@@ -50,6 +50,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     double precioVenta;
     double precioVentaMayor;
     boolean bandera = true;//Se usará para que al momento de hacer clic en la imagen del producto cambie a false
+    boolean banderaCodigo = true;//Se usará para que al momento de validar el codigo de barras
 
     //Modelos de combobox    
     DefaultComboBoxModel<Categoria> modeloCategorias;
@@ -76,7 +77,6 @@ public final class IngresoProd extends javax.swing.JFrame {
         conMat = new DATMaterial();
         objBodega = new DATBodega();
         objExistenciasBodega = new DATExistenciasBodega();
-        System.out.println(lblImagen);
         cargarModeloCat();
         cargarModeloProv();
         cargarModeloUbic();
@@ -87,7 +87,6 @@ public final class IngresoProd extends javax.swing.JFrame {
         muestraPrecioxMayor();
         permisos();
         seleccionIva();
-        btnGenerador.setEnabled(false);
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -103,8 +102,12 @@ public final class IngresoProd extends javax.swing.JFrame {
         } else {
             try {
                 double precio = Double.parseDouble(txtPrecioCompra.getText());
-                double ganancia = Double.parseDouble(txtGananciaMayor.getText());
-                precioVentaMayor = precio + (precio * (ganancia / 100));
+                double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
+                if (iva12.isSelected()) {
+                    precioVentaMayor = ((precio) + precio * 0.12) + (precio * (gananciaMayor / 100));
+                } else {
+                    precioVentaMayor = precio + (precio * (gananciaMayor / 100));
+                }
                 DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
                 simbolos.setDecimalSeparator('.');
                 DecimalFormat dcmlCambioMayor = new DecimalFormat("0.00", simbolos);
@@ -112,7 +115,6 @@ public final class IngresoProd extends javax.swing.JFrame {
                 precioVentaMayor = Double.parseDouble(strPrecioMayor);
                 lblPrecioMayor.setText("Precio de venta al por mayor: $" + precioVentaMayor);
             } catch (NumberFormatException ex) {
-
             }
 
         }
@@ -124,7 +126,11 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 double precioInput = Double.parseDouble(txtPrecioCompra.getText());
                 double ganancia = Double.parseDouble(txtGanancia.getText());
-                precioVenta = precioInput + (precioInput * (ganancia / 100));
+                if (iva12.isSelected()) {
+                    precioVenta = ((precioInput) + precioInput * 0.12) + (precioInput * (ganancia / 100));
+                } else {
+                    precioVenta = precioInput + (precioInput * (ganancia / 100));
+                }
                 DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
                 simbolos.setDecimalSeparator('.');
                 DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
@@ -196,7 +202,6 @@ public final class IngresoProd extends javax.swing.JFrame {
             Bodega bodega = (Bodega) cmbBodega.getSelectedItem();
             String codigo = txtCod.getText();
             int Cantidad = Integer.parseInt(txtExistenciasBodega.getText());
-            System.out.println(bodega.getIntIdBodega());
             bodegaExistencias = new ExistenciasBodega(bodega.getIntIdBodega(), codigo, Cantidad);
             objExistenciasBodega.ingresarEnBodega(bodegaExistencias);
         }
@@ -206,8 +211,10 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (cbxAyuda.isSelected()) {
             txtCantidad.setText("");
             //lblPrecioMayor.setText("");
-            cbxGenerador.setSelected(false);
+//            cbxGenerador.setSelected(false);
+            txtCod.setText("");
         } else {
+            txtCod.setText("");
             txtGanancia.setText("");
             txtGananciaMayor.setText("");
             txtCantidad.setText("");
@@ -216,13 +223,15 @@ public final class IngresoProd extends javax.swing.JFrame {
             lblPrecioMayor.setText("Precio de venta al por mayor:");
             lblPrecioPublico.setText("Precio de venta al público:");
             txtCantMin.setText("");
-            cbxGenerador.setSelected(false);
+//            cbxGenerador.setSelected(false);
         }
     }
 
     public void guardar() {
         File imagenDefaultProd = new File("src/Recursos/circulo-de-no-disponible.png");
         File imagenDefaultCodigo = new File("src/Recursos/circulo-de-no-disponible.png");
+        File codigoBarras;
+        File fotoProd;
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator('.');
         DecimalFormat decimal = new DecimalFormat("0.00", simbolo);
@@ -258,50 +267,26 @@ public final class IngresoProd extends javax.swing.JFrame {
 
                 idBodega = bod.getIntIdBodega();
             }
-
-            if (!(cbxGenerador.isSelected()) && (bandera == true)) {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imagenDefaultProd, iva, idBodega);
-                try {
-                    if (conMat.IngresarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
-                        reseteoCampos();
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error");
-                }
-
-            } else if ((bandera == true) && (cbxGenerador.isSelected() && lblImagen != null)) {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imagenDefaultProd, iva, idBodega);
-                try {
-                    if (conMat.IngresarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
-                        reseteoCampos();
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error");
-                }
-            } else if (!cbxGenerador.isSelected() && (bandera == false)) {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imagenDefaultCodigo, imgArticulo, iva, idBodega);
-                try {
-                    if (conMat.IngresarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
-                        reseteoCampos();
-                        bandera = true;
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error");
-                }
+            /*Valida el cambio de imagen de producto*/
+            if (bandera == true) {
+                fotoProd = imagenDefaultCodigo;
             } else {
-                producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), imgCodigoArticulo, imgArticulo, iva, idBodega);
-                try {
-                    if (conMat.IngresarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
-                        reseteoCampos();
-                        bandera = true;
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error");
+                fotoProd = imgArticulo;
+            }
+            /*Valida el codigo de barras del producto*/
+            if (banderaCodigo == true) {
+                codigoBarras = imagenDefaultCodigo;
+            } else {
+                codigoBarras = imgCodigoArticulo;
+            }
+            producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), codigoBarras, fotoProd, iva, idBodega);
+            try {
+                if (conMat.IngresarProducto(producto)) {
+                    JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
+                    reseteoCampos();
                 }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error");
             }
             if (!txtExistenciasBodega.getText().isEmpty()) {
                 guardarBodega();
@@ -323,6 +308,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         grupoIVA = new javax.swing.ButtonGroup();
         jLabel15 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         txtNombreProd = new javax.swing.JTextField();
         txtCod = new javax.swing.JTextField();
         txtPrecioCompra = new javax.swing.JTextField();
@@ -336,7 +322,6 @@ public final class IngresoProd extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtCantMin = new javax.swing.JTextField();
@@ -347,7 +332,6 @@ public final class IngresoProd extends javax.swing.JFrame {
         pnlGenerador = new javax.swing.JPanel();
         lblImagen = new javax.swing.JLabel();
         btnGenerador = new javax.swing.JButton();
-        cbxGenerador = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         lblImagProd = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -512,14 +496,6 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         lblImagen.getAccessibleContext().setAccessibleName("lblImagen");
 
-        cbxGenerador.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        cbxGenerador.setText("Generador");
-        cbxGenerador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxGeneradorActionPerformed(evt);
-            }
-        });
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Haga clic para agregar imagen"));
 
         lblImagProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/circulo-de-no-disponible.png"))); // NOI18N
@@ -592,7 +568,18 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel13.setText("Producto con IVA:");
 
+        iva12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iva12ActionPerformed(evt);
+            }
+        });
+
         iva0.setText("0%");
+        iva0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iva0ActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel14.setText("Ganancia %");
@@ -756,7 +743,6 @@ public final class IngresoProd extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -805,9 +791,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                                 .addGap(166, 166, 166)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(66, 66, 66)
-                                        .addComponent(cbxGenerador)
-                                        .addGap(18, 18, 18)
+                                        .addGap(180, 180, 180)
                                         .addComponent(pnlGenerador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
@@ -855,8 +839,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                         .addGap(11, 11, 11)
                         .addComponent(jLabel8))
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -915,9 +898,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlGenerador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxGenerador))
+                .addComponent(pnlGenerador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAtras)
@@ -939,7 +920,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             if (cmbProveedor.getSelectedItem().toString().equals("Sin Proveedor")) { //Se pregunta al usuario si desa dejar el producto sin proveedor
                 int n = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea guardar el producto sin asignarle un proveedor?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.YES_OPTION) { //Si acepta se guarda el producto asigandole como proveedor "Sin proveedor"
-                    if (cbxGenerador.isSelected()) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
+                    if (imagen != null) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
 
                         imagen = null;
                         this.lblImagen.setIcon(null);
@@ -950,8 +931,10 @@ public final class IngresoProd extends javax.swing.JFrame {
                     }
 
                 }
+                ImageIcon image = new ImageIcon(getClass().getResource("src/Recursos/circulo-de-no-disponible.png"));
+                lblImagProd.setIcon(image);
             } else { //Si el usuario es uno diferente a "Sin proveedor" no pregunta y procede a guardar el producto
-                if (cbxGenerador.isSelected()) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
+                if (imagen != null) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
 
                     imagen = null;
                     this.lblImagen.setIcon(null);
@@ -960,8 +943,9 @@ public final class IngresoProd extends javax.swing.JFrame {
                 } else {//Si no esta seleccionado el combobox no guarda ninguna imagen
                     guardar();
                 }
-            }
-
+            }setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
+            ImageIcon image = new ImageIcon("src/Recursos/circulo-de-no-disponible.png");
+            lblImagProd.setIcon(image);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -1000,9 +984,9 @@ public final class IngresoProd extends javax.swing.JFrame {
                 double ganancia = Double.parseDouble(txtGanancia.getText());
                 double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
                 precioVenta = precio + (precio * (ganancia / 100));
-                lblPrecioPublico.setText("El precio de venta al público es: $" + precioVenta);
+                lblPrecioPublico.setText("Precio de venta al público: $" + precioVenta);
                 precioVentaMayor = precio + (precio * (gananciaMayor / 100));
-                lblPrecioMayor.setText("El precio de venta al por mayor es: $" + precioVentaMayor);
+                lblPrecioMayor.setText("Precio de venta al por mayor: $" + precioVentaMayor);
             } catch (NumberFormatException ex) {
 
             }
@@ -1088,16 +1072,9 @@ public final class IngresoProd extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debes ingresar un valor!!!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             generaCodigo(this.txtCod.getText());
+            banderaCodigo = false;
         }
     }//GEN-LAST:event_btnGeneradorActionPerformed
-
-    private void cbxGeneradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneradorActionPerformed
-        if (cbxGenerador.isSelected()) {
-            btnGenerador.setEnabled(true);
-        } else {
-            btnGenerador.setEnabled(false);
-        }
-    }//GEN-LAST:event_cbxGeneradorActionPerformed
 
     private void lblImagProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagProdMouseClicked
         JFileChooser chooser = new JFileChooser();
@@ -1111,6 +1088,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             int altoImagen = lblImagProd.getHeight();
 
             imgArticulo = chooser.getSelectedFile();
+            System.out.println(imgArticulo.length());
             ImageIcon icono = new ImageIcon(imgArticulo.getAbsolutePath());
             Image imagen2 = icono.getImage();
             Image imagenescalada = imagen2.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_DEFAULT);
@@ -1262,6 +1240,20 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void iva12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iva12ActionPerformed
+        if (!txtPrecioCompra.getText().isEmpty()) {
+            muestraPrecio();
+            muestraPrecioxMayor();
+        }
+    }//GEN-LAST:event_iva12ActionPerformed
+
+    private void iva0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iva0ActionPerformed
+        if (!txtPrecioCompra.getText().isEmpty()) {
+            muestraPrecio();
+            muestraPrecioxMayor();
+        }
+    }//GEN-LAST:event_iva0ActionPerformed
+
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra
         barcode.setCodeType(new Interleaved25());
@@ -1330,7 +1322,6 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JButton btnProveedor;
     private javax.swing.JButton btnUbicacion;
     private javax.swing.JCheckBox cbxAyuda;
-    private javax.swing.JCheckBox cbxGenerador;
     private javax.swing.JComboBox<Bodega> cmbBodega;
     private javax.swing.JComboBox<Categoria> cmbCategoria;
     private javax.swing.JComboBox<Proveedor> cmbProveedor;

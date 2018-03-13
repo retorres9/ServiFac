@@ -247,7 +247,7 @@ public class DATClientes {
         ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, direccion, deuda FROM clientes WHERE cedula_cliente = ?";
+            String sentencia = "SELECT nombres, direccion, deuda, telefono FROM clientes WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
@@ -255,7 +255,8 @@ public class DATClientes {
                 String nombreCli = rs.getString(1);
                 String direccion = rs.getString(2);
                 double deuda = rs.getDouble(3);
-                cliente = new Clientes(nombreCli, deuda, direccion);
+                String telf = rs.getString(4);
+                cliente = new Clientes(nombreCli, deuda, direccion, telf);
                 listaCliente.add(cliente);
             }
         } catch (SQLException ex) {

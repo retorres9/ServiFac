@@ -1,7 +1,9 @@
 CREATE DATABASE empresa;
 drop database empresa;
 USE empresa;
+describe producto;
 select * FROM producto;
+UPDATE producto SET cantidad = 100 WHERE codigo = "6";
 SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, pp.cedula_usuario 
 FROM proveedores p, pago_proveedor pp 
 WHERE p.ruc = pp.ruc AND pp.Fecha = "18/2/2018" AND Tipo ="Pago";
@@ -30,7 +32,7 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL,
 estado boolean default true
 );
-INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion) VALUES ("CONSUMIDOR FINAL","1111111111","1234567",0.00,"");
+INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion) VALUES ("ROBERTH TORRES","1105970717","1234567",0.00,"SAN VICENTE");
 update clientes SET direccion = "" where cedula_cliente = "1111111111";
 #describe producto;
 CREATE TABLE producto(
@@ -48,8 +50,8 @@ id_ubicacion INT(3),#
 cantidad INT(7),#
 cantidad_Minima INT (3),#
 ruc VARCHAR(15),#
-imagen_codigo BLOB,#
-imagen_producto BLOB,#
+imagen_codigo MEDIUMBLOB,#
+imagen_producto MEDIUMBLOB,#
 id_bodega INT(3)
 );
 

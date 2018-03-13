@@ -253,7 +253,8 @@ public class DATMaterial {
             ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");
+//            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");
+            ex.printStackTrace();
             return false;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
