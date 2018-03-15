@@ -772,9 +772,9 @@ public final class Inventario extends javax.swing.JFrame {
         txtPrecio.setText(precio);
         String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
         txtPrecioM.setText(precioMayor);
-        String ubicacion = tblProd.getModel().getValueAt(fila, 4).toString();//Seleccionamos la ubicacion del producto
+        String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
         txtUbicacion.setText(ubicacion);
-        String cant = (String) tblProd.getModel().getValueAt(fila, 5).toString();//Seleccionamos la cantidad del producto
+        String cant = (String) tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
         txtCantidad.setText(cant);
 
         String rol = config.validacion();
@@ -979,15 +979,15 @@ public final class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
     private void btnActualizaCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCantidadMouseClicked
+        int cant2 = Integer.parseInt(txtCantidad.getText());
         try {
             String nume = JOptionPane.showInputDialog(
                     "Ingrese la cantidad que desea agregar a:\n" + txtNombre.getText());
             int cant1 = Integer.parseInt(nume);
-            int cant2 = Integer.parseInt(txtCantidad.getText());
             int total = cant1 + cant2;
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), total, cod);
-            material.UpdateProducto(producto);
+            producto = new Producto(total, txtNombre.getText());
+            material.UpdateCantFactura(producto);
             String nuevaCantTxt = String.valueOf(total);
             txtCantidad.setText(nuevaCantTxt);
             updateTabla();
@@ -1001,10 +1001,8 @@ public final class Inventario extends javax.swing.JFrame {
         try {
             String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombre.getText());
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            System.out.println(cod);
             producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
             material.UpdateProducto(producto);
-            System.out.println(cod);
             updateTabla();
         } catch (NullPointerException | NumberFormatException e) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, e);

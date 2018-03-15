@@ -226,15 +226,15 @@ public class DATMaterial {
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            FileInputStream fis = new FileInputStream(producto.getFotoProd());
-            FileInputStream fisCod = new FileInputStream(producto.getImgCodigoProd());
-            System.out.println(fis);
-            System.out.println(fisCod);
+//            FileInputStream fis = new FileInputStream(producto.getFotoProd());
+//            FileInputStream fisCod = new FileInputStream(producto.getImgCodigoProd());
+//            System.out.println(fis);
+//            System.out.println(fisCod);
             String Sentencia = "INSERT INTO producto (nombre_producto, codigo,"
                     + " precio_Compra, precio, precio_mayor, ganancia, ganancia_Mayor,"
                     + "id_categoria, id_ubicacion, cantidad, cantidad_Minima,"
-                    + " ruc, iva, imagen_producto,imagen_codigo)"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + " ruc, iva)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
             ps.setString(2, producto.getStrCod());
@@ -249,14 +249,12 @@ public class DATMaterial {
             ps.setInt(11, producto.getIntCantidadMinima());
             ps.setString(12, producto.getStrRUC());
             ps.setString(13, producto.getIva());
-            ps.setBinaryStream(14, fis, (int) producto.getFotoProd().length());
-            ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
+            //ps.setBinaryStream(14, fis, (int) producto.getFotoProd().length());
+            //ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");            
             return false;
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "problema con la imagen");
         } finally {
             try {
                 ps.close();
@@ -428,7 +426,7 @@ public class DATMaterial {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
-            ps.setInt(1, prod.getIntUbicacion());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
+            ps.setInt(1, prod.getIntCantidadMinima());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
             ps.setString(2, prod.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {

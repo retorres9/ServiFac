@@ -124,7 +124,7 @@ public class Producto {
         this.intCantidad = intCantidad;
     }
 
-    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, int intUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File imgCodigoProd, File fotoProd, String iva, int bodega) {
+    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, int intUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, String iva, int bodega) {
         this.strNombreProd = strNombreProd;
         this.strCod = strCod;
         this.fltPrecio = fltPrecio;
@@ -144,25 +144,25 @@ public class Producto {
         this.bodega = bodega;
     }
     
-    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, String strUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File imgCodigoProd, File fotoProd, String iva, int bodega) {
-        this.strNombreProd = strNombreProd;
-        this.strCod = strCod;
-        this.fltPrecio = fltPrecio;
-        this.precioCompra = precioCompra;
-        this.ganancia = ganancia;
-        this.gananciaMayor = gananciaMayor;
-        this.stock = stock;
-        this.fltPrecioMayor = fltPrecioMayor;
-        this.strUbicacion = strUbicacion;
-        this.idCategoria = idCategoria;
-        this.intCantidad = intCantidad;
-        this.intCantidadMinima = intCantidadMinima;
-        this.strRUC = strRUC;
-        this.imgCodigoProd = imgCodigoProd;
-        this.fotoProd = fotoProd;
-        this.iva = iva;
-        this.bodega = bodega;
-    }
+//    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, String strUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File imgCodigoProd, File fotoProd, String iva, int bodega) {
+//        this.strNombreProd = strNombreProd;
+//        this.strCod = strCod;
+//        this.fltPrecio = fltPrecio;
+//        this.precioCompra = precioCompra;
+//        this.ganancia = ganancia;
+//        this.gananciaMayor = gananciaMayor;
+//        this.stock = stock;
+//        this.fltPrecioMayor = fltPrecioMayor;
+//        this.strUbicacion = strUbicacion;
+//        this.idCategoria = idCategoria;
+//        this.intCantidad = intCantidad;
+//        this.intCantidadMinima = intCantidadMinima;
+//        this.strRUC = strRUC;
+//        this.imgCodigoProd = imgCodigoProd;
+//        this.fotoProd = fotoProd;
+//        this.iva = iva;
+//        this.bodega = bodega;
+//    }
 
     public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, int intUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File fotoProd, String iva, int bodega) {
         this.strNombreProd = strNombreProd;
