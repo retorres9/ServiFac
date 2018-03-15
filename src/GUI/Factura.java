@@ -63,11 +63,12 @@ public final class Factura extends javax.swing.JFrame {
     DATClientes manejadorCliente;
     DATReporte manejadorDetalle;
     DATUsuario manejadorUsuario;
+    Configuracion config = new Configuracion();
 
     public Factura() {
         initComponents();
         cargarEncabezado();
-        txtUsuario.setText(Constantes.Constantes.USUARIO);
+        txtUsuario.setText(config.usuario());
         manejadorProd = new DATMaterial();
         manejadorCliente = new DATClientes();
         manejadorVenta = new DATVenta();
@@ -133,7 +134,7 @@ public final class Factura extends javax.swing.JFrame {
 
     public void permisos() {
 
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
 
         if (rol.equals("0")) {
             jmiElimProd.setEnabled(false);
@@ -185,7 +186,7 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void ventaProd() {
-        vendedor = Configuracion.vendedor_venta();
+        vendedor = config.vendedor_venta();
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
             int cantExist = 0;
             int cantVenta = (int) tblVentas.getValueAt(i, 0);

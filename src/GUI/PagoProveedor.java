@@ -1,5 +1,6 @@
 package GUI;
 
+import Clases.Configuracion;
 import Clases.PagoProveedorClase;
 import Clases.Proveedor;
 import Clases.Usuario;
@@ -32,13 +33,14 @@ public final class PagoProveedor extends javax.swing.JFrame {
     String usuario;
     DATUsuario manejadorUsuario;
     Usuario user = new Usuario();
+    Configuracion config = new Configuracion();
 
     public PagoProveedor() {
         initComponents();
         manejadorProveedor = new DATProveedor();
         manejadorUsuario = new DATUsuario();
         manejadorPago = new DATPagoProveedor();
-        usuario = Constantes.Constantes.USUARIO;
+        usuario = config.usuario();
         cedula();
         cargarColumnas();
         cargarTabla();

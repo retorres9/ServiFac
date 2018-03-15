@@ -50,19 +50,22 @@ public final class Login extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Inicio de Sesión");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(202, 125, 112, 24);
+        jLabel1.setBounds(170, 120, 210, 24);
 
         jLabel2.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Usuario:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(111, 184, 52, 19);
+        jLabel2.setBounds(73, 184, 90, 19);
 
         jLabel3.setFont(new java.awt.Font("Roboto Condensed Light", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Contraseña:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(89, 226, 74, 19);
+        jLabel3.setBounds(43, 226, 120, 19);
 
         jButton1.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/botonLogin.png"))); // NOI18N
@@ -73,7 +76,7 @@ public final class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(280, 293, 103, 27);
+        jButton1.setBounds(280, 293, 100, 35);
 
         jButton2.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jButton2.setText("Cancelar");
@@ -83,7 +86,7 @@ public final class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(130, 293, 79, 27);
+        jButton2.setBounds(130, 293, 77, 35);
 
         jButton3.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         jButton3.setText("Registrar nuevo Usuario");
@@ -93,7 +96,7 @@ public final class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(130, 30, 220, 27);
+        jButton3.setBounds(130, 30, 220, 35);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 70, 510, 10);
 
@@ -103,7 +106,7 @@ public final class Login extends javax.swing.JFrame {
 
         txtUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         getContentPane().add(txtUsuario);
-        txtUsuario.setBounds(175, 182, 229, 23);
+        txtUsuario.setBounds(175, 182, 229, 25);
 
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPass.addKeyListener(new java.awt.event.KeyAdapter() {

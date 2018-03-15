@@ -1,5 +1,6 @@
 package GUI;
 
+import Clases.Configuracion;
 import Clases.Usuario;
 import Dat.DATUsuario;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,8 @@ public final class NuevoUsuario extends javax.swing.JFrame {
 
     Usuario objUs = new Usuario();
     DATUsuario usuario;
-    String clave = Constantes.Constantes.CLAVE_ADMIN;
+    Configuracion config = new Configuracion();
+    String clave = config.claveAdmin();
 
     public NuevoUsuario() {
         initComponents();
@@ -248,33 +250,44 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         } else if (digitosCedula != 10) {
             JOptionPane.showMessageDialog(null, "Número de cédula incorrecto");
         } else {
-            String cedula = txtCedulaUser.getText();
-            String nom = txtNombre.getText();
-            String usu = txtUsuario.getText();
-            String pass = txtPass.getText();
-            String rol = (String) jComboBox1.getSelectedItem();
-            if (rol.equals("Vendedor")) {
-                rolUs = 0;
-            }
-            if (txtPass.getText().equals(txtConf.getText())) {
-                String newPass = pass;
-                pass = getMD5(newPass);
-                objUs = new Usuario(cedula, nom, usu, pass, rolUs);
-                try {
-                    if (usuario.nuevoUsuario(objUs)) {
-                        JOptionPane.showMessageDialog(null, "El usuario se guardó"
-                                + " correctamente, ahora por favor vuelva a ingresar\n"
-                                + "su usuario y contraseña");
-                        Login valid = new Login();
-                        valid.setVisible(true);
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "error");
-                }
+            String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear\n"
+                    + "un usuario con rol de Vendedor");
+            try {
+                if (n.equals(clave)) {
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+                    String cedula = txtCedulaUser.getText();
+                    String nom = txtNombre.getText();
+                    String usu = txtUsuario.getText();
+                    String pass = txtPass.getText();
+                    String rol = (String) jComboBox1.getSelectedItem();
+                    if (rol.equals("Vendedor")) {
+                        rolUs = 0;
+                    }
+                    if (txtPass.getText().equals(txtConf.getText())) {
+                        String newPass = pass;
+                        pass = getMD5(newPass);
+                        objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                        try {
+                            if (usuario.nuevoUsuario(objUs)) {
+                                JOptionPane.showMessageDialog(null, "El usuario se guardó"
+                                        + " correctamente, ahora por favor vuelva a ingresar\n"
+                                        + "su usuario y contraseña");
+                                Login valid = new Login();
+                                valid.setVisible(true);
+                                this.dispose();
+                            }
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "error");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Codigo Incorrecto");
+                }
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(null, "No ha ingresado el código de verificación");
             }
         }
     }

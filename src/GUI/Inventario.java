@@ -30,6 +30,7 @@ public final class Inventario extends javax.swing.JFrame {
     DATMaterial material;
     ExistenciasBodega existencias;
     DATExistenciasBodega manejadorExistencias;
+    Configuracion config = new Configuracion();
 
     public Inventario() {
         initComponents();
@@ -78,7 +79,7 @@ public final class Inventario extends javax.swing.JFrame {
 
     public void permisos() {
 
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
 
         if (rol.equals("0")) {
             jmiElimProd.setEnabled(false);
@@ -776,7 +777,7 @@ public final class Inventario extends javax.swing.JFrame {
         String cant = (String) tblProd.getModel().getValueAt(fila, 5).toString();//Seleccionamos la cantidad del producto
         txtCantidad.setText(cant);
 
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
         if (rol.equals("0")) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);
@@ -959,7 +960,7 @@ public final class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void btnActualizaUbicacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaUbicacionMouseClicked
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
         if (rol.equals("0")) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {

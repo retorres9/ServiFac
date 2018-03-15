@@ -28,11 +28,12 @@ public final class Pagos extends javax.swing.JFrame {
     NewCliente objClienteNew = new NewCliente();
     Inventario objBuspProd = new Inventario();
     IngresoProd objIngrProd = new IngresoProd();
+    Configuracion config = new Configuracion();
     int fila, idVenta;
     Venta objVenta = new Venta();
     String strTotal, nombre;
     AbonoCliente abono = new AbonoCliente();
-    String vendedor = Constantes.Constantes.USUARIO;
+    String vendedor = config.usuario();
     DefaultTableModel modelo = new DefaultTableModel();
     DATAbonoCliente manejadorAbono;
     DATClientes cliente;
@@ -533,7 +534,7 @@ public final class Pagos extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
         if (rol.equals("0")) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);

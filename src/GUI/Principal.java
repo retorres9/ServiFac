@@ -9,14 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public final class Principal extends javax.swing.JFrame {
-
+    Configuracion config = new Configuracion();
     int cant;
-    String rol = Configuracion.validacion();
-    String vendedor = Configuracion.vendedor_venta();
+    String rol = config.validacion();
+    String vendedor = config.vendedor_venta();
     static Process p;
 
     Usuario objU = new Usuario();
-    Configuracion config = new Configuracion();
     Login objV = new Login();
     DATMaterial objProd = new DATMaterial();
 

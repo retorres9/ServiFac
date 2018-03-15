@@ -14,7 +14,8 @@ public final class NuevoProveedor extends javax.swing.JFrame {
 
     Proveedor objP = new Proveedor();
     DATProveedor prov;
-
+    Configuracion config = new Configuracion();
+    
     public NuevoProveedor() {
         initComponents();
         prov = new DATProveedor();
@@ -26,7 +27,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
         if (rol.equals("0")) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);

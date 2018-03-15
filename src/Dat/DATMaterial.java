@@ -253,11 +253,10 @@ public class DATMaterial {
             ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");            
             return false;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "problema con la imagen");
         } finally {
             try {
                 ps.close();

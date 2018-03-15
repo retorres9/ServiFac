@@ -78,7 +78,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         txtDireccionEmp = new javax.swing.JTextField();
         txtPropietarioEmp = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtIVA = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtRucEmp = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -117,7 +117,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
         jLabel2.setText("Nombre de la Empresa:");
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIVA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
         jLabel3.setText("Dirección:");
@@ -150,7 +150,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtRucEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefonoEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombreEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
@@ -180,7 +180,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -317,11 +317,12 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     }
 
     public void configuracion() {
-        txtNombreEmp.setText(Constantes.Constantes.NOMBRE_EMPRESA);
-        txtDireccionEmp.setText(Constantes.Constantes.DIRECCION_EMPRESA);
-        txtPropietarioEmp.setText(Constantes.Constantes.PROPIETARIO_EMPRESA);
-        txtRucEmp.setText(Constantes.Constantes.RUC_EMPRESA);
-        txtTelefonoEmp.setText(Constantes.Constantes.RUC_EMPRESA);
+        txtNombreEmp.setText(configu.configNombreEmpresa());
+        txtDireccionEmp.setText(configu.configDireccionEmpresa());
+        txtPropietarioEmp.setText(configu.configPropietarioEmpresa());
+        txtRucEmp.setText(configu.configRUCEmpresa());
+        txtTelefonoEmp.setText(configu.configTelefonoEmpresa());
+        txtIVA.setText(configu.iva());
     }
 
     public void getTexto() {
@@ -391,8 +392,8 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField txtDireccionEmp;
+    private javax.swing.JTextField txtIVA;
     private javax.swing.JTextField txtNombreEmp;
     private javax.swing.JTextField txtPropietarioEmp;
     private javax.swing.JTextField txtRucEmp;

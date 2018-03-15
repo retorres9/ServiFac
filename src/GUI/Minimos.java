@@ -25,6 +25,7 @@ public final class Minimos extends javax.swing.JFrame {
     Usuario objU = new Usuario();
     DATMaterial producto;
     DefaultTableModel modelo = new DefaultTableModel();
+    Configuracion config = new Configuracion();
 
     public Minimos() {
         initComponents();
@@ -50,7 +51,7 @@ public final class Minimos extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
         if (rol.equals("0")) {
             txtMin.setEditable(false);
             txtUpdate.setEnabled(false);

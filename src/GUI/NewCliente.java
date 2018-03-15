@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public final class NewCliente extends javax.swing.JFrame {
 
     Clientes objCliente = new Clientes();
-
+    Configuracion config = new Configuracion();
     public static int valid = 1;
     DATClientes cliente;
 
@@ -27,7 +27,7 @@ public final class NewCliente extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = Configuracion.validacion();
+        String rol = config.validacion();
         if (rol.equals("0")) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);
