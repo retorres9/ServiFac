@@ -1,6 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+describe producto;
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -43,6 +44,8 @@ imagen_codigo MEDIUMBLOB,
 imagen_producto MEDIUMBLOB,
 id_bodega INT(3)
 );
+#alter table producto change imagen_codigo imagen_codigo MEDIUMBLOB default null;
+select * from producto;
 
 
 CREATE TABLE ubicacion(

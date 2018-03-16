@@ -51,6 +51,7 @@ public final class Inventario extends javax.swing.JFrame {
         updateTabla();
         cargarTablaBodega();
         btnActualizaPrecio.setText("");
+        totalInventario();
     }
 
     public void insertarColumnas() {
@@ -63,6 +64,24 @@ public final class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Ganancia por mayor %");
         modelo.addColumn("Ubicación");
         modelo.addColumn("Cantidad");
+    }
+    public void totalInventario(){
+        int cant1 = modelo.getRowCount();
+        int cant2 = modelo2.getRowCount();
+        double suma1 = 0.00;
+        double suma2 = 0.00;
+        for (int i = 0; i < cant1; i++) {
+            int cant = (int)modelo.getValueAt(i, 8);
+            double prec = (Double)modelo.getValueAt(i,2);
+            suma1 = suma1 + (cant * prec);
+        }
+        for (int i = 0; i < cant2; i++) {
+            int cant = (int)modelo2.getValueAt(i, 8);
+            double prec = (Double)modelo2.getValueAt(i,2);
+            suma2 = suma2 + (cant * prec);
+        }
+        double global = suma1+suma2;
+        lblTotal.setText("Total del inventario: $"+global);
     }
 
     public void encabezadoBodega() {
@@ -311,6 +330,7 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtBodega = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        lblTotal = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -347,6 +367,10 @@ public final class Inventario extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lupa.png"))); // NOI18N
 
+        jTabbedPane1.setFocusable(false);
+
+        cmbBusq.setFocusable(false);
+
         jLabel6.setText("Buscar por:");
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -371,6 +395,7 @@ public final class Inventario extends javax.swing.JFrame {
 
         txtPrecio.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(0, 153, 0));
+        txtPrecio.setFocusable(false);
         txtPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecioActionPerformed(evt);
@@ -627,6 +652,8 @@ public final class Inventario extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Productos en bodega", jPanel3);
 
+        lblTotal.setText("Total del inventario:");
+
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -736,13 +763,15 @@ public final class Inventario extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(410, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(679, 679, 679))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(206, 206, 206)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(273, 273, 273))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -754,11 +783,13 @@ public final class Inventario extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(lblTotal))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -1121,6 +1152,7 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblBodega;
     public static final javax.swing.JTable tblProd = new javax.swing.JTable();
     private javax.swing.JTextField txtBodega;

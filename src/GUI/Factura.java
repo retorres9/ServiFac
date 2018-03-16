@@ -94,7 +94,6 @@ public final class Factura extends javax.swing.JFrame {
             parametro.put("direccion", txtDireccionCl.getText());
             parametro.put("cliente", txtCliente.getText());
             JRDataSource dataSource = new JRTableModelDataSource(tblVentas.getModel());
-            System.out.println(parametro);
             JasperPrint j = JasperFillManager.fillReport(reporte, parametro,dataSource);
             JasperViewer.viewReport(j,false);
             
@@ -978,6 +977,7 @@ public final class Factura extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         generarFactura();
+        System.out.println("hola");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     public void cargarProducto() {
