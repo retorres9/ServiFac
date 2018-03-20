@@ -30,7 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import jbarcodebean.JBarcodeBean;
-import net.sourceforge.jbarcodebean.model.Interleaved25;
+import net.sourceforge.jbarcodebean.model.Code128;
 
 public final class IngresoProd extends javax.swing.JFrame {
 
@@ -143,6 +143,28 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }
 
+    public void validacioCod() {
+        int cant = conMat.validaCodigo(txtCod.getText());
+        if (txtCod.getText().isEmpty()) {
+            this.txtValid.setIcon(null);
+        }
+        if (cant == 0) {
+            try {
+                Image img = ImageIO.read(getClass().getResource(("/Recursos/success.png")));
+                txtValid.setIcon(new ImageIcon(img));
+            } catch (IOException ex) {
+                Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                Image img = ImageIO.read(getClass().getResource(("/Recursos/error.png")));
+                txtValid.setIcon(new ImageIcon(img));
+            } catch (IOException ex) {
+                Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public void cargarModeloCat() {
         try {
             ArrayList<Categoria> listaCategorias;
@@ -226,10 +248,6 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     public void guardar() {
         String workingDirectory = System.getProperty("java.io.tmpdir");
-//        final File imagenDefaultProd = new File(workingDirectory + File.separator + "/Recursos/circulo-de-no-disponible.png");
-//        File imagenDefaultCodigo = new File(workingDirectory + File.separator + "/Recursos/circulo-de-no-disponible.png");
-//        File codigoBarras;
-//        File fotoProd;
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator('.');
         DecimalFormat decimal = new DecimalFormat("0.00", simbolo);
@@ -264,26 +282,12 @@ public final class IngresoProd extends javax.swing.JFrame {
             } else {
                 idBodega = bod.getIntIdBodega();
             }
-            /*Valida el cambio de imagen de producto*/
-//            if (bandera == true) {
-//                fotoProd = imagenDefaultProd;
-//            } else {
-//                fotoProd = imgArticulo;
-//            }
-//            //Fin validacion
-//            /*Valida el codigo de barras del producto*/
-//            if (banderaCodigo == true) {
-//                codigoBarras = imagenDefaultCodigo;
-//            } else {
-//                codigoBarras = imgCodigoArticulo;
-//            }
-            //Fin validacion
             producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), iva, idBodega);
             try {
-                conMat.IngresarProducto(producto);
-                JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
-                reseteoCampos();
-
+                if (conMat.IngresarProducto(producto) == true) {
+                    JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");
+                    reseteoCampos();
+                }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error");
             }
@@ -349,6 +353,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        txtValid = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -379,6 +384,9 @@ public final class IngresoProd extends javax.swing.JFrame {
         });
 
         txtCod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCodKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCodKeyTyped(evt);
             }
@@ -622,6 +630,8 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setText("Ganancia por mayor");
 
+        txtValid.setText(" ");
+
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -729,6 +739,12 @@ public final class IngresoProd extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -764,9 +780,6 @@ public final class IngresoProd extends javax.swing.JFrame {
                                         .addComponent(btnCategoria))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtCod, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                                                .addComponent(txtNombreProd))
                                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtCantMin, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -776,8 +789,14 @@ public final class IngresoProd extends javax.swing.JFrame {
                                                 .addComponent(jLabel5)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(txtGananciaMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(lblPrecioPublico))
-                                        .addGap(65, 65, 65)
+                                            .addComponent(lblPrecioPublico)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(txtCod, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                                                    .addComponent(txtNombreProd))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtValid, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(42, 42, 42)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(pnlGenerador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -792,12 +811,6 @@ public final class IngresoProd extends javax.swing.JFrame {
                         .addGap(247, 247, 247)
                         .addComponent(btnGuardar)))
                 .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -829,7 +842,8 @@ public final class IngresoProd extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))))))
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtValid))))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -881,51 +895,47 @@ public final class IngresoProd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
-            if ((txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
-                    || txtNombreProd.getText().isEmpty() || txtPrecioCompra.getText().isEmpty()
-                    || lblPrecioMayor.getText().isEmpty() || txtGanancia.getText().isEmpty()
-                    || txtGananciaMayor.getText().isEmpty()) || (!iva12.isSelected()
-                    && !iva0.isSelected())) { //Asegura que ningun campo quede nulo
-                JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
-            } else if ((cmbCategoria.getItemCount() == 0)) {
-                JOptionPane.showMessageDialog(null, "No hay categorias ingresadas, por favor\ningrese una categoria");
-            } else if ((cmbUbicacion.getItemCount() == 0)) {
-                JOptionPane.showMessageDialog(null, "No hay ubicaciones ingresadas, por favor\ningrese una ubicación");
-            } else { //Si todo esta bien procede a guardar proveedor
-                if (cmbProveedor.getSelectedItem().toString().equals("(Vacio)")) { //Se pregunta al usuario si desa dejar el producto sin proveedor
-                    int n = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea guardar el producto sin asignarle un proveedor?", "Aviso", JOptionPane.YES_NO_OPTION);
-                    if (n == JOptionPane.YES_OPTION) { //Si acepta se guarda el producto asigandole como proveedor "Sin proveedor"
-                        if (imagen != null) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
 
-                            imagen = null;
-                            this.lblImagen.setIcon(null);
-                            guardar();
-
-                        } else { //Si no esta seleccionado el combobox no guarda ninguna imagen
-                            guardar();
-                        }
-
-                    }
-//                    ImageIcon image = new ImageIcon(getClass().getResource("src/Recursos/circulo-de-no-disponible.png"));
-//                    lblImagProd.setIcon(image);
-                } else { //Si el usuario es uno diferente a "Sin proveedor" no pregunta y procede a guardar el producto
+        if ((txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
+                || txtNombreProd.getText().isEmpty() || txtPrecioCompra.getText().isEmpty()
+                || lblPrecioMayor.getText().isEmpty() || txtGanancia.getText().isEmpty()
+                || txtGananciaMayor.getText().isEmpty()) || (!iva12.isSelected()
+                && !iva0.isSelected())) { //Asegura que ningun campo quede nulo
+            JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
+        } else if ((cmbCategoria.getItemCount() == 0)) {
+            JOptionPane.showMessageDialog(null, "No hay categorias ingresadas, por favor\ningrese una categoria");
+        } else if ((cmbUbicacion.getItemCount() == 0)) {
+            JOptionPane.showMessageDialog(null, "No hay ubicaciones ingresadas, por favor\ningrese una ubicación");
+        } else { //Si todo esta bien procede a guardar proveedor
+            if (cmbProveedor.getSelectedItem().toString().equals("(Vacio)")) { //Se pregunta al usuario si desa dejar el producto sin proveedor
+                int n = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea guardar el producto sin asignarle un proveedor?", "Aviso", JOptionPane.YES_NO_OPTION);
+                if (n == JOptionPane.YES_OPTION) { //Si acepta se guarda el producto asigandole como proveedor "Sin proveedor"
                     if (imagen != null) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
 
                         imagen = null;
                         this.lblImagen.setIcon(null);
                         guardar();
 
-                    } else {//Si no esta seleccionado el combobox no guarda ninguna imagen
+                    } else { //Si no esta seleccionado el combobox no guarda ninguna imagen
                         guardar();
                     }
+
                 }
-//                ImageIcon image = new ImageIcon("/Recursos/circulo-de-no-disponible.png");
-//                lblImagProd.setIcon(image);
-                bandera = true;
-                banderaCodigo = true;
+            } else { //Si el usuario es uno diferente a "Sin proveedor" no pregunta y procede a guardar el producto
+                if (imagen != null) { //Si el cmbobox de generador está seleccionado guarda la imagen del codigo de barras
+
+                    imagen = null;
+                    this.lblImagen.setIcon(null);
+                    guardar();
+
+                } else {//Si no esta seleccionado el combobox no guarda ninguna imagen
+                    guardar();
+                }
             }
-        
+            bandera = true;
+            banderaCodigo = true;
+        }
+        txtNombreProd.requestFocusInWindow();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
@@ -1051,7 +1061,6 @@ public final class IngresoProd extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debes ingresar un valor!!!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             generaCodigo(this.txtCod.getText());
-            banderaCodigo = false;
         }
     }//GEN-LAST:event_btnGeneradorActionPerformed
 
@@ -1210,9 +1219,13 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_iva0ActionPerformed
 
+    private void txtCodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyReleased
+        validacioCod();
+    }//GEN-LAST:event_txtCodKeyReleased
+
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra
-        barcode.setCodeType(new Interleaved25());
+        barcode.setCodeType(new Code128());
         // nuestro valor a codificar y algunas configuraciones mas
         barcode.setCode(codigo);
 
@@ -1330,5 +1343,6 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JTextField txtGananciaMayor;
     private javax.swing.JTextField txtNombreProd;
     private javax.swing.JTextField txtPrecioCompra;
+    private javax.swing.JLabel txtValid;
     // End of variables declaration//GEN-END:variables
 }

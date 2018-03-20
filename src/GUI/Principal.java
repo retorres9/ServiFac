@@ -25,9 +25,8 @@ public final class Principal extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         alerta();
-        
-//        config();
         permisos();
+        txtEmpresa.setText(config.configNombreEmpresa());
     }
 
     @SuppressWarnings("unchecked")
@@ -164,7 +163,7 @@ public final class Principal extends javax.swing.JFrame {
         txtEmpresa.setFont(new java.awt.Font("Roboto Cn", 1, 24)); // NOI18N
         txtEmpresa.setText("Nombre Empresa");
         getContentPane().add(txtEmpresa);
-        txtEmpresa.setBounds(50, 11, 860, 32);
+        txtEmpresa.setBounds(50, 11, 840, 32);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 47, 1031, 10);
 
@@ -431,12 +430,6 @@ public final class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-//    public void config() {
-//        String nombreEmp = Configuracion.configNombreEmpresa();
-//        txtEmpresa.setText(nombreEmp);
-//        
-//    }
-
     public void permisos() {
         txtVendedor.setText(vendedor);
         if (rol.equals("0")) {
@@ -589,7 +582,6 @@ public final class Principal extends javax.swing.JFrame {
             this.setVisible(false);
             configGui.setVisible(true);
         }
-
     }//GEN-LAST:event_txtConfigMouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked

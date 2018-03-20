@@ -6,7 +6,10 @@ import Clases.Producto;
 import Clases.Usuario;
 import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +49,7 @@ public final class Inventario extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
-        txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
+        txtEmpresa.setText(config.configNombreEmpresa());
         permisos();
         updateTabla();
         cargarTablaBodega();
@@ -65,23 +68,28 @@ public final class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Ubicación");
         modelo.addColumn("Cantidad");
     }
-    public void totalInventario(){
+
+    public void totalInventario() {
         int cant1 = modelo.getRowCount();
         int cant2 = modelo2.getRowCount();
         double suma1 = 0.00;
         double suma2 = 0.00;
         for (int i = 0; i < cant1; i++) {
-            int cant = (int)modelo.getValueAt(i, 8);
-            double prec = (Double)modelo.getValueAt(i,2);
+            int cant = (int) modelo.getValueAt(i, 8);
+            double prec = (Double) modelo.getValueAt(i, 2);
             suma1 = suma1 + (cant * prec);
         }
         for (int i = 0; i < cant2; i++) {
-            int cant = (int)modelo2.getValueAt(i, 8);
-            double prec = (Double)modelo2.getValueAt(i,2);
+            int cant = (int) modelo2.getValueAt(i, 8);
+            double prec = (Double) modelo2.getValueAt(i, 2);
             suma2 = suma2 + (cant * prec);
         }
-        double global = suma1+suma2;
-        lblTotal.setText("Total del inventario: $"+global);
+        double global = suma1 + suma2;
+        DecimalFormatSymbols separador = new DecimalFormatSymbols();
+        separador.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("0.00", separador);
+        String strGlobal = df.format(global);
+        lblTotal.setText("Total del inventario: $" + strGlobal);
     }
 
     public void encabezadoBodega() {
@@ -396,11 +404,6 @@ public final class Inventario extends javax.swing.JFrame {
         txtPrecio.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(0, 153, 0));
         txtPrecio.setFocusable(false);
-        txtPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecioActionPerformed(evt);
-            }
-        });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Precio al por mayor:");
@@ -556,9 +559,15 @@ public final class Inventario extends javax.swing.JFrame {
 
         tblProd.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblProd.setModel(modelo);
+        tblProd.setFocusable(false);
         tblProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProdMouseClicked(evt);
+            }
+        });
+        tblProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblProdKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(tblProd);
@@ -758,7 +767,7 @@ public final class Inventario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(txtEmpresa)
+                .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jSeparator1)
@@ -805,7 +814,7 @@ public final class Inventario extends javax.swing.JFrame {
         txtPrecioM.setText(precioMayor);
         String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
         txtUbicacion.setText(ubicacion);
-        String cant = (String) tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+        String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
         txtCantidad.setText(cant);
 
         String rol = config.validacion();
@@ -854,18 +863,26 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.setNumRows(cantLista);
                 for (int i = 0; i < cantLista; i++) {
                     producto = listadoProd.get(i);
+
                     String nombreProd = producto.getStrNombreProd();
                     String cod = producto.getStrCod();
+                    Double preciCompra = producto.getPrecioCompra();
                     Double precio = producto.getFltPrecio();
                     Double precioMayor = producto.getFltPrecioMayor();
+                    Double ganancia = producto.getGanancia();
+                    Double gananciaMayor = producto.getGananciaMayor();
                     String ubi = producto.getStrUbicacion();
                     Integer cant = producto.getIntCantidad();
+
                     modelo.setValueAt(nombreProd, i, 0);
                     modelo.setValueAt(cod, i, 1);
-                    modelo.setValueAt(precio, i, 2);
-                    modelo.setValueAt(precioMayor, i, 3);
-                    modelo.setValueAt(ubi, i, 4);
-                    modelo.setValueAt(cant, i, 5);
+                    modelo.setValueAt(preciCompra, i, 2);
+                    modelo.setValueAt(precio, i, 3);
+                    modelo.setValueAt(precioMayor, i, 4);
+                    modelo.setValueAt(ganancia, i, 5);
+                    modelo.setValueAt(gananciaMayor, i, 6);
+                    modelo.setValueAt(ubi, i, 7);
+                    modelo.setValueAt(cant, i, 8);
                 }
             } else {
                 ArrayList<Producto> listadoProd = material.ConsultarPorCodigo(dato);
@@ -873,18 +890,26 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.setNumRows(cantLista);
                 for (int i = 0; i < cantLista; i++) {
                     producto = listadoProd.get(i);
+
                     String nombreProd = producto.getStrNombreProd();
                     String cod = producto.getStrCod();
+                    Double preciCompra = producto.getPrecioCompra();
                     Double precio = producto.getFltPrecio();
                     Double precioMayor = producto.getFltPrecioMayor();
+                    Double ganancia = producto.getGanancia();
+                    Double gananciaMayor = producto.getGananciaMayor();
                     String ubi = producto.getStrUbicacion();
                     Integer cant = producto.getIntCantidad();
+
                     modelo.setValueAt(nombreProd, i, 0);
                     modelo.setValueAt(cod, i, 1);
-                    modelo.setValueAt(precio, i, 2);
-                    modelo.setValueAt(precioMayor, i, 3);
-                    modelo.setValueAt(ubi, i, 4);
-                    modelo.setValueAt(cant, i, 5);
+                    modelo.setValueAt(preciCompra, i, 2);
+                    modelo.setValueAt(precio, i, 3);
+                    modelo.setValueAt(precioMayor, i, 4);
+                    modelo.setValueAt(ganancia, i, 5);
+                    modelo.setValueAt(gananciaMayor, i, 6);
+                    modelo.setValueAt(ubi, i, 7);
+                    modelo.setValueAt(cant, i, 8);
                 }
             }
         } catch (SQLException ex) {
@@ -915,7 +940,7 @@ public final class Inventario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (!(txtBodega.getText().isEmpty()) && (tblBodega.getSelectedRowCount() == 1)) {
-            int n = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea mover " + txtBodega.getText() + "\nunidad/es al almacén?","Aviso",JOptionPane.YES_NO_OPTION);
+            int n = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea mover " + txtBodega.getText() + "\nunidad/es al almacén?", "Aviso", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 moverBodega();
             } else {
@@ -926,11 +951,6 @@ public final class Inventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public static String getFechaActual() {
-        Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-        return formateador.format(ahora);
-    }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Principal objP = new Principal();
         objP.setVisible(true);
@@ -1016,7 +1036,6 @@ public final class Inventario extends javax.swing.JFrame {
                     "Ingrese la cantidad que desea agregar a:\n" + txtNombre.getText());
             int cant1 = Integer.parseInt(nume);
             int total = cant1 + cant2;
-            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
             producto = new Producto(total, txtNombre.getText());
             material.UpdateCantFactura(producto);
             String nuevaCantTxt = String.valueOf(total);
@@ -1036,7 +1055,7 @@ public final class Inventario extends javax.swing.JFrame {
             material.UpdateProducto(producto);
             updateTabla();
         } catch (NullPointerException | NumberFormatException e) {
-            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, e);
+
         }
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
@@ -1055,10 +1074,6 @@ public final class Inventario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se ha cambiado el precio por mayor de:\n" + txtNombre.getText());
         }
     }//GEN-LAST:event_btnActualizaPrecioMayorMouseClicked
-
-    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void btnActualizaPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaPrecioMouseClicked
         try {
@@ -1083,6 +1098,23 @@ public final class Inventario extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtBodegaKeyTyped
+
+    private void tblProdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyTyped
+//        char c = evt.getKeyChar();
+//        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+//            fila = tblProd.getSelectedRow();
+//            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
+//            txtNombre.setText(prod);
+//            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
+//            txtPrecio.setText(precio);
+//            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
+//            txtPrecioM.setText(precioMayor);
+//            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
+//            txtUbicacion.setText(ubicacion);
+//            String cant = (String) tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+//            txtCantidad.setText(cant);
+//        }
+    }//GEN-LAST:event_tblProdKeyTyped
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

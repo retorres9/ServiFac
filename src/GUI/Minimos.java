@@ -4,19 +4,26 @@ import Clases.Configuracion;
 import Clases.Producto;
 import Clases.Usuario;
 import Dat.DATMaterial;
-import java.awt.print.PrinterException;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public final class Minimos extends javax.swing.JFrame {
 
@@ -455,11 +462,11 @@ public final class Minimos extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
     private void tablaMinimosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMinimosMouseClicked
         int fila = tablaMinimos.rowAtPoint(evt.getPoint());
-        
+
         String strProducto = (String) tablaMinimos.getValueAt(fila, 0);
         txtNom.setText(strProducto);
         String strCodigo = (String) tablaMinimos.getValueAt(fila, 1);
@@ -483,11 +490,12 @@ public final class Minimos extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            String header = "Libreria y Bazar\n'San Antonio'\nInforme de productos Faltantes";
-            MessageFormat encabezado = new MessageFormat(header);
-            MessageFormat PieDePagina = new MessageFormat("Cariamanga - loja - Ecuador");
-            tablaMinimos.print(JTable.PrintMode.FIT_WIDTH, encabezado, PieDePagina);
-        } catch (PrinterException ex) {
+            JasperReport minimos = (JasperReport) JRLoader.loadObject("reporteMinimos.jasper");
+            Map parametros = new HashMap();
+            JRDataSource datasource = new JRTableModelDataSource(tablaMinimos.getModel());
+            JasperPrint j = JasperFillManager.fillReport(minimos, parametros, datasource);
+            JasperViewer.viewReport(j, false);
+        } catch (JRException ex) {
             Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

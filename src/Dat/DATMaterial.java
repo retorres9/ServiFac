@@ -370,7 +370,23 @@ public class DATMaterial {
                 Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+    }
+    
+    public int validaCodigo(String codigo){
+        int cant = 0;
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "select count(codigo) from producto where codigo LIKE ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, codigo);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                cant = rs.getInt(1);                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cant;
     }
 
     public ArrayList<Producto> cargaProductoFact(String codigo) {
@@ -424,7 +440,7 @@ public class DATMaterial {
     public void UpdateCantFactura(Producto prod) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "UPDATE producto SET Cantidad = ? WHERE Nombre_Producto = ?";
+            String sentencia = "UPDATE producto SET Cantidad = cantidad - ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, prod.getIntCantidadMinima());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
             ps.setString(2, prod.getStrNombreProd());

@@ -26,7 +26,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         usuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        txtNombreEmp.setText(Constantes.Constantes.NOMBRE_EMPRESA);
+        txtNombreEmp.setText(config.configNombreEmpresa());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
     }
 

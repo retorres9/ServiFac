@@ -13,18 +13,6 @@ import javax.swing.JOptionPane;
 
 public class Configuracion {
 
-//    public static String guardar(String nombre) {
-//        String s1 = "";
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(nombre + ".png"));
-//            s1 = br.readLine();
-//            br.close();
-//        } catch (IOException ex) {
-//            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return s1;
-//    }
-
     public String validacion() {
         String workingDirectory = System.getProperty("java.io.tmpdir");
         File yourFile = new File(workingDirectory + File.separator + "validacion.txt");
@@ -38,7 +26,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\validacion.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,12 +33,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "validacion.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 
     public String vendedor() {
@@ -67,7 +48,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Vendedor.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,12 +55,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "Vendedor.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 
     public String configNombreEmpresa() {
@@ -96,7 +70,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigNombreEmpresa.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,12 +77,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "ConfigNombreEmpresa.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 
     public String configDireccionEmpresa() {
@@ -125,7 +92,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigDireccionEmpresa.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,13 +99,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "ConfigDireccionEmpresa.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 
     public String configPropietarioEmpresa() {
@@ -155,7 +114,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigPropietarioEmpresa.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,13 +121,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "ConfigPropietarioEmpresa.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 
     public String configRUCEmpresa() {
@@ -185,7 +136,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigTelefonoEmpresa.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,13 +143,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "ConfigRUCEmpresa.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 
     public String configTelefonoEmpresa() {
@@ -209,12 +152,6 @@ public class Configuracion {
         try {
             File yourFile = new File(workingDirectory + File.separator + "ConfigTelefonoEmpresa.txt");
             yourFile.createNewFile();
-            //String workingDirectory = System.getProperty("java.io.tmpdir");
-//            InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "ConfigTelefonoEmpresa.txt");
-//            InputStreamReader reader = new InputStreamReader(input);
-//            Scanner read = new Scanner(reader);
-//            s1 = read.nextLine();
-
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -222,7 +159,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigTelefonoEmpresa.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -423,7 +359,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Vendedor.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -431,15 +366,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-//        String s1 = "";
-//        //BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\rober\\Desktop\\ServiFac\\ClaveAdmin.txt"));
-//        //BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/Recursos/ClaveAdmin.txt")));
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "Vendedor.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        //s1 = read;
-//        return s1;
     }
 
     public String iva() {
@@ -455,7 +381,6 @@ public class Configuracion {
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Iva.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -463,15 +388,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-//        String s1 = "";
-//        //BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\rober\\Desktop\\ServiFac\\ClaveAdmin.txt"));
-//        //BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/Recursos/ClaveAdmin.txt")));
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "Iva.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        //s1 = read;
-//        return s1;
     }
 
     public String claveAdmin() {
@@ -483,12 +399,10 @@ public class Configuracion {
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         String s1 = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ClaveAdmin.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -496,17 +410,6 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-
-//        String s1 = "";
-//        //BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\rober\\Desktop\\ServiFac\\ClaveAdmin.txt"));
-//        //BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/Recursos/ClaveAdmin.txt")));
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + "/" + "ClaveAdmin.txt");
-//        System.out.println(input);
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        //s1 = read;
-//        return s1;
     }
 
     public String usuario() {
@@ -514,16 +417,13 @@ public class Configuracion {
         File yourFile = new File(workingDirectory + File.separator + "Usuario.txt");
         try {
             yourFile.createNewFile();
-
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
         String s1 = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Usuario.txt"));
             s1 = br.readLine();
-            System.out.println(s1);
             br.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -531,11 +431,5 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-//        String s1 = "";
-//        InputStream input = getClass().getResourceAsStream(workingDirectory + File.separator + "Usuario.txt");
-//        InputStreamReader reader = new InputStreamReader(input);
-//        Scanner read = new Scanner(reader);
-//        s1 = read.nextLine();
-//        return s1;
     }
 }

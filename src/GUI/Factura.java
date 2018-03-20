@@ -80,7 +80,7 @@ public final class Factura extends javax.swing.JFrame {
         setAnchoColumnas();
         contador();
         permisos();
-        txtEmpresa.setText(Constantes.Constantes.NOMBRE_EMPRESA);
+        txtEmpresa.setText(config.configNombreEmpresa());
         txtCod.requestFocus();
         usuario();
     }
@@ -187,20 +187,13 @@ public final class Factura extends javax.swing.JFrame {
     public void ventaProd() {
         vendedor = config.vendedor_venta();
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
-            int cantExist = 0;
+            
             int cantVenta = (int) tblVentas.getValueAt(i, 0);
             String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
             String strCodigo = (String) tblVentas.getValueAt(i, 5);
             String strPrecio = tblVentas.getValueAt(i, 2).toString();
             double precio_Venta = Double.parseDouble(strPrecio);
-            ArrayList<Producto> cantProd = manejadorProd.comprobarCant(descripcionVenta);
-            int intCantProd = cantProd.size();
-            for (int j = 0; j < intCantProd; j++) {
-                producto = cantProd.get(i);
-                cantExist = producto.getIntCantidad();
-            }
-            cantExist = cantExist - cantVenta;
-            producto = new Producto(descripcionVenta, cantExist);
+            producto = new Producto(cantVenta, descripcionVenta);
             manejadorProd.UpdateCantFactura(producto);
             String cedula = txtCed.getText();
             detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
@@ -440,7 +433,7 @@ public final class Factura extends javax.swing.JFrame {
             }
         });
 
-        txtCliente.setText(" ");
+        txtCliente.setText("CONSUMIDOR FINAL");
         txtCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Roboto Condensed Light", 1, 13)); // NOI18N
@@ -811,11 +804,11 @@ public final class Factura extends javax.swing.JFrame {
         } else {
             if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
                 venta();
-                //ventaProd();
+                ventaProd();
                 this.contador();
             } else {
                 venta();
-                //ventaProd();
+                ventaProd();
                 this.contador();
             }
         }
