@@ -393,7 +393,7 @@ public class DATMaterial {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT Nombre_Producto, Precio, precio_mayor, Codigo FROM producto WHERE Codigo = ? AND Cantidad > 0";
+            String sentencia = "SELECT Nombre_Producto, Precio, precio_mayor, Codigo, IVA FROM producto WHERE Codigo = ? AND Cantidad > 0";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
             rs = ps.executeQuery();
@@ -402,7 +402,8 @@ public class DATMaterial {
                 double precio = rs.getDouble(2);
                 double precioMayor = rs.getDouble(3);
                 String cod = rs.getString(4);
-                Producto prod = new Producto(nombre, cod, precio, precioMayor);
+                String iva = rs.getString(5);
+                Producto prod = new Producto(nombre, cod, precio, precioMayor, iva);
                 listadoProducto.add(prod);
             }
         } catch (SQLException ex) {
@@ -441,6 +442,26 @@ public class DATMaterial {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET Cantidad = cantidad - ? WHERE Nombre_Producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, prod.getIntCantidadMinima());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
+            ps.setString(2, prod.getStrNombreProd());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void AumentaCant(Producto prod) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET Cantidad = cantidad + ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, prod.getIntCantidadMinima());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
             ps.setString(2, prod.getStrNombreProd());

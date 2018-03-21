@@ -2,6 +2,7 @@ CREATE DATABASE empresa;
 
 USE empresa;
 describe producto;
+select * from producto;
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -23,6 +24,7 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL,
 estado boolean default true
 );
+INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111", " ", 0.00, " ", 1);
 #describe producto;
 
 CREATE TABLE producto(
@@ -78,6 +80,7 @@ valor_Cancelado DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10),
 cedula_usuario VARCHAR(10) NOT NULL
 );
+insert into venta(id_venta, total_venta,valor_cancelado,fecha,cedula_usuario) values(1.2,1.2,"dfsdf","2222");
 
 CREATE TABLE detalle_venta(
 cedula_cliente VARCHAR(13),

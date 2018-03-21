@@ -52,8 +52,8 @@ public final class Minimos extends javax.swing.JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Al por mayor");
         modelo.addColumn("Ubicación");
-        modelo.addColumn("Cant");
-        modelo.addColumn("Cant Min");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Cant Minima");
         modelo.addColumn("Proveedor");
     }
 
@@ -114,16 +114,16 @@ public final class Minimos extends javax.swing.JFrame {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
                 case 0:
-                    anchoColumna = (42 * ancho) / 100;
+                    anchoColumna = (60 * ancho) / 100;
                     break;
                 case 1:
-                    anchoColumna = (38 * ancho) / 100;
+                    anchoColumna = (30 * ancho) / 100;
                     break;
                 case 2:
-                    anchoColumna = (20 * ancho) / 100;
+                    anchoColumna = (15 * ancho) / 100;
                     break;
                 case 3:
-                    anchoColumna = (30 * ancho) / 100;
+                    anchoColumna = (25 * ancho) / 100;
                     break;
                 case 4:
                     anchoColumna = (25 * ancho) / 100;
@@ -135,7 +135,7 @@ public final class Minimos extends javax.swing.JFrame {
                     anchoColumna = (30 * ancho) / 100;
                     break;
                 case 7:
-                    anchoColumna = (30 * ancho) / 100;
+                    anchoColumna = (50 * ancho) / 100;
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
@@ -421,18 +421,17 @@ public final class Minimos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jButton1)
-                        .addGap(192, 192, 192)
-                        .addComponent(jButton2)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1019, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(213, 213, 213)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(214, 214, 214))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,7 +441,7 @@ public final class Minimos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addGap(29, 29, 29))

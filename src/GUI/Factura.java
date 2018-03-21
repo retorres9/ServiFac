@@ -84,24 +84,26 @@ public final class Factura extends javax.swing.JFrame {
         txtCod.requestFocus();
         usuario();
     }
-    public void generarFactura(){
-        
-        try{
+
+    public void generarFactura() {
+
+        try {
             JasperReport reporte = (JasperReport) JRLoader.loadObject("factura.jasper");
             Map parametro = new HashMap();
-            
+
             parametro.put("cedula", txtCed.getText());
             parametro.put("direccion", txtDireccionCl.getText());
             parametro.put("cliente", txtCliente.getText());
+            parametro.put("telefono", txtTelf.getText());
             JRDataSource dataSource = new JRTableModelDataSource(tblVentas.getModel());
-            JasperPrint j = JasperFillManager.fillReport(reporte, parametro,dataSource);
-            JasperViewer.viewReport(j,false);
-            
+            JasperPrint j = JasperFillManager.fillReport(reporte, parametro, dataSource);
+            JasperViewer.viewReport(j, false);
+
             //jv.setTitle("factura");
-        } catch (JRException ex){
+        } catch (JRException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
     public void cargarEncabezado() {
@@ -111,6 +113,8 @@ public final class Factura extends javax.swing.JFrame {
         modelo.addColumn("P/ Mayor");
         modelo.addColumn("P Total");
         modelo.addColumn("Codigo");
+        modelo.addColumn("iva");
+        modelo.addColumn("Precio iva");
     }
 
     public void contador() {
@@ -179,6 +183,12 @@ public final class Factura extends javax.swing.JFrame {
                 case 4:
                     anchoColumna = (25 * ancho) / 100;
                     break;
+                case 5:
+                    anchoColumna = (10 * ancho) / 100;
+                    break;
+                case 6:
+                    anchoColumna = (10 * ancho) / 100;
+                    break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
         }
@@ -187,7 +197,7 @@ public final class Factura extends javax.swing.JFrame {
     public void ventaProd() {
         vendedor = config.vendedor_venta();
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
-            
+
             int cantVenta = (int) tblVentas.getValueAt(i, 0);
             String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
             String strCodigo = (String) tblVentas.getValueAt(i, 5);
@@ -199,7 +209,8 @@ public final class Factura extends javax.swing.JFrame {
             detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
             manejadorDetalle.creaReporte(detalle);
         }
-        resetFact();
+        generarFactura();
+
     }
 
     public void resetFact() {
@@ -236,10 +247,11 @@ public final class Factura extends javax.swing.JFrame {
             }
             venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
             manejadorVenta.crearVenta(venta);
+            resetFact();
         } catch (NumberFormatException ex) {
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(NullPointerException ex){
-            
+        } catch (NullPointerException ex) {
+
         }
 
     }
@@ -272,8 +284,8 @@ public final class Factura extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblSubtotal = new javax.swing.JLabel();
+        lblIva = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtTotalLetras = new javax.swing.JTextArea();
@@ -299,6 +311,7 @@ public final class Factura extends javax.swing.JFrame {
         setResizable(false);
 
         tblVentas.setModel(modelo);
+        tblVentas.setFocusable(false);
         tblVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblVentasMouseClicked(evt);
@@ -510,9 +523,9 @@ public final class Factura extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Roboto Condensed Light", 1, 13)); // NOI18N
         jLabel5.setText("TOTAL:");
 
-        jLabel6.setText("0.00");
+        lblSubtotal.setText("0.00");
 
-        jLabel7.setText("0.00");
+        lblIva.setText("0.00");
 
         txtTotal.setEditable(false);
         txtTotal.setBackground(new java.awt.Color(0, 204, 0));
@@ -659,8 +672,8 @@ public final class Factura extends javax.swing.JFrame {
                                     .addComponent(jLabel1))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblIva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(29, 29, 29)
@@ -718,11 +731,11 @@ public final class Factura extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel6))
+                            .addComponent(lblSubtotal))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel7))
+                            .addComponent(lblIva))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -801,14 +814,16 @@ public final class Factura extends javax.swing.JFrame {
     private void txtImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImprimirActionPerformed
         if ((tblVentas.getRowCount() == 0) || (txtCliente.getText().isEmpty())) {
             //Do nothing
+        } else if (txtCliente.getText().equals("CONSUMIDOR FINAL")) {
+
         } else {
             if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
-                venta();
                 ventaProd();
+                venta();
                 this.contador();
             } else {
-                venta();
                 ventaProd();
+                venta();
                 this.contador();
             }
         }
@@ -970,18 +985,30 @@ public final class Factura extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         generarFactura();
-        System.out.println("hola");
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     public void cargarProducto() {
-
+        DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+        simbolos.setDecimalSeparator('.');
+        DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
         double totProd;
+        double aux;
+        double aux2;
+        String strAux = "";
+        double ivaInit = 0.00;
         int cantInicial = 1;
+        double dblIva = 0;
+        String precioMenos = "";
+        String Stringaux = "";
         String dato = txtCod.getText();
         ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
         int cantLista = listadoProducto.size();
+        System.out.println(cantLista);
         if (cantLista == 0) {
-
+            JOptionPane.showMessageDialog(null, "No se ha agregado el producto a la venta debido a\n"
+                    + "que no existe el producto o no existen mas productos \n"
+                    + "en el almacén");
         } else {
             crearFilas();
             for (int i = 0; i < cantLista; i++) {
@@ -990,23 +1017,35 @@ public final class Factura extends javax.swing.JFrame {
                 double precio = producto.getFltPrecio();
                 double precioMayor = producto.getFltPrecioMayor();
                 String codigo = producto.getStrCod();
+                String iva = producto.getIva();
+                if (iva.equals("12%")) {
+                    ivaInit = precio / 1.12;
+                    aux = ivaInit;
+                    ivaInit = precio - ivaInit;
+                    strAux = dcmlCambio.format(ivaInit);
+                    dblIva = Double.parseDouble(strAux);
+                    
+                    aux2 = precio - dblIva;
+                    precioMenos = dcmlCambio.format(aux2);
+                }
 
                 modelo.setValueAt(cantInicial, fila, 0);
                 modelo.setValueAt(prod, fila, 1);
                 modelo.setValueAt(precio, fila, 2);
                 modelo.setValueAt(precioMayor, fila, 3);
+                modelo.setValueAt(dblIva, fila, 6);
                 totProd = cantInicial * precio;
-                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-                simbolos.setDecimalSeparator('.');
-                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+
+                double dblPrecioMenos = Double.parseDouble(precioMenos);
+                
                 String strPrec = dcmlCambio.format(totProd);
                 totProd = Double.parseDouble(strPrec);
                 modelo.setValueAt(totProd, fila, 4);
                 modelo.setValueAt(codigo, fila, 5);
+                modelo.setValueAt(dblPrecioMenos, fila, 7);
             }
             fila++;
         }
-
     }
 
     public void crearFilas() {
@@ -1018,16 +1057,28 @@ public final class Factura extends javax.swing.JFrame {
     public void total() { //Para sumar el precio total y asignarlo a el textfield de total
         try {
             double total1 = 0;
+            double totalIva = 0.00;
+            double totalProd = 0.00;
             int totalRow = tblVentas.getRowCount();
             totalRow -= 1;
             for (int j = 0; j <= (totalRow); j++) {
-                String strTotal = (String) tblVentas.getValueAt(j, 4).toString();
-                double total = Double.parseDouble(strTotal);
-                total1 += total;
+                String strIva = tblVentas.getValueAt(j, 6).toString();
+                String strProdIva = tblVentas.getValueAt(j, 7).toString();
+                double dblIva = Double.parseDouble(strIva);
+                double dblProdIva = Double.parseDouble(strProdIva);
+                totalIva += dblIva;
+                totalProd += dblProdIva;
                 DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
                 simbolos.setDecimalSeparator('.');
                 DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-                String strTotalLbl = dcmlCambio.format(total1);
+                String strTotalIva = dcmlCambio.format(totalIva);
+                String strTotalProd = dcmlCambio.format(totalProd);
+                lblIva.setText(strTotalIva);
+                lblSubtotal.setText(strTotalProd);
+                double auxSub = Double.parseDouble(strTotalIva);
+                double auxProd = Double.parseDouble(strTotalProd);
+                double totalVenta = auxSub + auxProd;
+                String strTotalLbl = dcmlCambio.format(totalVenta);
                 txtTotal.setText(strTotalLbl);
             }
             NumerosLetras numero = new NumerosLetras();
@@ -1040,10 +1091,8 @@ public final class Factura extends javax.swing.JFrame {
                 if (number[0].equals("1")) {
                     txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES ." + decimal + "/100");
                 } else {
-
                     txtTotalLetras.setText(numero.convertir(Integer.parseInt(entero)) + "DOLARES ." + decimal + "/100");
                 }
-
             }
         } catch (NullPointerException ex) {
 
@@ -1055,17 +1104,28 @@ public final class Factura extends javax.swing.JFrame {
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
             String cod = (String) tblVentas.getValueAt(i, 5);
             double precio = (Double) tblVentas.getValueAt(i, 2);
+            double dblIva = (Double) tblVentas.getValueAt(i, 6);
+            double dblPrecioIva = (Double) tblVentas.getValueAt(i, 7);
+            
             int cant = (int) tblVentas.getValueAt(i, 0);
             if (cod.equals(txtCod.getText())) {
                 int cant2 = cant + 1;
                 double precio2 = cant2 * precio;
+                double nuevo_iva = cant2 * dblIva;
+                double nuevoPrecioIva = cant2 * dblPrecioIva;
                 DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
                 simbolos.setDecimalSeparator('.');
                 DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
                 String strTotalLbl = dcmlCambio.format(precio2);
                 precio2 = Double.parseDouble(strTotalLbl);
+                String strIva = dcmlCambio.format(nuevo_iva);
+                double strIva2 = Double.parseDouble(strIva);
+                String putoIva = dcmlCambio.format(nuevoPrecioIva);
+                double putoIva2 = Double.parseDouble(putoIva);
                 modelo.setValueAt(cant2, i, 0);
                 modelo.setValueAt(precio2, i, 4);
+                modelo.setValueAt(strIva2, i, 6);
+                modelo.setValueAt(putoIva2, i, 7);
                 flag = false;
                 verif = false;
                 total();
@@ -1119,8 +1179,6 @@ public final class Factura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu2;
@@ -1142,6 +1200,8 @@ public final class Factura extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
+    private javax.swing.JLabel lblIva;
+    private javax.swing.JLabel lblSubtotal;
     private javax.swing.JTable tblVentas;
     public static final javax.swing.JTextField txtCed = new javax.swing.JTextField();
     public static final javax.swing.JLabel txtCliente = new javax.swing.JLabel();

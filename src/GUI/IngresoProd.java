@@ -13,6 +13,7 @@ import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATProveedor;
 import Dat.DATUbicacion;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
@@ -35,7 +36,6 @@ import net.sourceforge.jbarcodebean.model.Code128;
 public final class IngresoProd extends javax.swing.JFrame {
 
     int cant;
-    File imgArticulo;
     File imgCodigoArticulo;
     DATCategoria objCat;
     DATBodega objBodega;
@@ -152,6 +152,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 Image img = ImageIO.read(getClass().getResource(("/Recursos/success.png")));
                 txtValid.setIcon(new ImageIcon(img));
+                bandera = true;
             } catch (IOException ex) {
                 Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -159,6 +160,10 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 Image img = ImageIO.read(getClass().getResource(("/Recursos/error.png")));
                 txtValid.setIcon(new ImageIcon(img));
+                txtValid.setToolTipText("El codigo digitado ya ha sido ingresado en la base de datos");
+                Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+                txtValid.setCursor(cursor);
+                bandera = false;
             } catch (IOException ex) {
                 Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -631,6 +636,11 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel5.setText("Ganancia por mayor");
 
         txtValid.setText(" ");
+        txtValid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtValidMouseClicked(evt);
+            }
+        });
 
         jMenu2.setText("Productos");
 
@@ -932,10 +942,9 @@ public final class IngresoProd extends javax.swing.JFrame {
                     guardar();
                 }
             }
-            bandera = true;
-            banderaCodigo = true;
         }
         txtNombreProd.requestFocusInWindow();
+        txtValid.setIcon(null);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
@@ -1222,6 +1231,18 @@ public final class IngresoProd extends javax.swing.JFrame {
     private void txtCodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyReleased
         validacioCod();
     }//GEN-LAST:event_txtCodKeyReleased
+
+    private void txtValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtValidMouseClicked
+        if(bandera == false){
+            InventarioDialog invDialog = new InventarioDialog(this, true);
+            invDialog.txtBuscar.setText(txtCod.getText());
+            invDialog.busqueda();
+            invDialog.setVisible(true);
+            
+            
+            //InventarioDialog.txtBuscar.setText(txtCod.getText());
+        }
+    }//GEN-LAST:event_txtValidMouseClicked
 
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra

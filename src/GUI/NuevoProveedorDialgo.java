@@ -41,8 +41,8 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
 
     public void guardarProveedor() {
         try {
-            String nombreCta = txtNombre.getText();
-            String empresa = txtEmpresa.getText();
+            String nombreCta = txtNombre.getText().toUpperCase();
+            String empresa = txtEmpresa.getText().toUpperCase();
             String ruc = txtRuc.getText();
             String tipoCuenta = cmbTipo.getSelectedItem().toString();
             String numCuenta = (txtNumero.getText());

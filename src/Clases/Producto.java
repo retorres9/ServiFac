@@ -36,11 +36,12 @@ public class Producto {
         this.strEmpresa = strEmpresa;
     }
 
-    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor) {
+    public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String iva) {
         this.strNombreProd = strNombreProd;
         this.strCod = strCod;
         this.fltPrecio = fltPrecio;
         this.fltPrecioMayor = fltPrecioMayor;
+        this.iva = iva;
     }
     
     public String getStrBodega() {
