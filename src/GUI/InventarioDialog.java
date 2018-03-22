@@ -43,6 +43,8 @@ public class InventarioDialog extends javax.swing.JDialog {
     public InventarioDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        JOptionPane.showMessageDialog(null, "En la siguiente ventana solo podrá actualizar\n"
+                + "el producto que ya se encuentra agregado");
         this.txtBuscar.setEditable(false);
         material = new DATMaterial();
         manejadorExistencias = new DATExistenciasBodega();
@@ -52,23 +54,7 @@ public class InventarioDialog extends javax.swing.JDialog {
         txtEmpresa.setText(config.configNombreEmpresa());
         this.setLocationRelativeTo(null);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        //busqueda();
-    }
-    
-    public void totalInventario() {
-        int cant1 = modelo.getRowCount();
-        double suma1 = 0.00;
         
-        for (int i = 0; i < cant1; i++) {
-            int cant = (int) modelo.getValueAt(i, 8);
-            double prec = (Double) modelo.getValueAt(i, 2);
-            suma1 = suma1 + (cant * prec);
-        }
-        DecimalFormatSymbols separador = new DecimalFormatSymbols();
-        separador.setDecimalSeparator('.');
-        DecimalFormat df = new DecimalFormat("0.00", separador);
-        String strGlobal = df.format(suma1);
-        lblTotal.setText("Total del inventario: $" + strGlobal);
     }
 
     public void CargaCombo() {
@@ -216,7 +202,6 @@ public class InventarioDialog extends javax.swing.JDialog {
         txtEmpresa = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        lblTotal = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -254,8 +239,6 @@ public class InventarioDialog extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        lblTotal.setText("Total del inventario:");
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lupa.png"))); // NOI18N
 
@@ -497,8 +480,8 @@ public class InventarioDialog extends javax.swing.JDialog {
                     .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Productos en almacén", jPanel2);
@@ -518,11 +501,9 @@ public class InventarioDialog extends javax.swing.JDialog {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
-                .addGap(206, 206, 206)
+                .addGap(210, 210, 210)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(273, 273, 273))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,12 +516,10 @@ public class InventarioDialog extends javax.swing.JDialog {
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(lblTotal))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -593,6 +572,8 @@ public class InventarioDialog extends javax.swing.JDialog {
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
             producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
             material.UpdateProducto(producto);
+            txtNombre.setText(nombre);
+            tblProd.setValueAt(nombre, fila, 0);
             //updateTabla();
         } catch (NullPointerException | NumberFormatException e) {
 
@@ -600,16 +581,16 @@ public class InventarioDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
     private void btnActualizaCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCantidadMouseClicked
-        int cant2 = Integer.parseInt(txtCantidad.getText());
+        int cant = Integer.parseInt(txtCantidad.getText());
         try {
             String nume = JOptionPane.showInputDialog(
                     "Ingrese la cantidad que desea agregar a:\n" + txtNombre.getText());
             int cant1 = Integer.parseInt(nume);
-            int total = cant1 + cant2;
-            producto = new Producto(total, txtNombre.getText());
+            int cantAux = cant + cant1;
+            producto = new Producto(cant1, txtNombre.getText());
             material.AumentaCant(producto);
-            String nuevaCantTxt = String.valueOf(total);
-            txtCantidad.setText(nuevaCantTxt);
+            txtCantidad.setText(String.valueOf(cantAux));
+            busqueda();
             //updateTabla();
 
         } catch (NullPointerException | NumberFormatException e) {
@@ -691,9 +672,10 @@ public class InventarioDialog extends javax.swing.JDialog {
             String nume = JOptionPane.showInputDialog(
                     "Ingrese la cantidad que desea restar a:\n" + txtNombre.getText());
             int cant1 = Integer.parseInt(nume);
+            int nuevaCant = cant2 - cant1;
             producto = new Producto(cant1, txtNombre.getText());
             material.UpdateCantFactura(producto);
-            String nuevaCantTxt = String.valueOf(cant1);
+            String nuevaCantTxt = String.valueOf(nuevaCant);
             txtCantidad.setText(nuevaCantTxt);
             //updateTabla();
 
@@ -767,7 +749,6 @@ public class InventarioDialog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblMenos;
-    private javax.swing.JLabel lblTotal;
     public static final javax.swing.JTable tblProd = new javax.swing.JTable();
     public static final javax.swing.JTextField txtBuscar = new javax.swing.JTextField();
     private javax.swing.JLabel txtCantidad;

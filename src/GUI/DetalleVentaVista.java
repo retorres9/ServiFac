@@ -240,7 +240,12 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         tblPagoPr = new javax.swing.JTable();
         txtTotalPagoPr = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto Cn", 0, 36)); // NOI18N
         jLabel1.setText("Reporte de ventas");
@@ -354,7 +359,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(txtTotalVentas)
-            .addContainerGap(43, Short.MAX_VALUE))
+            .addContainerGap(8, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Ventas", jPanel1);
@@ -384,7 +389,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap(60, Short.MAX_VALUE)
+            .addContainerGap(25, Short.MAX_VALUE)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(txtTotalAbonos)
@@ -422,7 +427,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(txtTotalPagoPr)
-            .addContainerGap(46, Short.MAX_VALUE))
+            .addContainerGap(11, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Pago Proveedores", jPanel3);
@@ -443,22 +448,22 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                     .addGap(18, 18, 18)
                     .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(162, 162, 162)
-                            .addComponent(jButton1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(52, 52, 52)
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel3))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(279, 279, 279)
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(52, 52, 52)
+                    .addComponent(jLabel1)
+                    .addGap(18, 18, 18)
+                    .addComponent(jLabel3)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
+        .addGroup(layout.createSequentialGroup()
+            .addGap(172, 172, 172)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(117, 117, 117)
+                    .addComponent(jLabel2)
+                    .addGap(18, 18, 18)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,14 +480,14 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jTabbedPane1)
-            .addGap(18, 18, 18)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel2)
                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(22, 22, 22)
             .addComponent(jButton1)
-            .addGap(21, 21, 21))
+            .addContainerGap(23, Short.MAX_VALUE))
     );
 
     pack();
@@ -533,6 +538,11 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private void tblPagoPrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPagoPrMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPagoPrMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Principal objP = new Principal();
+        objP.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

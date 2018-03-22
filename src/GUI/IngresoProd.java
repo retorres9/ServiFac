@@ -160,7 +160,8 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 Image img = ImageIO.read(getClass().getResource(("/Recursos/error.png")));
                 txtValid.setIcon(new ImageIcon(img));
-                txtValid.setToolTipText("El codigo digitado ya ha sido ingresado en la base de datos");
+                txtValid.setToolTipText("El codigo digitado ya ha sido ingresado en la base de datos"
+                        + "haga clic en la X para actualizar el producto");
                 Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
                 txtValid.setCursor(cursor);
                 bandera = false;

@@ -1,8 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-describe producto;
-select * from producto;
+
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -42,13 +41,11 @@ id_ubicacion INT(3),
 cantidad INT(7),
 cantidad_Minima INT (3),
 ruc VARCHAR(15),
-imagen_codigo MEDIUMBLOB,
-imagen_producto MEDIUMBLOB,
+imagen_codigo MEDIUMBLOB default null,
+imagen_producto MEDIUMBLOB default null,
 id_bodega INT(3)
 );
 #alter table producto change imagen_codigo imagen_codigo MEDIUMBLOB default null;
-select * from producto;
-
 
 CREATE TABLE ubicacion(
 id_ubicacion INT (3) AUTO_INCREMENT PRIMARY KEY,
@@ -80,7 +77,6 @@ valor_Cancelado DECIMAL(7,2) NOT NULL,
 fecha VARCHAR(10),
 cedula_usuario VARCHAR(10) NOT NULL
 );
-insert into venta(id_venta, total_venta,valor_cancelado,fecha,cedula_usuario) values(1.2,1.2,"dfsdf","2222");
 
 CREATE TABLE detalle_venta(
 cedula_cliente VARCHAR(13),
