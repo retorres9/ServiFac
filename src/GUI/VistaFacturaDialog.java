@@ -12,37 +12,31 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-public final class VistaFactura extends javax.swing.JFrame {
+/**
+ *
+ * @author rober
+ */
+public class VistaFacturaDialog extends javax.swing.JDialog {
 
     DetalleVenta detalle = new DetalleVenta();
     DATReporte manejadorDetalle;
     DefaultTableModel modelo = new DefaultTableModel();
-    String strId;
 
-    public VistaFactura() {
+    public VistaFacturaDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        strId = getId();
         encabezados();
         manejadorDetalle = new DATReporte();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
-        //cargarTabla();
     }
-
+    
     public void encabezados() {
         modelo.addColumn("Cant.");
         modelo.addColumn("Descripción");
         modelo.addColumn("Precio Venta");
         modelo.addColumn("Total");
-    }
-
-    public void setId(String strId) {
-        this.strId = strId;
-    }
-
-    public String getId() {
-        return strId;
     }
     
     public void setAnchoColumnas() {
@@ -72,7 +66,35 @@ public final class VistaFactura extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        int id = Integer.parseInt(strId);
+        txtVenta.setText(DetalleVentaVista.txtId.getText());
+        int id = Integer.parseInt(txtVenta.getText());
+        System.out.println(id);
+        ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
+        int cant = listadoFactura.size();
+        modelo.setNumRows(cant);
+        for (int i = 0; i < cant; i++) {
+            detalle = listadoFactura.get(i);
+            int cantidad = detalle.getIntCant();
+            String desc = detalle.getNombreProd();
+            double prec = detalle.getDblPrecioVenta();
+            double total = cant * prec;
+            DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+            simbolo.setDecimalSeparator('.');
+            DecimalFormat decimal = new DecimalFormat("0.00", simbolo);
+            String strTotal = decimal.format(total);
+            String fecha = detalle.getFecha();
+            modelo.setValueAt(cantidad, i, 0);
+            modelo.setValueAt(desc, i, 1);
+            modelo.setValueAt(prec, i, 2);
+            modelo.setValueAt(strTotal, i, 3);
+            txtFecha.setText(fecha);
+        }
+    }
+    
+    public void cargarTabla2() {
+        txtVenta.setText(VistaDeudaCliente.txtId.getText());
+        int id = Integer.parseInt(txtVenta.getText());
+        System.out.println(id);
         ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
         int cant = listadoFactura.size();
         modelo.setNumRows(cant);
@@ -99,28 +121,18 @@ public final class VistaFactura extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jLabel7 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(870, 600));
-
-        tblFactura.setModel(modelo);
-        jScrollPane1.setViewportView(tblFactura);
-
-        jLabel1.setText("Cliente:");
-
-        jLabel3.setText("N° Venta:");
-
-        txtCliente.setText(" ");
 
         txtVenta.setText(" ");
 
@@ -138,9 +150,18 @@ public final class VistaFactura extends javax.swing.JFrame {
 
         jLabel6.setText("Total:");
 
+        tblFactura.setModel(modelo);
+        jScrollPane1.setViewportView(tblFactura);
+
         txtTotal.setText(" ");
 
         jLabel7.setText("Fecha:");
+
+        jLabel1.setText("Cliente:");
+
+        jLabel3.setText("N° Venta:");
+
+        txtCliente.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,14 +182,14 @@ public final class VistaFactura extends javax.swing.JFrame {
                         .addGap(107, 107, 107)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(118, 118, 118)
+                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel7))
@@ -176,7 +197,7 @@ public final class VistaFactura extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(224, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 72, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,17 +226,21 @@ public final class VistaFactura extends javax.swing.JFrame {
                                 .addComponent(txtCliente)
                                 .addComponent(jLabel3)
                                 .addComponent(txtVenta)))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtTotal)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtTotal)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 155, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(27, 27, 27))
         );
@@ -224,9 +249,14 @@ public final class VistaFactura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DetalleVentaVista dv = new DetalleVentaVista();
+        dv.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -235,26 +265,33 @@ public final class VistaFactura extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaFacturaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaFacturaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaFacturaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaFacturaDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaFactura().setVisible(true);
+                VistaFacturaDialog dialog = new VistaFacturaDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

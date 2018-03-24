@@ -47,19 +47,18 @@ public class DATPagoProveedor {
         ArrayList<PagoProveedorClase> listadoPagos = new ArrayList<PagoProveedorClase>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.Empresa, p.Deuda, ac.Monto_Cancelado, ac.Usuario, ac.Fecha "
-                    + "FROM proveedores p, pago_proveedor pp "
-                    + "WHERE p.Empresa = pp.Empresa AND p.Empresa = ? AND Tipo ='Credito'";
+            String sentencia = "SELECT pp.monto_cancelado, u.usuario, pp.fecha, pp.descripcion "
+                    + "FROM proveedores p, pago_proveedor pp , usuario u "
+                    + "WHERE p.RUC = pp.RUC AND u.cedula_usuario = pp.cedula_usuario AND pp.RUC = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, empresa);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String strEmpresa = rs.getString(1);
-                double deuda = rs.getDouble(2);
-                double montoCancel = rs.getDouble(3);
-                String usuario = rs.getString(4);
-                String fecha = rs.getString(5);
-                PagoProveedorClase objPago = new PagoProveedorClase(strEmpresa, montoCancel, deuda, usuario, fecha);
+                double montoCancel = rs.getDouble(1);
+                String usuario = rs.getString(2);
+                String fecha = rs.getString(3);
+                String desc = rs.getString(4);
+                PagoProveedorClase objPago = new PagoProveedorClase(montoCancel, usuario, fecha, desc);
                 listadoPagos.add(objPago);
             }
         } catch (SQLException ex) {

@@ -18,6 +18,7 @@ public class DetalleVenta {
     public DetalleVenta(String strCed, int intCant, String strCod, double dblPrecioVenta, String strUsuario, int id_Venta) {
         this.strCed = strCed;
         this.intCant = intCant;
+        this.strCod = strCod;
         this.dblPrecioVenta = dblPrecioVenta;
         this.strUsuario = strUsuario;
         this.id_Venta = id_Venta;

@@ -15,6 +15,13 @@ public class PagoProveedorClase {
     private String fecha;
     private String empresa;
 
+    public PagoProveedorClase(double dblMontoCancelado, String usuario, String fecha, String strDescripcion) {
+        this.dblMontoCancelado = dblMontoCancelado;
+        this.strDescripcion = strDescripcion;
+        this.usuario = usuario;
+        this.fecha = fecha;
+    }
+
     public PagoProveedorClase(String strEmpresa, String strUsuario, double dblMontoCancelado, String strFecha, String strTipo, String strDescripcion) {
         this.strRuc = strEmpresa;
         this.strCedulaUsuario = strUsuario;

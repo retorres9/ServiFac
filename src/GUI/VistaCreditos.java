@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import GUI.PagoProveedor;
 
 public final class VistaCreditos extends javax.swing.JFrame {
 
@@ -13,6 +14,7 @@ public final class VistaCreditos extends javax.swing.JFrame {
     DefaultTableCellRenderer celda = new DefaultTableCellRenderer();
     DATPagoProveedor manejadorPago;
     PagoProveedorClase objPago = new PagoProveedorClase();
+    String emp;
 
     public VistaCreditos() {
         initComponents();
@@ -20,17 +22,18 @@ public final class VistaCreditos extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         manejadorPago = new DATPagoProveedor();
+        emp = PagoProveedor.txtRuc.getText();
         encabezados();
-        //cargarTabla();
+        cargarTabla();
     }
 
     public void encabezados() {
         //modelo.addColumn("Empresa");
-        modelo.addColumn("Deuda");
+        //modelo.addColumn("Deuda");
         modelo.addColumn("Pagos");
-        modelo.addColumn("Fecha");
-        modelo.addColumn("Estado");
         modelo.addColumn("Usuario");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Descripcion");
     }
 
     @SuppressWarnings("unchecked")
@@ -102,23 +105,22 @@ public final class VistaCreditos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void cargarTabla() {
-        String empresa;
-        empresa = txtEmpresa.getText();
-        ArrayList<PagoProveedorClase> lista = manejadorPago.verPagos(empresa);
+        
+        System.out.println(emp);
+        ArrayList<PagoProveedorClase> lista = manejadorPago.verPagos(emp);
         int cant = lista.size();
         modelo.setNumRows(cant);
         for (int i = 0; i < cant; i++) {
             objPago = lista.get(i);
-            String strEmpresa = objPago.getStrRuc();
-            double deuda = objPago.getDeuda();
             double montocancelado = objPago.getDblMontoCancelado();
-            String strFecha = objPago.getFecha();
             String usuario = objPago.getUsuario();
-            modelo.setValueAt(strEmpresa, i, 0);
-            modelo.setValueAt(deuda, i, 1);
-            modelo.setValueAt(montocancelado, i, 2);
-            modelo.setValueAt(strFecha, i, 3);
-            modelo.setValueAt(usuario, i, 4);
+            String strFecha = objPago.getFecha();
+            String desc = objPago.getStrDescripcion();
+            System.out.println(desc);
+            modelo.setValueAt(montocancelado, i, 0);
+            modelo.setValueAt(usuario, i, 1);
+            modelo.setValueAt(strFecha, i, 2);
+            modelo.setValueAt(desc, i, 3);
         }
 
     }

@@ -19,6 +19,7 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
 
     public VistaDeudaCliente() {
         initComponents();
+        txtId.setVisible(false);
         manejadorVenta = new DATVenta();
         cargaEncabezado();
         cargarTabla();
@@ -97,12 +98,17 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        txtCed = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(934, 323));
 
-        jLabel1.setFont(new java.awt.Font("Roboto Cn", 0, 24)); // NOI18N
-        jLabel1.setText("Compras Realizadas por:");
+        jLabel1.setFont(new java.awt.Font("Roboto Cn", 0, 36)); // NOI18N
+        jLabel1.setText("Compras Realizadas");
 
         tblDeudaCliente.setModel(modelo);
         tblDeudaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,7 +118,7 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDeudaCliente);
 
-        txtNombreCliente.setFont(new java.awt.Font("Roboto Cn", 0, 24)); // NOI18N
+        txtNombreCliente.setFont(new java.awt.Font("Roboto Cn", 0, 18)); // NOI18N
 
         jButton1.setText("Ver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -129,46 +135,82 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Roboto Condensed", 0, 18)); // NOI18N
-        jLabel2.setText("Cedula:");
+        jLabel2.setText("Cédula o  RUC:");
+
+        txtCed.setFont(new java.awt.Font("Roboto Condensed Light", 1, 18)); // NOI18N
+        txtCed.setText(" ");
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lista.png"))); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Roboto Condensed Light", 1, 18)); // NOI18N
+        jLabel4.setText("Cliente:");
+
+        txtId.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jButton2)
-                        .addGap(501, 501, 501)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                                .addGap(180, 180, 180)
+                                .addComponent(jButton2)
+                                .addGap(501, 501, 501)
+                                .addComponent(jButton1)
+                                .addGap(65, 65, 65)
+                                .addComponent(txtId))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel2))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(0, 60, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(2, 2, 2))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel4))
+                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCed))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(txtId)))
                 .addGap(40, 40, 40))
         );
 
@@ -177,22 +219,24 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
 
     private void tblDeudaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDeudaClienteMouseClicked
         int fila = tblDeudaCliente.getSelectedRow();
+        int id;
         if (tblDeudaCliente.getSelectedRows().length > 0) {
             idVenta = tblDeudaCliente.getValueAt(fila, 0).toString();
             nombreCli = txtNombreCliente.getText();
             cedula = tblDeudaCliente.getValueAt(fila, 1).toString();
             total = tblDeudaCliente.getValueAt(fila, 2).toString();
+            txtId.setText(tblDeudaCliente.getValueAt(fila, 0).toString());
         }
     }//GEN-LAST:event_tblDeudaClienteMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VistaFactura vf = new VistaFactura();
-        VistaFactura.txtCliente.setText(nombreCli);
-        VistaFactura.txtTotal.setText(total);
-        VistaFactura.txtVenta.setText(idVenta);
-        vf.setId(idVenta);
-        vf.cargarTabla();
+        VistaFacturaDialog vf = new VistaFacturaDialog(this,true);
+        VistaFacturaDialog.txtCliente.setText(nombreCli);
+        VistaFacturaDialog.txtTotal.setText(total);
+        VistaFacturaDialog.txtVenta.setText(idVenta);
+        vf.cargarTabla2();
         vf.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -249,8 +293,13 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     public static final javax.swing.JTable tblDeudaCliente = new javax.swing.JTable();
+    public static javax.swing.JLabel txtCed;
+    public static javax.swing.JLabel txtId;
     public static final javax.swing.JLabel txtNombreCliente = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

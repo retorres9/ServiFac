@@ -443,11 +443,6 @@ public class InventarioDialog extends javax.swing.JDialog {
                 tblProdMouseClicked(evt);
             }
         });
-        tblProd.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tblProdKeyTyped(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblProd);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -648,23 +643,6 @@ public class InventarioDialog extends javax.swing.JDialog {
             lblMenos.setVisible(true);
         }
     }//GEN-LAST:event_tblProdMouseClicked
-
-    private void tblProdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyTyped
-        //        char c = evt.getKeyChar();
-        //        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
-        //            fila = tblProd.getSelectedRow();
-        //            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
-        //            txtNombre.setText(prod);
-        //            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
-        //            txtPrecio.setText(precio);
-        //            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
-        //            txtPrecioM.setText(precioMayor);
-        //            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
-        //            txtUbicacion.setText(ubicacion);
-        //            String cant = (String) tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
-        //            txtCantidad.setText(cant);
-        //        }
-    }//GEN-LAST:event_tblProdKeyTyped
 
     private void lblMenosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenosMouseClicked
         int cant2 = Integer.parseInt(txtCantidad.getText());

@@ -381,7 +381,7 @@ public final class IngresoProd extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(531, 405));
-        setPreferredSize(new java.awt.Dimension(1175, 730));
+        setPreferredSize(new java.awt.Dimension(1175, 715));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

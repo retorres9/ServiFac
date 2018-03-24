@@ -9,6 +9,8 @@ import Dat.DATProveedor;
 import Dat.DATUsuario;
 import com.sun.glass.events.KeyEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,8 +42,6 @@ public final class PagoProveedor extends javax.swing.JFrame {
         manejadorProveedor = new DATProveedor();
         manejadorUsuario = new DATUsuario();
         manejadorPago = new DATPagoProveedor();
-        usuario = config.usuario();
-        cedula();
         cargarColumnas();
         cargarTabla();
         combo();
@@ -50,15 +50,25 @@ public final class PagoProveedor extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        System.out.println(usuario);
+        txtUsuario.setText(config.usuario());
+        cedula();
     }
 
+//    public void getusuario() {
+//        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
+//        int cantUser = cedula.size();
+//        for (int i = 0; i < cantUser; i++) {
+//            usuario = cedula.get(i);
+//            cedUsuario = usuario.getCedulaUsuario();
+//        }
+//    }
     public void cedula() {
-        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(usuario);
+        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
         int cant = cedula.size();
         for (int i = 0; i < cant; i++) {
             user = cedula.get(i);
             usuario = user.getCedulaUsuario();
+            System.out.println(usuario);
         }
     }
 
@@ -225,6 +235,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         opc1 = new javax.swing.JRadioButton();
         txtTexto = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -241,7 +252,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         jmConfig = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1024, 754));
+        setMinimumSize(new java.awt.Dimension(1024, 730));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -436,8 +447,10 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ocp2)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
+
+        txtUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carnetVendedor.png"))); // NOI18N
 
         jMenu2.setText("Productos");
 
@@ -544,18 +557,12 @@ public final class PagoProveedor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(212, 212, 212)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -563,41 +570,50 @@ public final class PagoProveedor extends javax.swing.JFrame {
                                 .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(48, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(198, 198, 198)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(188, 188, 188))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtUsuario)
+                                .addGap(91, 91, 91)))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(89, 89, 89)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
                     .addComponent(jLabel2)
                     .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(35, 35, 35))
+                .addComponent(jButton1)
+                .addGap(76, 76, 76))
         );
 
         pack();
@@ -638,6 +654,10 @@ public final class PagoProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscKeyReleased
 
     public void Credito() {
+        DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+        simbolo.setDecimalSeparator('.');
+        DecimalFormat formato = new DecimalFormat("0.00", simbolo);
+
         double deuda2;
         double monto;
 
@@ -657,10 +677,11 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 }
                 if (monto <= deuda) {
                     deuda2 = deuda - monto;
-                    txtDeuda.setText(Double.toString(deuda2));
+                    String strDeuda = formato.format(deuda2);
+                    txtDeuda.setText(strDeuda);
                     String ruc = txtRuc.getText();
                     objProveedor = new Proveedor(ruc, deuda2);
-
+                    desc = txtDesc.getText();
                     manejadorProveedor.updateDeuda(objProveedor);
                     objPagoProv = new PagoProveedorClase(ruc, usuario, monto, getFecha(), "Pago", desc);
                     manejadorPago.pagoProveedor(objPagoProv);
@@ -669,8 +690,10 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 }
             } else if (ocp2.isSelected()) {
                 deuda2 = deuda + Double.parseDouble(txtMonto.getText());
-                txtDeuda.setText(Double.toString(deuda2));
+                String strDeuda = formato.format(deuda2);
+                txtDeuda.setText(strDeuda);
                 String ruc = txtRuc.getText();
+                desc = txtDesc.getText();
                 objProveedor = new Proveedor(ruc, deuda);
                 manejadorProveedor.updateDeuda(objProveedor);
                 objPagoProv = new PagoProveedorClase(ruc, usuario, monto, getFecha(), "Crédio", desc);
@@ -798,7 +821,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         if (tblProv.getSelectedRows().length > 0) {
             String empresa = txtEmpresa.getText();
             VistaCreditos.txtEmpresa.setText(empresa);
-            objVc.cargarTabla();
+            //objVc.cargarTabla();
             objVc.setVisible(true);
             this.setVisible(false);
         }
@@ -894,8 +917,9 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel txtEmpresa;
     private javax.swing.JTextField txtMonto;
     private javax.swing.JLabel txtNumCuenta;
-    private javax.swing.JLabel txtRuc;
+    public static javax.swing.JLabel txtRuc;
     private javax.swing.JLabel txtTelf;
     private javax.swing.JLabel txtTexto;
+    private javax.swing.JLabel txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

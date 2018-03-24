@@ -6,10 +6,9 @@ import Clases.Venta;
 import Dat.DATAbonoCliente;
 import Dat.DATPagoProveedor;
 import Dat.DATVenta;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -20,7 +19,8 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     
     Venta objVenta = new Venta();
     DATVenta manejadorVenta;
-    String id_Venta, cedula, nombre, total;
+    String cedula, nombre, total;
+    public static String id_Venta;
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modelo2 = new DefaultTableModel();
     DefaultTableModel modelo3 = new DefaultTableModel();
@@ -34,6 +34,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         manejadorAbono = new DATAbonoCliente();
         manejadorPago = new DATPagoProveedor();
         initComponents();
+        txtId.setVisible(false);
         encabezados();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -124,7 +125,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             aux3 = 0.00;
             txtTotalPagoPr.setText("Total: $" + String.valueOf(aux3));
         }
-        double totalDia = aux1 + aux2 + aux3;
+        double totalDia = aux1 + aux2 - aux3;
         txtTotal.setText("$ " + String.valueOf(totalDia));
     }
 
@@ -137,10 +138,10 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             objVenta = listadoVentas.get(i);
             int idVenta = objVenta.getIntIdVenta();
             String cedulaCliente = objVenta.getCedulaUser();
-            String nombreCliente = objVenta.getStrCliente();
+            String nombreCliente = objVenta.getStrFecha();
             double totalVenta = objVenta.getDblTotalVenta();
             double valCancelado = objVenta.getDblValCancelado();
-            String fechaVenta = objVenta.getStrFecha();
+            //String fechaVenta = objVenta.getStrFecha();
 
             modelo.setValueAt(idVenta, i, 0);
             modelo.setValueAt(cedulaCliente, i, 1);
@@ -153,13 +154,13 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
 
     public void encabezados() {
         modelo.addColumn("Id Venta");
-        modelo.addColumn("Cédula");
-        modelo.addColumn("Nombre");
+        modelo.addColumn("Cédula de cliente");
+        modelo.addColumn("Nombre de cliente");
         modelo.addColumn("Total de venta");
         modelo.addColumn("Valor cancelado");
 
         modelo2.addColumn("Cliente");
-        modelo2.addColumn("Cédula");
+        modelo2.addColumn("Cédula de cliente");
         modelo2.addColumn("Monto de Abono");
         modelo2.addColumn("Deuda");
         modelo2.addColumn("Uusario");
@@ -231,6 +232,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         tblVentas = new javax.swing.JTable();
         btnVer = new javax.swing.JButton();
         txtTotalVentas = new javax.swing.JLabel();
+        txtId = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPagoCl = new javax.swing.JTable();
@@ -335,6 +337,8 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
 
     txtTotalVentas.setText("jLabel5");
 
+    txtId.setText("jLabel5");
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -348,7 +352,9 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(txtTotalVentas)
-                    .addGap(0, 0, Short.MAX_VALUE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtId)
+                    .addGap(401, 401, 401))))
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,7 +364,9 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
-            .addComponent(txtTotalVentas)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtTotalVentas)
+                .addComponent(txtId))
             .addContainerGap(8, Short.MAX_VALUE))
     );
 
@@ -509,26 +517,27 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private void tblVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVentasMouseClicked
         int fila = tblVentas.getSelectedRow();
         if (fila >= 0) {
-            id_Venta = (String) tblVentas.getValueAt(fila, 0).toString();
-            cedula = (String) tblVentas.getValueAt(fila, 1).toString();
+            id_Venta = tblVentas.getValueAt(fila, 0).toString();
+            txtId.setText(id_Venta);
+            cedula = (String) tblVentas.getValueAt(fila, 1);
             nombre = (String) tblVentas.getValueAt(fila, 2);
-            total = (String) tblVentas.getValueAt(fila, 3).toString();
+            total = tblVentas.getValueAt(fila, 3).toString();
         }
     }//GEN-LAST:event_tblVentasMouseClicked
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        VistaFactura vf = new VistaFactura();
+        VistaFacturaDialog vf = new VistaFacturaDialog(this,true);
 
-//        if (tblVentas.getSelectedRows().length > 0) {
-//            VistaFactura.txtCliente.setText(nombre);
-//            VistaFactura.txtCedula.setText(cedula);
-//            VistaFactura.txtVenta.setText(id_Venta);
-//            VistaFactura.txtTotal.setText("$" + total);
-//            VistaFactura.cargarTabla();
-//            vf.setVisible(true);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna venta");
-//        }
+        if (tblVentas.getSelectedRows().length > 0) {
+            VistaFacturaDialog.txtCliente.setText(nombre);
+            //VistaFactura.txtCedula.setText(cedula);
+            vf.cargarTabla();
+            VistaFacturaDialog.txtTotal.setText("$" + total);
+            
+            vf.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna venta");
+        }
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void tblPagoClMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPagoClMouseClicked
@@ -597,7 +606,8 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblPagoCl;
     private javax.swing.JTable tblPagoPr;
-    private javax.swing.JTable tblVentas;
+    public static javax.swing.JTable tblVentas;
+    public static javax.swing.JLabel txtId;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JLabel txtTotalAbonos;
     private javax.swing.JLabel txtTotalPagoPr;

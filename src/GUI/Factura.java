@@ -86,7 +86,6 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void generarFactura() {
-
         try {
             JasperReport reporte = (JasperReport) JRLoader.loadObject("factura.jasper");
             Map parametro = new HashMap();
@@ -202,6 +201,7 @@ public final class Factura extends javax.swing.JFrame {
             int cantVenta = (int) tblVentas.getValueAt(i, 0);
             String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
             String strCodigo = (String) tblVentas.getValueAt(i, 5);
+            System.out.println(strCodigo);
             String strPrecio = tblVentas.getValueAt(i, 2).toString();
             double precio_Venta = Double.parseDouble(strPrecio);
             producto = new Producto(cantVenta, descripcionVenta);
@@ -211,6 +211,7 @@ public final class Factura extends javax.swing.JFrame {
             manejadorDetalle.creaReporte(detalle);
         }
         generarFactura();
+        resetFact();
 
     }
 
@@ -248,7 +249,7 @@ public final class Factura extends javax.swing.JFrame {
             }
             venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
             manejadorVenta.crearVenta(venta);
-            resetFact();
+            
         } catch (NumberFormatException ex) {
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException ex) {
@@ -432,6 +433,11 @@ public final class Factura extends javax.swing.JFrame {
         txtCed.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCedFocusGained(evt);
+            }
+        });
+        txtCed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedActionPerformed(evt);
             }
         });
         txtCed.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -829,12 +835,13 @@ public final class Factura extends javax.swing.JFrame {
 
         } else {
             if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
-                ventaProd();
                 venta();
+                ventaProd();
+                
                 this.contador();
             } else {
-                ventaProd();
                 venta();
+                ventaProd();
                 this.contador();
             }
         }
@@ -994,13 +1001,17 @@ public final class Factura extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblVentasKeyReleased
 
+    private void txtCedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedActionPerformed
+
     public void cargarProducto() {
         DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
         simbolos.setDecimalSeparator('.');
         DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
         double totProd;
         double aux;
-        double aux2;
+        double aux2 = 0.00;
         String strAux = "";
         double ivaInit = 0.00;
         int cantInicial = 1;
@@ -1010,7 +1021,6 @@ public final class Factura extends javax.swing.JFrame {
         String dato = txtCod.getText();
         ArrayList<Producto> listadoProducto = manejadorProd.cargaProductoFact(dato);
         int cantLista = listadoProducto.size();
-        System.out.println(cantLista);
         if (cantLista == 0) {
             JOptionPane.showMessageDialog(null, "No se ha agregado el producto a la venta debido a\n"
                     + "que no existe el producto o no existen mas productos \n"
@@ -1041,14 +1051,15 @@ public final class Factura extends javax.swing.JFrame {
                     double defectoNoIVA = 0.00;
                     modelo.setValueAt(defectoNoIVA, fila, 7);
                     modelo.setValueAt(precio, fila, 8);
+                    aux2 = precio;
                 }
 
                 modelo.setValueAt(cantInicial, fila, 0);
                 modelo.setValueAt(prod, fila, 1);
-                modelo.setValueAt(precio, fila, 2);
+                modelo.setValueAt(aux2, fila, 2);
                 modelo.setValueAt(precioMayor, fila, 3);
                 modelo.setValueAt(dblIva, fila, 6);
-                totProd = cantInicial * precio;
+                totProd = cantInicial * aux2;
 
                 
                 

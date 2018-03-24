@@ -833,7 +833,9 @@ public final class Pagos extends javax.swing.JFrame {
         if (tblClientes.getSelectedRowCount() > 0) {
             int filaSelec = tblClientes.getSelectedRow();
             String nombreCli = (String) tblClientes.getValueAt(filaSelec, 0);
+            String ced = (String) tblClientes.getValueAt(filaSelec, 1);
             VistaDeudaCliente.txtNombreCliente.setText(nombreCli);
+            VistaDeudaCliente.txtCed.setText(ced);
             vf.setCliente(nombreCli);
             vf.cargarTabla();
             vf.setVisible(true);
