@@ -58,7 +58,9 @@ public class DATVenta {
                 double totVenta = rs.getDouble(4);
                 double valCancelado = rs.getDouble(5);
                 //String fechaVenta = rs.getString(6);
+                System.out.println(idVenta);
                 venta = new Venta(idVenta, totVenta, valCancelado, nombre,cedula);
+                System.out.println(idVenta);    
                 listadoVentas.add(venta);
             }
         } catch (SQLException ex) {

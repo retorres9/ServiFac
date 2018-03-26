@@ -1,7 +1,9 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-
+SELECT MAX(Id_Venta)+1 FROM venta;
+select * from detalle_venta;
+delete from venta where id_Venta=5;
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -92,6 +94,8 @@ id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL UNIQUE
 );
 
+INSERT INTO bodega (nombre_bodega) VALUES("BODEGA 1");
+
 CREATE TABLE existenciasBodega(
 id_bodega INT (3),
 codigo VARCHAR(13),
@@ -116,7 +120,7 @@ fecha VARCHAR (10),
 tipo VARCHAR(7),
 descripcion TEXT
 );
-
+ALTER TABLE pago_proveedor CHANGE descripcion descripcion text;
 ALTER TABLE producto
 ADD CONSTRAINT produbic_fk
 FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id_ubicacion);

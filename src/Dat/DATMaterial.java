@@ -132,10 +132,10 @@ public class DATMaterial {
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
                     + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
-                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Nombre_Producto REGEXP CONCAT('^',?) "
+                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Nombre_Producto LIKE '%" +nombre+ "%'"
                     + "ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
-            ps.setString(1, nombre);
+            //ps.setString(1, nombre);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombreprod = rs.getString(1);

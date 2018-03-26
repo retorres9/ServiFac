@@ -171,14 +171,14 @@ public class Configuracion {
 
     public void actualizaNombreEmp(String updNombre) throws IOException {
         String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Usuario.txt");
+        File yourFile = new File(workingDirectory + File.separator + "ConfigNombreEmpresa.txt");
         try {
             yourFile.createNewFile();
 
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String ruta = workingDirectory + File.separator + "Usuario.txt";
+        String ruta = workingDirectory + File.separator + "ConfigNombreEmpresa.txt";
         File archivo = new File(ruta);
         BufferedWriter bw = null;
         if (archivo.exists()) {

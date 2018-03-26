@@ -9,6 +9,7 @@
 	<parameter name="cliente" class="java.lang.String"/>
 	<parameter name="fecha" class="java.lang.String"/>
 	<parameter name="telefono" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
 	<field name="Cantidad" class="java.lang.Integer"/>
 	<field name="Descripcion" class="java.lang.String"/>
 	<field name="P Unit" class="java.lang.Double"/>
@@ -124,7 +125,7 @@
 			<textField pattern="">
 				<reportElement x="56" y="2" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_SCRIPTLET}.convertir( $V{Precio iva_1}+$V{iva_1}+$V{Iva 0_1} )]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_SCRIPTLET}.convertir($P{total})]]></textFieldExpression>
 			</textField>
 			<elementGroup/>
 			<textField pattern="###0.00">
@@ -142,10 +143,10 @@
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$V{Iva 0_1}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
-				<reportElement x="342" y="69" width="48" height="20"/>
+			<textField>
+				<reportElement x="341" y="69" width="49" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$V{Precio iva_1}+$V{iva_1}+$V{Iva 0_1}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

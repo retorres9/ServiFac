@@ -1061,6 +1061,7 @@ public final class Inventario extends javax.swing.JFrame {
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
             producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
             material.UpdateProducto(producto);
+            tblProd.setValueAt(nombre, fila, 0);
             //updateTabla();
         } catch (NullPointerException | NumberFormatException e) {
 

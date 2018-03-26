@@ -137,6 +137,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         for (int i = 0; i < cantFilas; i++) {
             objVenta = listadoVentas.get(i);
             int idVenta = objVenta.getIntIdVenta();
+            System.out.println(idVenta);
             String cedulaCliente = objVenta.getCedulaUser();
             String nombreCliente = objVenta.getStrFecha();
             double totalVenta = objVenta.getDblTotalVenta();
