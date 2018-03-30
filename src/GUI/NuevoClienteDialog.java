@@ -42,7 +42,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             String nombre = txtNombre.getText().toUpperCase();
             String dir = txtDireccion.getText().toUpperCase();
             String cedula = txtCedula.getText();
-            String telf = txtTelf.getText();
+            String telf = txtTelef.getText();
             double deuda = Double.parseDouble(txtDeuda.getText());
 
             objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
@@ -76,7 +76,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtTelf = new javax.swing.JTextField();
+        txtTelef = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -114,9 +114,9 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         jLabel1.setText("Datos del Cliente");
 
-        txtTelf.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTelef.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTelfKeyTyped(evt);
+                txtTelefKeyTyped(evt);
             }
         });
 
@@ -200,7 +200,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txtDeuda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                                .addComponent(txtTelf, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtTelef, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -239,7 +239,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -261,7 +261,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
 
     private void btnGuardarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCliActionPerformed
         int digitosCedula = txtCedula.getText().length();
-        int digitTelf = txtTelf.getText().length();
+        int digitTelf = txtTelef.getText().length();
         if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
         } else if ((txtCedula.getText().length() != 10) && (txtCedula.getText().length() != 13)) {
@@ -273,6 +273,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             Factura.txtCed.setText(txtCedula.getText());
             Factura.txtCliente.setText(txtNombre.getText().toUpperCase());
             Factura.txtDireccionCl.setText(txtDireccion.getText());
+            Factura.txtTelf.setText(txtTelef.getText());
             informacion = "bandera";
             this.dispose();
         }
@@ -296,16 +297,16 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAtrasActionPerformed
 
-    private void txtTelfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfKeyTyped
+    private void txtTelefKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefKeyTyped
         char caracter = evt.getKeyChar();
-        String Caracteres = txtTelf.getText();
+        String Caracteres = txtTelef.getText();
         if (Caracteres.length() >= 10) {
             evt.consume();
         }
         if (Character.isLetter(caracter)) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtTelfKeyTyped
+    }//GEN-LAST:event_txtTelefKeyTyped
 
     private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
         char caracter = evt.getKeyChar();
@@ -413,6 +414,6 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtDeuda;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelf;
+    private javax.swing.JTextField txtTelef;
     // End of variables declaration//GEN-END:variables
 }

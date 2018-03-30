@@ -106,6 +106,11 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(934, 323));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto Cn", 0, 36)); // NOI18N
         jLabel1.setText("Compras Realizadas");
@@ -244,6 +249,12 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
         this.dispose();
         objPagos.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Pagos p = new Pagos();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

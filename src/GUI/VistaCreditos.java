@@ -46,6 +46,11 @@ public final class VistaCreditos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         tblVistaCreditos.setModel(modelo);
         jScrollPane1.setViewportView(tblVistaCreditos);
@@ -103,6 +108,12 @@ public final class VistaCreditos extends javax.swing.JFrame {
         this.dispose();
         objFramePago.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        PagoProveedor pp = new PagoProveedor();
+        pp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     public void cargarTabla() {
         

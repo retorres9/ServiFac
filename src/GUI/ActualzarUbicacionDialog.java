@@ -6,6 +6,7 @@ import Dat.DATMaterial;
 import Dat.DATUbicacion;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+//import GUI.Inventario;
 
 /**
  *
@@ -19,7 +20,8 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
     DefaultComboBoxModel<Ubicacion> modeloUbicacion;
     DATUbicacion objUbic;
     DATMaterial objMat;
-    String info = "";
+    Inventario inv = new Inventario();
+    String info = " ";
     
     public ActualzarUbicacionDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -73,6 +75,11 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         jLabel1.setText("Seleccione la nueva ubicación para el producto");
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +88,9 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
             }
         });
 
+        lblProd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblProd.setText("jLabel2");
+        lblProd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,8 +140,15 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         Producto producto = new Producto(lblProd.getText(), ubic.getIdUbicacion());
         objMat.actualizarUbicacion(producto);
         info = ubic.getStrUbicacion();
+        //Inventario.txtUbicacion.setText(info);
+        //inv.updateTabla();
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        info = " "+"sdf";
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

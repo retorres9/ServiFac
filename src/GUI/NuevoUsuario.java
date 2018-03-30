@@ -28,6 +28,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         txtNombreEmp.setText(config.configNombreEmpresa());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
+        System.out.println(clave);
     }
 
     public void combo() {

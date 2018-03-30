@@ -237,6 +237,7 @@ public final class Inventario extends javax.swing.JFrame {
     }
 
     public void updateTabla() {
+        
         try {
             setAnchoColumnas();
             ArrayList<Producto> listadoProd = material.Consultar();
@@ -264,6 +265,7 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.setValueAt(ubi, i, 7);
                 modelo.setValueAt(cant, i, 8);
             }
+            System.out.println("hola");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -318,7 +320,7 @@ public final class Inventario extends javax.swing.JFrame {
         btnActualizaPrecio = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JLabel();
+        txtNombreProd = new javax.swing.JLabel();
         btnActualizaPrecioMayor = new javax.swing.JLabel();
         btnActualizaNombre = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -333,6 +335,7 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblMenos = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        tblProd = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblBodega = new javax.swing.JTable();
@@ -409,11 +412,11 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Precio al por mayor:");
 
-        txtNombre.setText("----------");
-        txtNombre.setAutoscrolls(true);
-        txtNombre.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtNombre.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        txtNombre.setMaximumSize(new java.awt.Dimension(150, 16));
+        txtNombreProd.setText("----------");
+        txtNombreProd.setAutoscrolls(true);
+        txtNombreProd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtNombreProd.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        txtNombreProd.setMaximumSize(new java.awt.Dimension(150, 16));
 
         btnActualizaPrecioMayor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar.png"))); // NOI18N
         btnActualizaPrecioMayor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -495,7 +498,7 @@ public final class Inventario extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnActualizaNombre))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -558,7 +561,7 @@ public final class Inventario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnActualizaNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -569,9 +572,22 @@ public final class Inventario extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        tblProd = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col)
+            {
+                //If you didn't want the first column to be editable
+                if(col == 0)
+                return true;
+                if(col == 7)
+                return true;
+                else
+                return false;
+            }
+        };
         tblProd.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblProd.setModel(modelo);
-        tblProd.setFocusable(false);
+        tblProd.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblProd.getTableHeader().setReorderingAllowed(false);
         tblProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProdMouseClicked(evt);
@@ -818,43 +834,47 @@ public final class Inventario extends javax.swing.JFrame {
 
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
         fila = tblProd.getSelectedRow();
-        String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
-        txtNombre.setText(prod);
-        String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
-        txtPrecio.setText(precio);
-        String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
-        txtPrecioM.setText(precioMayor);
-        String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
-        txtUbicacion.setText(ubicacion);
-        String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
-        txtCantidad.setText(cant);
+        try {
+            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
+            txtNombreProd.setText(prod);
+            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
+            txtPrecio.setText(precio);
+            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
+            txtPrecioM.setText(precioMayor);
+            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
+            txtUbicacion.setText(ubicacion);
+            String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+            txtCantidad.setText(cant);
 
-        String rol = config.validacion();
-        if (rol.equals("0")) {
-            jmiElimProd.setEnabled(false);
-            jmiElimCliente.setEnabled(false);
-            jmiElimProv.setEnabled(false);
-            jmConfig.setEnabled(false);
-            btnActualizaPrecio.setVisible(false);
-            btnActualizaNombre.setVisible(false);
-            btnActualizaPrecioMayor.setVisible(false);
-            btnActualizaUbicacion.setVisible(false);
-            btnActualizaCantidad.setVisible(false);
-            lblMenos.setVisible(false);
-        }
-        if (rol.equals("1")) {
-            jmiElimProd.setEnabled(true);
-            jmiElimCliente.setEnabled(true);
-            jmiElimProv.setEnabled(true);
-            jmConfig.setEnabled(true);
-            btnActualizaPrecio.setVisible(true);
-            btnActualizaNombre.setVisible(true);
-            btnActualizaPrecioMayor.setVisible(true);
-            btnActualizaUbicacion.setVisible(true);
-            btnActualizaCantidad.setVisible(true);
-            lblMenos.setVisible(true);
-        }
+            String rol = config.validacion();
+            if (rol.equals("0")) {
+                jmiElimProd.setEnabled(false);
+                jmiElimCliente.setEnabled(false);
+                jmiElimProv.setEnabled(false);
+                jmConfig.setEnabled(false);
+                btnActualizaPrecio.setVisible(false);
+                btnActualizaNombre.setVisible(false);
+                btnActualizaPrecioMayor.setVisible(false);
+                btnActualizaUbicacion.setVisible(false);
+                btnActualizaCantidad.setVisible(false);
+                lblMenos.setVisible(false);
+            }
+            if (rol.equals("1")) {
+                jmiElimProd.setEnabled(true);
+                jmiElimCliente.setEnabled(true);
+                jmiElimProv.setEnabled(true);
+                jmConfig.setEnabled(true);
+                btnActualizaPrecio.setVisible(true);
+                btnActualizaNombre.setVisible(true);
+                btnActualizaPrecioMayor.setVisible(true);
+                btnActualizaUbicacion.setVisible(true);
+                btnActualizaCantidad.setVisible(true);
+                lblMenos.setVisible(true);
+            }
 
+        } catch (ArrayIndexOutOfBoundsException ex) {
+
+        }
     }//GEN-LAST:event_tblProdMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -867,8 +887,8 @@ public final class Inventario extends javax.swing.JFrame {
         cmbBusq.addItem("Nombre producto");
         cmbBusq.addItem("Codigo");
     }
-    
-    public void busqueda(){
+
+    public void busqueda() {
         String dato = txtBuscar.getText();
         try {
             setAnchoColumnas();
@@ -930,13 +950,13 @@ public final class Inventario extends javax.swing.JFrame {
             txtCantidad.setText("----------");
             txtUbicacion.setText("----------");
             txtPrecio.setText("");
-            txtNombre.setText("----------");
+            txtNombreProd.setText("----------");
             txtPrecioM.setText("----------");
         } catch (SQLException ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         busqueda();
     }//GEN-LAST:event_txtBuscarKeyReleased
@@ -1022,42 +1042,43 @@ public final class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void btnActualizaUbicacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaUbicacionMouseClicked
-        String rol = config.validacion();
-        if (rol.equals("0")) {
-            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
-            ActualzarUbicacionDialog.lblProd.setText(txtNombre.getText());
-            dialogUbic.setVisible(true);
-
-            if (dialogUbic != null) {
-                if (!dialogUbic.getInfo().equals("")) {
-                    updateTabla();
-                    txtUbicacion.setText(dialogUbic.getUbic());
-                }
-            }
-
-        }
+//        String rol = config.validacion();
+//        if (rol.equals("0")) {
+//            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+//        } else {
+//            ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
+//            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
+//            dialogUbic.setVisible(true);
+//            //updateTabla();
+//            if (dialogUbic != null) {
+//                System.out.println(dialogUbic.getInfo());
+//                if (!dialogUbic.getInfo().equals(" ")) {
+//                    updateTabla();
+//                    txtUbicacion.setText(dialogUbic.getUbic());
+//                }
+//            }
+//        }
+JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
     private void btnActualizaCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCantidadMouseClicked
         try {
             String nume = JOptionPane.showInputDialog(
-                    "Ingrese la cantidad que desea agregar a:\n" + txtNombre.getText());
+                    "Ingrese la cantidad que desea agregar a:\n" + txtNombreProd.getText());
             int cant1 = Integer.parseInt(nume);
-            producto = new Producto(cant1, txtNombre.getText());
+            producto = new Producto(cant1, txtNombreProd.getText());
             material.AumentaCant(producto);
             String nuevaCantTxt = String.valueOf(cant1);
             txtCantidad.setText(nuevaCantTxt);
             busqueda();
         } catch (NullPointerException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombre.getText());
+            JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombreProd.getText());
         }
     }//GEN-LAST:event_btnActualizaCantidadMouseClicked
 
     private void btnActualizaNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaNombreMouseClicked
         try {
-            String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombre.getText()).toUpperCase();
+            String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombreProd.getText()).toUpperCase();
             String cod = (String) tblProd.getModel().getValueAt(fila, 1);
             producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
             material.UpdateProducto(producto);
@@ -1069,36 +1090,38 @@ public final class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
     private void btnActualizaPrecioMayorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaPrecioMayorMouseClicked
-        try {
-            n = JOptionPane.showInputDialog(null, "Ingrese el nuevo precio por mayor de:\n" + txtNombre.getText());
-            double newPrecio = Double.parseDouble(n);
-            int cant = Integer.parseInt(txtCantidad.getText());
-            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), Double.parseDouble(txtPrecio.getText()), newPrecio, cant, cod);
-            material.UpdateProducto(producto);
-            String nuevoPrecio = String.valueOf(n);
-            txtPrecioM.setText(nuevoPrecio);
-            //updateTabla();
-        } catch (NullPointerException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio por mayor de:\n" + txtNombre.getText());
-        }
+//        try {
+//            n = JOptionPane.showInputDialog(null, "Ingrese el nuevo precio por mayor de:\n" + txtNombreProd.getText());
+//            double newPrecio = Double.parseDouble(n);
+//            int cant = Integer.parseInt(txtCantidad.getText());
+//            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
+//            producto = new Producto(txtNombreProd.getText(), Double.parseDouble(txtPrecio.getText()), newPrecio, cant, cod);
+//            material.UpdateProducto(producto);
+//            String nuevoPrecio = String.valueOf(n);
+//            txtPrecioM.setText(nuevoPrecio);
+//            //updateTabla();
+//        } catch (NullPointerException | NumberFormatException e) {
+//            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio por mayor de:\n" + txtNombreProd.getText());
+//        }
+JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
     }//GEN-LAST:event_btnActualizaPrecioMayorMouseClicked
 
     private void btnActualizaPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaPrecioMouseClicked
-        try {
-            n = JOptionPane.showInputDialog(null, "Ingrese el nuevo precio de:\n" + txtNombre.getText());
-            double newPrecio = Double.parseDouble(n);
-            int cant = Integer.parseInt(txtCantidad.getText());
-            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(txtNombre.getText(), newPrecio, Double.parseDouble(txtPrecioM.getText()), cant, cod);
-            material.UpdateProducto(producto);
-            String nuevoPrecio = String.valueOf(n);
-            txtPrecio.setText(nuevoPrecio);
-            //updateTabla();
-
-        } catch (NullPointerException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio de:\n" + txtNombre.getText());
-        }
+//        try {
+//            n = JOptionPane.showInputDialog(null, "Ingrese el nuevo precio de:\n" + txtNombreProd.getText());
+//            double newPrecio = Double.parseDouble(n);
+//            int cant = Integer.parseInt(txtCantidad.getText());
+//            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
+//            producto = new Producto(txtNombreProd.getText(), newPrecio, Double.parseDouble(txtPrecioM.getText()), cant, cod);
+//            material.UpdateProducto(producto);
+//            String nuevoPrecio = String.valueOf(n);
+//            txtPrecio.setText(nuevoPrecio);
+//            //updateTabla();
+//
+//        } catch (NullPointerException | NumberFormatException e) {
+//            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio de:\n" + txtNombreProd.getText());
+//        }
+JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
     }//GEN-LAST:event_btnActualizaPrecioMouseClicked
 
     private void tblProdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyTyped
@@ -1142,16 +1165,16 @@ public final class Inventario extends javax.swing.JFrame {
         int cant2 = Integer.parseInt(txtCantidad.getText());
         try {
             String nume = JOptionPane.showInputDialog(
-                    "Ingrese la cantidad que desea restar a:\n" + txtNombre.getText());
+                    "Ingrese la cantidad que desea restar a:\n" + txtNombreProd.getText());
             int cant1 = Integer.parseInt(nume);
-            producto = new Producto(cant1, txtNombre.getText());
+            producto = new Producto(cant1, txtNombreProd.getText());
             material.UpdateCantFactura(producto);
             String nuevaCantTxt = String.valueOf(cant1);
             txtCantidad.setText(nuevaCantTxt);
             //updateTabla();
 
         } catch (NullPointerException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombre.getText());
+            JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombreProd.getText());
         }
     }//GEN-LAST:event_lblMenosMouseClicked
     public static void main(String args[]) {
@@ -1226,14 +1249,14 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel lblMenos;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblBodega;
-    public static final javax.swing.JTable tblProd = new javax.swing.JTable();
+    public static javax.swing.JTable tblProd;
     private javax.swing.JTextField txtBodega;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtCantidad;
     private javax.swing.JLabel txtEmpresa;
-    private javax.swing.JLabel txtNombre;
+    private javax.swing.JLabel txtNombreProd;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JLabel txtPrecioM;
-    private javax.swing.JLabel txtUbicacion;
+    public static javax.swing.JLabel txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }

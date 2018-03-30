@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
@@ -343,7 +343,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtNombre" min="-2" pref="242" max="-2" attributes="0"/>
+                                          <Component id="txtNombreProd" min="-2" pref="242" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btnActualizaNombre" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -425,7 +425,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNombreProd" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="btnActualizaNombre" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -481,7 +481,7 @@
                     <Property name="text" type="java.lang.String" value="Precio al por mayor:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="txtNombre">
+                <Component class="javax.swing.JLabel" name="txtNombreProd">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="----------"/>
                     <Property name="autoscrolls" type="boolean" value="true"/>
@@ -568,6 +568,9 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="btnActualizaUbicacion">
                   <Properties>
@@ -651,9 +654,11 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+                      <JTableSelectionModel selectionMode="0"/>
+                    </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                      <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>
                   </Properties>
                   <Events>
@@ -661,7 +666,8 @@
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tblProdKeyTyped"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="25"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tblProd = new javax.swing.JTable(){&#xa;public boolean isCellEditable(int row, int col)&#xa;{&#xa;    //If you didn&apos;t want the first column to be editable&#xa;    if(col == 0)&#xa;        return true;&#xa;    if(col == 7)&#xa;        return true;&#xa;    else&#xa;        return false;&#xa;    }&#xa;};"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
