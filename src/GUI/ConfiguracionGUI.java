@@ -4,10 +4,7 @@ import javax.swing.JOptionPane;
 import Clases.Configuracion;
 import Clases.Usuario;
 import Dat.DATUsuario;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,8 +43,8 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         modelo.addColumn("Usuario");
         modelo.addColumn("Puesto");
     }
-    
-    public void cargarTabla(){
+
+    public void cargarTabla() {
         String strRol;
         ArrayList<Usuario> listadoUsuarios = manejadorUsuario.listarClientes();
         int cantUusarios = listadoUsuarios.size();
@@ -59,7 +56,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
             int rol = objUusuario.getRol();
             modelo.setValueAt(nombre, i, 0);
             modelo.setValueAt(user, i, 1);
-            if(rol == 0){
+            if (rol == 0) {
                 strRol = "Vendedor";
             } else {
                 strRol = "Administrador";
@@ -93,7 +90,6 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -239,13 +235,6 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -262,9 +251,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(107, 107, 107)
                 .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(161, 161, 161))
+                .addGap(161, 509, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,9 +261,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(jButton1))
+                .addComponent(btnCancelar)
                 .addGap(35, 35, 35))
         );
 
@@ -319,10 +304,6 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-    
     public void actualizarConfig() {
         try {
             configu.actualizaNombreEmp(txtNombreEmp.getText());
@@ -398,7 +379,6 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -70,7 +70,7 @@ public final class Login extends javax.swing.JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
-        jButton2.setText("Cancelar");
+        jButton2.setText("Cerrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);

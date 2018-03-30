@@ -4,7 +4,12 @@ package GUI;
 import Clases.Configuracion;
 import Clases.Usuario;
 import Dat.DATMaterial;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -14,6 +19,7 @@ public final class Principal extends javax.swing.JFrame {
     String rol = config.validacion();
     String vendedor = config.vendedor_venta();
     static Process p;
+    String ruta = null;
 
     Usuario objU = new Usuario();
     Login objV = new Login();
@@ -87,6 +93,8 @@ public final class Principal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jmiElimProv = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jmConfig = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -416,6 +424,18 @@ public final class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu1.setText("Backup");
+
+        jMenuItem7.setText("Crear Backup");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu1);
+
         jmConfig.setText("Configuracion");
         jMenuBar1.add(jmConfig);
 
@@ -447,6 +467,31 @@ public final class Principal extends javax.swing.JFrame {
             txtConfig.setEnabled(true);
         }
     }
+    
+    public void respaldo (){
+        String fecha = new SimpleDateFormat("dd-MM-yyyy__HH_mm").format(new Date());
+        String workingDirectory = System.getProperty("user.home");
+        ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + fecha + ".sql";
+        System.out.println(ruta);
+        Process p = null;
+        try {
+            Runtime run = Runtime.getRuntime();
+            p = run.exec("mysqldump -u root -pticowrc2017"
+                    + " empresa");
+            InputStream in = p.getInputStream();
+            FileOutputStream out = new FileOutputStream(ruta);
+            byte[] buffer = new byte[1000];
+            int leido = in.read(buffer);
+            while (leido >0){
+                out.write(buffer, 0, leido);
+                leido = in.read(buffer);
+            }
+            out.close();
+            JOptionPane.showMessageDialog(null, "Backup creado satisfactoriamente");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un problema al crear el Backup");
+        }
+    }
 
     public void cerrar() {
         Object[] opciones = {"Aceptar", "Cancelar"};
@@ -454,7 +499,14 @@ public final class Principal extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, opciones, "Aceptar");
         if (eleccion == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            int n = JOptionPane.showConfirmDialog(null, "Antes de cerrar ¿Desea crar un respaldo de la base de datos?\n"
+                    + "Esto solo nos tomará unos segundos", "Backup", JOptionPane.YES_NO_OPTION);
+            if(n == JOptionPane.YES_OPTION){
+                respaldo();
+                System.exit(0);
+            } else {
+                System.exit(0);
+            }
         } else {
         }
     }
@@ -567,6 +619,7 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
         cerrar();
     }//GEN-LAST:event_formWindowClosing
 
@@ -598,6 +651,11 @@ public final class Principal extends javax.swing.JFrame {
         rv.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Backup back = new Backup(this, true);
+        back.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -655,6 +713,7 @@ public final class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -665,6 +724,7 @@ public final class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
