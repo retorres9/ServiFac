@@ -16,7 +16,6 @@ import javax.swing.table.TableColumnModel;
 
 public final class DetalleVentaVista extends javax.swing.JFrame {
 
-    
     Venta objVenta = new Venta();
     DATVenta manejadorVenta;
     String cedula, nombre, total;
@@ -55,10 +54,10 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
                 case 0:
-                    anchoColumna = (60 * ancho) / 100;
+                    anchoColumna = (10 * ancho) / 100;
                     break;
                 case 1:
-                    anchoColumna = (60 * ancho) / 100;
+                    anchoColumna = (30 * ancho) / 100;
                     break;
                 case 2:
                     anchoColumna = (50 * ancho) / 100;
@@ -67,12 +66,6 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                     anchoColumna = (30 * ancho) / 100;
                     break;
                 case 4:
-                    anchoColumna = (60 * ancho) / 100;
-                    break;
-                case 5:
-                    anchoColumna = (30 * ancho) / 100;
-                    break;
-                case 6:
                     anchoColumna = (30 * ancho) / 100;
                     break;
             }
@@ -207,7 +200,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             String cliente = pago.getUsuario();
             double deuda = pago.getDeuda();
             double monto = pago.getDblMontoCancelado();
-            
+
             modelo3.setValueAt(empresa, i, 0);
             modelo3.setValueAt(deuda, i, 1);
             modelo3.setValueAt(monto, i, 2);
@@ -321,6 +314,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-reloj-historial.png"))); // NOI18N
 
     tblVentas.setModel(modelo);
+    tblVentas.getTableHeader().setReorderingAllowed(false);
     tblVentas.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tblVentasMouseClicked(evt);
@@ -374,6 +368,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     jTabbedPane1.addTab("Ventas", jPanel1);
 
     tblPagoCl.setModel(modelo2);
+    tblPagoCl.getTableHeader().setReorderingAllowed(false);
     tblPagoCl.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tblPagoClMouseClicked(evt);
@@ -408,6 +403,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     jTabbedPane1.addTab("Pago Clientes", jPanel2);
 
     tblPagoPr.setModel(modelo3);
+    tblPagoPr.getTableHeader().setReorderingAllowed(false);
     tblPagoPr.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tblPagoPrMouseClicked(evt);
@@ -527,14 +523,14 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_tblVentasMouseClicked
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        VistaFacturaDialog vf = new VistaFacturaDialog(this,true);
+        VistaFacturaDialog vf = new VistaFacturaDialog(this, true);
 
         if (tblVentas.getSelectedRows().length > 0) {
             VistaFacturaDialog.txtCliente.setText(nombre);
             //VistaFactura.txtCedula.setText(cedula);
             vf.cargarTabla();
             VistaFacturaDialog.txtTotal.setText("$" + total);
-            
+
             vf.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna venta");

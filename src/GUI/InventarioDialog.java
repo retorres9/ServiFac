@@ -438,6 +438,7 @@ public class InventarioDialog extends javax.swing.JDialog {
         tblProd.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblProd.setModel(modelo);
         tblProd.setFocusable(false);
+        tblProd.getTableHeader().setReorderingAllowed(false);
         tblProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProdMouseClicked(evt);

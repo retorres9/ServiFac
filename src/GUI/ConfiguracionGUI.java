@@ -197,6 +197,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         jTabbedPane1.addTab("Empresa", jPanel1);
 
         jTable1.setModel(modelo);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("Eliminar");

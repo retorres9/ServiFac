@@ -23,6 +23,7 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
         manejadorVenta = new DATVenta();
         cargaEncabezado();
         cargarTabla();
+        setAnchoColumnas();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -73,7 +74,7 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
                 case 0:
-                    anchoColumna = (20 * ancho) / 100;
+                    anchoColumna = (10 * ancho) / 100;
                     break;
                 case 1:
                     anchoColumna = (35 * ancho) / 100;
@@ -116,6 +117,7 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
         jLabel1.setText("Compras Realizadas");
 
         tblDeudaCliente.setModel(modelo);
+        tblDeudaCliente.getTableHeader().setReorderingAllowed(false);
         tblDeudaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDeudaClienteMouseClicked(evt);

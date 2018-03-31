@@ -121,6 +121,7 @@ public final class Pagos extends javax.swing.JFrame {
         });
 
         tblClientes.setModel(modelo);
+        tblClientes.getTableHeader().setReorderingAllowed(false);
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblClientesMouseClicked(evt);

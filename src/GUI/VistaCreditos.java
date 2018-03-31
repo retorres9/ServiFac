@@ -53,6 +53,7 @@ public final class VistaCreditos extends javax.swing.JFrame {
         });
 
         tblVistaCreditos.setModel(modelo);
+        tblVistaCreditos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblVistaCreditos);
 
         txtEmpresa.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N

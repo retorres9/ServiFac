@@ -191,6 +191,7 @@ public final class Minimos extends javax.swing.JFrame {
         });
 
         tablaMinimos.setModel(modelo);
+        tablaMinimos.getTableHeader().setReorderingAllowed(false);
         tablaMinimos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaMinimosMouseClicked(evt);

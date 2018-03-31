@@ -1062,13 +1062,15 @@ JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
     private void btnActualizaCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCantidadMouseClicked
+        int cantInicial = Integer.parseInt(txtCantidad.getText());
         try {
             String nume = JOptionPane.showInputDialog(
                     "Ingrese la cantidad que desea agregar a:\n" + txtNombreProd.getText());
             int cant1 = Integer.parseInt(nume);
+            int tot = cantInicial + cant1;
             producto = new Producto(cant1, txtNombreProd.getText());
             material.AumentaCant(producto);
-            String nuevaCantTxt = String.valueOf(cant1);
+            String nuevaCantTxt = String.valueOf(tot);
             txtCantidad.setText(nuevaCantTxt);
             busqueda();
         } catch (NullPointerException | NumberFormatException e) {
@@ -1167,9 +1169,10 @@ JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
             String nume = JOptionPane.showInputDialog(
                     "Ingrese la cantidad que desea restar a:\n" + txtNombreProd.getText());
             int cant1 = Integer.parseInt(nume);
+            int tot = cant2 - cant1;
             producto = new Producto(cant1, txtNombreProd.getText());
             material.UpdateCantFactura(producto);
-            String nuevaCantTxt = String.valueOf(cant1);
+            String nuevaCantTxt = String.valueOf(tot);
             txtCantidad.setText(nuevaCantTxt);
             //updateTabla();
 

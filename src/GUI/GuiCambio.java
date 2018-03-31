@@ -23,6 +23,7 @@ public class GuiCambio extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("ServiFac - Cambio");
     }
 
     public double getCambio() {

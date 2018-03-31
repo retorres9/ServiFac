@@ -261,6 +261,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         });
 
         tblProv.setModel(modelo);
+        tblProv.getTableHeader().setReorderingAllowed(false);
         tblProv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProvMouseClicked(evt);

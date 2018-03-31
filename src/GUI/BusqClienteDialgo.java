@@ -94,6 +94,7 @@ public class BusqClienteDialgo extends javax.swing.JDialog {
         });
 
         jTable1.setModel(modelo);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         btnAtras.setText("Atrás");

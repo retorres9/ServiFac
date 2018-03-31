@@ -2,7 +2,6 @@ package GUI;
 
 import Clases.DetalleVenta;
 import Dat.DATReporte;
-import static GUI.VistaDeudaCliente.tblDeudaCliente;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -27,9 +26,10 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         initComponents();
         encabezados();
         manejadorDetalle = new DATReporte();
-        setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
+        //setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
+        setAnchoColumnas();
     }
     
     public void encabezados() {
@@ -40,16 +40,16 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
     }
     
     public void setAnchoColumnas() {
-        JViewport scroll = (JViewport) tblDeudaCliente.getParent();
+        JViewport scroll = (JViewport) tblFactura.getParent();
         int ancho = scroll.getWidth();
         int anchoColumna = 0;
-        TableColumnModel modeloColumna = tblDeudaCliente.getColumnModel();
+        TableColumnModel modeloColumna = tblFactura.getColumnModel();
         TableColumn columnaTabla;
-        for (int i = 0; i < tblDeudaCliente.getColumnCount(); i++) {
+        for (int i = 0; i < tblFactura.getColumnCount(); i++) {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
                 case 0:
-                    anchoColumna = (20 * ancho) / 100;
+                    anchoColumna = (10 * ancho) / 100;
                     break;
                 case 1:
                     anchoColumna = (50 * ancho) / 100;
@@ -151,6 +151,7 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         jLabel6.setText("Total:");
 
         tblFactura.setModel(modelo);
+        tblFactura.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblFactura);
 
         txtTotal.setText(" ");
