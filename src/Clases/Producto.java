@@ -345,4 +345,8 @@ public class Producto {
         this.bodega = bodega;
     }
     
+    @Override
+    public String toString(){
+        return this.strNombreProd+" - "+this.strCod;
+    }
 }

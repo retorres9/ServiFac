@@ -14,39 +14,11 @@ import javax.swing.JOptionPane;
 public class Configuracion {
 
     public String validacion() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "validacion.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\validacion.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
-    }
 
-    public String vendedor() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Vendedor.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String s1 = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Vendedor.txt"));
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "validacion.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -58,17 +30,11 @@ public class Configuracion {
     }
 
     public String configNombreEmpresa() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigNombreEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigNombreEmpresa.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigNombreEmpresa.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -80,17 +46,11 @@ public class Configuracion {
     }
 
     public String configDireccionEmpresa() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigDireccionEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigDireccionEmpresa.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigDireccionEmpresa.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -102,17 +62,11 @@ public class Configuracion {
     }
 
     public String configPropietarioEmpresa() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigPropietarioEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigPropietarioEmpresa.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigPropietarioEmpresa.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -124,17 +78,11 @@ public class Configuracion {
     }
 
     public String configRUCEmpresa() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigRUCEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigTelefonoEmpresa.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigRUCEmpresa.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -146,18 +94,11 @@ public class Configuracion {
     }
 
     public String configTelefonoEmpresa() {
-
-        
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        try {
-            File yourFile = new File(workingDirectory + File.separator + "ConfigTelefonoEmpresa.txt");
-            yourFile.createNewFile();
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ConfigTelefonoEmpresa.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigTelefonoEmpresa.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -166,19 +107,19 @@ public class Configuracion {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s1;
-        
+
     }
 
     public void actualizaNombreEmp(String updNombre) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigNombreEmpresa.txt");
+        
+        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigNombreEmpresa.txt");
         try {
             yourFile.createNewFile();
 
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String ruta = workingDirectory + File.separator + "ConfigNombreEmpresa.txt";
+        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigNombreEmpresa.txt";
         File archivo = new File(ruta);
         BufferedWriter bw = null;
         if (archivo.exists()) {
@@ -195,15 +136,14 @@ public class Configuracion {
     }
 
     public void actualizaDireccionEmp(String updNombre) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigDireccionEmpresa.txt");
+        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigDireccionEmpresa.txt");
         try {
             yourFile.createNewFile();
 
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String ruta = workingDirectory + File.separator + "ConfigDireccionEmpresa.txt";
+        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigDireccionEmpresa.txt";
         File archivo = new File(ruta);
         BufferedWriter bw = null;
         if (archivo.exists()) {
@@ -221,15 +161,14 @@ public class Configuracion {
     }
 
     public void actualizaPropietarioEmp(String updNombre) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigPropietarioEmpresa.txt");
+        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigPropietarioEmpresa.txt");
         try {
             yourFile.createNewFile();
 
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String ruta = workingDirectory + File.separator + "ConfigPropietarioEmpresa.txt";
+        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigPropietarioEmpresa.txt";
         File archivo = new File(ruta);
         BufferedWriter bw = null;
         if (archivo.exists()) {
@@ -246,15 +185,14 @@ public class Configuracion {
     }
 
     public void actualizaRucEmp(String updNombre) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigRUCEmpresa.txt");
+        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigRUCEmpresa.txt");
         try {
             yourFile.createNewFile();
 
         } catch (IOException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String ruta = workingDirectory + File.separator + "ConfigRUCEmpresa.txt";
+        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigRUCEmpresa.txt";
         File archivo = new File(ruta);
         BufferedWriter bw = null;
         if (archivo.exists()) {
@@ -347,17 +285,11 @@ public class Configuracion {
     }
 
     public String vendedor_venta() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Vendedor.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Vendedor.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "Vendedor.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -369,17 +301,11 @@ public class Configuracion {
     }
 
     public String iva() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Iva.txt");
-        try {
-            yourFile.createNewFile();
 
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Iva.txt"));
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "Iva.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -391,17 +317,11 @@ public class Configuracion {
     }
 
     public String claveAdmin() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ClaveAdmin.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\ClaveAdmin.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ClaveAdmin.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {
@@ -413,16 +333,11 @@ public class Configuracion {
     }
 
     public String usuario() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Usuario.txt");
-        try {
-            yourFile.createNewFile();
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }        
         String s1 = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(workingDirectory + "\\Usuario.txt"));
+
+            String dir = "C:\\Program Files\\dist";
+            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "Usuario.txt"));
             s1 = br.readLine();
             br.close();
         } catch (FileNotFoundException ex) {

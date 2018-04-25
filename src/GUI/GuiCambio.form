@@ -67,6 +67,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtCambio">
       <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCambioKeyReleased"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCambioKeyTyped"/>
       </Events>
     </Component>

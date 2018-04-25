@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 
 public final class Inventario extends javax.swing.JFrame {
 
-    int fila;
+    int fila = 0;
     String n;
     Producto producto;
     Usuario objU = new Usuario();
@@ -52,6 +52,16 @@ public final class Inventario extends javax.swing.JFrame {
         cargarTablaBodega();
         btnActualizaPrecio.setText("");
         totalInventario();
+    }
+
+    public void limpiarTabla() {
+        int numFilas = modelo.getRowCount();
+        if (numFilas > 0) {
+            for (int i = numFilas - 1; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
+        }
+        System.out.println("bien");
     }
 
     public void insertarColumnas() {
@@ -237,7 +247,6 @@ public final class Inventario extends javax.swing.JFrame {
     }
 
     public void updateTabla() {
-        
         try {
             setAnchoColumnas();
             ArrayList<Producto> listadoProd = material.Consultar();
@@ -265,7 +274,6 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.setValueAt(ubi, i, 7);
                 modelo.setValueAt(cant, i, 8);
             }
-            System.out.println("hola");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -528,22 +536,36 @@ public final class Inventario extends javax.swing.JFrame {
                         .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizaUbicacion)))
-                .addGap(349, 349, 349))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnActualizaPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(jLabel1)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnActualizaPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(3, 3, 3)
+                                    .addComponent(jLabel1))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnActualizaNombre))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtPrecioM)
+                                .addComponent(jLabel4))
+                            .addComponent(btnActualizaPrecioMayor)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -557,18 +579,6 @@ public final class Inventario extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtUbicacion)
                                 .addComponent(jLabel8)))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnActualizaNombre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtPrecioM)
-                        .addComponent(jLabel4))
-                    .addComponent(btnActualizaPrecioMayor))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -634,7 +644,7 @@ public final class Inventario extends javax.swing.JFrame {
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Productos en almacén", jPanel2);
@@ -833,17 +843,19 @@ public final class Inventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
-        fila = tblProd.getSelectedRow();
+        int fila1 = tblProd.getSelectedRow();
+        int fila2 = tblProd.getSelectedRow();
+        System.out.println(fila1 + " " + fila2);
         try {
-            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
+            String prod = (String) tblProd.getModel().getValueAt(fila1, 0);//Seleccionamos el nombre del producto
             txtNombreProd.setText(prod);
-            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
+            String precio = tblProd.getModel().getValueAt(fila1, 3).toString();//Seleccionamos el precio del producto
             txtPrecio.setText(precio);
-            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
+            String precioMayor = tblProd.getModel().getValueAt(fila1, 4).toString();//Seleccionamos el precio al por mayor del producto
             txtPrecioM.setText(precioMayor);
-            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
+            String ubicacion = tblProd.getModel().getValueAt(fila1, 7).toString();//Seleccionamos la ubicacion del producto
             txtUbicacion.setText(ubicacion);
-            String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+            String cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
             txtCantidad.setText(cant);
 
             String rol = config.validacion();
@@ -1043,22 +1055,38 @@ public final class Inventario extends javax.swing.JFrame {
 
     private void btnActualizaUbicacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaUbicacionMouseClicked
 //        String rol = config.validacion();
+//        ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
 //        if (rol.equals("0")) {
 //            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 //        } else {
-//            ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
 //            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
 //            dialogUbic.setVisible(true);
-//            //updateTabla();
-//            if (dialogUbic != null) {
-//                System.out.println(dialogUbic.getInfo());
-//                if (!dialogUbic.getInfo().equals(" ")) {
-//                    updateTabla();
-//                    txtUbicacion.setText(dialogUbic.getUbic());
-//                }
-//            }
+//            limpiarTabla();
+//            updateTabla();
+////            if (dialogUbic != null) {
+////                if (!dialogUbic.getInfo().equals(" ")) {
+////                    updateTabla();
+////                    System.out.println("if");
+////                    txtUbicacion.setText(dialogUbic.getUbic());
+////                } else {
+////                    updateTabla();
+////                    System.out.println("else");
+////                }
+////            }
 //        }
-JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
+////        JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
+
+        ActualzarUbicacionDialog vf = new ActualzarUbicacionDialog(this, true);
+        System.out.println(tblProd.getSelectedRows().length);
+        if (tblProd.getSelectedRows().length > 0) {
+            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
+            
+            
+
+            vf.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna venta");
+        }
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
     private void btnActualizaCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCantidadMouseClicked
@@ -1105,7 +1133,7 @@ JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
 //        } catch (NullPointerException | NumberFormatException e) {
 //            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio por mayor de:\n" + txtNombreProd.getText());
 //        }
-JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
+        JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
     }//GEN-LAST:event_btnActualizaPrecioMayorMouseClicked
 
     private void btnActualizaPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaPrecioMouseClicked
@@ -1123,7 +1151,7 @@ JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
 //        } catch (NullPointerException | NumberFormatException e) {
 //            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio de:\n" + txtNombreProd.getText());
 //        }
-JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
+        JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
     }//GEN-LAST:event_btnActualizaPrecioMouseClicked
 
     private void tblProdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyTyped

@@ -4,9 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Inventario.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/ConfiguracionGUI.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Principal.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/DetalleVentaVista.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Factura.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Producto.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Configuracion.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoClienteDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Usuario.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/ActualzarUbicacionDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/VistaFacturaDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/IngresoProd.java</file>
         </group>
     </open-files>
 </project-private>

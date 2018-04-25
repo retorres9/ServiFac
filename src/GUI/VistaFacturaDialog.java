@@ -5,7 +5,6 @@ import Dat.DATReporte;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -26,7 +25,6 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         initComponents();
         encabezados();
         manejadorDetalle = new DATReporte();
-        //setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
         setAnchoColumnas();
@@ -68,7 +66,6 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
     public void cargarTabla() {
         txtVenta.setText(DetalleVentaVista.txtId.getText());
         int id = Integer.parseInt(txtVenta.getText());
-        System.out.println(id);
         ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
         int cant = listadoFactura.size();
         modelo.setNumRows(cant);
@@ -94,7 +91,6 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
     public void cargarTabla2() {
         txtVenta.setText(VistaDeudaCliente.txtId.getText());
         int id = Integer.parseInt(txtVenta.getText());
-        System.out.println(id);
         ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
         int cant = listadoFactura.size();
         modelo.setNumRows(cant);
