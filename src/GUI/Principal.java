@@ -3,6 +3,7 @@ package GUI;
 
 import Clases.Configuracion;
 import Clases.Usuario;
+import Dat.DATConfiguracion;
 import Dat.DATMaterial;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,27 +13,37 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public final class Principal extends javax.swing.JFrame {
     Configuracion config = new Configuracion();
     int cant;
-    String rol = config.validacion();
-    String vendedor = config.vendedor_venta();
+    //String rol = config.validacion();
+    //String vendedor = config.vendedor_venta();
     static Process p;
     String ruta = null;
-
+    String nombreEmp;
+    String usuario;
+    String host;//Nombre de la maquina
+    
     Usuario objU = new Usuario();
     Login objV = new Login();
     DATMaterial objProd = new DATMaterial();
+    DATConfiguracion manejadorConf;
 
     public Principal() {
         initComponents();
+        getPcName();
+        manejadorConf = new DATConfiguracion();
+        obtenerUsuario();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         alerta();
-        permisos();
-        txtEmpresa.setText(config.configNombreEmpresa());
+        //permisos();
+        txtEmpresa.setText(nombreEmp);
     }
 
     @SuppressWarnings("unchecked")
@@ -443,29 +454,50 @@ public final class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         IngresoProd objI = new IngresoProd();
         objI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void getPcName(){
+        try {
+            InetAddress addr;
+            addr = InetAddress.getLocalHost();
+            host = addr.getHostName();
+        } catch (UnknownHostException ex) {
+            JOptionPane.showMessageDialog(null, "Error", "No se pudo obtener el nombre de la maquina", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void obtenerUsuario(){
+        ArrayList<Configuracion> listaUsuario = manejadorConf.cargaConfig();
+        int cant = listaUsuario.size();
+        for (int i = 0; i < cant; i++) {
+            config = listaUsuario.get(i);
+            nombreEmp = config.getEmpresa();
+            System.out.println(nombreEmp);
+            //usuario = config.
+        }
+    }
+    
     public void permisos() {
-        txtVendedor.setText(vendedor);
-        if (rol.equals("0")) {
-            jmiElimProd.setEnabled(false);
-            jmiElimCliente.setEnabled(false);
-            jmiElimProv.setEnabled(false);
-            jmConfig.setEnabled(false);
-            txtConfig.setEnabled(false);
-        }
-        if (rol.equals("1")) {
-            jmiElimProd.setEnabled(true);
-            jmiElimCliente.setEnabled(true);
-            jmiElimProv.setEnabled(true);
-            jmConfig.setEnabled(true);
-            txtConfig.setEnabled(true);
-        }
+//        txtVendedor.setText(vendedor);
+//        if (rol.equals("0")) {
+//            jmiElimProd.setEnabled(false);
+//            jmiElimCliente.setEnabled(false);
+//            jmiElimProv.setEnabled(false);
+//            jmConfig.setEnabled(false);
+//            txtConfig.setEnabled(false);
+//        }
+//        if (rol.equals("1")) {
+//            jmiElimProd.setEnabled(true);
+//            jmiElimCliente.setEnabled(true);
+//            jmiElimProv.setEnabled(true);
+//            jmConfig.setEnabled(true);
+//            txtConfig.setEnabled(true);
+//        }
     }
     
     public void respaldo (){
@@ -630,11 +662,11 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void txtConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConfigMouseClicked
-        ConfiguracionGUI configGui = new ConfiguracionGUI();
-        if (rol.equals("1")) {
-            this.setVisible(false);
-            configGui.setVisible(true);
-        }
+//        ConfiguracionGUI configGui = new ConfiguracionGUI();
+//        if (rol.equals("1")) {
+//            this.setVisible(false);
+//            configGui.setVisible(true);
+//        }
     }//GEN-LAST:event_txtConfigMouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked

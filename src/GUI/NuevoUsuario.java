@@ -16,7 +16,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
     Usuario objUs = new Usuario();
     DATUsuario usuario;
     Configuracion config = new Configuracion();
-    String clave = config.claveAdmin();
+    //String clave = config.claveAdmin();
 
     public NuevoUsuario() {
         initComponents();
@@ -26,9 +26,9 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         usuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        txtNombreEmp.setText(config.configNombreEmpresa());
+        //txtNombreEmp.setText(config.configNombreEmpresa());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        System.out.println(clave);
+        //System.out.println(clave);
     }
 
     public void combo() {

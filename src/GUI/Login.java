@@ -1,6 +1,7 @@
 package GUI;
 
 import Clases.Configuracion;
+import Dat.DATUsuario;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,21 +13,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public final class Login extends javax.swing.JFrame {
 
     NuevoUsuario objUs = new NuevoUsuario();
+    DATUsuario manejadorUsuario;
 //    Usuario objU = new Usuario();
 
     Configuracion config = new Configuracion();
     int validRol;
+    String host = "unknown";
 
     public Login() {
         initComponents();
+        manejadorUsuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         txtUsuario.requestFocus();
+        getPcName();
     }
 
     @SuppressWarnings("unchecked")
@@ -47,6 +54,14 @@ public final class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
         setPreferredSize(new java.awt.Dimension(500, 400));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -167,6 +182,16 @@ public final class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void getPcName() {
+        try {
+            InetAddress addr;
+            addr = InetAddress.getLocalHost();
+            host = addr.getHostName();
+        } catch (UnknownHostException ex) {
+            JOptionPane.showMessageDialog(null, "Error", "No se pudo obtener el nombre de la maquina", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void inicio(String user, String pass) {
         String valid = "";
         String valid2 = "";
@@ -188,6 +213,7 @@ public final class Login extends javax.swing.JFrame {
             if (txtUsuario.getText().isEmpty() || txtPass.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
             } else if (valid.equals(user) && valid2.equals(pass)) {
+                manejadorUsuario.setLogin(user, host);
                 config.actualizaValidacion(valid3);
                 config.vendedor(valid);
                 Principal objPncl = new Principal();
@@ -234,6 +260,14 @@ public final class Login extends javax.swing.JFrame {
             ingreso();
         }
     }//GEN-LAST:event_txtPassKeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        //System.out.println("hola");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

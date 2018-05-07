@@ -1,350 +1,72 @@
 package Clases;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 public class Configuracion {
+    
+    private String empresa;
+    private String propietario;
+    private String direccion;
+    private int iva;
+    private String ruc;
+    private String telefono;
 
-    public String validacion() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "validacion.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
+    public Configuracion() {
+    
     }
 
-    public String configNombreEmpresa() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigNombreEmpresa.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
+    public Configuracion(String empresa, String propietario, String direccion, int iva, String ruc, String telefono) {
+        this.empresa = empresa;
+        this.propietario = propietario;
+        this.direccion = direccion;
+        this.iva = iva;
+        this.ruc = ruc;
+        this.telefono = telefono;
     }
 
-    public String configDireccionEmpresa() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigDireccionEmpresa.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
+    public String getEmpresa() {
+        return empresa;
     }
 
-    public String configPropietarioEmpresa() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigPropietarioEmpresa.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
-    public String configRUCEmpresa() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigRUCEmpresa.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
+    public String getPropietario() {
+        return propietario;
     }
 
-    public String configTelefonoEmpresa() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ConfigTelefonoEmpresa.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
-
+    public void setPropietario(String propietario) {
+        this.propietario = propietario;
     }
 
-    public void actualizaNombreEmp(String updNombre) throws IOException {
-        
-        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigNombreEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigNombreEmpresa.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(updNombre);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void actualizaDireccionEmp(String updNombre) throws IOException {
-        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigDireccionEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigDireccionEmpresa.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(updNombre);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
-
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public void actualizaPropietarioEmp(String updNombre) throws IOException {
-        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigPropietarioEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigPropietarioEmpresa.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(updNombre);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
+    public int getIva() {
+        return iva;
     }
 
-    public void actualizaRucEmp(String updNombre) throws IOException {
-        File yourFile = new File("C:\\Program Files\\dist" + File.separator + "ConfigRUCEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String ruta = "C:\\Program Files\\dist" + File.separator + "ConfigRUCEmpresa.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(updNombre);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
+    public void setIva(int iva) {
+        this.iva = iva;
     }
 
-    public void actualizaTelefonoEmp(String updNombre) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "ConfigTelefonoEmpresa.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String ruta = workingDirectory + File.separator + "ConfigTelefonoEmpresa.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(updNombre);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
+    public String getRuc() {
+        return ruc;
     }
 
-    public void actualizaValidacion(String valid) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Validacion.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String ruta = workingDirectory + File.separator + "Validacion.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(valid);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
-    public void vendedor(String valid) throws IOException {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
-        File yourFile = new File(workingDirectory + File.separator + "Vendedor.txt");
-        try {
-            yourFile.createNewFile();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        String ruta = workingDirectory + File.separator + "Vendedor.txt";
-        File archivo = new File(ruta);
-        BufferedWriter bw = null;
-        if (archivo.exists()) {
-            try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(valid);
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ha habido un error");
-        }
+    public String getTelefono() {
+        return telefono;
     }
 
-    public String vendedor_venta() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "Vendedor.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
-    }
-
-    public String iva() {
-
-        String s1 = "";
-        try {
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "Iva.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
-    }
-
-    public String claveAdmin() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "ClaveAdmin.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
-    }
-
-    public String usuario() {
-        String s1 = "";
-        try {
-
-            String dir = "C:\\Program Files\\dist";
-            BufferedReader br = new BufferedReader(new FileReader(dir + File.separator + "Usuario.txt"));
-            s1 = br.readLine();
-            br.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return s1;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

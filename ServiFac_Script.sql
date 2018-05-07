@@ -1,8 +1,26 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-describe producto;
-select * from producto;
+
+CREATE TABLE configuracion(
+empresa VARCHAR(40) primary key not null,
+direccion varchar(50) not null,
+propietario varchar(60) not null,
+iva INT(2) not null,
+ruc VARCHAR(13) not null,
+telefono VARCHAR(10)
+);
+ALTER TABLE usuario drop COLUMN login;
+
+INSERT INTO configuracion(empresa, direccion,propietario, iva, ruc, telefono)
+VALUES ("Libreria y Bazar 'San Antonio'","Gonzalez Suarez y José Miguel Rosillo","Rober Torres",12,"1111111111001","2687986");
+
+update configuracion SET id = 1 WHERE empresa = "Libreria 'San Antonio'";
+
+SELECT MAX(precio) FROM producto;
+drop table venta;
+select * from usuario;
+delete from venta where id_Venta=5;
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -14,6 +32,8 @@ contrasena VARCHAR(128) NOT NULL,
 rol INT(10) ,
 estado boolean default true
 );
+ALTER TABLE usuario change maquina maquina VARCHAR (20) default NULL;
+#ALTER TABLE usuario ADD COLUMN maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario add COLUMN estado boolean default true;
 
 CREATE TABLE clientes(
@@ -24,6 +44,7 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL,
 estado boolean default true
 );
+INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111", " ", 0.00, " ", 1);
 #describe producto;
 
 CREATE TABLE producto(
@@ -41,13 +62,11 @@ id_ubicacion INT(3),
 cantidad INT(7),
 cantidad_Minima INT (3),
 ruc VARCHAR(15),
-imagen_codigo MEDIUMBLOB,
-imagen_producto MEDIUMBLOB,
+imagen_codigo MEDIUMBLOB default null,
+imagen_producto MEDIUMBLOB default null,
 id_bodega INT(3)
 );
 #alter table producto change imagen_codigo imagen_codigo MEDIUMBLOB default null;
-select * from producto;
-
 
 CREATE TABLE ubicacion(
 id_ubicacion INT (3) AUTO_INCREMENT PRIMARY KEY,
@@ -94,6 +113,8 @@ id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL UNIQUE
 );
 
+INSERT INTO bodega (nombre_bodega) VALUES("BODEGA 1");
+
 CREATE TABLE existenciasBodega(
 id_bodega INT (3),
 codigo VARCHAR(13),
@@ -118,7 +139,7 @@ fecha VARCHAR (10),
 tipo VARCHAR(7),
 descripcion TEXT
 );
-
+ALTER TABLE pago_proveedor CHANGE descripcion descripcion text;
 ALTER TABLE producto
 ADD CONSTRAINT produbic_fk
 FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id_ubicacion);

@@ -6,7 +6,8 @@ public class Usuario {
     private String usuario;
     private String contrasena;
     private int rol;
-
+    private String maquina;
+    
     public Usuario() {
     }
 
@@ -74,6 +75,14 @@ public class Usuario {
 
     public void setRol(int rol) {
         this.rol = rol;
+    }
+    
+    public String getMaquina() {
+        return maquina;
+    }
+
+    public void setMaquina(String maquina) {
+        this.maquina = maquina;
     }
     
 }

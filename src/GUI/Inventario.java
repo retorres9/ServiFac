@@ -148,6 +148,31 @@ public final class Inventario extends javax.swing.JFrame {
                 lblMenos.setVisible(true);
             }
 
+//            String rol = config.validacion();
+//            if (rol.equals("0")) {
+//                jmiElimProd.setEnabled(false);
+//                jmiElimCliente.setEnabled(false);
+//                jmiElimProv.setEnabled(false);
+//                jmConfig.setEnabled(false);
+//                btnActualizaPrecio.setVisible(false);
+//                btnActualizaNombre.setVisible(false);
+//                btnActualizaPrecioMayor.setVisible(false);
+//                btnActualizaUbicacion.setVisible(false);
+//                btnActualizaCantidad.setVisible(false);
+//                lblMenos.setVisible(false);
+//            }
+//            if (rol.equals("1")) {
+//                jmiElimProd.setEnabled(true);
+//                jmiElimCliente.setEnabled(true);
+//                jmiElimProv.setEnabled(true);
+//                jmConfig.setEnabled(true);
+//                btnActualizaPrecio.setVisible(true);
+//                btnActualizaNombre.setVisible(true);
+//                btnActualizaPrecioMayor.setVisible(true);
+//                btnActualizaUbicacion.setVisible(true);
+//                btnActualizaCantidad.setVisible(true);
+//                lblMenos.setVisible(true);
+//            }
         }
     }
 
@@ -843,9 +868,8 @@ public final class Inventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
-        int fila1 = tblProd.getSelectedRow();
-        int fila2 = tblProd.getSelectedRow();
-        System.out.println(fila1 + " " + fila2);
+        int fila1 = tblProd.rowAtPoint(evt.getPoint());
+        System.out.println(fila1 );
         try {
             String prod = (String) tblProd.getModel().getValueAt(fila1, 0);//Seleccionamos el nombre del producto
             txtNombreProd.setText(prod);
@@ -857,32 +881,8 @@ public final class Inventario extends javax.swing.JFrame {
             txtUbicacion.setText(ubicacion);
             String cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
             txtCantidad.setText(cant);
-
-            String rol = config.validacion();
-            if (rol.equals("0")) {
-                jmiElimProd.setEnabled(false);
-                jmiElimCliente.setEnabled(false);
-                jmiElimProv.setEnabled(false);
-                jmConfig.setEnabled(false);
-                btnActualizaPrecio.setVisible(false);
-                btnActualizaNombre.setVisible(false);
-                btnActualizaPrecioMayor.setVisible(false);
-                btnActualizaUbicacion.setVisible(false);
-                btnActualizaCantidad.setVisible(false);
-                lblMenos.setVisible(false);
-            }
-            if (rol.equals("1")) {
-                jmiElimProd.setEnabled(true);
-                jmiElimCliente.setEnabled(true);
-                jmiElimProv.setEnabled(true);
-                jmConfig.setEnabled(true);
-                btnActualizaPrecio.setVisible(true);
-                btnActualizaNombre.setVisible(true);
-                btnActualizaPrecioMayor.setVisible(true);
-                btnActualizaUbicacion.setVisible(true);
-                btnActualizaCantidad.setVisible(true);
-                lblMenos.setVisible(true);
-            }
+            System.out.println(ubicacion);
+            permisos();
 
         } catch (ArrayIndexOutOfBoundsException ex) {
 
@@ -1074,19 +1074,23 @@ public final class Inventario extends javax.swing.JFrame {
 ////                }
 ////            }
 //        }
-////        JOptionPane.showMessageDialog(null, "Módulo en mantenimiento");
-
+////        JOptionPane.showMessageDialog(null, "Módulo en mantenimiento")
+        //int canti = tblProd.getRowCount();
+        //System.out.println(canti);
         ActualzarUbicacionDialog vf = new ActualzarUbicacionDialog(this, true);
-        System.out.println(tblProd.getSelectedRows().length);
-        if (tblProd.getSelectedRows().length > 0) {
-            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
-            
-            
-
-            vf.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna venta");
+        //System.out.println(tblProd.getSelectedRows().length);
+        //int selec = tblProd.getSelectedRow();
+        //String val = modelo.getValueAt(0, fila).toString();
+        //System.out.println(val);
+        //System.out.println(selec);
+        ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
+        vf.setVisible(true);
+        if (vf != null) {
+            if (vf.getInfo() != "") {
+                //updateTabla();
+            }
         }
+        //System.out.println(selec);
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
     private void btnActualizaCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCantidadMouseClicked
@@ -1205,7 +1209,7 @@ public final class Inventario extends javax.swing.JFrame {
             //updateTabla();
 
         } catch (NullPointerException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombreProd.getText());
+            JOptionPane.showMessageDialog(null, "No se mermó nada a:\n" + txtNombreProd.getText());
         }
     }//GEN-LAST:event_lblMenosMouseClicked
     public static void main(String args[]) {
@@ -1288,6 +1292,6 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel txtNombreProd;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JLabel txtPrecioM;
-    public static javax.swing.JLabel txtUbicacion;
+    private javax.swing.JLabel txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }

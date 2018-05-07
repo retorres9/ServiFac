@@ -3,11 +3,9 @@ package GUI;
 import javax.swing.JOptionPane;
 import Clases.Configuracion;
 import Clases.Usuario;
+import Dat.DATConfiguracion;
 import Dat.DATUsuario;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
@@ -15,23 +13,30 @@ import javax.swing.table.DefaultTableModel;
 public final class ConfiguracionGUI extends javax.swing.JFrame {
 
     boolean bandera = true;
-    String nombreEmp = "";
-    String direccionEmp = "";
-    String propietarioEmp = "";
-    String rucEmp = "";
-    String telefonoEmp = "";
-    Configuracion configu = new Configuracion();
+
+    DATConfiguracion configu;
+    Configuracion objConfig;
     Principal pr = new Principal();
     DefaultTableModel modelo = new DefaultTableModel();
     DATUsuario manejadorUsuario;
     Usuario objUusuario = new Usuario();
 
+    /* variables */
+    String nombreEmp;
+    String direccionEmp;
+    String propietarioEmp;
+    int iva;
+    String strIva;
+    String rucEmp;
+    String telefonoEmp;
+
     public ConfiguracionGUI() {
-        manejadorUsuario = new DATUsuario();
         initComponents();
+        configu = new DATConfiguracion();
+        manejadorUsuario = new DATUsuario();
+        configuracion();
         encabezados();
         cargarTabla();
-        configuracion();
         getTexto();
         this.setLocationRelativeTo(null);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -281,7 +286,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                 pr.setVisible(true);
             }
         } else {
-
+            JOptionPane.showMessageDialog(null, "No ha realizado ningún cambio en la configuración");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -306,24 +311,36 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     public void actualizarConfig() {
-        try {
-            configu.actualizaNombreEmp(txtNombreEmp.getText());
-            configu.actualizaDireccionEmp(txtDireccionEmp.getText());
-            configu.actualizaPropietarioEmp(txtPropietarioEmp.getText());
-            configu.actualizaRucEmp(txtRucEmp.getText());
-            configu.actualizaTelefonoEmp(txtTelefonoEmp.getText());
-        } catch (IOException ex) {
-            Logger.getLogger(ConfiguracionGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        nombreEmp = txtNombreEmp.getText();
+        direccionEmp = txtDireccionEmp.getText();
+        propietarioEmp = txtPropietarioEmp.getText();
+        rucEmp = txtRucEmp.getText();
+        telefonoEmp = txtTelefonoEmp.getText();
+        iva = Integer.parseInt(txtIVA.getText());
+        objConfig = new Configuracion(nombreEmp, propietarioEmp, direccionEmp, iva, rucEmp, telefonoEmp);
+        configu.actualizaConfig(objConfig);
     }
 
     public void configuracion() {
-        txtNombreEmp.setText(configu.configNombreEmpresa());
-        txtDireccionEmp.setText(configu.configDireccionEmpresa());
-        txtPropietarioEmp.setText(configu.configPropietarioEmpresa());
-        txtRucEmp.setText(configu.configRUCEmpresa());
-        txtTelefonoEmp.setText(configu.configTelefonoEmpresa());
-        txtIVA.setText(configu.iva());
+        ArrayList<Configuracion> cargaConfig = configu.cargaConfig();
+        int cantidadLista = cargaConfig.size();
+        for (int i = 0; i < cantidadLista; i++) {
+            objConfig = cargaConfig.get(i);
+            nombreEmp = objConfig.getEmpresa();
+            direccionEmp = objConfig.getDireccion();
+            propietarioEmp = objConfig.getPropietario();
+            iva = objConfig.getIva();
+            strIva = String.valueOf(iva);
+            rucEmp = objConfig.getRuc();
+            telefonoEmp = objConfig.getTelefono();
+            /*Asignacion de valores a textfield's*/
+            txtNombreEmp.setText(nombreEmp);
+            txtDireccionEmp.setText(direccionEmp);
+            txtPropietarioEmp.setText(propietarioEmp);
+            txtRucEmp.setText(rucEmp);
+            txtTelefonoEmp.setText(telefonoEmp);
+            txtIVA.setText(strIva);
+        }
     }
 
     public void getTexto() {

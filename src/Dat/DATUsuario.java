@@ -70,15 +70,15 @@ public class DATUsuario {
         }
         return cedula;
     }
-    
-    public ArrayList<Usuario> listarClientes (){
+
+    public ArrayList<Usuario> listarClientes() {
         ArrayList<Usuario> listadoUsuarios = new ArrayList<Usuario>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT nombre, usuario, rol FROM usuario ORDER BY nombre";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String nombre = rs.getString(1);
                 String user = rs.getString(2);
                 int rol = rs.getInt(3);
@@ -96,6 +96,27 @@ public class DATUsuario {
             }
         }
         return listadoUsuarios;
+    }
+
+    public void setLogin(String user, String maq) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE usuario SET  maquina = ? where usuario = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, maq);
+            ps.setString(2, user);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 //    public int compUsuario() throws ClassNotFoundException, SQLException{
 //        String sentencia = "SELECT Usuario, Contrasena FROM usuario WHERE Usuario = ? && Contrasena = ?";
