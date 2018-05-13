@@ -6,6 +6,7 @@
 package Dat;
 
 import Clases.Configuracion;
+import Clases.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -54,6 +55,31 @@ public class DATConfiguracion {
             }
         }
         return config;
+    }
+    
+    public ArrayList<Configuracion> obtenerCredencial(){
+        ArrayList<Configuracion> credencial = new ArrayList<Configuracion>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentecia = "SELECT PASSWORD FROM configuracion";
+            ps = con.prepareStatement(sentecia);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String pass = rs.getString(1);
+                Configuracion objConf = new Configuracion(pass);
+                credencial.add(objConf);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return credencial;
     }
     
     public void actualizaConfig(Configuracion config){

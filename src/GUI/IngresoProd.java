@@ -7,12 +7,16 @@ import Clases.ExistenciasBodega;
 import Clases.Producto;
 import Clases.Proveedor;
 import Clases.Ubicacion;
+import Clases.Usuario;
 import Dat.DATBodega;
 import Dat.DATCategoria;
+import Dat.DATConfiguracion;
 import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATProveedor;
 import Dat.DATUbicacion;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -36,12 +40,17 @@ import net.sourceforge.jbarcodebean.model.Code128;
 public final class IngresoProd extends javax.swing.JFrame {
 
     int cant;
+    int rol;
+    String host;
+    Utilidades util = new Utilidades();
     File imgCodigoArticulo;
     DATCategoria objCat;
     DATBodega objBodega;
     DATProveedor objProveedor;
     DATUbicacion objUbic;
+    DATUsuario manejadorUsuario;
     DATExistenciasBodega objExistenciasBodega;
+    DATConfiguracion manejadorConf;
     Categoria categoria;
     Ubicacion ubicacion;
     Bodega objetoBodega;
@@ -63,13 +72,14 @@ public final class IngresoProd extends javax.swing.JFrame {
     ExistenciasBodega bodegaExistencias = new ExistenciasBodega();
     ButtonGroup iva = new ButtonGroup();
     Configuracion config = new Configuracion();
+    Usuario objUsuario = new Usuario();
 
     public IngresoProd() {
         modeloCategorias = new DefaultComboBoxModel<Categoria>();
         modeloProv = new DefaultComboBoxModel<Proveedor>();
         modeloUbic = new DefaultComboBoxModel<Ubicacion>();
         modeloBodega = new DefaultComboBoxModel<Bodega>();
-
+        manejadorConf = new DATConfiguracion();
         objCat = new DATCategoria();
         objProveedor = new DATProveedor();
         objUbic = new DATUbicacion();
@@ -81,7 +91,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         cargarModeloUbic();
         cargarModeloBodega();
         initComponents();
-        iva12.setText(config.iva());
+        host = util.getPcName();
         muestraPrecio();
         muestraPrecioxMayor();
         permisos();
@@ -94,7 +104,26 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     public void seleccionIva() {
         iva.add(iva0);
-        iva.add(iva12);
+        iva.add(txtIva);
+    }
+
+    public void obtenerConf() {
+        ArrayList<Configuracion> conf = manejadorConf.cargaConfig();
+        int cantConf = conf.size();
+        for (int i = 0; i < cantConf; i++) {
+            config = conf.get(i);
+            int iva = config.getIva();
+            txtIva.setText(Integer.toString(iva));
+        }
+    }
+
+    public void obtenerCredenciales() {
+        ArrayList<Usuario> credencial = manejadorUsuario.obtenerUserLog(host);
+        int cantCred = credencial.size();
+        for (int i = 0; i < cantCred; i++) {
+            objUsuario = credencial.get(i);
+            rol = objUsuario.getRol();
+        }
     }
 
     public void muestraPrecioxMayor() {
@@ -103,7 +132,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 double precio = Double.parseDouble(txtPrecioCompra.getText());
                 double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
-                if (iva12.isSelected()) {
+                if (txtIva.isSelected()) {
                     precioVentaMayor = ((precio) + precio * 0.12) + (precio * (gananciaMayor / 100));
                 } else {
                     precioVentaMayor = precio + (precio * (gananciaMayor / 100));
@@ -126,7 +155,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 double precioInput = Double.parseDouble(txtPrecioCompra.getText());
                 double ganancia = Double.parseDouble(txtGanancia.getText());
-                if (iva12.isSelected()) {
+                if (txtIva.isSelected()) {
                     precioVenta = ((precioInput) + precioInput * 0.12) + (precioInput * (ganancia / 100));
                 } else {
                     precioVenta = precioInput + (precioInput * (ganancia / 100));
@@ -208,16 +237,13 @@ public final class IngresoProd extends javax.swing.JFrame {
     }
 
     public void permisos() {
-
-        String rol = config.validacion();
-
-        if (rol.equals("0")) {
+        if (rol == 0) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);
             jmiElimProv.setEnabled(false);
             jmConfig.setEnabled(false);
         }
-        if (rol.equals("1")) {
+        if (rol ==1) {
             jmiElimProd.setEnabled(true);
             jmiElimCliente.setEnabled(true);
             jmiElimProv.setEnabled(true);
@@ -348,7 +374,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         btnUbicacion = new javax.swing.JButton();
         btnCategoria = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        iva12 = new javax.swing.JRadioButton();
+        txtIva = new javax.swing.JRadioButton();
         iva0 = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
         lblPrecioPublico = new javax.swing.JLabel();
@@ -560,10 +586,10 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel13.setText("Producto con IVA:");
 
-        iva12.setFocusable(false);
-        iva12.addActionListener(new java.awt.event.ActionListener() {
+        txtIva.setFocusable(false);
+        txtIva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                iva12ActionPerformed(evt);
+                txtIvaActionPerformed(evt);
             }
         });
 
@@ -813,7 +839,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(231, 231, 231)
-                                .addComponent(iva12)
+                                .addComponent(txtIva)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(iva0))))
                     .addGroup(layout.createSequentialGroup()
@@ -844,7 +870,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel13)
-                                    .addComponent(iva12)
+                                    .addComponent(txtIva)
                                     .addComponent(iva0))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -910,7 +936,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         if ((txtCantidad.getText().isEmpty() || txtCod.getText().isEmpty()
                 || txtNombreProd.getText().isEmpty() || txtPrecioCompra.getText().isEmpty()
                 || lblPrecioMayor.getText().isEmpty() || txtGanancia.getText().isEmpty()
-                || txtGananciaMayor.getText().isEmpty()) || (!iva12.isSelected()
+                || txtGananciaMayor.getText().isEmpty()) || (!txtIva.isSelected()
                 && !iva0.isSelected())) { //Asegura que ningun campo quede nulo
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
         } else if ((cmbCategoria.getItemCount() == 0)) {
@@ -1075,8 +1101,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGeneradorActionPerformed
 
     private void btnUbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbicacionActionPerformed
-        String rol = config.validacion();
-        if (rol.equals("0")) {
+        if (rol == 0) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevas ubicaciones", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
             String ubi = JOptionPane.showInputDialog(null, "Ingrese el nombre de la ubicacion");
@@ -1098,8 +1123,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUbicacionActionPerformed
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
-        String rol = config.validacion();
-        if (rol.equals("0")) {
+        if (rol == 0) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
             NuevoProveedorDialgo provDialog = new NuevoProveedorDialgo(null, true);
@@ -1115,8 +1139,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-        String rol = config.validacion();
-        if (rol.equals("0")) {
+        if (rol == 0) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevas categorias", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
             String cat = JOptionPane.showInputDialog(null, "Ingrese el nombre de la categoria");
@@ -1215,12 +1238,12 @@ public final class IngresoProd extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void iva12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iva12ActionPerformed
+    private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
         if (!txtPrecioCompra.getText().isEmpty()) {
             muestraPrecio();
             muestraPrecioxMayor();
         }
-    }//GEN-LAST:event_iva12ActionPerformed
+    }//GEN-LAST:event_txtIvaActionPerformed
 
     private void iva0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iva0ActionPerformed
         if (!txtPrecioCompra.getText().isEmpty()) {
@@ -1234,13 +1257,12 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodKeyReleased
 
     private void txtValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtValidMouseClicked
-        if(bandera == false){
+        if (bandera == false) {
             InventarioDialog invDialog = new InventarioDialog(this, true);
             invDialog.txtBuscar.setText(txtCod.getText());
             invDialog.busqueda();
             invDialog.setVisible(true);
-            
-            
+
             //InventarioDialog.txtBuscar.setText(txtCod.getText());
         }
     }//GEN-LAST:event_txtValidMouseClicked
@@ -1319,7 +1341,6 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JComboBox<Ubicacion> cmbUbicacion;
     private javax.swing.ButtonGroup grupoIVA;
     private javax.swing.JRadioButton iva0;
-    private javax.swing.JRadioButton iva12;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1363,6 +1384,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     private javax.swing.JTextField txtExistenciasBodega;
     private javax.swing.JTextField txtGanancia;
     private javax.swing.JTextField txtGananciaMayor;
+    private javax.swing.JRadioButton txtIva;
     private javax.swing.JTextField txtNombreProd;
     private javax.swing.JTextField txtPrecioCompra;
     private javax.swing.JLabel txtValid;

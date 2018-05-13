@@ -9,6 +9,7 @@ import Dat.DATAbonoCliente;
 import Dat.DATClientes;
 import Dat.DATUsuario;
 import Dat.DATVenta;
+import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -30,10 +31,11 @@ public final class Pagos extends javax.swing.JFrame {
     IngresoProd objIngrProd = new IngresoProd();
     Configuracion config = new Configuracion();
     int fila, idVenta;
+    int rol;
     Venta objVenta = new Venta();
     String strTotal, nombre;
+    String vendedor;
     AbonoCliente abono = new AbonoCliente();
-    String vendedor = config.usuario();
     DefaultTableModel modelo = new DefaultTableModel();
     DATAbonoCliente manejadorAbono;
     DATClientes cliente;
@@ -42,6 +44,8 @@ public final class Pagos extends javax.swing.JFrame {
     DATUsuario manejadorUsuario;
     Usuario usuario = new Usuario();
     String cedUsuario;
+    String host;
+    Utilidades util = new Utilidades();
 
     public Pagos() {
         initComponents();
@@ -59,8 +63,6 @@ public final class Pagos extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         cargarTabla();
         permisos();
-        txtVendedor.setText(vendedor);
-        System.out.println(cedUsuario);
     }
 
     @SuppressWarnings("unchecked")
@@ -489,11 +491,14 @@ public final class Pagos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void usuario() {
-        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(vendedor);
+        ArrayList<Usuario> cedula = manejadorUsuario.obtenerUserLog(host);
         int cantUser = cedula.size();
         for (int i = 0; i < cantUser; i++) {
             usuario = cedula.get(i);
             cedUsuario = usuario.getCedulaUsuario();
+            vendedor = usuario.getUsuario();
+            txtVendedor.setText(vendedor);
+            rol = usuario.getRol();
         }
     }
 
@@ -535,14 +540,13 @@ public final class Pagos extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = config.validacion();
-        if (rol.equals("0")) {
+        if (rol == 0) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);
             jmiElimProv.setEnabled(false);
             jmConfig.setEnabled(false);
         }
-        if (rol.equals("1")) {
+        if (rol == 1) {
             jmiElimProd.setEnabled(true);
             jmiElimCliente.setEnabled(true);
             jmiElimProv.setEnabled(true);

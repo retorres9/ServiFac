@@ -1,7 +1,6 @@
 package GUI;
 
 import Clases.Clientes;
-import Clases.Configuracion;
 import Clases.Producto;
 import Clases.DetalleVenta;
 import Clases.Usuario;
@@ -11,6 +10,7 @@ import Dat.DATMaterial;
 import Dat.DATReporte;
 import Dat.DATUsuario;
 import Dat.DATVenta;
+import Utilidades.Utilidades;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -49,6 +49,7 @@ public final class Factura extends javax.swing.JFrame {
     int cantProd2;
     int filasSelec;
     int cantInicial;
+    int rol;
     boolean flag = true;
     boolean banderaFila = true;
     String cedUsuario;
@@ -65,13 +66,14 @@ public final class Factura extends javax.swing.JFrame {
     DATClientes manejadorCliente;
     DATReporte manejadorDetalle;
     DATUsuario manejadorUsuario;
-    Configuracion config = new Configuracion();
     double totalVenta;
+    String host;
+    Utilidades util = new Utilidades();
 
     public Factura() {
         initComponents();
+        host = util.getPcName();
         cargarEncabezado();
-        txtUsuario.setText(config.vendedor_venta());
         manejadorProd = new DATMaterial();
         manejadorCliente = new DATClientes();
         manejadorVenta = new DATVenta();
@@ -83,7 +85,6 @@ public final class Factura extends javax.swing.JFrame {
         setAnchoColumnas();
         contador();
         permisos();
-        txtEmpresa.setText(config.configNombreEmpresa());
         txtCod.requestFocusInWindow();
         usuario();
     }
@@ -136,25 +137,26 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void usuario() {
-        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
+        ArrayList<Usuario> cedula = manejadorUsuario.obtenerUserLog(host);
         int cantUser = cedula.size();
         for (int i = 0; i < cantUser; i++) {
             usuario = cedula.get(i);
             cedUsuario = usuario.getCedulaUsuario();
+            vendedor = usuario.getUsuario();
+            txtUsuario.setText(vendedor);
+            rol = usuario.getRol();
         }
     }
 
     public void permisos() {
 
-        String rol = config.validacion();
-
-        if (rol.equals("0")) {
+        if (rol == 0) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);
             jmiElimProv.setEnabled(false);
             jmConfig.setEnabled(false);
         }
-        if (rol.equals("1")) {
+        if (rol == 1) {
             jmiElimProd.setEnabled(true);
             jmiElimCliente.setEnabled(true);
             jmiElimProv.setEnabled(true);
@@ -204,7 +206,6 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void ventaProd() {
-        vendedor = config.vendedor_venta();
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
 
             int cantVenta = (int) tblVentas.getValueAt(i, 0);

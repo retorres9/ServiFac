@@ -9,8 +9,11 @@ import Clases.Configuracion;
 import Clases.ExistenciasBodega;
 import Clases.Producto;
 import Clases.Usuario;
+import Dat.DATConfiguracion;
 import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -36,29 +39,48 @@ public class InventarioDialog extends javax.swing.JDialog {
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modelo2 = new DefaultTableModel();
     DATMaterial material;
+    DATUsuario manejadorUsuario;
+    DATConfiguracion manejadorConf;
+    Configuracion objConfig = new Configuracion();
     ExistenciasBodega existencias;
     DATExistenciasBodega manejadorExistencias;
     Configuracion config = new Configuracion();
+    String nombreEmp;
+    Utilidades util = new Utilidades();
+    String host;
 
     public InventarioDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        host = util.getPcName();
+        manejadorConf = new DATConfiguracion();
+        manejadorUsuario = new DATUsuario();
         JOptionPane.showMessageDialog(null, "En la siguiente ventana solo podrá actualizar\n"
                 + "el producto que ya se encuentra agregado");
         this.txtBuscar.setEditable(false);
         material = new DATMaterial();
         manejadorExistencias = new DATExistenciasBodega();
         CargaCombo();
+        cargConfig();
         insertarColumnas();
         setAnchoColumnas();
-        txtEmpresa.setText(config.configNombreEmpresa());
         this.setLocationRelativeTo(null);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        
+
     }
 
     public void CargaCombo() {
         cmbBusq.addItem("Codigo");
+    }
+
+    public void cargConfig() {
+        ArrayList<Configuracion> configuracion = manejadorConf.cargaConfig();
+        int cantConf = configuracion.size();
+        for (int i = 0; i < cantConf; i++) {
+            config = configuracion.get(i);
+            nombreEmp = config.getEmpresa();
+            txtEmpresa.setText(nombreEmp);
+        }
     }
 
     public void insertarColumnas() {
@@ -75,25 +97,20 @@ public class InventarioDialog extends javax.swing.JDialog {
 
     public void permisos() {
 
-        String rol = config.validacion();
-
-        if (rol.equals("0")) {
-            btnActualizaPrecio.setVisible(false);
-            btnActualizaNombre.setVisible(false);
-            btnActualizaPrecioMayor.setVisible(false);
-            btnActualizaUbicacion.setVisible(false);
-            btnActualizaCantidad.setVisible(false);
-            lblMenos.setVisible(false);
-        }
-        if (rol.equals("1")) {
-            if (txtPrecio.getText().isEmpty()) {
+        ArrayList<Usuario> credencial = manejadorUsuario.obtenerUserLog(host);
+        int cantCred = credencial.size();
+        int rol = 0;
+        for (int i = 0; i < cantCred; i++) {
+            objU = credencial.get(i);
+            if (rol == 0) {
                 btnActualizaPrecio.setVisible(false);
                 btnActualizaNombre.setVisible(false);
                 btnActualizaPrecioMayor.setVisible(false);
                 btnActualizaUbicacion.setVisible(false);
                 btnActualizaCantidad.setVisible(false);
                 lblMenos.setVisible(false);
-            } else {
+            }
+            if (rol == 1) {
                 btnActualizaPrecio.setVisible(true);
                 btnActualizaNombre.setVisible(true);
                 btnActualizaPrecioMayor.setVisible(true);
@@ -103,6 +120,7 @@ public class InventarioDialog extends javax.swing.JDialog {
             }
 
         }
+
     }
 
     public void iconos() {
@@ -625,24 +643,6 @@ public class InventarioDialog extends javax.swing.JDialog {
         txtUbicacion.setText(ubicacion);
         String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
         txtCantidad.setText(cant);
-
-        String rol = config.validacion();
-        if (rol.equals("0")) {
-            btnActualizaPrecio.setVisible(false);
-            btnActualizaNombre.setVisible(false);
-            btnActualizaPrecioMayor.setVisible(false);
-            btnActualizaUbicacion.setVisible(false);
-            btnActualizaCantidad.setVisible(false);
-            lblMenos.setVisible(false);
-        }
-        if (rol.equals("1")) {
-            btnActualizaPrecio.setVisible(true);
-            btnActualizaNombre.setVisible(true);
-            btnActualizaPrecioMayor.setVisible(true);
-            btnActualizaUbicacion.setVisible(true);
-            btnActualizaCantidad.setVisible(true);
-            lblMenos.setVisible(true);
-        }
     }//GEN-LAST:event_tblProdMouseClicked
 
     private void lblMenosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenosMouseClicked

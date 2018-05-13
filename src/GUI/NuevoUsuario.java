@@ -2,12 +2,15 @@ package GUI;
 
 import Clases.Configuracion;
 import Clases.Usuario;
+import Dat.DATConfiguracion;
 import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -16,40 +19,39 @@ public final class NuevoUsuario extends javax.swing.JFrame {
     Usuario objUs = new Usuario();
     DATUsuario usuario;
     Configuracion config = new Configuracion();
-    //String clave = config.claveAdmin();
+    DATConfiguracion manejadorConf;
+    Utilidades util = new Utilidades();
+    String host;
+    String pass;
 
     public NuevoUsuario() {
         initComponents();
+        manejadorConf = new DATConfiguracion();
+        host = util.getPcName();
+        obtenerCredencial();
         combo();
         txtCedulaUser.setTransferHandler(null);
         txtNombre.setTransferHandler(null);
         usuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        //txtNombreEmp.setText(config.configNombreEmpresa());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        //System.out.println(clave);
+        System.out.println(pass);
+    }
+    
+    public void obtenerCredencial(){
+        ArrayList<Configuracion> cred = manejadorConf.obtenerCredencial();
+        int cantCred = cred.size();
+        for (int i = 0; i < cantCred; i++) {
+            config = cred.get(i);
+            pass = config.getPass();
+        }
     }
 
     public void combo() {
         jComboBox1.addItem("Seleccione...");
         jComboBox1.addItem("Administrador");
         jComboBox1.addItem("Vendedor");
-    }
-
-    public static String getMD5(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(input.getBytes());
-            BigInteger number = new BigInteger(1, messageDigest);
-            String hashtext = number.toString(16);
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Ha habido un error al codificar su contraseña");
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -253,8 +255,9 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         } else {
             String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear\n"
                     + "un usuario con rol de Vendedor");
+            String cred = util.getMD5(n);
             try {
-                if (n.equals(clave)) {
+                if (cred.equals(pass)) {
 
                     String cedula = txtCedulaUser.getText();
                     String nom = txtNombre.getText();
@@ -266,7 +269,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                     }
                     if (txtPass.getText().equals(txtConf.getText())) {
                         String newPass = pass;
-                        pass = getMD5(newPass);
+                        pass = util.getMD5(newPass);
                         objUs = new Usuario(cedula, nom, usu, pass, rolUs);
                         try {
                             if (usuario.nuevoUsuario(objUs)) {
@@ -305,8 +308,10 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         } else {
             String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear\n"
                     + "un usuario con rol de Administrador");
+            String cred = util.getMD5(n);
+            System.out.println(cred);
             try {
-                if (n.equals(clave)) {
+                if (cred.equals(pass)) {
                     String cedula = txtCedulaUser.getText();
                     String nom = txtNombre.getText();
                     String usu = txtUsuario.getText();
@@ -317,7 +322,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
                     }
                     if (txtPass.getText().equals(txtConf.getText())) {
                         String newPass = pass;
-                        pass = getMD5(newPass);
+                        pass = util.getMD5(newPass);
                         objUs = new Usuario(cedula, nom, usu, pass, rolUs);
                         try {
                             if (usuario.nuevoUsuario(objUs)) {

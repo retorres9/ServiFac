@@ -4,6 +4,8 @@ import Clases.Configuracion;
 import Clases.Producto;
 import Clases.Usuario;
 import Dat.DATMaterial;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,10 +35,15 @@ public final class Minimos extends javax.swing.JFrame {
     DATMaterial producto;
     DefaultTableModel modelo = new DefaultTableModel();
     Configuracion config = new Configuracion();
+    DATUsuario manejadorUsuario;
+    Utilidades util = new Utilidades();
+    String host;
 
     public Minimos() {
         initComponents();
         producto = new DATMaterial();
+        manejadorUsuario = new DATUsuario();
+        host = util.getPcName();
         carcarColumnas();
         setAnchoColumnas();
         this.setLocationRelativeTo(null);
@@ -58,20 +65,26 @@ public final class Minimos extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = config.validacion();
-        if (rol.equals("0")) {
-            txtMin.setEditable(false);
-            txtUpdate.setEnabled(false);
-            jmiElimProd.setEnabled(false);
-            jmiElimCliente.setEnabled(false);
-            jmiElimProv.setEnabled(false);
-            jmConfig.setEnabled(false);
-        }
-        if (rol.equals("1")) {
-            jmiElimProd.setEnabled(true);
-            jmiElimCliente.setEnabled(true);
-            jmiElimProv.setEnabled(true);
-            jmConfig.setEnabled(true);
+        ArrayList<Usuario> rolLogged = manejadorUsuario.obtenerUserLog(host);
+        int cantRol = rolLogged.size();
+        int rol = 0;
+        for (int i = 0; i < cantRol; i++) {
+            objU = rolLogged.get(i);
+            rol = objU.getRol();
+            if (rol == 0) {
+                txtMin.setEditable(false);
+                txtUpdate.setEnabled(false);
+                jmiElimProd.setEnabled(false);
+                jmiElimCliente.setEnabled(false);
+                jmiElimProv.setEnabled(false);
+                jmConfig.setEnabled(false);
+            }
+            if (rol == 1) {
+                jmiElimProd.setEnabled(true);
+                jmiElimCliente.setEnabled(true);
+                jmiElimProv.setEnabled(true);
+                jmConfig.setEnabled(true);
+            }
         }
     }
 

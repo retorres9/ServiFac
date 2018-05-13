@@ -2,9 +2,12 @@ package GUI;
 
 import Clases.Configuracion;
 import Clases.Proveedor;
+import Clases.Usuario;
 import Dat.DATProveedor;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -12,12 +15,17 @@ import javax.swing.JOptionPane;
 
 public final class NuevoProveedor extends javax.swing.JFrame {
 
+    String host;
     Proveedor objP = new Proveedor();
     DATProveedor prov;
     Configuracion config = new Configuracion();
+    DATUsuario manejadorUsuario = new DATUsuario();
+    Utilidades util = new Utilidades();
+    Usuario objUsuario = new Usuario();
     
     public NuevoProveedor() {
         initComponents();
+        host = util.getPcName();
         prov = new DATProveedor();
         combo();
         permisos();
@@ -27,14 +35,20 @@ public final class NuevoProveedor extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = config.validacion();
-        if (rol.equals("0")) {
+        ArrayList<Usuario> conf = manejadorUsuario.obtenerUserLog(host);
+        int rol=0;
+        int canConf = conf.size();
+        for (int i = 0; i < canConf; i++) {
+            objUsuario = conf.get(i);
+             rol = objUsuario.getRol();
+        }
+        if (rol == 0) {
             jmiElimProd.setEnabled(false);
             jmiElimCliente.setEnabled(false);
             jmiElimProv.setEnabled(false);
             jmConfig.setEnabled(false);
         }
-        if (rol.equals("1")) {
+        if (rol == 1) {
             jmiElimProd.setEnabled(true);
             jmiElimCliente.setEnabled(true);
             jmiElimProv.setEnabled(true);

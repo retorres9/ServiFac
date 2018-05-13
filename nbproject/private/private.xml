@@ -5,10 +5,13 @@
         <group>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Principal.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoProveedor.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoUsuario.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATConfiguracion.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Usuario.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Configuracion.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATUsuario.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/prueba.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Login.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Utilidades/Utilidades.java</file>
         </group>
     </open-files>

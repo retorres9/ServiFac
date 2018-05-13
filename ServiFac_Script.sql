@@ -8,10 +8,11 @@ direccion varchar(50) not null,
 propietario varchar(60) not null,
 iva INT(2) not null,
 ruc VARCHAR(13) not null,
-telefono VARCHAR(10),
-login boolean DEFAULT false,
-maquina VARCHAR(30) not null
+telefono VARCHAR(10)
 );
+ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);
+SELECT PASSWORD FROM configuracion;
+UPDATE configuracion SET password = md5("servifac") WHERE empresa ="Libreria y bazar 'San Antonio'";
 #INSERT INTO configuracion(empresa, direccion,propietario, iva, ruc, telefono)
 #VALUES ("Libreria y Bazar 'San Antonio'","Gonzalez Suarez y José Miguel Rosillo","Rober Torres",12,"1111111111001","2687986");
 
@@ -31,7 +32,9 @@ nombre VARCHAR(50) NOT NULL UNIQUE,
 usuario VARCHAR(15) NOT NULL UNIQUE,
 contrasena VARCHAR(128) NOT NULL,
 rol INT(10) ,
-estado boolean default true
+estado boolean default true,
+login boolean DEFAULT false,
+maquina VARCHAR(30) not null
 );
 
 

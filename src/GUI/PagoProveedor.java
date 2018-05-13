@@ -7,6 +7,7 @@ import Clases.Usuario;
 import Dat.DATPagoProveedor;
 import Dat.DATProveedor;
 import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import com.sun.glass.events.KeyEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -33,15 +34,18 @@ public final class PagoProveedor extends javax.swing.JFrame {
     DATProveedor manejadorProveedor;
     DATPagoProveedor manejadorPago;
     String usuario;
+    String host;
     DATUsuario manejadorUsuario;
     Usuario user = new Usuario();
     Configuracion config = new Configuracion();
+    Utilidades util = new Utilidades();
 
     public PagoProveedor() {
         initComponents();
         manejadorProveedor = new DATProveedor();
         manejadorUsuario = new DATUsuario();
         manejadorPago = new DATPagoProveedor();
+        host = util.getPcName();
         cargarColumnas();
         cargarTabla();
         combo();
@@ -50,25 +54,15 @@ public final class PagoProveedor extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        txtUsuario.setText(config.usuario());
         cedula();
     }
 
-//    public void getusuario() {
-//        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
-//        int cantUser = cedula.size();
-//        for (int i = 0; i < cantUser; i++) {
-//            usuario = cedula.get(i);
-//            cedUsuario = usuario.getCedulaUsuario();
-//        }
-//    }
     public void cedula() {
-        ArrayList<Usuario> cedula = manejadorUsuario.obtenerCedula(txtUsuario.getText());
+        ArrayList<Usuario> cedula = manejadorUsuario.obtenerUserLog(host);
         int cant = cedula.size();
         for (int i = 0; i < cant; i++) {
             user = cedula.get(i);
             usuario = user.getCedulaUsuario();
-            System.out.println(usuario);
         }
     }
 

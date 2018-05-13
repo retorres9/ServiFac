@@ -4,8 +4,11 @@ import Clases.Configuracion;
 import Clases.ExistenciasBodega;
 import Clases.Producto;
 import Clases.Usuario;
+import Dat.DATConfiguracion;
 import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -30,13 +33,20 @@ public final class Inventario extends javax.swing.JFrame {
     DATMaterial material;
     ExistenciasBodega existencias;
     DATExistenciasBodega manejadorExistencias;
-    Configuracion config = new Configuracion();
+    DATUsuario manejadorUsuario;
+    Configuracion objConfig = new Configuracion();
+    DATConfiguracion manejadorConf;
+    String host;
+    Utilidades util = new Utilidades();
 
     public Inventario() {
         initComponents();
         iconos();
         material = new DATMaterial();
+        manejadorUsuario = new DATUsuario();
         manejadorExistencias = new DATExistenciasBodega();
+        manejadorConf = new DATConfiguracion();
+        host = util.getPcName();
         insertarColumnas();
         encabezadoBodega();
         setAnchoColumnas();
@@ -46,7 +56,6 @@ public final class Inventario extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
-        txtEmpresa.setText(config.configNombreEmpresa());
         permisos();
         updateTabla();
         cargarTablaBodega();
@@ -61,7 +70,16 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.removeRow(i);
             }
         }
-        System.out.println("bien");
+    }
+
+    public void cargarConfig() {
+        ArrayList<Configuracion> config = manejadorConf.cargaConfig();
+        int cantConf = config.size();
+        for (int i = 0; i < cantConf; i++) {
+            objConfig = config.get(i);
+            String empr = objConfig.getEmpresa();
+            txtEmpresa.setText(empr);
+        }
     }
 
     public void insertarColumnas() {
@@ -113,66 +131,45 @@ public final class Inventario extends javax.swing.JFrame {
 
     public void permisos() {
 
-        String rol = config.validacion();
-
-        if (rol.equals("0")) {
-            jmiElimProd.setEnabled(false);
-            jmiElimCliente.setEnabled(false);
-            jmiElimProv.setEnabled(false);
-            jmConfig.setEnabled(false);
-            btnActualizaPrecio.setVisible(false);
-            btnActualizaNombre.setVisible(false);
-            btnActualizaPrecioMayor.setVisible(false);
-            btnActualizaUbicacion.setVisible(false);
-            btnActualizaCantidad.setVisible(false);
-            lblMenos.setVisible(false);
-        }
-        if (rol.equals("1")) {
-            jmiElimProd.setEnabled(true);
-            jmiElimCliente.setEnabled(true);
-            jmiElimProv.setEnabled(true);
-            jmConfig.setEnabled(true);
-            if (txtPrecio.getText().isEmpty()) {
+        ArrayList<Usuario> credencial = manejadorUsuario.obtenerUserLog(host);
+        int cant = credencial.size();
+        int rol = 0;
+        for (int i = 0; i < cant; i++) {
+            objU = credencial.get(i);
+            rol = objU.getRol();
+            if (rol == 0) {
+                jmiElimProd.setEnabled(false);
+                jmiElimCliente.setEnabled(false);
+                jmiElimProv.setEnabled(false);
+                jmConfig.setEnabled(false);
                 btnActualizaPrecio.setVisible(false);
                 btnActualizaNombre.setVisible(false);
                 btnActualizaPrecioMayor.setVisible(false);
                 btnActualizaUbicacion.setVisible(false);
                 btnActualizaCantidad.setVisible(false);
                 lblMenos.setVisible(false);
-            } else {
-                btnActualizaPrecio.setVisible(true);
-                btnActualizaNombre.setVisible(true);
-                btnActualizaPrecioMayor.setVisible(true);
-                btnActualizaUbicacion.setVisible(true);
-                btnActualizaCantidad.setVisible(true);
-                lblMenos.setVisible(true);
             }
-
-//            String rol = config.validacion();
-//            if (rol.equals("0")) {
-//                jmiElimProd.setEnabled(false);
-//                jmiElimCliente.setEnabled(false);
-//                jmiElimProv.setEnabled(false);
-//                jmConfig.setEnabled(false);
-//                btnActualizaPrecio.setVisible(false);
-//                btnActualizaNombre.setVisible(false);
-//                btnActualizaPrecioMayor.setVisible(false);
-//                btnActualizaUbicacion.setVisible(false);
-//                btnActualizaCantidad.setVisible(false);
-//                lblMenos.setVisible(false);
-//            }
-//            if (rol.equals("1")) {
-//                jmiElimProd.setEnabled(true);
-//                jmiElimCliente.setEnabled(true);
-//                jmiElimProv.setEnabled(true);
-//                jmConfig.setEnabled(true);
-//                btnActualizaPrecio.setVisible(true);
-//                btnActualizaNombre.setVisible(true);
-//                btnActualizaPrecioMayor.setVisible(true);
-//                btnActualizaUbicacion.setVisible(true);
-//                btnActualizaCantidad.setVisible(true);
-//                lblMenos.setVisible(true);
-//            }
+            if (rol == 1) {
+                jmiElimProd.setEnabled(true);
+                jmiElimCliente.setEnabled(true);
+                jmiElimProv.setEnabled(true);
+                jmConfig.setEnabled(true);
+                if (txtPrecio.getText().isEmpty()) {
+                    btnActualizaPrecio.setVisible(false);
+                    btnActualizaNombre.setVisible(false);
+                    btnActualizaPrecioMayor.setVisible(false);
+                    btnActualizaUbicacion.setVisible(false);
+                    btnActualizaCantidad.setVisible(false);
+                    lblMenos.setVisible(false);
+                } else {
+                    btnActualizaPrecio.setVisible(true);
+                    btnActualizaNombre.setVisible(true);
+                    btnActualizaPrecioMayor.setVisible(true);
+                    btnActualizaUbicacion.setVisible(true);
+                    btnActualizaCantidad.setVisible(true);
+                    lblMenos.setVisible(true);
+                }
+            }
         }
     }
 
@@ -869,7 +866,6 @@ public final class Inventario extends javax.swing.JFrame {
 
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
         int fila1 = tblProd.rowAtPoint(evt.getPoint());
-        System.out.println(fila1 );
         try {
             String prod = (String) tblProd.getModel().getValueAt(fila1, 0);//Seleccionamos el nombre del producto
             txtNombreProd.setText(prod);
@@ -881,7 +877,6 @@ public final class Inventario extends javax.swing.JFrame {
             txtUbicacion.setText(ubicacion);
             String cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
             txtCantidad.setText(cant);
-            System.out.println(ubicacion);
             permisos();
 
         } catch (ArrayIndexOutOfBoundsException ex) {

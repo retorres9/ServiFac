@@ -2,9 +2,13 @@ package GUI;
 
 import Clases.Clientes;
 import Clases.Configuracion;
+import Clases.Usuario;
 import Dat.DATClientes;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -14,12 +18,17 @@ public final class NewCliente extends javax.swing.JFrame {
 
     Clientes objCliente = new Clientes();
     Configuracion config = new Configuracion();
-    public static int valid = 1;
+    DATUsuario manejadorUsuario;
+    Utilidades util = new Utilidades();
+    Usuario objU = new Usuario();
+    String host;
     DATClientes cliente;
 
     public NewCliente() {
         initComponents();
         cliente = new DATClientes();
+        manejadorUsuario = new DATUsuario();
+        host = util.getPcName();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
@@ -27,18 +36,23 @@ public final class NewCliente extends javax.swing.JFrame {
     }
 
     public void permisos() {
-        String rol = config.validacion();
-        if (rol.equals("0")) {
-            jmiElimProd.setEnabled(false);
-            jmiElimCliente.setEnabled(false);
-            jmiElimProv.setEnabled(false);
-            jmConfig.setEnabled(false);
-        }
-        if (rol.equals("1")) {
-            jmiElimProd.setEnabled(true);
-            jmiElimCliente.setEnabled(true);
-            jmiElimProv.setEnabled(true);
-            jmConfig.setEnabled(true);
+        ArrayList<Usuario> rolLogged = manejadorUsuario.obtenerUserLog(host);
+        int cantRol = rolLogged.size();
+        int rol = 0;
+        for (int i = 0; i < cantRol; i++) {
+            objU = rolLogged.get(i);
+            if (rol == 0) {
+                jmiElimProd.setEnabled(false);
+                jmiElimCliente.setEnabled(false);
+                jmiElimProv.setEnabled(false);
+                jmConfig.setEnabled(false);
+            }
+            if (rol == 1) {
+                jmiElimProd.setEnabled(true);
+                jmiElimCliente.setEnabled(true);
+                jmiElimProv.setEnabled(true);
+                jmConfig.setEnabled(true);
+            }
         }
     }
 
@@ -49,13 +63,12 @@ public final class NewCliente extends javax.swing.JFrame {
             String dir = txtDireccion.getText().toUpperCase();
             String cedula = txtCedula.getText();
             String telf = txtTelf.getText();
-            if (txtDeuda.getText().isEmpty()){
-                
+            if (txtDeuda.getText().isEmpty()) {
+
             } else {
                 deuda = Double.parseDouble(txtDeuda.getText());
             }
-            
-            
+
             objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
             try {
                 if (cliente.InsertarCliente(objCliente)) {
@@ -524,22 +537,22 @@ public final class NewCliente extends javax.swing.JFrame {
 
     private void txtDeudaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDeudaKeyTyped
         char c = evt.getKeyChar();
-        if (((c < '0') || (c > '9') || (txtDeuda.getText().length() > 6)) && (c !='.')) {
-            
+        if (((c < '0') || (c > '9') || (txtDeuda.getText().length() > 6)) && (c != '.')) {
+
             evt.consume();
         }
     }//GEN-LAST:event_txtDeudaKeyTyped
 
     private void txtDeudaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusLost
-        if(txtDeuda.getText().equals("")){
+        if (txtDeuda.getText().equals("")) {
             txtDeuda.setText("0.00");
         } else {
-           //Do nothing 
+            //Do nothing 
         }
     }//GEN-LAST:event_txtDeudaFocusLost
 
     private void txtDeudaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusGained
-        if(txtDeuda.getText().equals("0.00")){
+        if (txtDeuda.getText().equals("0.00")) {
             txtDeuda.setText("");
         } else {
             //Do nothing

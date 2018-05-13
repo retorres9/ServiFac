@@ -8,6 +8,7 @@ public class Configuracion {
     private int iva;
     private String ruc;
     private String telefono;
+    private String pass;
 
     public Configuracion() {
     
@@ -20,6 +21,10 @@ public class Configuracion {
         this.iva = iva;
         this.ruc = ruc;
         this.telefono = telefono;
+    }
+    
+    public Configuracion(String pass){
+        this.pass = pass;
     }
 
     public String getEmpresa() {
@@ -68,5 +73,13 @@ public class Configuracion {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

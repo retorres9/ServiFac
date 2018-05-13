@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 
 public final class Login extends javax.swing.JFrame {
 
-    NuevoUsuario objUs = new NuevoUsuario();
     DATUsuario manejadorUsuario;
     Utilidades util = new Utilidades();
 
@@ -230,7 +229,7 @@ public final class Login extends javax.swing.JFrame {
     public void ingreso() {
         String user = txtUsuario.getText();
         String pass = txtPass.getText();
-        String passMD5 = objUs.getMD5(pass);
+        String passMD5 = util.getMD5(pass);
         inicio(user, passMD5);
         txtUsuario.setText("");
         txtPass.setText("");
@@ -253,7 +252,7 @@ public final class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassKeyPressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        //System.out.println("hola");
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
