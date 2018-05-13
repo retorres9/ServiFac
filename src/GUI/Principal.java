@@ -5,6 +5,8 @@ import Clases.Configuracion;
 import Clases.Usuario;
 import Dat.DATConfiguracion;
 import Dat.DATMaterial;
+import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,37 +15,38 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public final class Principal extends javax.swing.JFrame {
     Configuracion config = new Configuracion();
-    int cant;
-    //String rol = config.validacion();
-    //String vendedor = config.vendedor_venta();
+    Utilidades util = new Utilidades();
     static Process p;
     String ruta = null;
     String nombreEmp;
     String usuario;
+    int cant;
     String host;//Nombre de la maquina
+    int rol = 0;
     
-    Usuario objU = new Usuario();
-    Login objV = new Login();
+    Usuario objUser = new Usuario();
     DATMaterial objProd = new DATMaterial();
     DATConfiguracion manejadorConf;
+    DATUsuario manejadorUsuario;
+    int rol1 = 1;
+    int rol2 = 0;
 
     public Principal() {
         initComponents();
-        getPcName();
-        manejadorConf = new DATConfiguracion();
+        host = util.getPcName();
+        manejadorUsuario = new DATUsuario();        
+        manejadorConf = new DATConfiguracion();        
         obtenerUsuario();
+        obtenerConf();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         alerta();
-        //permisos();
-        txtEmpresa.setText(nombreEmp);
+        permisos();
     }
 
     @SuppressWarnings("unchecked")
@@ -461,50 +464,53 @@ public final class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void getPcName(){
-        try {
-            InetAddress addr;
-            addr = InetAddress.getLocalHost();
-            host = addr.getHostName();
-        } catch (UnknownHostException ex) {
-            JOptionPane.showMessageDialog(null, "Error", "No se pudo obtener el nombre de la maquina", JOptionPane.ERROR_MESSAGE);
-        }
+    public void obtenerUsuario(){
+        ArrayList<Usuario> listaUsuario = manejadorUsuario.obtenerUserLog(host);
+        int cantUsuario = listaUsuario.size();
+        for (int i = 0; i < cantUsuario; i++) {
+            objUser = listaUsuario.get(i);
+            String usuar = objUser. getNombre();
+            txtVendedor.setText(usuar);
+            rol = objUser.getRol();
+            if(rol ==1){
+                
+            }
+        }        
     }
     
-    public void obtenerUsuario(){
-        ArrayList<Configuracion> listaUsuario = manejadorConf.cargaConfig();
-        int cant = listaUsuario.size();
-        for (int i = 0; i < cant; i++) {
-            config = listaUsuario.get(i);
-            nombreEmp = config.getEmpresa();
-            System.out.println(nombreEmp);
-            //usuario = config.
+    public void obtenerConf(){
+        ArrayList<Configuracion> conf = manejadorConf.cargaConfig();
+        int cantConf = conf.size();
+        for (int j = 0; j < cantConf; j++) {
+            config = conf.get(j);
+            String empresa = config.getEmpresa();
+            txtEmpresa.setText(empresa);
         }
     }
     
     public void permisos() {
-//        txtVendedor.setText(vendedor);
-//        if (rol.equals("0")) {
-//            jmiElimProd.setEnabled(false);
-//            jmiElimCliente.setEnabled(false);
-//            jmiElimProv.setEnabled(false);
-//            jmConfig.setEnabled(false);
-//            txtConfig.setEnabled(false);
-//        }
-//        if (rol.equals("1")) {
-//            jmiElimProd.setEnabled(true);
-//            jmiElimCliente.setEnabled(true);
-//            jmiElimProv.setEnabled(true);
-//            jmConfig.setEnabled(true);
-//            txtConfig.setEnabled(true);
-//        }
+        int auxRol = rol;
+        System.out.println(auxRol);
+        if (auxRol == 0) {
+            jmiElimProd.setEnabled(false);
+            jmiElimCliente.setEnabled(false);
+            jmiElimProv.setEnabled(false);
+            jmConfig.setEnabled(false);
+            txtConfig.setEnabled(false);
+        }
+        if (rol == 1) {
+            jmiElimProd.setEnabled(true);
+            jmiElimCliente.setEnabled(true);
+            jmiElimProv.setEnabled(true);
+            jmConfig.setEnabled(true);
+            txtConfig.setEnabled(true);
+        }
     }
     
     public void respaldo (){
         String fecha = new SimpleDateFormat("dd-MM-yyyy__HH_mm").format(new Date());
         String workingDirectory = System.getProperty("user.home");
         ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + fecha + ".sql";
-        System.out.println(ruta);
         Process p = null;
         try {
             Runtime run = Runtime.getRuntime();

@@ -337,7 +337,6 @@ public class DATMaterial {
             rs = ps.executeQuery();
             while (rs.next()) {
                 cant = rs.getInt(1);
-                Producto prod = new Producto();
             }
 
         } catch (SQLException ex) {

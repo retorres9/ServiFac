@@ -2,8 +2,8 @@ package GUI;
 
 import Clases.Configuracion;
 import Dat.DATUsuario;
+import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,27 +13,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public final class Login extends javax.swing.JFrame {
 
     NuevoUsuario objUs = new NuevoUsuario();
     DATUsuario manejadorUsuario;
-//    Usuario objU = new Usuario();
+    Utilidades util = new Utilidades();
 
     Configuracion config = new Configuracion();
     int validRol;
     String host = "unknown";
+    String valid = "";
+    String valid2 = "";
+    String valid3 = "";
 
     public Login() {
         initComponents();
+        host = util.getPcName();
         manejadorUsuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         txtUsuario.requestFocus();
-        getPcName();
+        manejadorUsuario.startupLogin(host);
     }
 
     @SuppressWarnings("unchecked")
@@ -182,52 +184,41 @@ public final class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void getPcName() {
-        try {
-            InetAddress addr;
-            addr = InetAddress.getLocalHost();
-            host = addr.getHostName();
-        } catch (UnknownHostException ex) {
-            JOptionPane.showMessageDialog(null, "Error", "No se pudo obtener el nombre de la maquina", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     public void inicio(String user, String pass) {
-        String valid = "";
-        String valid2 = "";
-        String valid3 = "";
+
         ResultSet res = null;
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             Statement stm = con.createStatement();
-            res = stm.executeQuery("SELECT Usuario, Contrasena, Rol FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
+            res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
 
             while (res.next()) {
                 valid = res.getString("Usuario");
                 valid2 = res.getString("Contrasena");
-                valid3 = res.getString("Rol");
+                valid3 = res.getString("cedula_usuario");
             }
 
             if (txtUsuario.getText().isEmpty() || txtPass.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
+                JOptionPane.showMessageDialog(null, "Hay uno o más campos vacios");
             } else if (valid.equals(user) && valid2.equals(pass)) {
-                manejadorUsuario.setLogin(user, host);
-                config.actualizaValidacion(valid3);
-                config.vendedor(valid);
+                
                 Principal objPncl = new Principal();
+                manejadorUsuario.setLogin(valid3, host);
+                objPncl.obtenerUsuario();
                 objPncl.setVisible(true);
-                this.setVisible(false);
+                objPncl.obtenerUsuario();
+                this.dispose();
+
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
             }
+            //manejadorUsuario.setLogin(valid3, host);
             stm.close();
             res.close();
             con.close();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,7 +257,7 @@ public final class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     /**

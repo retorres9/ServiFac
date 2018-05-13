@@ -7,6 +7,7 @@ public class Usuario {
     private String contrasena;
     private int rol;
     private String maquina;
+    private boolean login;
     
     public Usuario() {
     }
@@ -83,6 +84,14 @@ public class Usuario {
 
     public void setMaquina(String maquina) {
         this.maquina = maquina;
+    }
+
+    public boolean isLogin() {
+        return login;
+    }
+
+    public void setLogin(boolean login) {
+        this.login = login;
     }
     
 }

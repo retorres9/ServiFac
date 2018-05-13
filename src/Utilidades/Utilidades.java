@@ -14,15 +14,15 @@ import java.net.UnknownHostException;
  */
 public class Utilidades {
     String host = "unknown";
-    public void getPcName() {
+    public String getPcName() {
         try {
             InetAddress addr;
             addr = InetAddress.getLocalHost();
             host = addr.getHostName();
-            System.out.println(host);
         } catch (UnknownHostException ex) {
             System.out.println("Hostname can not be resolved");
         }
+        return host;
     }
     
 }

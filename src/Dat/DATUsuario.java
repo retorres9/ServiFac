@@ -63,7 +63,7 @@ public class DATUsuario {
         } finally {
             try {
                 rs.close();
-                ps.close();
+                con.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -98,13 +98,14 @@ public class DATUsuario {
         return listadoUsuarios;
     }
 
-    public void setLogin(String user, String maq) {
+    public void setLogin(String us, String maq) {
         try {
+
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "UPDATE usuario SET  maquina = ? where usuario = ?";
+            String sentencia = "UPDATE usuario SET login = 1, maquina = ? WHERE cedula_usuario = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
-            ps.setString(2, user);
+            ps.setString(2, us);
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,6 +117,53 @@ public class DATUsuario {
                 Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public void startupLogin(String maq) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE usuario SET login = 0 WHERE maquina = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, maq);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public ArrayList<Usuario> obtenerUserLog(String maq) {
+        ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();        
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT usuario, cedula_usuario, rol FROM usuario WHERE  login = 1 AND maquina = ? LIMIT 1";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, maq);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String strUsuario = rs.getString(1);                
+                String cedula = rs.getString(2);
+                int rol = rs.getInt(3);
+                Usuario user = new Usuario(strUsuario, cedula, rol);
+                listaUsuario.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listaUsuario;
 
     }
 //    public int compUsuario() throws ClassNotFoundException, SQLException{

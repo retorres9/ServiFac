@@ -8,19 +8,20 @@ direccion varchar(50) not null,
 propietario varchar(60) not null,
 iva INT(2) not null,
 ruc VARCHAR(13) not null,
-telefono VARCHAR(10)
+telefono VARCHAR(10),
+login boolean DEFAULT false,
+maquina VARCHAR(30) not null
 );
-ALTER TABLE usuario drop COLUMN login;
+#INSERT INTO configuracion(empresa, direccion,propietario, iva, ruc, telefono)
+#VALUES ("Libreria y Bazar 'San Antonio'","Gonzalez Suarez y José Miguel Rosillo","Rober Torres",12,"1111111111001","2687986");
 
-INSERT INTO configuracion(empresa, direccion,propietario, iva, ruc, telefono)
-VALUES ("Libreria y Bazar 'San Antonio'","Gonzalez Suarez y José Miguel Rosillo","Rober Torres",12,"1111111111001","2687986");
+#update configuracion SET id = 1 WHERE empresa = "Libreria 'San Antonio'";
 
-update configuracion SET id = 1 WHERE empresa = "Libreria 'San Antonio'";
-
-SELECT MAX(precio) FROM producto;
-drop table venta;
+#SELECT MAX(precio) FROM producto;
+#drop table venta;
 select * from usuario;
-delete from venta where id_Venta=5;
+UPDATE usuario SET login = true, maquina = "DESKTOP-GF2OJ9B" where usuario = "marthareyes";
+
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
 #describe usuario;
 
@@ -32,6 +33,8 @@ contrasena VARCHAR(128) NOT NULL,
 rol INT(10) ,
 estado boolean default true
 );
+
+
 ALTER TABLE usuario change maquina maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario ADD COLUMN maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario add COLUMN estado boolean default true;
