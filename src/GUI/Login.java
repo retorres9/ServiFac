@@ -16,15 +16,21 @@ import javax.swing.JOptionPane;
 
 public final class Login extends javax.swing.JFrame {
 
-    DATUsuario manejadorUsuario;
-    Utilidades util = new Utilidades();
-
-    Configuracion config = new Configuracion();
+    /*Variables*/
     int validRol;
     String host = "unknown";
     String valid = "";
     String valid2 = "";
     String valid3 = "";
+    
+    /*Clases*/
+    Utilidades util = new Utilidades();
+    Configuracion config = new Configuracion();
+    
+    /*DAT*/
+    DATUsuario manejadorUsuario;
+    
+    
 
     public Login() {
         initComponents();
@@ -55,14 +61,7 @@ public final class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
         setPreferredSize(new java.awt.Dimension(500, 400));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -185,8 +184,8 @@ public final class Login extends javax.swing.JFrame {
 
     public void inicio(String user, String pass) {
 
-        ResultSet res = null;
-        Connection con = null;
+        ResultSet res;
+        Connection con;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -250,14 +249,6 @@ public final class Login extends javax.swing.JFrame {
             ingreso();
         }
     }//GEN-LAST:event_txtPassKeyPressed
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
-    }//GEN-LAST:event_formWindowClosed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
-    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

@@ -22,6 +22,11 @@ public class Configuracion {
         this.ruc = ruc;
         this.telefono = telefono;
     }
+
+    public Configuracion(String empresa, String pass) {
+        this.empresa = empresa;
+        this.pass = pass;
+    }
     
     public Configuracion(String pass){
         this.pass = pass;

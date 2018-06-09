@@ -6,9 +6,6 @@ import Dat.DATConfiguracion;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -36,7 +33,6 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        System.out.println(pass);
     }
     
     public void obtenerCredencial(){
@@ -45,6 +41,8 @@ public final class NuevoUsuario extends javax.swing.JFrame {
         for (int i = 0; i < cantCred; i++) {
             config = cred.get(i);
             pass = config.getPass();
+            String emp = config.getEmpresa();
+            txtNombreEmp.setText(emp);
         }
     }
 
@@ -79,6 +77,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel1.setText("Nombre:");

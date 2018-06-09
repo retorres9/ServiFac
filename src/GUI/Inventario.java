@@ -9,6 +9,7 @@ import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -626,6 +627,9 @@ public final class Inventario extends javax.swing.JFrame {
             }
         });
         tblProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblProdKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tblProdKeyTyped(evt);
             }
@@ -1054,7 +1058,7 @@ public final class Inventario extends javax.swing.JFrame {
 //        if (rol.equals("0")) {
 //            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 //        } else {
-//            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
+//            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText()); 
 //            dialogUbic.setVisible(true);
 //            limpiarTabla();
 //            updateTabla();
@@ -1082,8 +1086,11 @@ public final class Inventario extends javax.swing.JFrame {
         vf.setVisible(true);
         if (vf != null) {
             if (vf.getInfo() != "") {
-                //updateTabla();
+                updateTabla();
             }
+            String auxUbic = modelo.getValueAt(fila, 7).toString();
+            System.out.println(auxUbic);
+            txtUbicacion.setText(auxUbic);
         }
         //System.out.println(selec);
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
@@ -1156,9 +1163,10 @@ public final class Inventario extends javax.swing.JFrame {
     private void tblProdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyTyped
 //        char c = evt.getKeyChar();
 //        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+//            System.out.println("hola");
 //            fila = tblProd.getSelectedRow();
 //            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
-//            txtNombre.setText(prod);
+//            txtNombreProd.setText(prod);
 //            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
 //            txtPrecio.setText(precio);
 //            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
@@ -1207,6 +1215,24 @@ public final class Inventario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se mermó nada a:\n" + txtNombreProd.getText());
         }
     }//GEN-LAST:event_lblMenosMouseClicked
+
+    private void tblProdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyPressed
+        char c = evt.getKeyChar();
+        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+            System.out.println("hola");
+            fila = tblProd.getSelectedRow();
+            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
+            txtNombreProd.setText(prod);
+            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
+            txtPrecio.setText(precio);
+            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
+            txtPrecioM.setText(precioMayor);
+            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
+            txtUbicacion.setText(ubicacion);
+            String cant = (String) tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+            txtCantidad.setText(cant);
+        }
+    }//GEN-LAST:event_tblProdKeyPressed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1287,6 +1313,6 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel txtNombreProd;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JLabel txtPrecioM;
-    private javax.swing.JLabel txtUbicacion;
+    public javax.swing.JLabel txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }

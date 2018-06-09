@@ -37,7 +37,6 @@ public final class PagoProveedor extends javax.swing.JFrame {
     String host;
     DATUsuario manejadorUsuario;
     Usuario user = new Usuario();
-    Configuracion config = new Configuracion();
     Utilidades util = new Utilidades();
 
     public PagoProveedor() {
@@ -62,7 +61,9 @@ public final class PagoProveedor extends javax.swing.JFrame {
         int cant = cedula.size();
         for (int i = 0; i < cant; i++) {
             user = cedula.get(i);
-            usuario = user.getCedulaUsuario();
+            usuario = user.getNombre();
+            System.out.println(usuario);
+            txtUsuario.setText(usuario);
         }
     }
 

@@ -49,6 +49,7 @@ public final class Pagos extends javax.swing.JFrame {
 
     public Pagos() {
         initComponents();
+        host = util.getPcName();
         cliente = new DATClientes();
         manejadorAbono = new DATAbonoCliente();
         manejadorVenta = new DATVenta();
@@ -491,12 +492,16 @@ public final class Pagos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void usuario() {
+        System.out.println("ajshdkajsh");
         ArrayList<Usuario> cedula = manejadorUsuario.obtenerUserLog(host);
         int cantUser = cedula.size();
+        System.out.println(cantUser);
         for (int i = 0; i < cantUser; i++) {
             usuario = cedula.get(i);
-            cedUsuario = usuario.getCedulaUsuario();
-            vendedor = usuario.getUsuario();
+            cedUsuario = usuario.getUsuario();//Se obtiene el usuario ya que en la clase datusuario ya hay un constructor( string string string) -> (nombre,usuario,rol)
+            System.out.println(cedUsuario);
+            vendedor = usuario.getNombre();
+            System.out.println(vendedor);
             txtVendedor.setText(vendedor);
             rol = usuario.getRol();
         }

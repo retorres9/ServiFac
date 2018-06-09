@@ -142,7 +142,7 @@ public class DATUsuario {
         ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();        
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT usuario, cedula_usuario, rol FROM usuario WHERE  login = 1 AND maquina = ? LIMIT 1";
+            String sentencia = "SELECT usuario, cedula_usuario, rol FROM usuario WHERE  login = 1 AND maquina = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
             rs = ps.executeQuery();

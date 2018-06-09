@@ -101,7 +101,7 @@ public class DATMaterial {
                     + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
                     + "p.Cantidad_Minima, pr.Empresa FROM producto p, ubicacion u,"
                     + " proveedores pr WHERE p.id_ubicacion = u.id_ubicacion AND"
-                    + " p.ruc = pr.ruc AND cantidad<cantidad_minima ORDER BY p.Nombre_Producto";
+                    + " p.ruc = pr.ruc AND cantidad<cantidad_minima ORDER BY pr.Empresa, p.Nombre_Producto ";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {

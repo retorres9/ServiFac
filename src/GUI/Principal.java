@@ -1,6 +1,5 @@
 package GUI;
 
-
 import Clases.Configuracion;
 import Clases.Usuario;
 import Dat.DATConfiguracion;
@@ -18,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 public final class Principal extends javax.swing.JFrame {
+
     Configuracion config = new Configuracion();
     Utilidades util = new Utilidades();
     static Process p;
@@ -26,27 +26,24 @@ public final class Principal extends javax.swing.JFrame {
     String usuario;
     int cant;
     String host;//Nombre de la maquina
-    int rol = 0;
-    
+    int rol;
+
     Usuario objUser = new Usuario();
     DATMaterial objProd = new DATMaterial();
     DATConfiguracion manejadorConf;
     DATUsuario manejadorUsuario;
-    int rol1 = 1;
-    int rol2 = 0;
 
     public Principal() {
         initComponents();
         host = util.getPcName();
-        manejadorUsuario = new DATUsuario();        
-        manejadorConf = new DATConfiguracion();        
+        manejadorUsuario = new DATUsuario();
+        manejadorConf = new DATConfiguracion();
         obtenerUsuario();
         obtenerConf();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         alerta();
-        permisos();
     }
 
     @SuppressWarnings("unchecked")
@@ -457,28 +454,40 @@ public final class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         IngresoProd objI = new IngresoProd();
         objI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void obtenerUsuario(){
+    public void obtenerUsuario() {
         ArrayList<Usuario> listaUsuario = manejadorUsuario.obtenerUserLog(host);
         int cantUsuario = listaUsuario.size();
         for (int i = 0; i < cantUsuario; i++) {
             objUser = listaUsuario.get(i);
-            String usuar = objUser. getNombre();
+            String usuar = objUser.getNombre();
             txtVendedor.setText(usuar);
             rol = objUser.getRol();
-            if(rol ==1){
-                
+            if (rol == 0) {
+                jmiElimProd.setEnabled(false);
+                jmiElimCliente.setEnabled(false);
+                jmiElimProv.setEnabled(false);
+                jmConfig.setEnabled(false);
+                txtConfig.setEnabled(false);
             }
-        }        
+            if (rol == 1) {
+                jmiElimProd.setEnabled(true);
+                jmiElimCliente.setEnabled(true);
+                jmiElimProv.setEnabled(true);
+                jmConfig.setEnabled(true);
+                txtConfig.setEnabled(true);
+            }
+
+        }
     }
-    
-    public void obtenerConf(){
+
+    public void obtenerConf() {
         ArrayList<Configuracion> conf = manejadorConf.cargaConfig();
         int cantConf = conf.size();
         for (int j = 0; j < cantConf; j++) {
@@ -487,27 +496,8 @@ public final class Principal extends javax.swing.JFrame {
             txtEmpresa.setText(empresa);
         }
     }
-    
-    public void permisos() {
-        int auxRol = rol;
-        System.out.println(auxRol);
-        if (auxRol == 0) {
-            jmiElimProd.setEnabled(false);
-            jmiElimCliente.setEnabled(false);
-            jmiElimProv.setEnabled(false);
-            jmConfig.setEnabled(false);
-            txtConfig.setEnabled(false);
-        }
-        if (rol == 1) {
-            jmiElimProd.setEnabled(true);
-            jmiElimCliente.setEnabled(true);
-            jmiElimProv.setEnabled(true);
-            jmConfig.setEnabled(true);
-            txtConfig.setEnabled(true);
-        }
-    }
-    
-    public void respaldo (){
+
+    public void respaldo() {
         String fecha = new SimpleDateFormat("dd-MM-yyyy__HH_mm").format(new Date());
         String workingDirectory = System.getProperty("user.home");
         ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + fecha + ".sql";
@@ -520,7 +510,7 @@ public final class Principal extends javax.swing.JFrame {
             FileOutputStream out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];
             int leido = in.read(buffer);
-            while (leido >0){
+            while (leido > 0) {
                 out.write(buffer, 0, leido);
                 leido = in.read(buffer);
             }
@@ -539,7 +529,7 @@ public final class Principal extends javax.swing.JFrame {
         if (eleccion == JOptionPane.YES_OPTION) {
             int n = JOptionPane.showConfirmDialog(null, "Antes de cerrar ¿Desea crar un respaldo de la base de datos?\n"
                     + "Esto solo nos tomará unos segundos", "Backup", JOptionPane.YES_NO_OPTION);
-            if(n == JOptionPane.YES_OPTION){
+            if (n == JOptionPane.YES_OPTION) {
                 respaldo();
                 System.exit(0);
             } else {
@@ -657,7 +647,7 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+
         cerrar();
     }//GEN-LAST:event_formWindowClosing
 
@@ -668,11 +658,11 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void txtConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConfigMouseClicked
-//        ConfiguracionGUI configGui = new ConfiguracionGUI();
-//        if (rol.equals("1")) {
-//            this.setVisible(false);
-//            configGui.setVisible(true);
-//        }
+        ConfiguracionGUI configGui = new ConfiguracionGUI();
+        if (rol == 1) {
+            this.setVisible(false);
+            configGui.setVisible(true);
+        }
     }//GEN-LAST:event_txtConfigMouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked

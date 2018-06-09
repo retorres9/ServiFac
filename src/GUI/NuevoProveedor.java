@@ -387,7 +387,7 @@ public final class NuevoProveedor extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Principal objPr = new Principal();
-        if (!txtDeuda.getText().isEmpty() || !txtEmpresa.getText().isEmpty()
+        if (!txtEmpresa.getText().isEmpty()
                 || !txtNombre.getText().isEmpty() || !txtNumero.getText().isEmpty()) {
             int n = JOptionPane.showConfirmDialog(null, "Hay datos que no han sido guardados\n¿Desea salir?", "Aviso", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {

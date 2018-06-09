@@ -140,6 +140,7 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         Producto producto = new Producto(lblProd.getText(), ubic.getIdUbicacion());
         objMat.actualizarUbicacion(producto);
         info = ubic.getStrUbicacion();
+        inv.txtUbicacion.setText(info);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -141,8 +141,8 @@ public final class Factura extends javax.swing.JFrame {
         int cantUser = cedula.size();
         for (int i = 0; i < cantUser; i++) {
             usuario = cedula.get(i);
-            cedUsuario = usuario.getCedulaUsuario();
-            vendedor = usuario.getUsuario();
+            vendedor = usuario.getNombre();
+            cedUsuario = usuario.getUsuario();
             txtUsuario.setText(vendedor);
             rol = usuario.getRol();
         }
@@ -206,22 +206,22 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void ventaProd() {
-        for (int i = 0; i < tblVentas.getRowCount(); i++) {
-
-            int cantVenta = (int) tblVentas.getValueAt(i, 0);
-            String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
-            String strCodigo = (String) tblVentas.getValueAt(i, 5);
-            System.out.println(strCodigo);
-            String strPrecio = tblVentas.getValueAt(i, 2).toString();
-            double precio_Venta = Double.parseDouble(strPrecio);
-            producto = new Producto(cantVenta, descripcionVenta);
-            manejadorProd.UpdateCantFactura(producto);
-            String cedula = txtCed.getText();
-            detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
-            manejadorDetalle.creaReporte(detalle);
-        }
-        generarFactura();
-        resetFact();
+//        for (int i = 0; i < tblVentas.getRowCount(); i++) {
+//
+//            int cantVenta = (int) tblVentas.getValueAt(i, 0);
+//            String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
+//            String strCodigo = (String) tblVentas.getValueAt(i, 5);
+//            System.out.println(strCodigo);
+//            String strPrecio = tblVentas.getValueAt(i, 2).toString();
+//            double precio_Venta = Double.parseDouble(strPrecio);
+//            producto = new Producto(cantVenta, descripcionVenta);
+//            manejadorProd.UpdateCantFactura(producto);
+//            String cedula = txtCed.getText();
+//            detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
+//            manejadorDetalle.creaReporte(detalle);
+//        }
+//        generarFactura();
+//        resetFact();
 
     }
 
@@ -263,8 +263,24 @@ public final class Factura extends javax.swing.JFrame {
                 cliente = new Clientes(nuevaDeuda, txtCed.getText());
                 manejadorCliente.agregarDeuda(cliente);
             }
+            for (int i = 0; i < tblVentas.getRowCount(); i++) {
+
+                int cantVenta = (int) tblVentas.getValueAt(i, 0);
+                String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
+                String strCodigo = (String) tblVentas.getValueAt(i, 5);
+                System.out.println(strCodigo);
+                String strPrecio = tblVentas.getValueAt(i, 2).toString();
+                double precio_Venta = Double.parseDouble(strPrecio);
+                producto = new Producto(cantVenta, descripcionVenta);
+                manejadorProd.UpdateCantFactura(producto);
+                String cedula = txtCed.getText();
+                detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
+                //manejadorDetalle.creaReporte(detalle);
+            }
+            generarFactura();
+            resetFact();
             venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
-            manejadorVenta.crearVenta(venta);
+            manejadorVenta.crearVenta(venta, detalle);
 
         } catch (NumberFormatException ex) {
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);

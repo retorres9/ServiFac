@@ -1,5 +1,6 @@
 package Dat;
 
+import Clases.DetalleVenta;
 import Clases.Venta;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATVenta {
 
@@ -16,10 +18,12 @@ public class DATVenta {
     PreparedStatement ps;
     ResultSet rs;
     Venta venta = new Venta();
+    DetalleVenta detalle = new DetalleVenta();
 
-    public void crearVenta(Venta venta) {
+    public void crearVenta(Venta venta, DetalleVenta detalle) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con.setAutoCommit(false);
             String sentencia = "INSERT INTO venta (Total_Venta, Valor_Cancelado, Fecha, Cedula_Usuario)"
                     + "VALUES (?,?,?,?)";
             ps = con.prepareStatement(sentencia);
@@ -28,8 +32,22 @@ public class DATVenta {
             ps.setString(3, venta.getStrFecha());
             ps.setString(4, venta.getCedulaUser());
             ps.executeUpdate();
+            
+            
+            String sentencia2 = "INSERT INTO detalle_venta (Cedula_Cliente, Cantidad, Codigo, Precio_Venta, Usuario, Id_Venta) "
+                    + "VALUES (?,?,?,?,?,?)";
+            ps = con.prepareStatement(sentencia2);
+            ps.setString(1, detalle.getStrCed());
+            ps.setInt(2, detalle.getIntCant());
+            ps.setString(3, detalle.getStrCod());
+            ps.setDouble(4, detalle.getDblPrecioVenta());
+            ps.setString(5, detalle.getStrUsuario());
+            ps.setInt(6, detalle.getId_Venta());
+            ps.executeUpdate();
+            con.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrio un error al prosesar la transaccion", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

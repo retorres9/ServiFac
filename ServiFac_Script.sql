@@ -1,7 +1,8 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-
+SELECT cedula_cliente,count(cedula_cliente)  FROM detalle_venta group by cedula_cliente;
+select * from venta;
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
@@ -10,8 +11,10 @@ iva INT(2) not null,
 ruc VARCHAR(13) not null,
 telefono VARCHAR(10)
 );
+select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
+select fecha from venta;
 ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);
-SELECT PASSWORD FROM configuracion;
+SELECT * FROM usuario;
 UPDATE configuracion SET password = md5("servifac") WHERE empresa ="Libreria y bazar 'San Antonio'";
 #INSERT INTO configuracion(empresa, direccion,propietario, iva, ruc, telefono)
 #VALUES ("Libreria y Bazar 'San Antonio'","Gonzalez Suarez y José Miguel Rosillo","Rober Torres",12,"1111111111001","2687986");
