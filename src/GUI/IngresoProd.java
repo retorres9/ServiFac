@@ -1104,7 +1104,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (rol == 0) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevas ubicaciones", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            String ubi = JOptionPane.showInputDialog(null, "Ingrese el nombre de la ubicacion");
+            String ubi = JOptionPane.showInputDialog(null, "Ingrese el nombre de la ubicacion").toUpperCase();
             if (ubi == null) {
 
             } else {
@@ -1142,7 +1142,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         if (rol == 0) {
             JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevas categorias", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            String cat = JOptionPane.showInputDialog(null, "Ingrese el nombre de la categoria");
+            String cat = JOptionPane.showInputDialog(null, "Ingrese el nombre de la categoria").toUpperCase();
             if (cat == null) {
 
             } else {

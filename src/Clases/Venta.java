@@ -24,6 +24,11 @@ public class Venta {
         this.dblTotalVenta = dblTotalVenta;
         this.dblValCancelado = dblValCancelado;
     }
+    
+    public Venta(String strFecha, String strCliente){
+        this.strFecha = strFecha;
+        this.strCliente = strCliente;
+    }
 
     public double getDeudaCliente() {
         return deudaCliente;

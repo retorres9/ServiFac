@@ -75,7 +75,6 @@ public class DATVenta {
                 String nombre = rs.getString(3);
                 double totVenta = rs.getDouble(4);
                 double valCancelado = rs.getDouble(5);
-                //String fechaVenta = rs.getString(6);
                 System.out.println(idVenta);
                 venta = new Venta(idVenta, totVenta, valCancelado, nombre,cedula);
                 System.out.println(idVenta);    
@@ -92,6 +91,27 @@ public class DATVenta {
             }
         }
         return listadoVentas;
+    }
+    
+    public ArrayList<Venta> cargaCompras(String cliente){
+        ArrayList <Venta> compras = new ArrayList<Venta>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "SELECT Distinct v.id_venta, v.fecha, c.cedula_cliente FROM venta v, usuario u, detalle_venta dv, clientes c WHERE v.id_Venta = dv.id_venta AND c.cedula_cliente=dv.cedula_cliente AND c.nombres='CONSUMIDOR FINAL'";
+            ps = con.prepareStatement(sentencia);
+            ps.executeQuery();
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String fecha = rs.getString(2);
+                String nombrecliente = rs.getString(3);
+                Venta venta = new Venta(fecha, nombrecliente);
+                compras.add(venta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return compras;
+        
     }
 
     public ArrayList<Venta> ConsultarComprasCL(String nombre) {

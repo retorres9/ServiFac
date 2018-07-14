@@ -13,38 +13,51 @@ public class GuiCambio extends javax.swing.JDialog {
      * Creates new form GuiCambio
      */
     boolean bandera = true;
+    boolean cred;
+    public static double monto;
+    public static String cliente;
 
     public GuiCambio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("ServiFac - Cambio");
+        txtAyudaCred.setVisible(false);
+        txtAyudaDeuda.setVisible(false);
     }
 
     public double getCambio() {
         double cambio = 0.00;
         try {
             cambio = Double.parseDouble(txtCambio.getText());
-            
+
         } catch (NumberFormatException ex) {
-            
+
         }
         return cambio;
     }
 
     public void valida() {
         try {
-            double aux1 = 0.00;
-            double aux2 = Double.parseDouble(txtCambio.getText());
+            double deuda = Double.parseDouble(txtAyudaDeuda.getText());
+            double cant = Double.parseDouble(txtAyudaCred.getText());
+            double monto2 = monto + deuda;
+            if (monto2 > cant) {
+                JOptionPane.showMessageDialog(null, "El crédito a realizar excede el monto de crédito aprobado");
+                bandera = false;
+            } else {
+                double aux1 = 0.00;
+                double aux2 = Double.parseDouble(txtCambio.getText());
 
-            double total = aux1 + aux2;
-            bandera = true;
+                double total = aux1 + aux2;
+                bandera = true;
+            }
         } catch (NumberFormatException ex) {
             bandera = false;
         }
     }
-    
-    public void cambio(){
+
+    public void cambio() {
         valida();
         if (bandera == true) {
             this.dispose();
@@ -53,7 +66,6 @@ public class GuiCambio extends javax.swing.JDialog {
         }
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -61,12 +73,16 @@ public class GuiCambio extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtCambio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        txtAyudaCred = new javax.swing.JLabel();
+        txtAyudaDeuda = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Roboto Condensed Light", 1, 24)); // NOI18N
         jLabel1.setText("Por favor ingrese el monto recibido:");
 
+        txtCambio.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtCambio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCambio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCambioKeyReleased(evt);
@@ -83,6 +99,10 @@ public class GuiCambio extends javax.swing.JDialog {
             }
         });
 
+        txtAyudaCred.setText("jLabel2");
+
+        txtAyudaDeuda.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,7 +117,11 @@ public class GuiCambio extends javax.swing.JDialog {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(212, 212, 212)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtAyudaCred)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAyudaDeuda)))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -105,11 +129,14 @@ public class GuiCambio extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
-                .addGap(39, 39, 39)
-                .addComponent(txtCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(txtCambio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAyudaCred)
+                    .addComponent(txtAyudaDeuda)))
         );
 
         pack();
@@ -129,7 +156,7 @@ public class GuiCambio extends javax.swing.JDialog {
 
     private void txtCambioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambioKeyReleased
         char c = evt.getKeyChar();
-        if(c == KeyEvent.VK_ENTER){
+        if (c == KeyEvent.VK_ENTER) {
             cambio();
         }
     }//GEN-LAST:event_txtCambioKeyReleased
@@ -179,6 +206,8 @@ public class GuiCambio extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    public static javax.swing.JLabel txtAyudaCred;
+    public static javax.swing.JLabel txtAyudaDeuda;
     private javax.swing.JTextField txtCambio;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,6 +3,7 @@ package GUI;
 import Clases.Configuracion;
 import Clases.Producto;
 import Clases.Usuario;
+import Dat.DATConfiguracion;
 import Dat.DATMaterial;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
@@ -38,11 +40,14 @@ public final class Minimos extends javax.swing.JFrame {
     DATUsuario manejadorUsuario;
     Utilidades util = new Utilidades();
     String host;
+    DATConfiguracion manejadorConf;
 
     public Minimos() {
         initComponents();
+        this.jLabel7.setVisible(false);
         producto = new DATMaterial();
         manejadorUsuario = new DATUsuario();
+        manejadorConf = new DATConfiguracion();
         host = util.getPcName();
         carcarColumnas();
         setAnchoColumnas();
@@ -51,6 +56,7 @@ public final class Minimos extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         permisos();
         updateTabla();
+        empresa();
     }
 
     public void carcarColumnas() {
@@ -63,15 +69,20 @@ public final class Minimos extends javax.swing.JFrame {
         modelo.addColumn("Cant Minima");
         modelo.addColumn("Proveedor");
     }
-    
-    public void generaReporte(){
+
+    public void generaReporte() {
         try {
+            JDialog diag = new JDialog(new javax.swing.JFrame(), "Reporte", true);
+            diag.setSize(1124, 768);
+            diag.setLocationRelativeTo(null);
             JasperReport reporteMin = (JasperReport) JRLoader.loadObject("reporteMinimos.jasper");
             Map parametro = new HashMap();
-            parametro.put("Proveedor", jLabel7.getText());
+            parametro.put("Empresa", txtEmpresa.getText());
             JRDataSource datasource = new JRTableModelDataSource(tablaMinimos.getModel());
             JasperPrint j = JasperFillManager.fillReport(reporteMin, parametro, datasource);
-            JasperViewer.viewReport(j, false);
+            JasperViewer viewer = new JasperViewer(j, false);
+            diag.getContentPane().add(viewer.getContentPane());
+            diag.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,6 +109,16 @@ public final class Minimos extends javax.swing.JFrame {
                 jmiElimProv.setEnabled(true);
                 jmConfig.setEnabled(true);
             }
+        }
+    }
+    
+    public void empresa(){
+        ArrayList<Configuracion> conf = manejadorConf.cargaConfig();
+        int cant = conf.size();
+        for (int i = 0; i < cant; i++) {
+            config = conf.get(i);
+            String emp = config.getEmpresa();
+            txtEmpresa.setText(emp);
         }
     }
 
@@ -192,8 +213,8 @@ public final class Minimos extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtMin = new javax.swing.JTextField();
         txtUpdate = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        txtEmpresa = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -234,6 +255,7 @@ public final class Minimos extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/impresora.png"))); // NOI18N
         jButton2.setText("Imprimir");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -347,17 +369,10 @@ public final class Minimos extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/impresorabtn .png"))); // NOI18N
-        jButton3.setText("Imprimir");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("jLabel7");
+
+        txtEmpresa.setFont(new java.awt.Font("Roboto Condensed Light", 1, 36)); // NOI18N
+        txtEmpresa.setText("Nombre de la Empresa");
 
         jMenu2.setText("Productos");
 
@@ -461,44 +476,42 @@ public final class Minimos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(122, 122, 122)
-                        .addComponent(jLabel7))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1019, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(213, 213, 213)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(216, 216, 216)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addGap(214, 214, 214))
+                .addGap(211, 211, 211))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(218, 218, 218)
+                        .addComponent(jLabel7))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE)
+                    .addComponent(txtEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(txtEmpresa)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
+                        .addGap(44, 44, 44)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
+                        .addGap(37, 37, 37)
                         .addComponent(jLabel7)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(29, 29, 29))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -542,15 +555,7 @@ public final class Minimos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            JasperReport minimos = (JasperReport) JRLoader.loadObject("reporteMinimos.jasper");
-            Map parametros = new HashMap();
-            JRDataSource datasource = new JRTableModelDataSource(tablaMinimos.getModel());
-            JasperPrint j = JasperFillManager.fillReport(minimos, parametros, datasource);
-            JasperViewer.viewReport(j, false);
-        } catch (JRException ex) {
-            Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        generaReporte();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUpdateActionPerformed
@@ -620,10 +625,6 @@ public final class Minimos extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        generaReporte();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -658,7 +659,6 @@ public final class Minimos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -686,6 +686,7 @@ public final class Minimos extends javax.swing.JFrame {
     private javax.swing.JTable tablaMinimos;
     private javax.swing.JLabel txtCant;
     private javax.swing.JLabel txtCod;
+    private javax.swing.JLabel txtEmpresa;
     private javax.swing.JLabel txtMayor;
     private javax.swing.JTextField txtMin;
     private javax.swing.JLabel txtNom;

@@ -527,7 +527,7 @@ public final class Principal extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, opciones, "Aceptar");
         if (eleccion == JOptionPane.YES_OPTION) {
-            int n = JOptionPane.showConfirmDialog(null, "Antes de cerrar ¿Desea crar un respaldo de la base de datos?\n"
+            int n = JOptionPane.showConfirmDialog(null, "Antes de cerrar ¿Desea crear un respaldo de la base de datos?\n"
                     + "Esto solo nos tomará unos segundos", "Backup", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 respaldo();
@@ -647,7 +647,6 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
         cerrar();
     }//GEN-LAST:event_formWindowClosing
 

@@ -5,6 +5,11 @@ public class Clientes {
     private String strTelf;
     private double dblDeuda;
     private String strDireccion;
+    private boolean credito;
+    
+    /*Atributos externos*/
+    private String usuario;
+    private double cant;
 
     public Clientes() {
         /*Constructor vacio para usar posteriormente en la 
@@ -15,11 +20,13 @@ public class Clientes {
         this.strCedula = strCedula;
     }
 
-    public Clientes(String strNombre, double dblDeuda, String strDireccion, String strTelf) {
+    public Clientes(String strNombre, double dblDeuda, String strDireccion, String strTelf, boolean credito, double cant) {
         this.strNombre = strNombre;
         this.dblDeuda = dblDeuda;
         this.strDireccion = strDireccion;
         this.strTelf = strTelf;
+        this.credito = credito;
+        this.cant = cant;
     }
 
     public Clientes(double dblDeuda, String strCedula) {
@@ -32,19 +39,22 @@ public class Clientes {
         this.strCedula = strCedula;
     }
 
-    public Clientes(String strNombre, String strCedula, String strTelf, String strDireccion) {
-        this.strNombre = strNombre;
-        this.strCedula = strCedula;
-        this.strTelf = strTelf;
-        this.strDireccion = strDireccion;
-    }
-    
     public Clientes(String strNombre, String strCedula, String strTelf, double dblDeuda, String strDireccion) {
         this.strNombre = strNombre;
         this.strCedula = strCedula;
         this.strTelf = strTelf;
         this.dblDeuda = dblDeuda;
         this.strDireccion = strDireccion;
+    }
+    
+    public Clientes(String strNombre, String strCedula, String strTelf, double dblDeuda, String strDireccion, boolean credito, String usuario, double cant) {
+        this.strNombre = strNombre;
+        this.strCedula = strCedula;
+        this.strTelf = strTelf;
+        this.dblDeuda = dblDeuda;
+        this.strDireccion = strDireccion;
+        this.usuario = usuario;
+        this.cant = cant;
     }
 
     public String getStrNombre() {
@@ -86,6 +96,29 @@ public class Clientes {
     public void setStrDireccion(String strDireccion){
         this.strDireccion = strDireccion;
     }
-    
+
+    public boolean isCredito() {
+        return credito;
+    }
+
+    public void setCredito(boolean credito) {
+        this.credito = credito;
+    }    
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public double getCant() {
+        return cant;
+    }
+
+    public void setCant(double cant) {
+        this.cant = cant;
+    }
     
 }

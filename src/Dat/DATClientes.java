@@ -160,6 +160,37 @@ public class DATClientes {
         }
         return true;
     }
+    
+    public boolean InsertarCliente2(Clientes cliente) throws SQLException {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "INSERT INTO clientes (Nombres, Cedula_Cliente, Telefono, Deuda, Direccion, Credito, "
+                    + "autorizado_por, monto_aprovado)"
+                    + "VALUES (?,?,?,?,?,?,?,?)";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, cliente.getStrNombre());
+            ps.setString(2, cliente.getStrCedula());
+            ps.setString(3, cliente.getStrTelf());
+            ps.setDouble(4, cliente.getDblDeuda());
+            ps.setString(5, cliente.getStrDireccion());
+            ps.setBoolean(6, cliente.isCredito());
+            ps.setString(7, cliente.getUsuario());
+            ps.setDouble(8, cliente.getCant());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "El nombre o la cédula ya están asignados a otro cliente");
+            return false;
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return true;
+    }
 
     public void agregarDeuda(Clientes cliente) {
         try {
@@ -247,7 +278,7 @@ public class DATClientes {
         ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, direccion, deuda, telefono FROM clientes WHERE cedula_cliente = ?";
+            String sentencia = "SELECT nombres, direccion, deuda, telefono, credito, cantidad FROM clientes WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();
@@ -256,7 +287,9 @@ public class DATClientes {
                 String direccion = rs.getString(2);
                 double deuda = rs.getDouble(3);
                 String telf = rs.getString(4);
-                cliente = new Clientes(nombreCli, deuda, direccion, telf);
+                boolean credito = rs.getBoolean(5);
+                double cant = rs.getDouble(6);
+                cliente = new Clientes(nombreCli, deuda, direccion, telf, credito, cant);
                 listaCliente.add(cliente);
             }
         } catch (SQLException ex) {

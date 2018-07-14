@@ -22,10 +22,17 @@ public final class NewCliente extends javax.swing.JFrame {
     Utilidades util = new Utilidades();
     Usuario objU = new Usuario();
     String host;
+    public boolean bandera;
+    String usuario;
+    int rol = 0;
     DATClientes cliente;
 
     public NewCliente() {
         initComponents();
+        txtAyuda.setVisible(false);
+        txtAyudaCed.setVisible(false);
+        rbtnCredito.setSelected(false);
+        txtCredito.setEnabled(false);
         cliente = new DATClientes();
         manejadorUsuario = new DATUsuario();
         host = util.getPcName();
@@ -38,9 +45,10 @@ public final class NewCliente extends javax.swing.JFrame {
     public void permisos() {
         ArrayList<Usuario> rolLogged = manejadorUsuario.obtenerUserLog(host);
         int cantRol = rolLogged.size();
-        int rol = 0;
         for (int i = 0; i < cantRol; i++) {
             objU = rolLogged.get(i);
+            rol = objU.getRol();
+            usuario = objU.getCedulaUsuario();
             if (rol == 0) {
                 jmiElimProd.setEnabled(false);
                 jmiElimCliente.setEnabled(false);
@@ -58,6 +66,7 @@ public final class NewCliente extends javax.swing.JFrame {
 
     public void guardarCliente() {
         double deuda = 0.00;
+        boolean credito = false;
         try {
             String nombre = txtNombre.getText().toUpperCase();
             String dir = txtDireccion.getText().toUpperCase();
@@ -68,17 +77,35 @@ public final class NewCliente extends javax.swing.JFrame {
             } else {
                 deuda = Double.parseDouble(txtDeuda.getText());
             }
+            if (rbtnCredito.isSelected()) {
+                credito = true;
+                double cantidad = Double.parseDouble(txtCredito.getText());
+                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyudaCed.getText(), cantidad);
+            } else {
+                objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
+            }
 
-            objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
             try {
-                if (cliente.InsertarCliente(objCliente)) {
-                    JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
-                    txtNombre.setText("");
-                    txtDireccion.setText("");
-                    txtCedula.setText("");
-                    txtTelf.setText("");
-                    txtDeuda.setText("");
+                if (rbtnCredito.isSelected()) {
+                    if (cliente.InsertarCliente2(objCliente)) {
+                        JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
+                        txtNombre.setText("");
+                        txtDireccion.setText("");
+                        txtCedula.setText("");
+                        txtTelf.setText("");
+                        txtDeuda.setText("");
+                    }
+                } else {
+                    if (cliente.InsertarCliente(objCliente)) {
+                        JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
+                        txtNombre.setText("");
+                        txtDireccion.setText("");
+                        txtCedula.setText("");
+                        txtTelf.setText("");
+                        txtDeuda.setText("");
+                    }
                 }
+
             } catch (SQLException ex) {
                 Logger.getLogger(NewCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -111,6 +138,10 @@ public final class NewCliente extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         txtDeuda = new javax.swing.JTextField();
+        rbtnCredito = new javax.swing.JRadioButton();
+        txtCredito = new javax.swing.JTextField();
+        txtAyuda = new javax.swing.JLabel();
+        txtAyudaCed = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -219,6 +250,19 @@ public final class NewCliente extends javax.swing.JFrame {
             }
         });
 
+        rbtnCredito.setText("Crédito");
+        rbtnCredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCreditoActionPerformed(evt);
+            }
+        });
+
+        txtCredito.setText(" ");
+
+        txtAyuda.setText("jLabel9");
+
+        txtAyudaCed.setText("jLabel9");
+
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -321,7 +365,13 @@ public final class NewCliente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtAyuda)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAyudaCed)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -330,37 +380,39 @@ public final class NewCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addComponent(jLabel10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(116, 116, 116)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rbtnCredito)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(130, 130, 130)
+                                    .addComponent(jLabel6))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(114, 114, 114)
+                                    .addComponent(jLabel10))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(116, 116, 116)
+                                    .addComponent(jLabel5))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(114, 114, 114)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4)))))
                         .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtDeuda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                                .addComponent(txtTelf, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 79, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDeuda, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                            .addComponent(txtTelf)
+                            .addComponent(txtNombre)
+                            .addComponent(txtCedula)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                            .addComponent(txtCredito))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(197, Short.MAX_VALUE)
                 .addComponent(btnAtras)
                 .addGap(79, 79, 79)
                 .addComponent(btnGuardarCli)
-                .addGap(162, 162, 162))
+                .addGap(166, 166, 166))
             .addGroup(layout.createSequentialGroup()
                 .addGap(242, 242, 242)
                 .addComponent(jLabel1)
@@ -375,7 +427,10 @@ public final class NewCliente extends javax.swing.JFrame {
                         .addComponent(jLabel7))
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAyuda)
+                    .addComponent(txtAyudaCed))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
@@ -398,18 +453,22 @@ public final class NewCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addGap(43, 43, 43)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbtnCredito)
+                    .addComponent(txtCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAtras)
                     .addComponent(btnGuardarCli))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCliActionPerformed
-        int digitosCedula = txtCedula.getText().length();
+
         int digitTelf = txtTelf.getText().length();
         if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hay campos vacios que no se pueden guardar");
@@ -418,8 +477,33 @@ public final class NewCliente extends javax.swing.JFrame {
         } else if (digitTelf != 7 && digitTelf != 10) {
             JOptionPane.showMessageDialog(null, "Número telefónico incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            guardarCliente();
+            if (rol == 1) {
+                guardarCliente();
+                txtAyuda.setText("nada");
+                txtAyudaCed.setText("nada");
+            } else if (rol == 0) {
+                int j = JOptionPane.showConfirmDialog(null, "No tiene permisos para asignar créditos.\n"
+                        + "Solo un administrador puede aprobar créditos\n"
+                        + "Si un administrador va a aprobar el crédito\n"
+                        + "presione (Si) de lo contrario presione (No)", "Importante",
+                        JOptionPane.YES_NO_OPTION);
+                if (j == JOptionPane.YES_OPTION) {
+                    System.out.println(txtAyuda.getText());
+                    PermisoDialg pd = new PermisoDialg(null, true);
+                    pd.setVisible(true);
+                    System.out.println(txtAyuda.getText());
+                    if (txtAyuda.getText().equals("ok")) {
+                        guardarCliente();
+                        txtAyuda.setText("nada");
+                        txtAyudaCed.setText("nada");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se habilitó el crédito al usuario");
+                    }
+
+                }
+            }
         }
+
     }//GEN-LAST:event_btnGuardarCliActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
@@ -559,6 +643,15 @@ public final class NewCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDeudaFocusGained
 
+    private void rbtnCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCreditoActionPerformed
+        if (rbtnCredito.isSelected()) {
+            txtCredito.setEnabled(true);
+        } else {
+            txtCredito.setEnabled(false);
+            txtCredito.setText("");
+        }
+    }//GEN-LAST:event_rbtnCreditoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -618,7 +711,11 @@ public final class NewCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
+    private javax.swing.JRadioButton rbtnCredito;
+    public static javax.swing.JLabel txtAyuda;
+    public static javax.swing.JLabel txtAyudaCed;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtCredito;
     private javax.swing.JTextField txtDeuda;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;

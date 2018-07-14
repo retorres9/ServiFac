@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
@@ -50,6 +51,8 @@ public final class Factura extends javax.swing.JFrame {
     int filasSelec;
     int cantInicial;
     int rol;
+    int helper;
+    boolean credito;
     boolean flag = true;
     boolean banderaFila = true;
     String cedUsuario;
@@ -68,6 +71,7 @@ public final class Factura extends javax.swing.JFrame {
     DATUsuario manejadorUsuario;
     double totalVenta;
     String host;
+    double cant;
     Utilidades util = new Utilidades();
 
     public Factura() {
@@ -91,6 +95,9 @@ public final class Factura extends javax.swing.JFrame {
 
     public void generarFactura() {
         try {
+            JDialog fact = new JDialog(new javax.swing.JFrame(), "Factura", true);
+            fact.setSize(1124, 768);
+            fact.setLocationRelativeTo(null);
             JasperReport reporte = (JasperReport) JRLoader.loadObject("factura.jasper");
             Map parametro = new HashMap();
 
@@ -102,8 +109,34 @@ public final class Factura extends javax.swing.JFrame {
             parametro.put("total", txtTotal.getText());
             JRDataSource dataSource = new JRTableModelDataSource(tblVentas.getModel());
             JasperPrint j = JasperFillManager.fillReport(reporte, parametro, dataSource);
-            JasperViewer.viewReport(j, false);
+            JasperViewer viewer = new JasperViewer(j, false);
+            fact.getContentPane().add(viewer.getContentPane());
+            fact.setVisible(true);
+            //jv.setTitle("factura");
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
 
+    }
+
+    public void generarNotaVenta() {
+        try {
+            JDialog fact = new JDialog(new javax.swing.JFrame(), "Factura", true);
+            fact.setSize(1124, 768);
+            fact.setLocationRelativeTo(null);
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("notaVenta.jasper");
+            Map parametro = new HashMap();
+
+            parametro.put("cedula", txtCed.getText());
+            parametro.put("direccion", txtDireccionCl.getText());
+            parametro.put("cliente", txtCliente.getText());
+            parametro.put("telefono", txtTelf.getText());
+            parametro.put("total", txtTotal.getText());
+            JRDataSource dataSource = new JRTableModelDataSource(tblVentas.getModel());
+            JasperPrint j = JasperFillManager.fillReport(reporte, parametro, dataSource);
+            JasperViewer viewer = new JasperViewer(j, false);
+            fact.getContentPane().add(viewer.getContentPane());
+            fact.setVisible(true);
             //jv.setTitle("factura");
         } catch (JRException ex) {
             ex.printStackTrace();
@@ -133,7 +166,6 @@ public final class Factura extends javax.swing.JFrame {
                 cont = 1;
             }
         }
-        System.out.println(cont);
     }
 
     public void usuario() {
@@ -233,59 +265,83 @@ public final class Factura extends javax.swing.JFrame {
         }
     }
 
+    public void revisaCredito() {
+
+    }
+
     public void venta() {
-        GuiCambio cambioDiag = new GuiCambio(this, true);
-        cambioDiag.setVisible(true);
-        try {
-            double num = 0, numTotal;
-            if (cambioDiag != null) {
-                num = cambioDiag.getCambio();
+        if ((credito == false) && (cmbPago.getSelectedItem().equals("Crédito"))) {
+            JOptionPane.showMessageDialog(null, "El cliente no tiene crédito aprobado");
+            helper = 0;
+        } else {
+            GuiCambio cambioDiag = new GuiCambio(this, true);
+            cambioDiag.cred=credito;
+            GuiCambio.monto = Double.parseDouble(txtTotal.getText());
+            GuiCambio.cliente = txtCliente.getText();
+            GuiCambio.txtAyudaDeuda.setText(String.valueOf(deuda));
+            GuiCambio.txtAyudaCred.setText(String.valueOf(cant));
+            cambioDiag.setVisible(true);
+            
+            try {
+                double num = 0, numTotal;
+                if (cambioDiag != null) {
+                    num = cambioDiag.getCambio();
+                }
+
+                numTotal = Double.parseDouble(txtTotal.getText());
+                double cambio = num - numTotal;
+                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                simbolos.setDecimalSeparator('.');
+                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+                String decimal = dcmlCambio.format(cambio);
+                double dblDecimal = Double.parseDouble(decimal);
+                dblDecimal = Math.abs(dblDecimal);
+                double EPSILON = 0.0000001;
+
+                if (cmbPago.getSelectedItem().equals("Contado")) {
+
+                } else if (cmbPago.getSelectedItem().equals("Crédito")) {
+
+                }
+
+                if (dblDecimal < EPSILON) {
+                    JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
+                } else if ((dblDecimal > 0) && (num > numTotal)) {
+                    JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
+                    double nuevaDeuda = deuda + dblDecimal;
+                    cliente = new Clientes(nuevaDeuda, txtCed.getText());
+                    manejadorCliente.agregarDeuda(cliente);
+                }
+                for (int i = 0; i < tblVentas.getRowCount(); i++) {
+
+                    int cantVenta = (int) tblVentas.getValueAt(i, 0);
+                    String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
+                    String strCodigo = (String) tblVentas.getValueAt(i, 5);
+                    String strPrecio = tblVentas.getValueAt(i, 2).toString();
+                    double precio_Venta = Double.parseDouble(strPrecio);
+                    producto = new Producto(cantVenta, descripcionVenta);
+                    manejadorProd.UpdateCantFactura(producto);
+                    String cedula = txtCed.getText();
+                    detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
+                    //manejadorDetalle.creaReporte(detalle);
+                }
+                if (cmbTipComp.getSelectedItem().equals("Factura")) {
+                    generarFactura();
+                } else {
+                    generarNotaVenta();
+                }
+                resetFact();
+                venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
+                manejadorVenta.crearVenta(venta, detalle);
+                helper = 1;
+            } catch (NumberFormatException ex) {
+                Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+
             }
-
-            numTotal = Double.parseDouble(txtTotal.getText());
-            double cambio = num - numTotal;
-            DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-            simbolos.setDecimalSeparator('.');
-            DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-            String decimal = dcmlCambio.format(cambio);
-            double dblDecimal = Double.parseDouble(decimal);
-            dblDecimal = Math.abs(dblDecimal);
-            double EPSILON = 0.0000001;
-            System.out.println(dblDecimal);
-            if (dblDecimal < EPSILON) {
-                JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
-            } else if ((dblDecimal > 0) && (num > numTotal)) {
-                JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
-
-            } else {
-                JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
-                double nuevaDeuda = deuda + dblDecimal;
-                cliente = new Clientes(nuevaDeuda, txtCed.getText());
-                manejadorCliente.agregarDeuda(cliente);
-            }
-            for (int i = 0; i < tblVentas.getRowCount(); i++) {
-
-                int cantVenta = (int) tblVentas.getValueAt(i, 0);
-                String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
-                String strCodigo = (String) tblVentas.getValueAt(i, 5);
-                System.out.println(strCodigo);
-                String strPrecio = tblVentas.getValueAt(i, 2).toString();
-                double precio_Venta = Double.parseDouble(strPrecio);
-                producto = new Producto(cantVenta, descripcionVenta);
-                manejadorProd.UpdateCantFactura(producto);
-                String cedula = txtCed.getText();
-                detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
-                //manejadorDetalle.creaReporte(detalle);
-            }
-            generarFactura();
-            resetFact();
-            venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
-            manejadorVenta.crearVenta(venta, detalle);
-
-        } catch (NumberFormatException ex) {
-            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException ex) {
-
         }
 
     }
@@ -306,7 +362,7 @@ public final class Factura extends javax.swing.JFrame {
         cmbTipComp = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        cmbPago = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -431,8 +487,8 @@ public final class Factura extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Roboto Condensed Light", 1, 13)); // NOI18N
         jLabel8.setText("Tipo de Pago:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito" }));
-        jComboBox2.setFocusable(false);
+        cmbPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito" }));
+        cmbPago.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -445,7 +501,7 @@ public final class Factura extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbTipComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -459,7 +515,7 @@ public final class Factura extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -733,7 +789,7 @@ public final class Factura extends javax.swing.JFrame {
                 .addComponent(txtEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtUsuario)
-                .addGap(102, 102, 102)
+                .addGap(83, 83, 83)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
@@ -838,7 +894,6 @@ public final class Factura extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBusqProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(txtImprimir))
@@ -854,7 +909,6 @@ public final class Factura extends javax.swing.JFrame {
             if (numFilas >= 0) {
                 String filaDesc = (String) tblVentas.getValueAt(numFilas, 1);
                 cantInicial = (int) tblVentas.getValueAt(numFilas, 0);
-                System.out.println(cantInicial);
                 ArrayList<Producto> datos = manejadorProd.comprobarCant(filaDesc);
                 int cantDatos = datos.size();
                 for (int i = 0; i < cantDatos; i++) {
@@ -891,6 +945,8 @@ public final class Factura extends javax.swing.JFrame {
             txtDireccionCl.setText(dir);
             txtTelf.setText(telf);
             deuda = cliente.getDblDeuda();
+            credito = cliente.isCredito();
+            cant = cliente.getCant();
         }
 
         if (txtCliente.getText().equals(" ")) {
@@ -916,21 +972,27 @@ public final class Factura extends javax.swing.JFrame {
         if ((tblVentas.getRowCount() == 0) || (txtCed.getText().isEmpty())) {
             //Do nothing
         } else {
-            if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
-                venta();
-                ventaProd();
-                this.contador();
+            if ((txtCliente.getText().equals("CONSUMIDOR FINAL")) && (cmbPago.getSelectedItem().equals("Crédito"))) {
+                JOptionPane.showMessageDialog(null, "No se puede agregar deuda a CONSUMIDOR FINAL");
             } else {
-                venta();
-                ventaProd();
-                this.contador();
+                if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
+                    venta();
+                    ventaProd();
+                    this.contador();
+                } else {
+                    venta();
+                    ventaProd();
+                    this.contador();
+                }
             }
         }
-        txtCliente.setText("CONSUMIDOR FINAL");
-        txtCed.setText("1111111111111");
-        txtDireccionCl.setText(" ");
-        txtTelf.setText(" ");
-        txtCod.requestFocusInWindow();
+        if (helper == 1) {
+            txtCliente.setText("CONSUMIDOR FINAL");
+            txtCed.setText("1111111111111");
+            txtDireccionCl.setText(" ");
+            txtTelf.setText(" ");
+            txtCod.requestFocusInWindow();
+        }
     }//GEN-LAST:event_txtImprimirActionPerformed
 
     public void comparaProducto() {
@@ -1052,7 +1114,6 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtCedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedFocusGained
-        System.out.println(txtCed.getText());
         if (txtCed.getText().equals("1111111111111")) {
             txtCed.setText("");
             txtCliente.setText(" ");
@@ -1068,7 +1129,6 @@ public final class Factura extends javax.swing.JFrame {
     private void tblVentasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVentasKeyReleased
         int filaSeleccionada = tblVentas.getSelectedRow();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println("hola");
             try {
                 if (filaSeleccionada >= 0) {
                     double precioUnit = (Double) tblVentas.getValueAt(filaSeleccionada, 2);
@@ -1337,11 +1397,11 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cmbPago;
     private javax.swing.JComboBox cmbTipComp;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;

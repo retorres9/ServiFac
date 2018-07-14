@@ -1,8 +1,9 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+describe clientes;
 SELECT cedula_cliente,count(cedula_cliente)  FROM detalle_venta group by cedula_cliente;
-select * from venta;
+select * from usuario;
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
@@ -51,8 +52,17 @@ cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 
 telefono VARCHAR(10) NOT NULL,
 deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 direccion TEXT NOT NULL,
-estado boolean default true
+estado boolean default true,
+credito boolean default false,
+autorizado_por varchar(10) default "N/A",
+modificado_por varchar(10) default "N/A",
+monto_aprovado decimal(7,2) default 0.00
 );
+select * from clientes;
+UPDATE clientes set credito = false WHERE cedula_cliente ='1111111111111';
+select * from clientes;
+ALTER table clientes change modificado_por modificado_por varchar(10) default "N/A";
+
 INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111", " ", 0.00, " ", 1);
 #describe producto;
 
@@ -117,6 +127,9 @@ usuario VARCHAR(15),
 id_venta INT(10)
 );
 
+SELECT Distinct v.id_venta, v.fecha, c.cedula_cliente FROM venta v, usuario u, detalle_venta dv, clientes c WHERE v.id_Venta = dv.id_venta AND c.cedula_cliente=dv.cedula_cliente AND c.nombres="CONSUMIDOR FINAL";
+select * from venta;
+select * from detalle_venta;
 CREATE TABLE bodega(
 id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL UNIQUE
