@@ -59,7 +59,7 @@ public class PermisoDialg extends javax.swing.JDialog {
             res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario, rol FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
 
             while (res.next()) {
-                valid = res.getString("Usuario");9
+                valid = res.getString("Usuario");
                 valid2 = res.getString("Contrasena");
                 valid3 = res.getString("cedula_usuario");
                 valid4 = res.getBoolean("rol");

@@ -130,7 +130,6 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         for (int i = 0; i < cantFilas; i++) {
             objVenta = listadoVentas.get(i);
             int idVenta = objVenta.getIntIdVenta();
-            System.out.println(idVenta);
             String cedulaCliente = objVenta.getCedulaUser();
             String nombreCliente = objVenta.getStrFecha();
             double totalVenta = objVenta.getDblTotalVenta();
@@ -263,7 +262,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         txtTotal.setBackground(new java.awt.Color(0, 255, 0));
         txtTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        calendario.setCurrentView(new datechooser.view.appearance.AppearancesList("custom",
+        calendario.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
             new datechooser.view.appearance.ViewAppearance("custom",
                 new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 12),
                     new java.awt.Color(187, 187, 187),
@@ -304,7 +303,9 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
+    calendario.setNothingAllowed(false);
     calendario.setFormat(2);
+    calendario.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
     calendario.addCommitListener(new datechooser.events.CommitListener() {
         public void onCommit(datechooser.events.CommitEvent evt) {
             calendarioOnCommit(evt);

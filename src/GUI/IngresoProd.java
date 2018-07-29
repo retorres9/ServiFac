@@ -91,6 +91,13 @@ public final class IngresoProd extends javax.swing.JFrame {
         cargarModeloUbic();
         cargarModeloBodega();
         initComponents();
+        txtCantMin.setTransferHandler(null);
+        txtCantidad.setTransferHandler(null);
+        txtCod.setTransferHandler(null);
+        txtExistenciasBodega.setTransferHandler(null);
+        txtGanancia.setTransferHandler(null);
+        txtGananciaMayor.setTransferHandler(null);
+        txtPrecioCompra.setTransferHandler(null);
         host = util.getPcName();
         muestraPrecio();
         muestraPrecioxMayor();

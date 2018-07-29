@@ -424,6 +424,7 @@
     <Component class="javax.swing.JRadioButton" name="rbtnCredito">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cr&#xe9;dito"/>
+        <Property name="toolTipText" type="java.lang.String" value="Seleccione para permitir cr&#xe9;dito al cliente que est&#xe1; ingresando"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtnCreditoActionPerformed"/>

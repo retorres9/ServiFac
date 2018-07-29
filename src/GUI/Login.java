@@ -211,8 +211,8 @@ public final class Login extends javax.swing.JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
+                txtUsuario.requestFocusInWindow();
             }
-            //manejadorUsuario.setLogin(valid3, host);
             stm.close();
             res.close();
             con.close();

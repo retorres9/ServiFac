@@ -121,6 +121,7 @@ public class DATUsuario {
 
     public void startupLogin(String maq) {
         try {
+            //con = DriverManager.getConnection("jdbc:mysql://192.168.1.7:3306/empresa", "root", "ticowrc2017");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE usuario SET login = 0 WHERE maquina = ?";
             ps = con.prepareStatement(sentencia);

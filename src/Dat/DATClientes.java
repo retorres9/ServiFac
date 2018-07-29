@@ -278,7 +278,7 @@ public class DATClientes {
         ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, direccion, deuda, telefono, credito, cantidad FROM clientes WHERE cedula_cliente = ?";
+            String sentencia = "SELECT nombres, direccion, deuda, telefono, credito, monto_aprovado FROM clientes WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();

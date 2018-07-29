@@ -29,6 +29,10 @@ public final class NewCliente extends javax.swing.JFrame {
 
     public NewCliente() {
         initComponents();
+        txtCedula.setTransferHandler(null);
+        txtCredito.setTransferHandler(null);
+        txtDeuda.setTransferHandler(null);
+        txtTelf.setTransferHandler(null);
         txtAyuda.setVisible(false);
         txtAyudaCed.setVisible(false);
         rbtnCredito.setSelected(false);
@@ -251,6 +255,7 @@ public final class NewCliente extends javax.swing.JFrame {
         });
 
         rbtnCredito.setText("Crédito");
+        rbtnCredito.setToolTipText("Seleccione para permitir crédito al cliente que está ingresando");
         rbtnCredito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnCreditoActionPerformed(evt);
