@@ -1,10 +1,14 @@
 package GUI;
 
+import Clases.Categoria;
 import Clases.Configuracion;
 import Clases.Producto;
+import Clases.Proveedor;
 import Clases.Usuario;
+import Dat.DATCategoria;
 import Dat.DATConfiguracion;
 import Dat.DATMaterial;
+import Dat.DATProveedor;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
 import java.sql.SQLException;
@@ -13,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -35,14 +40,25 @@ public final class Minimos extends javax.swing.JFrame {
     Principal objP = new Principal();
     Usuario objU = new Usuario();
     DATMaterial producto;
+    DATCategoria objCat;
+    DATProveedor objProveedor;
     DefaultTableModel modelo = new DefaultTableModel();
     Configuracion config = new Configuracion();
     DATUsuario manejadorUsuario;
     Utilidades util = new Utilidades();
     String host;
+    String auxProv="";
+    String auxCat="";
     DATConfiguracion manejadorConf;
+    
+    DefaultComboBoxModel<Categoria> modeloCategorias;
+    DefaultComboBoxModel<Proveedor> modeloProv;
 
     public Minimos() {
+        modeloCategorias = new DefaultComboBoxModel<Categoria>();
+        modeloProv = new DefaultComboBoxModel<Proveedor>();
+        objCat = new DATCategoria();
+        objProveedor = new DATProveedor();
         initComponents();
         this.jLabel7.setVisible(false);
         producto = new DATMaterial();
@@ -57,6 +73,28 @@ public final class Minimos extends javax.swing.JFrame {
         permisos();
         updateTabla();
         empresa();
+        cargarModeloCat();
+        cargarModeloProv();
+    }
+    
+    public void cargarModeloCat() {
+        try {
+            ArrayList<Categoria> listaCategorias;
+            listaCategorias = objCat.obtenerCategoria();
+            for (Categoria cat : listaCategorias) {
+                modeloCategorias.addElement(cat);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void cargarModeloProv() {
+        ArrayList<Proveedor> listaProveedores;
+        listaProveedores = objProveedor.obtenerEmpresa();
+        for (Proveedor prov : listaProveedores) {
+            modeloProv.addElement(prov);            
+        }
     }
 
     public void carcarColumnas() {
@@ -124,7 +162,7 @@ public final class Minimos extends javax.swing.JFrame {
 
     public void updateTabla() {
         try {
-            ArrayList<Producto> listaProductos = producto.ConsultarMinimo();
+            ArrayList<Producto> listaProductos = producto.ConsultarMinimo(auxProv,auxProv);
             int listadoProductos = listaProductos.size();
             modelo.setNumRows(listadoProductos);
             for (int i = 0; i < listadoProductos; i++) {
@@ -215,6 +253,13 @@ public final class Minimos extends javax.swing.JFrame {
         txtUpdate = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtEmpresa = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        rbtnProv = new javax.swing.JCheckBox();
+        rbtnCat = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -374,6 +419,58 @@ public final class Minimos extends javax.swing.JFrame {
         txtEmpresa.setFont(new java.awt.Font("Roboto Condensed Light", 1, 36)); // NOI18N
         txtEmpresa.setText("Nombre de la Empresa");
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar"));
+
+        jComboBox1.setModel(modeloProv);
+
+        jComboBox2.setModel(modeloCategorias);
+
+        jLabel8.setText("Proveedor:");
+
+        jLabel9.setText("Categoria:");
+
+        rbtnProv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnProvActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox1, 0, 234, Short.MAX_VALUE)
+                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnProv)
+                    .addComponent(rbtnCat))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8))
+                    .addComponent(rbtnProv))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(rbtnCat))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -485,26 +582,27 @@ public final class Minimos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
+                    .addComponent(txtEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(218, 218, 218)
-                        .addComponent(jLabel7))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE)
-                    .addComponent(txtEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(txtEmpresa)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel7)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
@@ -601,6 +699,7 @@ public final class Minimos extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    
     private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
         EliminarCliente objElmCl = new EliminarCliente();
         objElmCl.setVisible(true);
@@ -624,6 +723,16 @@ public final class Minimos extends javax.swing.JFrame {
         objElimProv.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jmiElimProvActionPerformed
+
+    private void rbtnProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnProvActionPerformed
+        if(rbtnProv.isSelected()){
+            auxProv = jComboBox1.getSelectedItem().toString();
+            updateTabla();
+        } else {
+            auxProv = "";
+            updateTabla();
+        }
+    }//GEN-LAST:event_rbtnProvActionPerformed
 
     /**
      * @param args the command line arguments
@@ -659,6 +768,8 @@ public final class Minimos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<Proveedor> jComboBox1;
+    private javax.swing.JComboBox<Categoria> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -667,6 +778,8 @@ public final class Minimos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -678,11 +791,14 @@ public final class Minimos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
+    private javax.swing.JCheckBox rbtnCat;
+    private javax.swing.JCheckBox rbtnProv;
     private javax.swing.JTable tablaMinimos;
     private javax.swing.JLabel txtCant;
     private javax.swing.JLabel txtCod;

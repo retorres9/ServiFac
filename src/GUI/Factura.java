@@ -947,6 +947,7 @@ public final class Factura extends javax.swing.JFrame {
             txtTelf.setText(telf);
             deuda = cliente.getDblDeuda();
             credito = cliente.isCredito();
+            System.out.println(credito);
             cant = cliente.getCant();
         }
 
@@ -955,6 +956,7 @@ public final class Factura extends javax.swing.JFrame {
                     + "\n¿Desea ingrear un nuevo Cliente?", "Aviso!", JOptionPane.YES_NO_OPTION);
             if (opc == JOptionPane.YES_OPTION) {
                 NuevoClienteDialog clienteDialogo = new NuevoClienteDialog(this, true);
+                clienteDialogo.txtCedula.setText(nom);
                 clienteDialogo.setVisible(true);
                 if (clienteDialogo != null) {
                     if (!clienteDialogo.getInformacion().equals("")) {

@@ -93,15 +93,15 @@ public class DATMaterial {
         return listadoEnBodega;
     }
 
-    public ArrayList<Producto> ConsultarMinimo() throws SQLException {
+    public ArrayList<Producto> ConsultarMinimo(String prov, String cat) throws SQLException {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.Precio, "
+            String sentencia = "SELECT distinct p.Nombre_Producto, p.Codigo, p.Precio, "
                     + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
-                    + "p.Cantidad_Minima, pr.Empresa FROM producto p, ubicacion u,"
-                    + " proveedores pr WHERE p.id_ubicacion = u.id_ubicacion AND"
-                    + " p.ruc = pr.ruc AND cantidad<cantidad_minima ORDER BY pr.Empresa, p.Nombre_Producto ";
+                    + "p.Cantidad_Minima, pr.Empresa FROM categoria cat, producto p, ubicacion u, "
+                    + "proveedores pr WHERE p.id_ubicacion = u.id_ubicacion  AND "
+                    + "p.ruc = pr.ruc AND cantidad<cantidad_minima "+"AND pr.empresa ='"+prov+"' OR cat.nombre_categoria = '"+cat+"' ORDER BY pr.Empresa, p.Nombre_Producto ";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {

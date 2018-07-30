@@ -12,10 +12,11 @@ public class GuiCambio extends javax.swing.JDialog {
     /**
      * Creates new form GuiCambio
      */
-    boolean bandera = true;
+    String bandera = "true";
     boolean cred;
     public static double monto;
     public static String cliente;
+    double cambio = 0.00;
 
     public GuiCambio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -27,7 +28,7 @@ public class GuiCambio extends javax.swing.JDialog {
     }
 
     public double getCambio() {
-        double cambio = 0.00;
+        cambio = 0.00;
         try {
             cambio = Double.parseDouble(txtCambio.getText());
 
@@ -42,25 +43,46 @@ public class GuiCambio extends javax.swing.JDialog {
             double deuda = Double.parseDouble(txtAyudaDeuda.getText());
             double cant = Double.parseDouble(txtAyudaCred.getText());
             double monto2 = monto + deuda;
-            if (monto2 > cant) {
-                JOptionPane.showMessageDialog(null, "El crédito a realizar excede el monto de crédito aprobado");
-                bandera = false;
-            } else {
-                double aux1 = 0.00;
-                double aux2 = Double.parseDouble(txtCambio.getText());
+            System.out.println(cred);
+            if (cred == true) {
+                System.out.println("cred true");
+                System.out.println(cred);
+                if (monto2 > cant) {
+                    JOptionPane.showMessageDialog(null, "El crédito a realizar excede el monto de crédito aprobado");
+                    bandera = "false";
+                } else {
+                    double aux1 = 0.00;
+                    double aux2 = Double.parseDouble(txtCambio.getText());
 
-                double total = aux1 + aux2;
-                bandera = true;
+                    double total = aux1 + aux2;
+                    bandera = "true";
+                }
+            } else {
+                if (monto <= Double.parseDouble(txtCambio.getText())) {
+                    double aux1 = 0.00;
+                    double aux2 = Double.parseDouble(txtCambio.getText());
+
+                    double total = aux1 + aux2;
+                    System.out.println("cred false");
+                    bandera = "true";
+                } else {
+                    bandera = "false";
+                    JOptionPane.showMessageDialog(null, "El monto recibido no cubre la deuda");
+                }
             }
+
         } catch (NumberFormatException ex) {
-            bandera = false;
+            //bandera = "moneda";
+            ex.printStackTrace();
         }
     }
 
     public void cambio() {
         valida();
-        if (bandera == true) {
+        if (bandera.equals("true")) {
             this.dispose();
+        } else if (bandera.equals("false")) {
+
         } else {
             JOptionPane.showMessageDialog(null, "Error en el formato del cambio introducido");
         }

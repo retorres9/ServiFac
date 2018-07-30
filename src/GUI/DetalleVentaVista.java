@@ -206,6 +206,29 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo3.setValueAt(cliente, i, 3);
         }
     }
+    
+    public void busquedafiltrada(){
+        String fecha = calendario.getText();
+        String nombre = txtBusqueda.getText();
+        ArrayList<Venta> listadoVentas = manejadorVenta.vistaVentaFiltrada(fecha, nombre);
+        int cantFilas = listadoVentas.size();
+        modelo.setNumRows(cantFilas);
+        for (int i = 0; i < cantFilas; i++) {
+            objVenta = listadoVentas.get(i);
+            int idVenta = objVenta.getIntIdVenta();
+            String cedulaCliente = objVenta.getCedulaUser();
+            String nombreCliente = objVenta.getStrFecha();
+            double totalVenta = objVenta.getDblTotalVenta();
+            double valCancelado = objVenta.getDblValCancelado();
+            //String fechaVenta = objVenta.getStrFecha();
+
+            modelo.setValueAt(idVenta, i, 0);
+            modelo.setValueAt(cedulaCliente, i, 1);
+            modelo.setValueAt(nombreCliente, i, 2);
+            modelo.setValueAt(totalVenta, i, 3);
+            modelo.setValueAt(valCancelado, i, 4);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -226,6 +249,8 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         btnVer = new javax.swing.JButton();
         txtTotalVentas = new javax.swing.JLabel();
         txtId = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtBusqueda = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPagoCl = new javax.swing.JTable();
@@ -335,6 +360,23 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
 
     txtId.setText("jLabel5");
 
+    jLabel5.setText("Buscar:");
+
+    txtBusqueda.setText("Ingrese el nombre o cédula del usuario que desee buscar.");
+    txtBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            txtBusquedaFocusGained(evt);
+        }
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            txtBusquedaFocusLost(evt);
+        }
+    });
+    txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            txtBusquedaKeyReleased(evt);
+        }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -343,12 +385,16 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel5)
+                    .addGap(18, 18, 18)
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(917, Short.MAX_VALUE))
+                    .addContainerGap())
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(txtTotalVentas)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 503, Short.MAX_VALUE)
                     .addComponent(txtId)
                     .addGap(401, 401, 401))))
     );
@@ -356,7 +402,10 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(17, 17, 17)
-            .addComponent(btnVer)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnVer)
+                .addComponent(jLabel5)
+                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
@@ -551,6 +600,30 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         objP.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void txtBusquedaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusGained
+        if (txtBusqueda.getText().equals("Ingrese el nombre o cédula del usuario que desee buscar.")) {
+            txtBusqueda.setText("");
+        } else {
+            //Do nothing
+        }
+    }//GEN-LAST:event_txtBusquedaFocusGained
+
+    private void txtBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusLost
+        if (!txtBusqueda.getText().equals("Ingrese el nombre o cédula del usuario que desee buscar.")) {
+            
+        } else {
+            txtBusqueda.setText("");
+        }
+    }//GEN-LAST:event_txtBusquedaFocusLost
+
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+        if(txtBusqueda.getText().isEmpty()){
+           tablaVentas();
+       } else {
+           busquedafiltrada();
+       }
+    }//GEN-LAST:event_txtBusquedaKeyReleased
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -594,6 +667,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -605,6 +679,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private javax.swing.JTable tblPagoCl;
     private javax.swing.JTable tblPagoPr;
     public static javax.swing.JTable tblVentas;
+    private javax.swing.JTextField txtBusqueda;
     public static javax.swing.JLabel txtId;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JLabel txtTotalAbonos;

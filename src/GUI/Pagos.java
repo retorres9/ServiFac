@@ -499,9 +499,7 @@ public final class Pagos extends javax.swing.JFrame {
         for (int i = 0; i < cantUser; i++) {
             usuario = cedula.get(i);
             cedUsuario = usuario.getUsuario();//Se obtiene el usuario ya que en la clase datusuario ya hay un constructor( string string string) -> (nombre,usuario,rol)
-            System.out.println(cedUsuario);
             vendedor = usuario.getNombre();
-            System.out.println(vendedor);
             txtVendedor.setText(vendedor);
             rol = usuario.getRol();
         }

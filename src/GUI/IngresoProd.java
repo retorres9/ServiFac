@@ -1082,9 +1082,8 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimClienteActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        NuevoProveedor objNp = new NuevoProveedor();
+        NuevoProveedorDialgo objNp = new NuevoProveedorDialgo(this, rootPaneCheckingEnabled);
         objNp.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed

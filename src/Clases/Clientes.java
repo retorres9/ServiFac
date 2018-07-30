@@ -1,12 +1,14 @@
 package Clases;
+
 public class Clientes {
+
     private String strNombre;
     private String strCedula;
     private String strTelf;
     private double dblDeuda;
     private String strDireccion;
     private boolean credito;
-    
+
     /*Atributos externos*/
     private String usuario;
     private double cant;
@@ -33,7 +35,7 @@ public class Clientes {
         this.strCedula = strCedula;
         this.dblDeuda = dblDeuda;
     }
-    
+
     public Clientes(String strNombre, String strCedula) {
         this.strNombre = strNombre;
         this.strCedula = strCedula;
@@ -46,7 +48,7 @@ public class Clientes {
         this.dblDeuda = dblDeuda;
         this.strDireccion = strDireccion;
     }
-    
+
     public Clientes(String strNombre, String strCedula, String strTelf, double dblDeuda, String strDireccion, boolean credito, String usuario, double cant) {
         this.strNombre = strNombre;
         this.strCedula = strCedula;
@@ -54,7 +56,15 @@ public class Clientes {
         this.dblDeuda = dblDeuda;
         this.strDireccion = strDireccion;
         this.usuario = usuario;
+        this.credito = credito;
         this.cant = cant;
+    }
+
+    public Clientes(String strNombre, String strCedula, String strTelf, String strDireccion) {
+        this.strNombre = strNombre;
+        this.strCedula = strCedula;
+        this.strTelf = strTelf;
+        this.strDireccion = strDireccion;
     }
 
     public String getStrNombre() {
@@ -88,12 +98,12 @@ public class Clientes {
     public void setDblDeuda(double dblDeuda) {
         this.dblDeuda = dblDeuda;
     }
-    
-    public String getStrDireccion(){
+
+    public String getStrDireccion() {
         return strDireccion;
     }
-    
-    public void setStrDireccion(String strDireccion){
+
+    public void setStrDireccion(String strDireccion) {
         this.strDireccion = strDireccion;
     }
 
@@ -103,7 +113,7 @@ public class Clientes {
 
     public void setCredito(boolean credito) {
         this.credito = credito;
-    }    
+    }
 
     public String getUsuario() {
         return usuario;
@@ -120,5 +130,5 @@ public class Clientes {
     public void setCant(double cant) {
         this.cant = cant;
     }
-    
+
 }

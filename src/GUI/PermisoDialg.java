@@ -71,7 +71,7 @@ public class PermisoDialg extends javax.swing.JDialog {
                 if (valid4 == true) {
                     NewCliente nc = new NewCliente();
                     NewCliente.txtAyuda.setText("ok");
-                    NewCliente.txtAyudaCed.setText(valid3);
+                    NewCliente.txtAyuda.setText(valid3);
                     this.dispose();
                 }
 

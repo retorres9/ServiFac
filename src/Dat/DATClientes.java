@@ -174,6 +174,7 @@ public class DATClientes {
             ps.setDouble(4, cliente.getDblDeuda());
             ps.setString(5, cliente.getStrDireccion());
             ps.setBoolean(6, cliente.isCredito());
+            System.out.println(cliente.isCredito());
             ps.setString(7, cliente.getUsuario());
             ps.setDouble(8, cliente.getCant());
             ps.executeUpdate();

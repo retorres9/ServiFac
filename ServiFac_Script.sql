@@ -1,9 +1,10 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+
 describe clientes;
-SELECT cedula_cliente,count(cedula_cliente)  FROM detalle_venta group by cedula_cliente;
-select * from usuario;
+SELECT * FROM producto where cantidad<cantidad_minima AND id_categoria=1;
+select * from clientes;
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,

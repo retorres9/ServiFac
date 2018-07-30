@@ -25,6 +25,7 @@ public final class Principal extends javax.swing.JFrame {
     String nombreEmp;
     String usuario;
     int cant;
+    String cedUser;
     String host;//Nombre de la maquina
     int rol;
 
@@ -467,6 +468,8 @@ public final class Principal extends javax.swing.JFrame {
         for (int i = 0; i < cantUsuario; i++) {
             objUser = listaUsuario.get(i);
             String usuar = objUser.getNombre();
+            cedUser = objUser.getUsuario();
+            System.out.println(cedUser);
             txtVendedor.setText(usuar);
             rol = objUser.getRol();
             if (rol == 0) {
@@ -564,6 +567,7 @@ public final class Principal extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         NewCliente objC = new NewCliente();
+        NewCliente.txtAyuda.setText(cedUser);
         objC.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -623,9 +627,8 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        NewCliente objNc = new NewCliente();
+        NuevoClienteDialog objNc = new NuevoClienteDialog(this, rootPaneCheckingEnabled);
         objNc.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -635,9 +638,8 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        NuevoProveedor objNp = new NuevoProveedor();
+        NuevoProveedorDialgo objNp = new NuevoProveedorDialgo(this, rootPaneCheckingEnabled);
         objNp.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed

@@ -33,8 +33,7 @@ public final class NewCliente extends javax.swing.JFrame {
         txtCredito.setTransferHandler(null);
         txtDeuda.setTransferHandler(null);
         txtTelf.setTransferHandler(null);
-        txtAyuda.setVisible(false);
-        txtAyudaCed.setVisible(false);
+        //txtAyuda.setVisible(false);
         rbtnCredito.setSelected(false);
         txtCredito.setEnabled(false);
         cliente = new DATClientes();
@@ -83,8 +82,9 @@ public final class NewCliente extends javax.swing.JFrame {
             }
             if (rbtnCredito.isSelected()) {
                 credito = true;
+                System.out.println(credito);
                 double cantidad = Double.parseDouble(txtCredito.getText());
-                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyudaCed.getText(), cantidad);
+                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyuda.getText(), cantidad);
             } else {
                 objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
             }
@@ -98,6 +98,8 @@ public final class NewCliente extends javax.swing.JFrame {
                         txtCedula.setText("");
                         txtTelf.setText("");
                         txtDeuda.setText("");
+                        txtCredito.setText("");
+                        rbtnCredito.setSelected(false);
                     }
                 } else {
                     if (cliente.InsertarCliente(objCliente)) {
@@ -107,6 +109,8 @@ public final class NewCliente extends javax.swing.JFrame {
                         txtCedula.setText("");
                         txtTelf.setText("");
                         txtDeuda.setText("");
+                        txtCredito.setText("");
+                        rbtnCredito.setSelected(false);
                     }
                 }
 
@@ -145,7 +149,6 @@ public final class NewCliente extends javax.swing.JFrame {
         rbtnCredito = new javax.swing.JRadioButton();
         txtCredito = new javax.swing.JTextField();
         txtAyuda = new javax.swing.JLabel();
-        txtAyudaCed = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -266,8 +269,6 @@ public final class NewCliente extends javax.swing.JFrame {
 
         txtAyuda.setText("jLabel9");
 
-        txtAyudaCed.setText("jLabel9");
-
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -373,9 +374,7 @@ public final class NewCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtAyuda)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAyudaCed)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(53, 53, 53)
                 .addComponent(jSeparator1))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,8 +433,7 @@ public final class NewCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAyuda)
-                    .addComponent(txtAyudaCed))
+                    .addComponent(txtAyuda))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
@@ -485,7 +483,6 @@ public final class NewCliente extends javax.swing.JFrame {
             if (rol == 1) {
                 guardarCliente();
                 txtAyuda.setText("nada");
-                txtAyudaCed.setText("nada");
             } else if (rol == 0) {
                 int j = JOptionPane.showConfirmDialog(null, "No tiene permisos para asignar créditos.\n"
                         + "Solo un administrador puede aprobar créditos\n"
@@ -500,7 +497,6 @@ public final class NewCliente extends javax.swing.JFrame {
                     if (txtAyuda.getText().equals("ok")) {
                         guardarCliente();
                         txtAyuda.setText("nada");
-                        txtAyudaCed.setText("nada");
                     } else {
                         JOptionPane.showMessageDialog(null, "No se habilitó el crédito al usuario");
                     }
@@ -718,7 +714,6 @@ public final class NewCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JRadioButton rbtnCredito;
     public static javax.swing.JLabel txtAyuda;
-    public static javax.swing.JLabel txtAyudaCed;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCredito;
     private javax.swing.JTextField txtDeuda;

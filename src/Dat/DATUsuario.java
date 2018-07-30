@@ -151,7 +151,7 @@ public class DATUsuario {
                 String strUsuario = rs.getString(1);                
                 String cedula = rs.getString(2);
                 int rol = rs.getInt(3);
-                Usuario user = new Usuario(strUsuario, cedula, rol);
+                Usuario user = new Usuario(strUsuario, cedula, rol);//en objeto (nombre, usuario,rol)
                 listaUsuario.add(user);
             }
         } catch (SQLException ex) {
