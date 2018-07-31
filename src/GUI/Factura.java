@@ -76,6 +76,7 @@ public final class Factura extends javax.swing.JFrame {
 
     public Factura() {
         initComponents();
+        txtCed.setTransferHandler(null);
         host = util.getPcName();
         cargarEncabezado();
         manejadorProd = new DATMaterial();
@@ -93,6 +94,7 @@ public final class Factura extends javax.swing.JFrame {
         usuario();
     }
 
+    @SuppressWarnings("unchecked")
     public void generarFactura() {
         try {
             JDialog fact = new JDialog(new javax.swing.JFrame(), "Factura", true);
@@ -119,6 +121,7 @@ public final class Factura extends javax.swing.JFrame {
 
     }
 
+    @SuppressWarnings("unchecked")
     public void generarNotaVenta() {
         try {
             JDialog fact = new JDialog(new javax.swing.JFrame(), "Factura", true);
@@ -158,8 +161,8 @@ public final class Factura extends javax.swing.JFrame {
 
     public void contador() {
         ArrayList<Venta> cantProducto = manejadorVenta.CuentaVentas();
-        int cant = cantProducto.size();
-        for (int i = 0; i < cant; i++) {
+        int cantid = cantProducto.size();
+        for (int i = 0; i < cantid; i++) {
             venta = cantProducto.get(i);
             cont = venta.getIntIdVenta();
             if (cont == 0) {
@@ -275,13 +278,13 @@ public final class Factura extends javax.swing.JFrame {
             helper = 0;
         } else {
             GuiCambio cambioDiag = new GuiCambio(this, true);
-            cambioDiag.cred=credito;
+            cambioDiag.cred = credito;
             GuiCambio.monto = Double.parseDouble(txtTotal.getText());
             GuiCambio.cliente = txtCliente.getText();
             GuiCambio.txtAyudaDeuda.setText(String.valueOf(deuda));
             GuiCambio.txtAyudaCred.setText(String.valueOf(cant));
             cambioDiag.setVisible(true);
-            
+
             try {
                 double num = 0, numTotal;
                 if (cambioDiag != null) {
@@ -557,6 +560,9 @@ public final class Factura extends javax.swing.JFrame {
         txtCed.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCedKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedKeyTyped(evt);
             }
         });
 
@@ -914,8 +920,8 @@ public final class Factura extends javax.swing.JFrame {
                 int cantDatos = datos.size();
                 for (int i = 0; i < cantDatos; i++) {
                     producto = datos.get(i);
-                    int cant = producto.getIntCantidad();
-                    cantProd2 = cant;
+                    int canti = producto.getIntCantidad();
+                    cantProd2 = canti;
                 }
             }
         } catch (ClassCastException ex) {
@@ -957,6 +963,8 @@ public final class Factura extends javax.swing.JFrame {
             if (opc == JOptionPane.YES_OPTION) {
                 NuevoClienteDialog clienteDialogo = new NuevoClienteDialog(this, true);
                 clienteDialogo.txtCedula.setText(nom);
+                clienteDialogo.txtAyuda.setText(cedUsuario);
+                clienteDialogo.txtAyudaRol.setText(String.valueOf(rol));
                 clienteDialogo.setVisible(true);
                 if (clienteDialogo != null) {
                     if (!clienteDialogo.getInformacion().equals("")) {
@@ -968,7 +976,9 @@ public final class Factura extends javax.swing.JFrame {
         }
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        cargaCliente();
+        if (!txtCed.getText().isEmpty()) {
+            cargaCliente();
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImprimirActionPerformed
@@ -1124,7 +1134,7 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCedFocusGained
 
     private void txtCedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedKeyReleased
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER) && (!txtCed.getText().isEmpty())) {
             cargaCliente();
         }
     }//GEN-LAST:event_txtCedKeyReleased
@@ -1205,6 +1215,13 @@ public final class Factura extends javax.swing.JFrame {
         txtBusqProd.setText("");
     }//GEN-LAST:event_txtBusqProdFocusGained
 
+    private void txtCedKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0') || (c > '9')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCedKeyTyped
+
     private void limpiarLista() {
         listaProductos.clear();
     }
@@ -1218,7 +1235,7 @@ public final class Factura extends javax.swing.JFrame {
         double aux2 = 0.00;
         String strAux = "";
         double ivaInit = 0.00;
-        int cantInicial = 1;
+        cantInicial = 1;
         double dblIva = 0;
         String precioMenos = "";
         String Stringaux = "";
@@ -1338,9 +1355,9 @@ public final class Factura extends javax.swing.JFrame {
             //double dblPrecioIva = (Double) tblVentas.getValueAt(i, 7);
             double dblPrecioIvaO = (Double) tblVentas.getValueAt(i, 8);
 
-            int cant = (int) tblVentas.getValueAt(i, 0);
+            int cantidad = (int) tblVentas.getValueAt(i, 0);
             if (cod.equals(txtCod.getText())) {
-                int cant2 = cant + 1;
+                int cant2 = cantidad + 1;
 
                 double precio2 = cant2 * precio;
                 double nuevo_iva = cant2 * dblIva;

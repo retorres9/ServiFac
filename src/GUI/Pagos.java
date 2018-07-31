@@ -603,7 +603,6 @@ public final class Pagos extends javax.swing.JFrame {
         try {
             double monto = Double.parseDouble(txtMonto.getText());
             double cantPaga, totalVenta;
-            int idVenta;
             ArrayList<Venta> datos = manejadorVenta.cargaVentasNoCancel(txtCedula.getText());
             int cant = datos.size();
 

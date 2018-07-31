@@ -166,7 +166,7 @@ public class GuiCambio extends javax.swing.JDialog {
 
     private void txtCambioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambioKeyTyped
         char c = evt.getKeyChar();
-        if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)
+        if (((c < '0') || (c > '9') || txtCambio.getText().length() > 7) && (c != KeyEvent.VK_BACK_SPACE)
                 && (c != '.')) {
             evt.consume();
         }
@@ -178,7 +178,7 @@ public class GuiCambio extends javax.swing.JDialog {
 
     private void txtCambioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambioKeyReleased
         char c = evt.getKeyChar();
-        if (c == KeyEvent.VK_ENTER) {
+        if ((c == KeyEvent.VK_ENTER)) {
             cambio();
         }
     }//GEN-LAST:event_txtCambioKeyReleased

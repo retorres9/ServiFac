@@ -33,7 +33,7 @@ public final class NewCliente extends javax.swing.JFrame {
         txtCredito.setTransferHandler(null);
         txtDeuda.setTransferHandler(null);
         txtTelf.setTransferHandler(null);
-        //txtAyuda.setVisible(false);
+        txtAyuda.setVisible(false);
         rbtnCredito.setSelected(false);
         txtCredito.setEnabled(false);
         cliente = new DATClientes();
@@ -119,7 +119,7 @@ public final class NewCliente extends javax.swing.JFrame {
             }
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda o crédito no"
                     + " es valido\nEjemplo (99.99)");
         }
     }
@@ -266,6 +266,11 @@ public final class NewCliente extends javax.swing.JFrame {
         });
 
         txtCredito.setText(" ");
+        txtCredito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCreditoKeyTyped(evt);
+            }
+        });
 
         txtAyuda.setText("jLabel9");
 
@@ -652,6 +657,13 @@ public final class NewCliente extends javax.swing.JFrame {
             txtCredito.setText("");
         }
     }//GEN-LAST:event_rbtnCreditoActionPerformed
+
+    private void txtCreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCreditoKeyTyped
+        char c = evt.getKeyChar();
+        if (((c < '0') || (c > '9') || (txtCredito.getText().length() > 7)) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCreditoKeyTyped
 
     /**
      * @param args the command line arguments

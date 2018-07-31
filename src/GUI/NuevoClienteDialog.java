@@ -23,22 +23,23 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     String informacion = "";
     public static int valid = 1;
     DATClientes cliente;
-    
+
     public NuevoClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         txtAyuda.setVisible(false);
+        txtAyudaRol.setVisible(false);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         cliente = new DATClientes();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
     }
-    
-    public String getInformacion(){
+
+    public String getInformacion() {
         return informacion;
     }
-    
+
     public void guardarCliente() {
         double deuda = 0.00;
         boolean credito = false;
@@ -64,20 +65,10 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
                 if (rbtnCredito.isSelected()) {
                     if (cliente.InsertarCliente2(objCliente)) {
                         JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
-                        txtNombre.setText("");
-                        txtDireccion.setText("");
-                        txtCedula.setText("");
-                        txtTelf.setText("");
-                        txtDeuda.setText("");
                     }
                 } else {
                     if (cliente.InsertarCliente(objCliente)) {
                         JOptionPane.showMessageDialog(null, "Cliente creado satisfactoriamente");
-                        txtNombre.setText("");
-                        txtDireccion.setText("");
-                        txtCedula.setText("");
-                        txtTelf.setText("");
-                        txtDeuda.setText("");
                     }
                 }
 
@@ -86,7 +77,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             }
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda no"
+            JOptionPane.showMessageDialog(null, "El valor ingresado en deuda o crédito no"
                     + " es valido\nEjemplo (99.99)");
         }
     }
@@ -119,6 +110,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         rbtnCredito = new javax.swing.JRadioButton();
         txtCredito = new javax.swing.JTextField();
         txtAyuda = new javax.swing.JLabel();
+        txtAyudaRol = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -210,8 +202,15 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         });
 
         txtCredito.setText(" ");
+        txtCredito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCreditoKeyTyped(evt);
+            }
+        });
 
         txtAyuda.setText("jLabel2");
+
+        txtAyudaRol.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,7 +265,9 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(txtAyuda)
-                .addGap(186, 186, 186)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAyudaRol)
+                .addGap(139, 139, 139)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -286,7 +287,9 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(80, 80, 80)
-                        .addComponent(txtAyuda)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtAyuda)
+                            .addComponent(txtAyudaRol))))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,6 +332,8 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Número de cédula o RUC incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (digitTelf != 7 && digitTelf != 10) {
             JOptionPane.showMessageDialog(null, "Número telefónico incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if ((txtAyuda.getText().equals("0") && rbtnCredito.isSelected())) {
+            JOptionPane.showMessageDialog(null, "No tienes permiso para asignar crédito al cliente.");
         } else {
             guardarCliente();
             Factura.txtCed.setText(txtCedula.getText());
@@ -344,10 +349,10 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         Principal objP = new Principal();
         if (!txtNombre.getText().isEmpty()) {
             int n = JOptionPane.showConfirmDialog(
-                null,
-                "Si retrocede se perderan los cambios no guardados?",
-                "Aviso!",
-                JOptionPane.YES_NO_OPTION);
+                    null,
+                    "Si retrocede se perderan los cambios no guardados?",
+                    "Aviso!",
+                    JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 objP.setVisible(true);
                 this.dispose();
@@ -388,7 +393,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
 
     private void txtDeudaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDeudaKeyTyped
         char c = evt.getKeyChar();
-        if (((c < '0') || (c > '9') || (txtDeuda.getText().length() > 6)) && (c !='.')) {
+        if (((c < '0') || (c > '9') || (txtDeuda.getText().length() > 6)) && (c != '.')) {
 
             evt.consume();
         }
@@ -402,7 +407,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtDeudaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusGained
-        if(txtDeuda.getText().equals("0.00")){
+        if (txtDeuda.getText().equals("0.00")) {
             txtDeuda.setText("");
         } else {
             //Do nothing
@@ -410,10 +415,10 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDeudaFocusGained
 
     private void txtDeudaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeudaFocusLost
-        if(txtDeuda.getText().equals("")){
+        if (txtDeuda.getText().equals("")) {
             txtDeuda.setText("0.00");
         } else {
-           //Do nothing 
+            //Do nothing 
         }
     }//GEN-LAST:event_txtDeudaFocusLost
 
@@ -425,6 +430,13 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             txtCredito.setText("");
         }
     }//GEN-LAST:event_rbtnCreditoActionPerformed
+
+    private void txtCreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCreditoKeyTyped
+        char c = evt.getKeyChar();
+        if (((c < '0') || (c > '9') || (txtCredito.getText().length() > 7)) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCreditoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -481,7 +493,8 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JRadioButton rbtnCredito;
-    private javax.swing.JLabel txtAyuda;
+    public static javax.swing.JLabel txtAyuda;
+    public static javax.swing.JLabel txtAyudaRol;
     public javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCredito;
     private javax.swing.JTextField txtDeuda;
