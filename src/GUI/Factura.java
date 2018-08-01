@@ -53,6 +53,7 @@ public final class Factura extends javax.swing.JFrame {
     int rol;
     int helper;
     boolean credito;
+    boolean ayudaCont;
     boolean flag = true;
     boolean banderaFila = true;
     String cedUsuario;
@@ -290,56 +291,61 @@ public final class Factura extends javax.swing.JFrame {
                 if (cambioDiag != null) {
                     num = cambioDiag.getCambio();
                 }
+                if (num >= 0.00) {
+                    numTotal = Double.parseDouble(txtTotal.getText());
+                    double cambio = num - numTotal;
+                    DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                    simbolos.setDecimalSeparator('.');
+                    DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+                    String decimal = dcmlCambio.format(cambio);
+                    double dblDecimal = Double.parseDouble(decimal);
+                    dblDecimal = Math.abs(dblDecimal);
+                    double EPSILON = 0.0000001;
 
-                numTotal = Double.parseDouble(txtTotal.getText());
-                double cambio = num - numTotal;
-                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-                simbolos.setDecimalSeparator('.');
-                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-                String decimal = dcmlCambio.format(cambio);
-                double dblDecimal = Double.parseDouble(decimal);
-                dblDecimal = Math.abs(dblDecimal);
-                double EPSILON = 0.0000001;
+                    if (cmbPago.getSelectedItem().equals("Contado")) {
 
-                if (cmbPago.getSelectedItem().equals("Contado")) {
+                    } else if (cmbPago.getSelectedItem().equals("Crédito")) {
 
-                } else if (cmbPago.getSelectedItem().equals("Crédito")) {
+                    }
 
-                }
+                    if (dblDecimal < EPSILON) {
+                        JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
+                    } else if ((dblDecimal > 0) && (num > numTotal)) {
+                        JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
 
-                if (dblDecimal < EPSILON) {
-                    JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
-                } else if ((dblDecimal > 0) && (num > numTotal)) {
-                    JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
+                        double nuevaDeuda = deuda + dblDecimal;
+                        cliente = new Clientes(nuevaDeuda, txtCed.getText());
+                        manejadorCliente.agregarDeuda(cliente);
+                    }
+                    for (int i = 0; i < tblVentas.getRowCount(); i++) {
 
+                        int cantVenta = (int) tblVentas.getValueAt(i, 0);
+                        String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
+                        String strCodigo = (String) tblVentas.getValueAt(i, 5);
+                        String strPrecio = tblVentas.getValueAt(i, 2).toString();
+                        double precio_Venta = Double.parseDouble(strPrecio);
+                        producto = new Producto(cantVenta, descripcionVenta);
+                        manejadorProd.UpdateCantFactura(producto);
+                        String cedula = txtCed.getText();
+                        detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
+                        //manejadorDetalle.creaReporte(detalle);
+                    }
+                    if (cmbTipComp.getSelectedItem().equals("Factura")) {
+                        generarFactura();
+                    } else {
+                        generarNotaVenta();
+                    }
+                    resetFact();
+                    venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
+                    manejadorVenta.crearVenta(venta, detalle);
+                    helper = 1;
+                    ayudaCont = true;
                 } else {
-                    JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
-                    double nuevaDeuda = deuda + dblDecimal;
-                    cliente = new Clientes(nuevaDeuda, txtCed.getText());
-                    manejadorCliente.agregarDeuda(cliente);
+                    ayudaCont = false;
                 }
-                for (int i = 0; i < tblVentas.getRowCount(); i++) {
 
-                    int cantVenta = (int) tblVentas.getValueAt(i, 0);
-                    String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
-                    String strCodigo = (String) tblVentas.getValueAt(i, 5);
-                    String strPrecio = tblVentas.getValueAt(i, 2).toString();
-                    double precio_Venta = Double.parseDouble(strPrecio);
-                    producto = new Producto(cantVenta, descripcionVenta);
-                    manejadorProd.UpdateCantFactura(producto);
-                    String cedula = txtCed.getText();
-                    detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
-                    //manejadorDetalle.creaReporte(detalle);
-                }
-                if (cmbTipComp.getSelectedItem().equals("Factura")) {
-                    generarFactura();
-                } else {
-                    generarNotaVenta();
-                }
-                resetFact();
-                venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
-                manejadorVenta.crearVenta(venta, detalle);
-                helper = 1;
             } catch (NumberFormatException ex) {
                 Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NullPointerException ex) {
@@ -953,7 +959,6 @@ public final class Factura extends javax.swing.JFrame {
             txtTelf.setText(telf);
             deuda = cliente.getDblDeuda();
             credito = cliente.isCredito();
-            System.out.println(credito);
             cant = cliente.getCant();
         }
 
@@ -991,11 +996,20 @@ public final class Factura extends javax.swing.JFrame {
                 if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
                     venta();
                     ventaProd();
-                    this.contador();
+                    if(ayudaCont == true){
+                        this.contador();
+                    } else {
+                        //Do nothing
+                    }
+                    
                 } else {
                     venta();
                     ventaProd();
-                    this.contador();
+                    if(ayudaCont == true){
+                        this.contador();
+                    } else {
+                        //Do nothing
+                    }
                 }
             }
         }
