@@ -33,7 +33,7 @@ public final class NewCliente extends javax.swing.JFrame {
         txtCredito.setTransferHandler(null);
         txtDeuda.setTransferHandler(null);
         txtTelf.setTransferHandler(null);
-        txtAyuda.setVisible(false);
+        //txtAyuda.setVisible(false);
         rbtnCredito.setSelected(false);
         txtCredito.setEnabled(false);
         cliente = new DATClientes();
@@ -84,7 +84,7 @@ public final class NewCliente extends javax.swing.JFrame {
                 credito = true;
                 System.out.println(credito);
                 double cantidad = Double.parseDouble(txtCredito.getText());
-                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyuda.getText(), cantidad);
+                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyudaCed.getText(), cantidad);
             } else {
                 objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
             }
@@ -97,9 +97,10 @@ public final class NewCliente extends javax.swing.JFrame {
                         txtDireccion.setText("");
                         txtCedula.setText("");
                         txtTelf.setText("");
-                        txtDeuda.setText("");
+                        txtDeuda.setText("0.00");
                         txtCredito.setText("");
                         rbtnCredito.setSelected(false);
+                        txtCredito.setEnabled(false);
                     }
                 } else {
                     if (cliente.InsertarCliente(objCliente)) {
@@ -108,7 +109,7 @@ public final class NewCliente extends javax.swing.JFrame {
                         txtDireccion.setText("");
                         txtCedula.setText("");
                         txtTelf.setText("");
-                        txtDeuda.setText("");
+                        txtDeuda.setText("0.00");
                         txtCredito.setText("");
                         rbtnCredito.setSelected(false);
                     }
@@ -149,6 +150,7 @@ public final class NewCliente extends javax.swing.JFrame {
         rbtnCredito = new javax.swing.JRadioButton();
         txtCredito = new javax.swing.JTextField();
         txtAyuda = new javax.swing.JLabel();
+        txtAyudaCed = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -274,6 +276,8 @@ public final class NewCliente extends javax.swing.JFrame {
 
         txtAyuda.setText("jLabel9");
 
+        txtAyudaCed.setText("jLabel9");
+
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -379,7 +383,9 @@ public final class NewCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtAyuda)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAyudaCed)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,7 +444,9 @@ public final class NewCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAyuda))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAyuda)
+                        .addComponent(txtAyudaCed)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
@@ -495,10 +503,10 @@ public final class NewCliente extends javax.swing.JFrame {
                         + "presione (Si) de lo contrario presione (No)", "Importante",
                         JOptionPane.YES_NO_OPTION);
                 if (j == JOptionPane.YES_OPTION) {
-                    System.out.println(txtAyuda.getText());
+                    
                     PermisoDialg pd = new PermisoDialg(null, true);
                     pd.setVisible(true);
-                    System.out.println(txtAyuda.getText());
+                    
                     if (txtAyuda.getText().equals("ok")) {
                         guardarCliente();
                         txtAyuda.setText("nada");
@@ -726,6 +734,7 @@ public final class NewCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JRadioButton rbtnCredito;
     public static javax.swing.JLabel txtAyuda;
+    public static javax.swing.JLabel txtAyudaCed;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCredito;
     private javax.swing.JTextField txtDeuda;

@@ -71,7 +71,7 @@ public class PermisoDialg extends javax.swing.JDialog {
                 if (valid4 == true) {
                     NewCliente nc = new NewCliente();
                     NewCliente.txtAyuda.setText("ok");
-                    NewCliente.txtAyuda.setText(valid3);
+                    NewCliente.txtAyudaCed.setText(valid3);
                     this.dispose();
                 }
 
@@ -115,6 +115,7 @@ public class PermisoDialg extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         txtPass = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -152,6 +153,8 @@ public class PermisoDialg extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Ingrese las credenciales de un usuario con privilegios de administrador");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,13 +175,16 @@ public class PermisoDialg extends javax.swing.JDialog {
                         .addGap(87, 87, 87)
                         .addComponent(jButton2)
                         .addGap(73, 73, 73)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(71, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
@@ -259,6 +265,7 @@ public class PermisoDialg extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txtPass;

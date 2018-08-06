@@ -435,19 +435,19 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         .addGroup(jPanel2Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addComponent(txtTotalAbonos)
-                    .addContainerGap(945, Short.MAX_VALUE))))
+                    .addGap(0, 0, Short.MAX_VALUE))))
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel2Layout.createSequentialGroup()
             .addContainerGap(25, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(txtTotalAbonos)
-            .addGap(38, 38, 38))
+            .addGap(22, 22, 22))
     );
 
     jTabbedPane1.addTab("Pago Clientes", jPanel2);
@@ -470,19 +470,19 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addComponent(txtTotalPagoPr)
-                    .addContainerGap(955, Short.MAX_VALUE))))
+                    .addGap(0, 0, Short.MAX_VALUE))))
     );
     jPanel3Layout.setVerticalGroup(
         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addGap(56, 56, 56)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
             .addComponent(txtTotalPagoPr)
-            .addContainerGap(11, Short.MAX_VALUE))
+            .addContainerGap())
     );
 
     jTabbedPane1.addTab("Pago Proveedores", jPanel3);

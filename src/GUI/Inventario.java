@@ -428,7 +428,7 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 36)); // NOI18N
         jLabel1.setText("$");
 
-        btnActualizaPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar Mediano.png"))); // NOI18N
+        btnActualizaPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/intercambio 32.png"))); // NOI18N
         btnActualizaPrecio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizaPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -449,7 +449,7 @@ public final class Inventario extends javax.swing.JFrame {
         txtNombreProd.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         txtNombreProd.setMaximumSize(new java.awt.Dimension(150, 16));
 
-        btnActualizaPrecioMayor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar.png"))); // NOI18N
+        btnActualizaPrecioMayor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/intercambio.png"))); // NOI18N
         btnActualizaPrecioMayor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizaPrecioMayor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -457,7 +457,7 @@ public final class Inventario extends javax.swing.JFrame {
             }
         });
 
-        btnActualizaNombre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar.png"))); // NOI18N
+        btnActualizaNombre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/intercambio.png"))); // NOI18N
         btnActualizaNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizaNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -474,7 +474,7 @@ public final class Inventario extends javax.swing.JFrame {
         txtCantidad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtCantidad.setText("----------");
 
-        btnActualizaCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/agregar.png"))); // NOI18N
+        btnActualizaCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/mas.png"))); // NOI18N
         btnActualizaCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizaCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -488,7 +488,7 @@ public final class Inventario extends javax.swing.JFrame {
         txtUbicacion.setText("----------");
         txtUbicacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnActualizaUbicacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar.png"))); // NOI18N
+        btnActualizaUbicacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/intercambio.png"))); // NOI18N
         btnActualizaUbicacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizaUbicacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -497,12 +497,13 @@ public final class Inventario extends javax.swing.JFrame {
         });
 
         txtPrecioM.setText("----------");
+        txtPrecioM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel2.setText("Precio de Compra:");
 
-        lblMenos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/menos.png"))); // NOI18N
+        lblMenos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/negativo.png"))); // NOI18N
         lblMenos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblMenos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -670,7 +671,7 @@ public final class Inventario extends javax.swing.JFrame {
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Productos en almacén", jPanel2);

@@ -285,7 +285,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="285" max="-2" attributes="0"/>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace pref="10" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -458,7 +458,7 @@
                 <Component class="javax.swing.JLabel" name="btnActualizaPrecio">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Recursos/boton-actualizar Mediano.png"/>
+                      <Image iconType="3" name="/Recursos/intercambio 32.png"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor de Mano"/>
@@ -503,7 +503,7 @@
                 <Component class="javax.swing.JLabel" name="btnActualizaPrecioMayor">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Recursos/boton-actualizar.png"/>
+                      <Image iconType="3" name="/Recursos/intercambio.png"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor de Mano"/>
@@ -516,7 +516,7 @@
                 <Component class="javax.swing.JLabel" name="btnActualizaNombre">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Recursos/boton-actualizar.png"/>
+                      <Image iconType="3" name="/Recursos/intercambio.png"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor de Mano"/>
@@ -547,7 +547,7 @@
                 <Component class="javax.swing.JLabel" name="btnActualizaCantidad">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Recursos/agregar.png"/>
+                      <Image iconType="3" name="/Recursos/mas.png"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor de Mano"/>
@@ -579,7 +579,7 @@
                 <Component class="javax.swing.JLabel" name="btnActualizaUbicacion">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Recursos/boton-actualizar.png"/>
+                      <Image iconType="3" name="/Recursos/intercambio.png"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor de Mano"/>
@@ -592,6 +592,11 @@
                 <Component class="javax.swing.JLabel" name="txtPrecioM">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="----------"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder/>
+                      </Border>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator2">
@@ -607,7 +612,7 @@
                 <Component class="javax.swing.JLabel" name="lblMenos">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Recursos/menos.png"/>
+                      <Image iconType="3" name="/Recursos/negativo.png"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor de Mano"/>

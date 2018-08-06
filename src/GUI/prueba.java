@@ -38,6 +38,7 @@ import javax.swing.table.TableColumnModel;
 public class prueba extends javax.swing.JFrame {
 
     int fila = 0;
+    int cant;
     String n;
     Producto producto;
     Usuario objU = new Usuario();
@@ -487,6 +488,11 @@ public class prueba extends javax.swing.JFrame {
         jButton5.setText("Mover");
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         txtNombreProd.setText("----------");
         txtNombreProd.setAutoscrolls(true);
@@ -725,7 +731,8 @@ public class prueba extends javax.swing.JFrame {
 //            txtPrecioM.setText(precioMayor);
             String ubicacion = tblProd.getModel().getValueAt(fila1, 7).toString();//Seleccionamos la ubicacion del producto
 //            txtUbicacion.setText(ubicacion);
-            String cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
+            String cantidad = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
+            cant = Integer.parseInt(cantidad);
 //            txtCantidad.setText(cant);
             permisos();
 
@@ -769,6 +776,12 @@ public class prueba extends javax.swing.JFrame {
             //            txtCantidad.setText(cant);
             //        }
     }//GEN-LAST:event_tblProdKeyTyped
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        MoverBodega mb = new MoverBodega(null, true);
+        mb.txtAyudaCant.setText(String.valueOf(cant));
+        mb.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

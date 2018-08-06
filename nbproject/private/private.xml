@@ -5,11 +5,10 @@
         <group>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/PermisoDialg.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Pagos.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Devoluciones.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Inventario.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/DetalleVentaVista.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NewCliente.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATVenta.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Factura.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/GuiCambio.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATClientes.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoClienteDialog.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATUsuario.java</file>

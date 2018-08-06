@@ -91,6 +91,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         cargarModeloUbic();
         cargarModeloBodega();
         initComponents();
+        obtenerConf();
         txtCantMin.setTransferHandler(null);
         txtCantidad.setTransferHandler(null);
         txtCod.setTransferHandler(null);
@@ -120,7 +121,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         for (int i = 0; i < cantConf; i++) {
             config = conf.get(i);
             int iva = config.getIva();
-            txtIva.setText(Integer.toString(iva));
+            txtIva.setText(Integer.toString(iva)+"%");
         }
     }
 
