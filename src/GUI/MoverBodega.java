@@ -6,7 +6,9 @@
 package GUI;
 
 import Clases.Bodega;
+import Clases.ExistenciasBodega;
 import Dat.DATBodega;
+import Dat.DATExistenciasBodega;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -18,11 +20,16 @@ import javax.swing.JOptionPane;
 public class MoverBodega extends javax.swing.JDialog {
 
     DefaultComboBoxModel<Bodega> modeloBodega;
-    DATBodega objBodega;
+    DATBodega manejadorBodega;
+    DATExistenciasBodega manejadorExistencias;
+    ExistenciasBodega objExistencias = new ExistenciasBodega();
 
     public MoverBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        objBodega = new DATBodega();
+        txtAyudaCant.setVisible(false);
+        txtAyudaCod.setVisible(false);
+        manejadorBodega = new DATBodega();
+        manejadorExistencias = new DATExistenciasBodega();
         modeloBodega = new DefaultComboBoxModel<>();
         cargarModeloBodega();
         initComponents();
@@ -31,7 +38,7 @@ public class MoverBodega extends javax.swing.JDialog {
 
     private void cargarModeloBodega() {
         ArrayList<Bodega> listaBodegas;
-        listaBodegas = objBodega.obtenerBodega();
+        listaBodegas = manejadorBodega.obtenerBodega();
         for (Bodega bodega : listaBodegas) {
             modeloBodega.addElement(bodega);
         }
@@ -46,15 +53,16 @@ public class MoverBodega extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbBodega = new javax.swing.JComboBox<>();
         txtCant = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtAyudaCant = new javax.swing.JLabel();
+        txtAyudaCod = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jComboBox1.setModel(modeloBodega);
+        cmbBodega.setModel(modeloBodega);
 
         jButton1.setText("Aceptar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -72,6 +80,8 @@ public class MoverBodega extends javax.swing.JDialog {
 
         txtAyudaCant.setText("jLabel1");
 
+        txtAyudaCod.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,23 +96,27 @@ public class MoverBodega extends javax.swing.JDialog {
                         .addComponent(jButton2)
                         .addGap(72, 72, 72)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jButton1)))
                 .addGap(110, 110, 110))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(txtAyudaCant)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAyudaCod)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(txtAyudaCant)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAyudaCant)
+                    .addComponent(txtAyudaCod))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -120,9 +134,27 @@ public class MoverBodega extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int auxCantActual = Integer.parseInt(txtAyudaCant.getText());
         int cant = Integer.parseInt(txtCant.getText());
-        if(cant > auxCantActual){
-            JOptionPane.showMessageDialog(null, "Está intentando mover una cantidad mayor a la existente");
+        Bodega bod = (Bodega) cmbBodega.getSelectedItem();
+        int getCant;
+        if (txtCant.getText().trim().isEmpty()) {
+            //Do nothing
+        } else {
+            if (cant > auxCantActual) {
+                JOptionPane.showMessageDialog(null, "Está intentando mover una cantidad mayor a la existente");
+            } else {
+                System.out.println(cmbBodega.getSelectedItem());
+                getCant = manejadorExistencias.contadorProdBodega(txtAyudaCod.getText());
+                System.out.println(bod.getIntIdBodega());
+                if (getCant > 0) {
+                    objExistencias = new ExistenciasBodega(txtAyudaCod.getText(), Integer.parseInt(txtCant.getText()));
+                    manejadorExistencias.actualizarCant(objExistencias, cant);
+                } else {
+                    objExistencias = new ExistenciasBodega(bod.getIntIdBodega(), txtAyudaCod.getText(), Integer.parseInt(txtCant.getText()));
+                    manejadorExistencias.ingresarEnBodegaInventario(objExistencias, cant);
+                }
+            }
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -168,10 +200,11 @@ public class MoverBodega extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Bodega> cmbBodega;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<Bodega> jComboBox1;
     public static javax.swing.JLabel txtAyudaCant;
+    public javax.swing.JLabel txtAyudaCod;
     private javax.swing.JTextField txtCant;
     // End of variables declaration//GEN-END:variables
 }

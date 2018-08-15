@@ -38,7 +38,7 @@ import javax.swing.table.TableColumnModel;
 public class prueba extends javax.swing.JFrame {
 
     int fila = 0;
-    int cant;
+    int cantidad;
     String n;
     Producto producto;
     Usuario objU = new Usuario();
@@ -52,6 +52,7 @@ public class prueba extends javax.swing.JFrame {
     DATConfiguracion manejadorConf;
     String host;
     Utilidades util = new Utilidades();
+    String cod;
     public prueba() {
         initComponents();
         iconos();
@@ -723,6 +724,7 @@ public class prueba extends javax.swing.JFrame {
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
         int fila1 = tblProd.rowAtPoint(evt.getPoint());
         try {
+            cod = (String) tblProd.getModel().getValueAt(fila1, 1);            
             String prod = (String) tblProd.getModel().getValueAt(fila1, 0);//Seleccionamos el nombre del producto
             txtNombreProd.setText(prod);
             String precio = tblProd.getModel().getValueAt(fila1, 3).toString();//Seleccionamos el precio del producto
@@ -731,8 +733,8 @@ public class prueba extends javax.swing.JFrame {
 //            txtPrecioM.setText(precioMayor);
             String ubicacion = tblProd.getModel().getValueAt(fila1, 7).toString();//Seleccionamos la ubicacion del producto
 //            txtUbicacion.setText(ubicacion);
-            String cantidad = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
-            cant = Integer.parseInt(cantidad);
+            String cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
+            cantidad = Integer.parseInt(cant);
 //            txtCantidad.setText(cant);
             permisos();
 
@@ -754,7 +756,7 @@ public class prueba extends javax.swing.JFrame {
 //            txtPrecioM.setText(precioMayor);
             String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
 //            txtUbicacion.setText(ubicacion);
-            String cant = (String) tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+            String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
 //            txtCantidad.setText(cant);
         }
     }//GEN-LAST:event_tblProdKeyPressed
@@ -779,7 +781,8 @@ public class prueba extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         MoverBodega mb = new MoverBodega(null, true);
-        mb.txtAyudaCant.setText(String.valueOf(cant));
+        mb.txtAyudaCant.setText(String.valueOf(cantidad));
+        mb.txtAyudaCod.setText(cod);
         mb.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 

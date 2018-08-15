@@ -44,9 +44,9 @@ public class DATAbonoCliente {
         ArrayList<AbonoCliente> listadoPagos = new ArrayList<AbonoCliente>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT c.Nombres, c.Cedula_cliente, ac.Monto_Abono, c.Deuda, ac.cedula_usuario "
-                    + "FROM clientes c, abono_cliente ac "
-                    + "WHERE c.Cedula_cliente = ac.Cedula_cliente AND Fecha = ?";
+            String sentencia = "SELECT c.Nombres, c.Cedula_cliente, ac.Monto_Abono, c.Deuda, u.usuario "
+                    + "FROM clientes c, abono_cliente ac, usuario u "
+                    + "WHERE u.cedula_usuario = ac.cedula_usuario AND c.Cedula_cliente = ac.Cedula_cliente AND Fecha = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, strFecha);
             rs = ps.executeQuery();

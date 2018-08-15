@@ -2,9 +2,13 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-describe clientes;
-SELECT * FROM producto where cantidad<cantidad_minima AND id_categoria=1;
-select * from clientes;
+describe existenciasbodega;
+
+SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, u.usuario
+FROM proveedores p, pago_proveedor pp, usuario u
+WHERE p.ruc = pp.ruc AND pp.Fecha = "15/08/2018" AND Tipo ='Pago';
+
+select * from usuario;
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
@@ -186,6 +190,10 @@ FOREIGN KEY (cedula_usuario) REFERENCES usuario(cedula_usuario);
 ALTER TABLE existenciasbodega
 ADD constraint idBodega_fk
 FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
+use empresa;
+select * from existenciasbodega;
+select * from bodega;
+INSERT INTO existenciasBodega (id_bodega, codigo, cantidad) VALUES (1,"0076",1);
 
 ALTER TABLE producto
 ADD CONSTRAINT bodega_fk

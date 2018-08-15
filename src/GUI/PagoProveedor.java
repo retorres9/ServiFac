@@ -35,6 +35,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
     DATPagoProveedor manejadorPago;
     String usuario;
     String host;
+    String cedula_usuario;
     DATUsuario manejadorUsuario;
     Usuario user = new Usuario();
     Utilidades util = new Utilidades();
@@ -62,6 +63,8 @@ public final class PagoProveedor extends javax.swing.JFrame {
         for (int i = 0; i < cant; i++) {
             user = cedula.get(i);
             usuario = user.getNombre();
+            cedula_usuario = user.getUsuario();//se toma usuario por que datusuario toma usuario para devolver el numero de cedula
+            System.out.println(cedula_usuario);
             System.out.println(usuario);
             txtUsuario.setText(usuario);
         }
@@ -675,7 +678,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
                     objProveedor = new Proveedor(ruc, deuda2);
                     desc = txtDesc.getText();
                     manejadorProveedor.updateDeuda(objProveedor);
-                    objPagoProv = new PagoProveedorClase(ruc, usuario, monto, getFecha(), "Pago", desc);
+                    objPagoProv = new PagoProveedorClase(ruc, cedula_usuario, monto, getFecha(), "Pago", desc);
                     manejadorPago.pagoProveedor(objPagoProv);
                     JOptionPane.showMessageDialog(null, "Pago registrado exitosamente");
                     txtMonto.setText("");
@@ -688,7 +691,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 desc = txtDesc.getText();
                 objProveedor = new Proveedor(ruc, deuda);
                 manejadorProveedor.updateDeuda(objProveedor);
-                objPagoProv = new PagoProveedorClase(ruc, usuario, monto, getFecha(), "Crédio", desc);
+                objPagoProv = new PagoProveedorClase(ruc, cedula_usuario, monto, getFecha(), "Crédio", desc);
                 manejadorPago.pagoProveedor(objPagoProv);
                 JOptionPane.showMessageDialog(null, "Crédito registrado exitosamente");
                 txtMonto.setText("");

@@ -47,6 +47,11 @@ public class DATVenta {
             con.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                con.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             JOptionPane.showMessageDialog(null, "Error", "Ha ocurrio un error al prosesar la transaccion", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {

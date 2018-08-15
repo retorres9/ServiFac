@@ -3,12 +3,15 @@ package GUI;
 import Clases.Configuracion;
 import Clases.ExistenciasBodega;
 import Clases.Producto;
+import Clases.Renderer;
 import Clases.Usuario;
 import Dat.DATConfiguracion;
 import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -18,7 +21,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -39,6 +44,7 @@ public final class Inventario extends javax.swing.JFrame {
     DATConfiguracion manejadorConf;
     String host;
     Utilidades util = new Utilidades();
+    Renderer render = new Renderer();
 
     public Inventario() {
         initComponents();
@@ -62,6 +68,7 @@ public final class Inventario extends javax.swing.JFrame {
         cargarTablaBodega();
         btnActualizaPrecio.setText("");
         totalInventario();
+        tblBodega.setDefaultRenderer(Object.class, render);
     }
 
     public void limpiarTabla() {
@@ -983,7 +990,7 @@ public final class Inventario extends javax.swing.JFrame {
                 producto = new Producto(cantMovida, cod);
                 material.moverBodega(producto);
                 existencias = new ExistenciasBodega(cod, cantExist);
-                manejadorExistencias.actualizarCant(existencias);
+                //manejadorExistencias.actualizarCant(existencias);
                 updateTabla();
                 cargarTablaBodega();
                 JOptionPane.showMessageDialog(null, "Se ha movido correcamente el producto al almacén");
@@ -1305,7 +1312,7 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JLabel lblMenos;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JTable tblBodega;
+    public static javax.swing.JTable tblBodega;
     public static javax.swing.JTable tblProd;
     private javax.swing.JTextField txtBodega;
     private javax.swing.JTextField txtBuscar;

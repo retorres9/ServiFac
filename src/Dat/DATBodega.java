@@ -15,26 +15,27 @@ import java.util.logging.Logger;
  * @author rober
  */
 public class DATBodega {
+
     Connection con;
     ResultSet rs;
     PreparedStatement ps;
-    
-    public ArrayList<Bodega> obtenerBodega(){
+
+    public ArrayList<Bodega> obtenerBodega() {
         ArrayList<Bodega> listadoBodega = new ArrayList<Bodega>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "Select id_bodega, nombre_bodega From Bodega";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt(1);
                 String nombre = rs.getString(2);
-                Bodega bodega = new Bodega(id,nombre);
+                Bodega bodega = new Bodega(id, nombre);
                 listadoBodega.add(bodega);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DATBodega.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             try {
                 rs.close();
                 con.close();
@@ -44,10 +45,10 @@ public class DATBodega {
         }
         return listadoBodega;
     }
-    
-    public void nuevaBodega(Bodega bodega){
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+
+    public void nuevaBodega(Bodega bodega) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO bodega (nombre_bodega) VALUES(?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, bodega.getStrBodega());
@@ -62,7 +63,5 @@ public class DATBodega {
                 Logger.getLogger(DATBodega.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
     }
 }

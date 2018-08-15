@@ -72,9 +72,9 @@ public class DATPagoProveedor {
         ArrayList<PagoProveedorClase> listadoPagos = new ArrayList<PagoProveedorClase>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, pp.cedula_usuario "
-                    + "FROM proveedores p, pago_proveedor pp "
-                    + "WHERE p.ruc = pp.ruc AND pp.Fecha = ? AND Tipo ='Pago'";
+            String sentencia = "SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, U.usuario "
+                    + "FROM proveedores p, pago_proveedor pp, usuario u "
+                    + "WHERE u.cedula_usuario=pp.cedula_usuario AND p.ruc = pp.ruc AND pp.Fecha = ? AND Tipo ='Pago'";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, strFecha);
             rs = ps.executeQuery();
