@@ -6,6 +6,7 @@ import Dat.DATMaterial;
 import Dat.DATUbicacion;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 //import GUI.Inventario;
 
 /**
@@ -23,11 +24,12 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
     Inventario inv = new Inventario();
     String info = " ";
     
-    public ActualzarUbicacionDialog(java.awt.Frame parent, boolean modal) {
+    public ActualzarUbicacionDialog(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         objUbic = new DATUbicacion();
         modeloUbicacion = new DefaultComboBoxModel<Ubicacion>();
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         objMat = new DATMaterial();
         this.setLocationRelativeTo(null);
@@ -140,7 +142,7 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         Producto producto = new Producto(lblProd.getText(), ubic.getIdUbicacion());
         objMat.actualizarUbicacion(producto);
         info = ubic.getStrUbicacion();
-        inv.txtUbicacion.setText(info);
+        //inv.txtUbicacion.setText(info);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -178,7 +180,7 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ActualzarUbicacionDialog dialog = new ActualzarUbicacionDialog(new javax.swing.JFrame(), true);
+                ActualzarUbicacionDialog dialog = new ActualzarUbicacionDialog(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

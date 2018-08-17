@@ -37,7 +37,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class prueba extends javax.swing.JFrame {
 
-    int fila = 0;
+    int fila1;
     int cantidad;
     String n;
     Producto producto;
@@ -53,6 +53,10 @@ public class prueba extends javax.swing.JFrame {
     String host;
     Utilidades util = new Utilidades();
     String cod;
+    String ubicacion;
+    String precio;
+    String cant;
+    
     public prueba() {
         initComponents();
         iconos();
@@ -435,6 +439,10 @@ public class prueba extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtBodega = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -443,10 +451,6 @@ public class prueba extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProd = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        txtBodega = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         cmbBusq = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -468,6 +472,47 @@ public class prueba extends javax.swing.JFrame {
         lblTotal.setText("Total del inventario:");
 
         jTabbedPane1.setFocusable(false);
+
+        jLabel3.setText("Cantidad a mover:");
+
+        txtBodega.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBodegaKeyTyped(evt);
+            }
+        });
+
+        jButton2.setText("Aceptar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(747, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(83, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(489, 489, 489))
+        );
+
+        jTabbedPane1.addTab("Productos en bodega", jPanel3);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Editar.png"))); // NOI18N
         jButton3.setText("Editar");
@@ -577,47 +622,6 @@ public class prueba extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Productos en almacén", jPanel2);
 
-        jLabel3.setText("Cantidad a mover:");
-
-        txtBodega.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBodegaKeyTyped(evt);
-            }
-        });
-
-        jButton2.setText("Aceptar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(747, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(489, 489, 489))
-        );
-
-        jTabbedPane1.addTab("Productos en bodega", jPanel3);
-
         cmbBusq.setFocusable(false);
 
         jLabel6.setText("Buscar por:");
@@ -685,9 +689,9 @@ public class prueba extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Principal objP = new Principal();
-        objP.setVisible(true);
-        this.dispose();
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -715,25 +719,29 @@ public class prueba extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        pruebactual prueb = new pruebactual(this, true);
+        ActualizacionDialog prueb = new ActualizacionDialog(this, true);
         prueb.txtNombreProd.setText(this.txtNombreProd.getText());
+        prueb.txtUbicacion.setText(ubicacion);
+        prueb.txtPrecio.setText(precio);
+        prueb.txtCantidad.setText(cant);
+        prueb.txtFila.setText(String.valueOf(fila1));
         prueb.setVisible(true);
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
-        int fila1 = tblProd.rowAtPoint(evt.getPoint());
+        fila1 = tblProd.rowAtPoint(evt.getPoint());
         try {
             cod = (String) tblProd.getModel().getValueAt(fila1, 1);            
             String prod = (String) tblProd.getModel().getValueAt(fila1, 0);//Seleccionamos el nombre del producto
             txtNombreProd.setText(prod);
-            String precio = tblProd.getModel().getValueAt(fila1, 3).toString();//Seleccionamos el precio del producto
+            precio = tblProd.getModel().getValueAt(fila1, 3).toString();//Seleccionamos el precio del producto
 //            txtPrecio.setText(precio);
             String precioMayor = tblProd.getModel().getValueAt(fila1, 4).toString();//Seleccionamos el precio al por mayor del producto
 //            txtPrecioM.setText(precioMayor);
-            String ubicacion = tblProd.getModel().getValueAt(fila1, 7).toString();//Seleccionamos la ubicacion del producto
+            ubicacion = tblProd.getModel().getValueAt(fila1, 7).toString();//Seleccionamos la ubicacion del producto
 //            txtUbicacion.setText(ubicacion);
-            String cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
+            cant = tblProd.getModel().getValueAt(fila1, 8).toString();//Seleccionamos la cantidad del producto
             cantidad = Integer.parseInt(cant);
 //            txtCantidad.setText(cant);
             permisos();
@@ -744,21 +752,21 @@ public class prueba extends javax.swing.JFrame {
     }//GEN-LAST:event_tblProdMouseClicked
 
     private void tblProdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyPressed
-        char c = evt.getKeyChar();
-        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
-            System.out.println("hola");
-            fila = tblProd.getSelectedRow();
-            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
-            txtNombreProd.setText(prod);
-            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
-//            txtPrecio.setText(precio);
-            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
-//            txtPrecioM.setText(precioMayor);
-            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
-//            txtUbicacion.setText(ubicacion);
-            String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
-//            txtCantidad.setText(cant);
-        }
+//        char c = evt.getKeyChar();
+//        if ((evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+//            System.out.println("hola");
+//            fila = tblProd.getSelectedRow();
+//            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
+//            txtNombreProd.setText(prod);
+//            String precio = tblProd.getModel().getValueAt(fila, 2).toString();//Seleccionamos el precio del producto
+////            txtPrecio.setText(precio);
+//            String precioMayor = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio al por mayor del producto
+////            txtPrecioM.setText(precioMayor);
+//            String ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
+////            txtUbicacion.setText(ubicacion);
+//            String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+////            txtCantidad.setText(cant);
+       // }
     }//GEN-LAST:event_tblProdKeyPressed
 
     private void tblProdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdKeyTyped
@@ -781,8 +789,10 @@ public class prueba extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         MoverBodega mb = new MoverBodega(null, true);
+        mb.txtAyudaIndice.setText(String.valueOf(fila1));
         mb.txtAyudaCant.setText(String.valueOf(cantidad));
         mb.txtAyudaCod.setText(cod);
+        mb.txtAyudaCantIni.setText(tblProd.getValueAt(fila1, 8).toString());
         mb.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 

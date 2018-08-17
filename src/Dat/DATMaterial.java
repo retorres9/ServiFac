@@ -93,7 +93,7 @@ public class DATMaterial {
         return listadoEnBodega;
     }
 
-    public ArrayList<Producto> ConsultarMinimo(String prov, String cat) throws SQLException {
+    public ArrayList<Producto> ConsultarMinimos() throws SQLException {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -101,9 +101,10 @@ public class DATMaterial {
                     + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
                     + "p.Cantidad_Minima, pr.Empresa FROM categoria cat, producto p, ubicacion u, "
                     + "proveedores pr WHERE p.id_ubicacion = u.id_ubicacion  AND "
-                    + "p.ruc = pr.ruc AND cantidad<cantidad_minima "+"AND pr.empresa ='"+prov+"' OR cat.nombre_categoria = '"+cat+"' ORDER BY pr.Empresa, p.Nombre_Producto ";
+                    + "p.ruc = pr.ruc AND cantidad<cantidad_minima ORDER BY pr.Empresa, p.Nombre_Producto ";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
+            System.out.println(sentencia);
             while (rs.next()) {
                 String nombreProd = rs.getString(1);
                 String cod = rs.getString(2);
@@ -119,6 +120,40 @@ public class DATMaterial {
         } catch (SQLException ex) {
             Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            rs.close();
+            con.close();
+        }
+        return listadoMinimos;
+    }
+    
+    public ArrayList<Producto> ConsultarMinimo(String prov, String cat) throws SQLException {
+        ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT distinct p.Nombre_Producto, p.Codigo, p.Precio, "
+                    + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
+                    + "p.Cantidad_Minima, pr.Empresa FROM categoria cat, producto p, ubicacion u, "
+                    + "proveedores pr WHERE p.id_ubicacion = u.id_ubicacion  AND "
+                    + "p.ruc = pr.ruc AND cantidad<cantidad_minima "+"AND pr.empresa ='"+prov+"' OR cat.nombre_categoria = '"+cat+"' ORDER BY pr.Empresa, p.Nombre_Producto ";
+            ps = con.prepareStatement(sentencia);
+            rs = ps.executeQuery();
+            System.out.println(sentencia);
+            while (rs.next()) {
+                String nombreProd = rs.getString(1);
+                String cod = rs.getString(2);
+                double precio = rs.getDouble(3);
+                double precioProdMayor = rs.getDouble(4);
+                String ubi = rs.getString(5);
+                int cant = rs.getInt(6);
+                int cantMin = rs.getInt(7);
+                String empresa = rs.getString(8);
+                Producto prod = new Producto(nombreProd, cod, precio, precioProdMayor, ubi, cant, cantMin, empresa);
+                listadoMinimos.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ps.close();
             rs.close();
             con.close();
         }

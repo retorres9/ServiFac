@@ -73,8 +73,8 @@ public final class Minimos extends javax.swing.JFrame {
         permisos();
         updateTabla();
         empresa();
-        cargarModeloCat();
-        cargarModeloProv();
+        //cargarModeloCat();
+        //cargarModeloProv();
     }
     
     public void cargarModeloCat() {
@@ -162,7 +162,36 @@ public final class Minimos extends javax.swing.JFrame {
 
     public void updateTabla() {
         try {
-            ArrayList<Producto> listaProductos = producto.ConsultarMinimo(auxProv,auxProv);
+            ArrayList<Producto> listaProductos = producto.ConsultarMinimos();
+            int listadoProductos = listaProductos.size();
+            modelo.setNumRows(listadoProductos);
+            for (int i = 0; i < listadoProductos; i++) {
+                manejadorProd = listaProductos.get(i);
+                String nombreProd = manejadorProd.getStrNombreProd();
+                String cod = manejadorProd.getStrCod();
+                Double precio = manejadorProd.getFltPrecio();
+                Double precioMayor = manejadorProd.getFltPrecioMayor();
+                String ubi = manejadorProd.getStrUbicacion();
+                Integer cant = manejadorProd.getIntCantidad();
+                Integer cantMin = manejadorProd.getIntCantidadMinima();
+                String prov = manejadorProd.getStrEmpresa();
+                modelo.setValueAt(nombreProd, i, 0);
+                modelo.setValueAt(cod, i, 1);
+                modelo.setValueAt(precio, i, 2);
+                modelo.setValueAt(precioMayor, i, 3);
+                modelo.setValueAt(ubi, i, 4);
+                modelo.setValueAt(cant, i, 5);
+                modelo.setValueAt(cantMin, i, 6);
+                modelo.setValueAt(prov, i, 7);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void cargarTablaBusqueda() {
+        try {
+            ArrayList<Producto> listaProductos = producto.ConsultarMinimo(auxProv, auxCat);
             int listadoProductos = listaProductos.size();
             modelo.setNumRows(listadoProductos);
             for (int i = 0; i < listadoProductos; i++) {
@@ -254,8 +283,8 @@ public final class Minimos extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtEmpresa = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbProveedor = new javax.swing.JComboBox<>();
+        cmbCategoria = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         rbtnProv = new javax.swing.JCheckBox();
@@ -421,9 +450,19 @@ public final class Minimos extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar"));
 
-        jComboBox1.setModel(modeloProv);
+        cmbProveedor.setModel(modeloProv);
+        cmbProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProveedorActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(modeloCategorias);
+        cmbCategoria.setModel(modeloCategorias);
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoriaActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Proveedor:");
 
@@ -432,6 +471,12 @@ public final class Minimos extends javax.swing.JFrame {
         rbtnProv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnProvActionPerformed(evt);
+            }
+        });
+
+        rbtnCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCatActionPerformed(evt);
             }
         });
 
@@ -446,8 +491,8 @@ public final class Minimos extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, 234, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmbProveedor, 0, 234, Short.MAX_VALUE)
+                    .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbtnProv)
@@ -460,14 +505,15 @@ public final class Minimos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8))
                     .addComponent(rbtnProv))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(rbtnCat))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnCat)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -726,13 +772,43 @@ public final class Minimos extends javax.swing.JFrame {
 
     private void rbtnProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnProvActionPerformed
         if(rbtnProv.isSelected()){
-            auxProv = jComboBox1.getSelectedItem().toString();
+            auxProv = cmbProveedor.getSelectedItem().toString();
             updateTabla();
         } else {
             auxProv = "";
             updateTabla();
         }
     }//GEN-LAST:event_rbtnProvActionPerformed
+
+    private void cmbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProveedorActionPerformed
+        if(rbtnProv.isSelected()){
+            auxProv = cmbProveedor.getSelectedItem().toString();
+            cargarTablaBusqueda();
+        } else {
+            auxProv = "";
+            cargarTablaBusqueda();
+        }
+    }//GEN-LAST:event_cmbProveedorActionPerformed
+
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
+        if(rbtnCat.isSelected()){
+            auxCat = cmbCategoria.getSelectedItem().toString();
+            cargarTablaBusqueda();
+        } else {
+            auxCat = "";
+            cargarTablaBusqueda();
+        }
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
+
+    private void rbtnCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCatActionPerformed
+        if(rbtnCat.isSelected()){
+            auxCat = cmbCategoria.getSelectedItem().toString();
+            updateTabla();
+        } else {
+            auxCat = "";
+            updateTabla();
+        }
+    }//GEN-LAST:event_rbtnCatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -766,10 +842,10 @@ public final class Minimos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Categoria> cmbCategoria;
+    private javax.swing.JComboBox<Proveedor> cmbProveedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<Proveedor> jComboBox1;
-    private javax.swing.JComboBox<Categoria> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

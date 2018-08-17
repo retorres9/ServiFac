@@ -2,13 +2,7 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
-describe existenciasbodega;
 
-SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, u.usuario
-FROM proveedores p, pago_proveedor pp, usuario u
-WHERE p.ruc = pp.ruc AND pp.Fecha = "15/08/2018" AND Tipo ='Pago';
-
-select * from usuario;
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
@@ -17,6 +11,7 @@ iva INT(2) not null,
 ruc VARCHAR(13) not null,
 telefono VARCHAR(10)
 );
+describe producto;
 select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
 select fecha from venta;
 ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);

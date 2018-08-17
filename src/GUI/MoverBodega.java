@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Clases.Bodega;
@@ -23,16 +18,17 @@ public class MoverBodega extends javax.swing.JDialog {
     DATBodega manejadorBodega;
     DATExistenciasBodega manejadorExistencias;
     ExistenciasBodega objExistencias = new ExistenciasBodega();
+    int total;
 
     public MoverBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        txtAyudaCant.setVisible(false);
-        txtAyudaCod.setVisible(false);
         manejadorBodega = new DATBodega();
         manejadorExistencias = new DATExistenciasBodega();
         modeloBodega = new DefaultComboBoxModel<>();
         cargarModeloBodega();
         initComponents();
+        txtAyudaCant.setVisible(false);
+        txtAyudaCod.setVisible(false);
         this.setLocationRelativeTo(null);
     }
 
@@ -59,6 +55,8 @@ public class MoverBodega extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         txtAyudaCant = new javax.swing.JLabel();
         txtAyudaCod = new javax.swing.JLabel();
+        txtAyudaIndice = new javax.swing.JLabel();
+        txtAyudaCantIni = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,6 +80,10 @@ public class MoverBodega extends javax.swing.JDialog {
 
         txtAyudaCod.setText("jLabel1");
 
+        txtAyudaIndice.setText("jLabel1");
+
+        txtAyudaCantIni.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,9 +104,14 @@ public class MoverBodega extends javax.swing.JDialog {
                         .addComponent(jButton1)))
                 .addGap(110, 110, 110))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(txtAyudaCant)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAyudaCod)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtAyudaCant)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAyudaCod)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAyudaIndice))
+                    .addComponent(txtAyudaCantIni))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,8 +119,11 @@ public class MoverBodega extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAyudaCant)
-                    .addComponent(txtAyudaCod))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                    .addComponent(txtAyudaCod)
+                    .addComponent(txtAyudaIndice))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAyudaCantIni)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,6 +144,8 @@ public class MoverBodega extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int auxCantActual = Integer.parseInt(txtAyudaCant.getText());
         int cant = Integer.parseInt(txtCant.getText());
+        int filaSelec = Integer.parseInt(txtAyudaIndice.getText());
+        int cantInicial = Integer.parseInt(txtAyudaCantIni.getText());
         Bodega bod = (Bodega) cmbBodega.getSelectedItem();
         int getCant;
         if (txtCant.getText().trim().isEmpty()) {
@@ -142,9 +154,11 @@ public class MoverBodega extends javax.swing.JDialog {
             if (cant > auxCantActual) {
                 JOptionPane.showMessageDialog(null, "Está intentando mover una cantidad mayor a la existente");
             } else {
+                total = cantInicial - Integer.parseInt(txtCant.getText());
                 System.out.println(cmbBodega.getSelectedItem());
                 getCant = manejadorExistencias.contadorProdBodega(txtAyudaCod.getText());
                 System.out.println(bod.getIntIdBodega());
+                
                 if (getCant > 0) {
                     objExistencias = new ExistenciasBodega(txtAyudaCod.getText(), Integer.parseInt(txtCant.getText()));
                     manejadorExistencias.actualizarCant(objExistencias, cant);
@@ -153,6 +167,9 @@ public class MoverBodega extends javax.swing.JDialog {
                     manejadorExistencias.ingresarEnBodegaInventario(objExistencias, cant);
                 }
             }
+            JOptionPane.showMessageDialog(null, "Operación realizada exitosamente!!!");
+            Inventario.tblProd.setValueAt(total, filaSelec, 8);
+            this.dispose();
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -204,7 +221,9 @@ public class MoverBodega extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     public static javax.swing.JLabel txtAyudaCant;
+    public javax.swing.JLabel txtAyudaCantIni;
     public javax.swing.JLabel txtAyudaCod;
+    public javax.swing.JLabel txtAyudaIndice;
     private javax.swing.JTextField txtCant;
     // End of variables declaration//GEN-END:variables
 }

@@ -150,7 +150,6 @@ public class DATUsuario {
             while (rs.next()) {
                 String strUsuario = rs.getString(1);                
                 String cedula = rs.getString(2);
-                System.out.println(cedula);
                 int rol = rs.getInt(3);
                 Usuario user = new Usuario(strUsuario, cedula, rol);//en objeto (nombre, usuario,rol)
                 listaUsuario.add(user);
