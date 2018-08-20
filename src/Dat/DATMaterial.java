@@ -24,7 +24,7 @@ public class DATMaterial {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
-                    + " p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia,"
+                    + " p.precio_compra, p.precio, p.Precio_Mayor, p.iva,"
                     + " p.ganancia_mayor, u.nombre_ubicacion, p.Cantidad FROM "
                     + "producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion "
                     + "AND stock = true ORDER BY p.Nombre_Producto Asc";
@@ -36,11 +36,11 @@ public class DATMaterial {
                 double precioCompra = rs.getDouble(3);
                 double precio = rs.getDouble(4);
                 double precioMayor = rs.getDouble(5);
-                double ganancia = rs.getDouble(6);
+                String iva = rs.getString(6);
                 double gananciaMayor = rs.getDouble(7);
                 String ubicacion = rs.getString(8);
                 int cant = rs.getInt(9);
-                Producto prod = new Producto(nombre, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, ubicacion);
+                Producto prod = new Producto(nombre, codigo, precio, precioCompra, iva, gananciaMayor, precioMayor, cant, ubicacion);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
@@ -299,6 +299,24 @@ public class DATMaterial {
             }
         }
         return true;
+    }
+    
+    public void ActualizaPrecio(Producto prod){
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentencia = "UPDATE producto SET precio_Compra = ?, precio = ?, precio_mayor = ?, ganancia = ?, ganancia_Mayor = ?"
+                    + "WHERE codigo = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setDouble(1, prod.getPrecioCompra());
+            ps.setDouble(2, prod.getFltPrecio());
+            ps.setDouble(3, prod.getFltPrecioMayor());
+            ps.setDouble(4, prod.getGanancia());
+            ps.setDouble(5, prod.getGananciaMayor());
+            ps.setString(6, prod.getStrCod());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto");
+        }
     }
 
     public void UpdateFormaCantMin(Producto producto) throws ClassNotFoundException, SQLException {

@@ -287,7 +287,6 @@ public final class IngresoProd extends javax.swing.JFrame {
     }
 
     public void guardar() {
-        String workingDirectory = System.getProperty("java.io.tmpdir");
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator('.');
         DecimalFormat decimal = new DecimalFormat("0.00", simbolo);

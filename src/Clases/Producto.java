@@ -43,6 +43,18 @@ public class Producto {
         this.fltPrecioMayor = fltPrecioMayor;
         this.iva = iva;
     }
+
+    public Producto(String nombre, String codigo, double precio, double precioCompra, String iva, double gananciaMayor, double precioMayor, int cant, String ubicacion) {
+        this.strNombreProd = nombre;
+        this.strCod = codigo;
+        this.fltPrecio = precio;
+        this.precioCompra = precioCompra;
+        this.iva = iva;
+        this.gananciaMayor = gananciaMayor;
+        this.fltPrecioMayor = precioMayor;
+        this.intCantidad = cant;
+        this.strUbicacion = ubicacion;
+    }
     
     public String getStrBodega() {
         return strBodega;
@@ -145,25 +157,14 @@ public class Producto {
         this.bodega = bodega;
     }
     
-//    public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, String strUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File imgCodigoProd, File fotoProd, String iva, int bodega) {
-//        this.strNombreProd = strNombreProd;
-//        this.strCod = strCod;
-//        this.fltPrecio = fltPrecio;
-//        this.precioCompra = precioCompra;
-//        this.ganancia = ganancia;
-//        this.gananciaMayor = gananciaMayor;
-//        this.stock = stock;
-//        this.fltPrecioMayor = fltPrecioMayor;
-//        this.strUbicacion = strUbicacion;
-//        this.idCategoria = idCategoria;
-//        this.intCantidad = intCantidad;
-//        this.intCantidadMinima = intCantidadMinima;
-//        this.strRUC = strRUC;
-//        this.imgCodigoProd = imgCodigoProd;
-//        this.fotoProd = fotoProd;
-//        this.iva = iva;
-//        this.bodega = bodega;
-//    }
+    public Producto(double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, String strCod) {
+        this.strCod = strCod;
+        this.fltPrecio = fltPrecio;
+        this.precioCompra = precioCompra;
+        this.ganancia = ganancia;
+        this.gananciaMayor = gananciaMayor;
+        this.fltPrecioMayor = fltPrecioMayor;
+    }
 
     public Producto(String strNombreProd, String strCod, double precioCompra, double fltPrecio, double fltPrecioMayor, double ganancia, double gananciaMayor, boolean stock, int intUbicacion, int idCategoria, int intCantidad, int intCantidadMinima, String strRUC, File fotoProd, String iva, int bodega) {
         this.strNombreProd = strNombreProd;

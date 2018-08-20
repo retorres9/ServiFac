@@ -47,10 +47,10 @@ public final class Minimos extends javax.swing.JFrame {
     DATUsuario manejadorUsuario;
     Utilidades util = new Utilidades();
     String host;
-    String auxProv="";
-    String auxCat="";
+    String auxProv = "";
+    String auxCat = "";
     DATConfiguracion manejadorConf;
-    
+
     DefaultComboBoxModel<Categoria> modeloCategorias;
     DefaultComboBoxModel<Proveedor> modeloProv;
 
@@ -59,6 +59,8 @@ public final class Minimos extends javax.swing.JFrame {
         modeloProv = new DefaultComboBoxModel<Proveedor>();
         objCat = new DATCategoria();
         objProveedor = new DATProveedor();
+        cargarModeloCat();
+        cargarModeloProv();
         initComponents();
         this.jLabel7.setVisible(false);
         producto = new DATMaterial();
@@ -73,10 +75,9 @@ public final class Minimos extends javax.swing.JFrame {
         permisos();
         updateTabla();
         empresa();
-        //cargarModeloCat();
-        //cargarModeloProv();
+
     }
-    
+
     public void cargarModeloCat() {
         try {
             ArrayList<Categoria> listaCategorias;
@@ -88,12 +89,12 @@ public final class Minimos extends javax.swing.JFrame {
             Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void cargarModeloProv() {
         ArrayList<Proveedor> listaProveedores;
         listaProveedores = objProveedor.obtenerEmpresa();
         for (Proveedor prov : listaProveedores) {
-            modeloProv.addElement(prov);            
+            modeloProv.addElement(prov);
         }
     }
 
@@ -149,8 +150,8 @@ public final class Minimos extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void empresa(){
+
+    public void empresa() {
         ArrayList<Configuracion> conf = manejadorConf.cargaConfig();
         int cant = conf.size();
         for (int i = 0; i < cant; i++) {
@@ -164,6 +165,7 @@ public final class Minimos extends javax.swing.JFrame {
         try {
             ArrayList<Producto> listaProductos = producto.ConsultarMinimos();
             int listadoProductos = listaProductos.size();
+            System.out.println(listadoProductos);
             modelo.setNumRows(listadoProductos);
             for (int i = 0; i < listadoProductos; i++) {
                 manejadorProd = listaProductos.get(i);
@@ -188,7 +190,7 @@ public final class Minimos extends javax.swing.JFrame {
             Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void cargarTablaBusqueda() {
         try {
             ArrayList<Producto> listaProductos = producto.ConsultarMinimo(auxProv, auxCat);
@@ -745,7 +747,7 @@ public final class Minimos extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    
+
     private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
         EliminarCliente objElmCl = new EliminarCliente();
         objElmCl.setVisible(true);
@@ -771,7 +773,7 @@ public final class Minimos extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void rbtnProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnProvActionPerformed
-        if(rbtnProv.isSelected()){
+        if (rbtnProv.isSelected()) {
             auxProv = cmbProveedor.getSelectedItem().toString();
             updateTabla();
         } else {
@@ -781,7 +783,7 @@ public final class Minimos extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnProvActionPerformed
 
     private void cmbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProveedorActionPerformed
-        if(rbtnProv.isSelected()){
+        if (rbtnProv.isSelected()) {
             auxProv = cmbProveedor.getSelectedItem().toString();
             cargarTablaBusqueda();
         } else {
@@ -791,7 +793,7 @@ public final class Minimos extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbProveedorActionPerformed
 
     private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
-        if(rbtnCat.isSelected()){
+        if (rbtnCat.isSelected()) {
             auxCat = cmbCategoria.getSelectedItem().toString();
             cargarTablaBusqueda();
         } else {
@@ -801,7 +803,7 @@ public final class Minimos extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbCategoriaActionPerformed
 
     private void rbtnCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCatActionPerformed
-        if(rbtnCat.isSelected()){
+        if (rbtnCat.isSelected()) {
             auxCat = cmbCategoria.getSelectedItem().toString();
             updateTabla();
         } else {

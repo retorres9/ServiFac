@@ -2,7 +2,10 @@ CREATE DATABASE empresa;
 
 USE empresa;
 
+Select * from producto where cantidad < cantidad_Minima order by ruc;
+describe producto;
 
+select * from categoria;
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
