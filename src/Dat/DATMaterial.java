@@ -1,8 +1,6 @@
 package Dat;
 
 import Clases.Producto;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -104,7 +102,6 @@ public class DATMaterial {
                     + "p.ruc = pr.ruc AND cantidad<cantidad_minima ORDER BY pr.Empresa, p.Nombre_Producto ";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
-            System.out.println(sentencia);
             while (rs.next()) {
                 String nombreProd = rs.getString(1);
                 String cod = rs.getString(2);
@@ -125,8 +122,8 @@ public class DATMaterial {
         }
         return listadoMinimos;
     }
-    
-    public ArrayList<Producto> ConsultarMinimo(String prov, String cat) throws SQLException {
+
+    public ArrayList<Producto> ConsultarMinimo(String prov) throws SQLException {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -134,10 +131,9 @@ public class DATMaterial {
                     + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
                     + "p.Cantidad_Minima, pr.Empresa FROM categoria cat, producto p, ubicacion u, "
                     + "proveedores pr WHERE p.id_ubicacion = u.id_ubicacion  AND "
-                    + "p.ruc = pr.ruc AND cantidad<cantidad_minima "+"AND pr.empresa ='"+prov+"' OR cat.nombre_categoria = '"+cat+"' ORDER BY pr.Empresa, p.Nombre_Producto ";
+                    + "p.ruc = pr.ruc AND cantidad<cantidad_minima " + "AND pr.empresa ='" + prov + "' ORDER BY pr.Empresa, p.Nombre_Producto ";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
-            System.out.println(sentencia);
             while (rs.next()) {
                 String nombreProd = rs.getString(1);
                 String cod = rs.getString(2);
@@ -167,10 +163,9 @@ public class DATMaterial {
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
                     + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
-                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Nombre_Producto LIKE '%" +nombre+ "%'"
+                    + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Nombre_Producto LIKE '%" + nombre + "%'"
                     + "ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
-            //ps.setString(1, nombre);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombreprod = rs.getString(1);
@@ -227,15 +222,6 @@ public class DATMaterial {
         }
         return listaProductosNombre;
     }
-//
-//    public ResultSet ConsultarCodigo(String codigo) throws ClassNotFoundException, SQLException {
-//        //Statement st = c.getConnection().createStatement();
-//        String Sentencia = "SELECT Nombre_Producto, Codigo, Precio, Precio_Mayor, Ubicacion, Cantidad FROM producto WHERE Codigo REGEXP CONCAT('^',?)";
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        //ResultSet re = st.executeQuery(Sentencia);
-//        ps.setString(1, codigo);
-//        return ps.executeQuery();
-//    }
 
     public void actualizarUbicacion(Producto producto) {
         try {
@@ -261,10 +247,6 @@ public class DATMaterial {
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-//            FileInputStream fis = new FileInputStream(producto.getFotoProd());
-//            FileInputStream fisCod = new FileInputStream(producto.getImgCodigoProd());
-//            System.out.println(fis);
-//            System.out.println(fisCod);
             String Sentencia = "INSERT INTO producto (nombre_producto, codigo,"
                     + " precio_Compra, precio, precio_mayor, ganancia, ganancia_Mayor,"
                     + "id_categoria, id_ubicacion, cantidad, cantidad_Minima,"
@@ -284,11 +266,9 @@ public class DATMaterial {
             ps.setInt(11, producto.getIntCantidadMinima());
             ps.setString(12, producto.getStrRUC());
             ps.setString(13, producto.getIva());
-            //ps.setBinaryStream(14, fis, (int) producto.getFotoProd().length());
-            //ps.setBinaryStream(15, fisCod, (int) producto.getImgCodigoProd().length());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");            
+            JOptionPane.showMessageDialog(null, "Nombre o codigo ya ingresados");
             return false;
         } finally {
             try {
@@ -300,10 +280,10 @@ public class DATMaterial {
         }
         return true;
     }
-    
-    public void ActualizaPrecio(Producto prod){
+
+    public void ActualizaPrecio(Producto prod) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET precio_Compra = ?, precio = ?, precio_mayor = ?, ganancia = ?, ganancia_Mayor = ?"
                     + "WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
@@ -316,6 +296,13 @@ public class DATMaterial {
             ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto");
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -423,17 +410,17 @@ public class DATMaterial {
             }
         }
     }
-    
-    public int validaCodigo(String codigo){
+
+    public int validaCodigo(String codigo) {
         int cant = 0;
-        try{
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "select count(codigo) from producto where codigo LIKE ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
             rs = ps.executeQuery();
-            while(rs.next()){
-                cant = rs.getInt(1);                
+            while (rs.next()) {
+                cant = rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
@@ -509,7 +496,7 @@ public class DATMaterial {
             }
         }
     }
-    
+
     public void AumentaCant(Producto prod) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");

@@ -469,7 +469,6 @@ public final class Principal extends javax.swing.JFrame {
             objUser = listaUsuario.get(i);
             String usuar = objUser.getNombre();
             cedUser = objUser.getUsuario();
-            System.out.println(cedUser);
             txtVendedor.setText(usuar);
             rol = objUser.getRol();
             if (rol == 0) {

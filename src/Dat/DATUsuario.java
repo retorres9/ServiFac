@@ -16,6 +16,8 @@ public class DATUsuario {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    
+    
 
     public boolean nuevoUsuario(Usuario usuario) throws SQLException {
         try {
@@ -167,18 +169,4 @@ public class DATUsuario {
         return listaUsuario;
 
     }
-//    public int compUsuario() throws ClassNotFoundException, SQLException{
-//        String sentencia = "SELECT Usuario, Contrasena FROM usuario WHERE Usuario = ? && Contrasena = ?";
-//        PreparedStatement st = c.getConnection().prepareStatement(sentencia);
-//        st.setString(1, usuario);
-//        st.setString(2, pass);
-//        return st.executeUpdate();
-//    }
-//    public ResultSet validUser(String usuario, String pass) throws ClassNotFoundException, SQLException{
-//        String sentencia = "SELECT count(*) FROM usuario WHERE Usuario = ? && Contrasena = ?";
-//        PreparedStatement pst = c.getConnection().prepareStatement(sentencia);
-//        pst.setString(1, usuario);
-//        pst.setString(2, pass);
-//        return pst.executeQuery();
-//    }
 }

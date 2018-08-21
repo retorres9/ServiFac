@@ -487,20 +487,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="cmbProveedor" pref="234" max="32767" attributes="0"/>
-                      <Component id="cmbCategoria" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="cmbProveedor" min="-2" pref="234" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="rbtnProv" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbtnCat" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="rbtnProv" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -516,15 +507,7 @@
                       </Group>
                       <Component id="rbtnProv" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="rbtnCat" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -543,37 +526,14 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Proveedor&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cmbCategoria">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="modeloCategorias" type="code"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbCategoriaActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Categoria&gt;"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
             <Property name="text" type="java.lang.String" value="Proveedor:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel9">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Categoria:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JCheckBox" name="rbtnProv">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtnProvActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="rbtnCat">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtnCatActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
