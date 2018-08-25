@@ -143,6 +143,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo.setValueAt(valCancelado, i, 4);
             //modelo.setValueAt(fechaVenta, i, 5);
         }
+        jTabbedPane1.setTitleAt(0, "Ventas ("+String.valueOf(cantFilas)+")");
     }
 
     public void encabezados() {
@@ -185,6 +186,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo2.setValueAt(deuda, i, 3);
             modelo2.setValueAt(usuario, i, 4);
         }
+        jTabbedPane1.setTitleAt(1, "Pago Clientes ("+String.valueOf(cantLista)+")");
     }
 
     public void tablaPagoPR() {
@@ -205,12 +207,13 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo3.setValueAt(monto, i, 2);
             modelo3.setValueAt(cliente, i, 3);
         }
+        jTabbedPane1.setTitleAt(2, "Pago Proveedores ("+String.valueOf(cantLista)+")");
     }
     
     public void busquedafiltrada(){
         String fecha = calendario.getText();
-        String nombre = txtBusqueda.getText();
-        ArrayList<Venta> listadoVentas = manejadorVenta.vistaVentaFiltrada(fecha, nombre);
+        String nombreCleinte = txtBusqueda.getText();
+        ArrayList<Venta> listadoVentas = manejadorVenta.vistaVentaFiltrada(fecha, nombreCleinte);
         int cantFilas = listadoVentas.size();
         modelo.setNumRows(cantFilas);
         for (int i = 0; i < cantFilas; i++) {

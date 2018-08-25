@@ -338,7 +338,7 @@ public final class Factura extends javax.swing.JFrame {
                         generarNotaVenta();
                     }
                     resetFact();
-                    venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario);//OJO
+                    venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario, cont);//OJO
                     manejadorVenta.crearVenta(venta, detalle);
                     helper = 1;
                     ayudaCont = true;

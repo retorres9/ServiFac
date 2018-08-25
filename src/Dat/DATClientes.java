@@ -23,7 +23,7 @@ public class DATClientes {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion FROM clientes  ORDER BY nombres";
+            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion FROM clientes WHERE nombres != 'CONSUMIDOR FINAL' ORDER BY nombres";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {

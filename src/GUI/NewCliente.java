@@ -33,7 +33,8 @@ public final class NewCliente extends javax.swing.JFrame {
         txtCredito.setTransferHandler(null);
         txtDeuda.setTransferHandler(null);
         txtTelf.setTransferHandler(null);
-        //txtAyuda.setVisible(false);
+        txtAyuda.setVisible(false);
+        txtAyudaCed.setVisible(false);
         rbtnCredito.setSelected(false);
         txtCredito.setEnabled(false);
         cliente = new DATClientes();

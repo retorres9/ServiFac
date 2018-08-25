@@ -3,6 +3,7 @@ package GUI;
 import Clases.AbonoCliente;
 import Clases.Clientes;
 import Clases.Configuracion;
+import Clases.Renderer;
 import Clases.Usuario;
 import Clases.Venta;
 import Dat.DATAbonoCliente;
@@ -46,6 +47,7 @@ public final class Pagos extends javax.swing.JFrame {
     String cedUsuario;
     String host;
     Utilidades util = new Utilidades();
+    Renderer render = new Renderer();
 
     public Pagos() {
         initComponents();
@@ -64,6 +66,7 @@ public final class Pagos extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         cargarTabla();
         permisos();
+        tblClientes.setDefaultRenderer(Object.class, render);
     }
 
     @SuppressWarnings("unchecked")
@@ -492,10 +495,8 @@ public final class Pagos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void usuario() {
-        System.out.println("ajshdkajsh");
         ArrayList<Usuario> cedula = manejadorUsuario.obtenerUserLog(host);
         int cantUser = cedula.size();
-        System.out.println(cantUser);
         for (int i = 0; i < cantUser; i++) {
             usuario = cedula.get(i);
             cedUsuario = usuario.getUsuario();//Se obtiene el usuario ya que en la clase datusuario ya hay un constructor( string string string) -> (nombre,usuario,rol)
@@ -866,7 +867,7 @@ public final class Pagos extends javax.swing.JFrame {
                 cargarTabla();
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "No ha ingresado ninguna dirección", "Erroe", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No ha ingresado ninguna dirección", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
         }

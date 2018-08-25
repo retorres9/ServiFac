@@ -5,11 +5,8 @@
  */
 package Clases;
 
-import static com.sun.management.jmx.Trace.isSelected;
-import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import java.awt.Color;
 import java.awt.Component;
-import static javax.management.Query.value;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -25,16 +22,16 @@ public class Renderer implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable tblBodega, Object value, boolean isSelected, boolean hasFocus, int row, int column){
         Component c = RENDERER.getTableCellRendererComponent(tblBodega, value, isSelected, hasFocus, row, column);
-        if (column == 8) {
+        if (column == 3) {
             String valor = tblBodega.getValueAt(row, column).toString();
-            int cant = Integer.parseInt(valor);
+            Double cant = Double.parseDouble(valor);
             Color color = null;
-            if (cant == 2) {
+            if (cant > 0) {
                 //this.setOpaque(true);
                 color = Color.RED;
                 //this.setForeground(Color.YELLOW);
             } else {
-                color = Color.YELLOW;
+                color = Color.BLUE;
             }
             c.setForeground(color);
         } else {

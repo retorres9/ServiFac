@@ -1,9 +1,8 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-
+describe venta;
 Select * from producto where cantidad < cantidad_Minima order by ruc;
-describe producto;
 
 select * from categoria;
 CREATE TABLE configuracion(
@@ -13,6 +12,13 @@ propietario varchar(60) not null,
 iva INT(2) not null,
 ruc VARCHAR(13) not null,
 telefono VARCHAR(10)
+);
+
+CREATE TABLE devolucion(
+id_devolucion INT(10),
+codigo VARCHAR(13) not null,
+precio DOUBLE(7,2) not null,
+comentario VARCHAR(500) not null
 );
 describe producto;
 select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
@@ -61,13 +67,13 @@ autorizado_por varchar(10) default "N/A",
 modificado_por varchar(10) default "N/A",
 monto_aprovado decimal(7,2) default 0.00
 );
-select * from clientes;
+select * from PRoducto where codigo = "0078";
 UPDATE clientes set credito = false WHERE cedula_cliente ='1111111111111';
 select * from clientes;
-ALTER table clientes change modificado_por modificado_por varchar(10) default "N/A";
+#ALTER table clientes change modificado_por modificado_por varchar(10) default "N/A";
 
-INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111", " ", 0.00, " ", 1);
-#describe producto;
+INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111111", " ", 0.00, " ", 1);#IMPORTANTE
+DELETE FROM clientes WHERE CEDULA_CLIENTE = "1111111111";
 
 CREATE TABLE producto(
 nombre_Producto VARCHAR(40) NOT NULL UNIQUE,

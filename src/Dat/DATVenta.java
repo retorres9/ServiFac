@@ -24,13 +24,15 @@ public class DATVenta {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             con.setAutoCommit(false);
-            String sentencia = "INSERT INTO venta (Total_Venta, Valor_Cancelado, Fecha, Cedula_Usuario)"
-                    + "VALUES (?,?,?,?)";
+            String sentencia = "INSERT INTO venta (id_venta, Total_Venta, Valor_Cancelado, Fecha, Cedula_Usuario)"
+                    + "VALUES (?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
-            ps.setDouble(1, venta.getDblTotalVenta());
-            ps.setDouble(2, venta.getDblValCancelado());
-            ps.setString(3, venta.getStrFecha());
-            ps.setString(4, venta.getCedulaUser());
+            ps.setInt(1, venta.getIntIdVenta());
+            ps.setDouble(2, venta.getDblTotalVenta());
+            ps.setDouble(3, venta.getDblValCancelado());
+            ps.setString(4, venta.getStrFecha());
+            ps.setString(5, venta.getCedulaUser());
+            System.out.println(ps.toString());
             ps.executeUpdate();
             
             
@@ -43,6 +45,7 @@ public class DATVenta {
             ps.setDouble(4, detalle.getDblPrecioVenta());
             ps.setString(5, detalle.getStrUsuario());
             ps.setInt(6, detalle.getId_Venta());
+            System.out.println(ps.toString());
             ps.executeUpdate();
             con.commit();
         } catch (SQLException ex) {

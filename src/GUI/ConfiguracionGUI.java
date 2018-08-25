@@ -51,7 +51,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
 
     public void cargarTabla() {
         String strRol;
-        ArrayList<Usuario> listadoUsuarios = manejadorUsuario.listarClientes();
+        ArrayList<Usuario> listadoUsuarios = manejadorUsuario.listarUsuarios();
         int cantUusarios = listadoUsuarios.size();
         modelo.setNumRows(cantUusarios);
         for (int i = 0; i < cantUusarios; i++) {

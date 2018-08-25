@@ -5,9 +5,16 @@
  */
 package GUI;
 
+import Clases.CellEditor;
+import Clases.CellRender;
+import Clases.Configuracion;
+import Clases.Usuario;
 import Clases.Venta;
+import Dat.DATConfiguracion;
+import Dat.DATUsuario;
 import Dat.DATVenta;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,32 +26,44 @@ public class Devoluciones extends javax.swing.JFrame {
     DATVenta manejadorventa;
     Venta objVenta = new Venta();
     DefaultTableModel modelo = new DefaultTableModel();
-    
+    DATConfiguracion configu;
+    Configuracion objConfig;
+    DATUsuario manejadorUsuario;
+    Usuario objUusuario = new Usuario();
+    CellEditor cell = new CellEditor();
     public Devoluciones() {
+        configu = new DATConfiguracion();
+        manejadorUsuario = new DATUsuario();
         initComponents();
         manejadorventa = new DATVenta();
         this.setLocationRelativeTo(null);
         cargaColumnas();
         cargarCompras();
+        //jTable1.getColumnModel().getColumn(2).setCellEditor(new CellEditor());
+        jTable1.getColumnModel().getColumn(1).setCellRenderer(new CellRender());
         
     }
     
     public void cargaColumnas(){
         modelo.addColumn("Fecha");
         modelo.addColumn("Fecha");
+        //modelo.addColumn("Fecha");
     }
     
     public void cargarCompras(){
-        ArrayList<Venta> compras = manejadorventa.ConsultarComprasCL("CONSUMIDOR FINAL");
+        ArrayList<Usuario> compras = manejadorUsuario.listarUsuarios();
         int cant = compras.size();
         System.out.println(cant);
         modelo.setNumRows(cant);
         for (int i = 0; i < cant; i++) {
-            objVenta = compras.get(i);
-            String fecha = objVenta.getStrFecha();
-            String cliente = objVenta.getStrCliente();
+            objUusuario = compras.get(i);
+            String fecha = objUusuario.getNombre();
+            System.out.println(fecha);
+            String cliente = objUusuario.getContrasena();
+            
             modelo.setValueAt(fecha, i, 0);
             modelo.setValueAt(cliente, i, 1);
+            //modelo.setValueAt(Boolean.TRUE, i, 2);
         }
     }
     
@@ -62,6 +81,7 @@ public class Devoluciones extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +94,13 @@ public class Devoluciones extends javax.swing.JFrame {
         jLabel2.setText("Cliente:");
 
         txtNombre.setText(" ");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,6 +116,10 @@ public class Devoluciones extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(408, 408, 408))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,11 +132,21 @@ public class Devoluciones extends javax.swing.JFrame {
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int fila = jTable1.getRowCount();
+        fila = fila-1;
+        System.out.println(fila);
+        boolean value = (Boolean)modelo.getValueAt(fila, 2);
+        System.out.println(value);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,6 +184,7 @@ public class Devoluciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -6,11 +6,20 @@ public class Venta {
     private String strFecha;
     private double dblValCancelado;
     private String cedulaUser;
-    
+    private int cont;
     /*Atributos para consultas cruzadas*/
     private double deudaCliente;
     private String strCliente;
 
+    public Venta(int intIdVenta, double dblTotalVenta, double dblValCancelado, String strFecha, String cedulaUser, int cont) {
+        this.intIdVenta = intIdVenta;
+        this.dblTotalVenta = dblTotalVenta;
+        this.dblValCancelado = dblValCancelado;
+        this.strFecha = strFecha;
+        this.cedulaUser = cedulaUser;
+        this.cont = cont;
+    }
+    
     public Venta(int intIdVenta, double dblTotalVenta, double dblValCancelado, String strFecha, String cedulaUser) {
         this.intIdVenta = intIdVenta;
         this.dblTotalVenta = dblTotalVenta;

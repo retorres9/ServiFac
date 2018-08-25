@@ -73,7 +73,7 @@ public class DATUsuario {
         return cedula;
     }
 
-    public ArrayList<Usuario> listarClientes() {
+    public ArrayList<Usuario> listarUsuarios() {
         ArrayList<Usuario> listadoUsuarios = new ArrayList<Usuario>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");

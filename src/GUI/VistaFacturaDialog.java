@@ -19,6 +19,8 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
     DetalleVenta detalle = new DetalleVenta();
     DATReporte manejadorDetalle;
     DefaultTableModel modelo = new DefaultTableModel();
+    int fila;
+    String cant;
 
     public VistaFacturaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -29,14 +31,14 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         setAnchoColumnas();
     }
-    
+
     public void encabezados() {
         modelo.addColumn("Cant.");
         modelo.addColumn("Descripción");
         modelo.addColumn("Precio Venta");
         modelo.addColumn("Total");
     }
-    
+
     public void setAnchoColumnas() {
         JViewport scroll = (JViewport) tblFactura.getParent();
         int ancho = scroll.getWidth();
@@ -87,7 +89,7 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
             txtFecha.setText(fecha);
         }
     }
-    
+
     public void cargarTabla2() {
         txtVenta.setText(VistaDeudaCliente.txtId.getText());
         int id = Integer.parseInt(txtVenta.getText());
@@ -127,6 +129,7 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -148,6 +151,11 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
 
         tblFactura.setModel(modelo);
         tblFactura.getTableHeader().setReorderingAllowed(false);
+        tblFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFacturaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblFactura);
 
         txtTotal.setText(" ");
@@ -160,6 +168,13 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
 
         txtCliente.setText(" ");
 
+        jButton2.setText("Registrar devolución");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,10 +186,16 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
                 .addComponent(jLabel5)
                 .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jSeparator1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(74, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(56, 56, 56))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,15 +214,11 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(224, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 72, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jSeparator1)
-                .addContainerGap())
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(188, 188, 188)
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,9 +252,11 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
                 .addComponent(jButton1)
                 .addGap(27, 27, 27))
         );
@@ -248,6 +267,20 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (tblFactura.getSelectedRowCount() > 0) {
+            DevolucionDialog dev = new DevolucionDialog(new javax.swing.JDialog(), true);
+            dev.lblCant.setText(cant);
+            dev.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tblFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacturaMouseClicked
+        fila = tblFactura.getSelectedRow();
+        cant = tblFactura.getValueAt(fila, 0).toString();
+        System.out.println(cant);
+    }//GEN-LAST:event_tblFacturaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -293,6 +326,7 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
