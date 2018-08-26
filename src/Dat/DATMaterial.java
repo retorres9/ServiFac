@@ -64,6 +64,7 @@ public class DATMaterial {
                     + "producto p, existenciasbodega eb, bodega b WHERE eb.id_bodega = b.id_bodega "
                     + "AND p.codigo = eb.codigo AND stock = true AND eb.cantidad > 0 ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(sentencia);
+            System.out.println(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombre = rs.getString(1);

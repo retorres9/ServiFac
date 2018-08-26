@@ -19,14 +19,19 @@ public class MoverBodega extends javax.swing.JDialog {
     DATExistenciasBodega manejadorExistencias;
     ExistenciasBodega objExistencias = new ExistenciasBodega();
     int total;
+    Inventario inv;
 
     public MoverBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+
         manejadorBodega = new DATBodega();
         manejadorExistencias = new DATExistenciasBodega();
         modeloBodega = new DefaultComboBoxModel<>();
         cargarModeloBodega();
         initComponents();
+        //inv = new Inventario();
+        txtAyudaCantIni.setVisible(false);
+        txtAyudaIndice.setVisible(false);
         txtAyudaCant.setVisible(false);
         txtAyudaCod.setVisible(false);
         this.setLocationRelativeTo(null);
@@ -149,7 +154,7 @@ public class MoverBodega extends javax.swing.JDialog {
         Bodega bod = (Bodega) cmbBodega.getSelectedItem();
         int getCant;
         if (txtCant.getText().trim().isEmpty()) {
-            //Do nothing
+//            Do nothing
         } else {
             if (cant > auxCantActual) {
                 JOptionPane.showMessageDialog(null, "Está intentando mover una cantidad mayor a la existente");
@@ -158,7 +163,7 @@ public class MoverBodega extends javax.swing.JDialog {
                 System.out.println(cmbBodega.getSelectedItem());
                 getCant = manejadorExistencias.contadorProdBodega(txtAyudaCod.getText());
                 System.out.println(bod.getIntIdBodega());
-                
+
                 if (getCant > 0) {
                     objExistencias = new ExistenciasBodega(txtAyudaCod.getText(), Integer.parseInt(txtCant.getText()));
                     manejadorExistencias.actualizarCant(objExistencias, cant);
@@ -167,11 +172,11 @@ public class MoverBodega extends javax.swing.JDialog {
                     manejadorExistencias.ingresarEnBodegaInventario(objExistencias, cant);
                 }
             }
+            Inventario.bandera = false;
             JOptionPane.showMessageDialog(null, "Operación realizada exitosamente!!!");
             Inventario.tblProd.setValueAt(total, filaSelec, 8);
             this.dispose();
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -220,7 +225,7 @@ public class MoverBodega extends javax.swing.JDialog {
     private javax.swing.JComboBox<Bodega> cmbBodega;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    public static javax.swing.JLabel txtAyudaCant;
+    public javax.swing.JLabel txtAyudaCant;
     public javax.swing.JLabel txtAyudaCantIni;
     public javax.swing.JLabel txtAyudaCod;
     public javax.swing.JLabel txtAyudaIndice;

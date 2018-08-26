@@ -1,6 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+select * from CLIENTEs where nombres != "CONSUMIDOR FINAL";
 describe venta;
 Select * from producto where cantidad < cantidad_Minima order by ruc;
 
@@ -18,6 +19,7 @@ CREATE TABLE devolucion(
 id_devolucion INT(10),
 codigo VARCHAR(13) not null,
 precio DOUBLE(7,2) not null,
+fecha VARCHAR(10),
 comentario VARCHAR(500) not null
 );
 describe producto;
@@ -33,7 +35,6 @@ UPDATE configuracion SET password = md5("servifac") WHERE empresa ="Libreria y b
 
 #SELECT MAX(precio) FROM producto;
 #drop table venta;
-select * from usuario;
 UPDATE usuario SET login = true, maquina = "DESKTOP-GF2OJ9B" where usuario = "marthareyes";
 
 #UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";

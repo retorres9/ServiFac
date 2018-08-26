@@ -1217,8 +1217,8 @@ public final class Factura extends javax.swing.JFrame {
             limpiarLista();
             String busq = txtBusqProd.getText();
             ArrayList<Producto> listaProd = manejadorProd.ConsultarPorNombre(busq);
-            for (Producto producto : listaProd) {
-                listaProductos.addElement(producto);
+            for (Producto objProducto : listaProd) {
+                listaProductos.addElement(objProducto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);

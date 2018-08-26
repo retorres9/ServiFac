@@ -49,7 +49,7 @@ public class DATExistenciasBodega {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             con.setAutoCommit(false);
-            String sentencia = "UPDATE existenciasBodega SET cantidad = ? WHERE codigo = ?";
+            String sentencia = "UPDATE existenciasBodega SET cantidad = cantidad + ? WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, existencia.getCantidad());
             ps.setString(2, existencia.getCodigo());
@@ -91,6 +91,13 @@ public class DATExistenciasBodega {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATExistenciasBodega.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cant;
     }

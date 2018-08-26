@@ -38,6 +38,7 @@ public final class Inventario extends javax.swing.JFrame {
     DATExistenciasBodega manejadorExistencias;
     DATUsuario manejadorUsuario;
     Configuracion objConfig = new Configuracion();
+    public static boolean bandera;
     DATConfiguracion manejadorConf;
     String host;
     Utilidades util = new Utilidades();
@@ -50,11 +51,13 @@ public final class Inventario extends javax.swing.JFrame {
     Principal objP = new Principal();
 
     public Inventario() {
-        initComponents();
         material = new DATMaterial();
         manejadorUsuario = new DATUsuario();
         manejadorExistencias = new DATExistenciasBodega();
         manejadorConf = new DATConfiguracion();
+        //mb = new MoverBodega(this, true);
+        initComponents();
+        bandera = true;
         host = util.getPcName();
         insertarColumnas();
         encabezadoBodega();
@@ -96,7 +99,7 @@ public final class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Precio de Compra");
         modelo.addColumn("Precio");
         modelo.addColumn("Precio por mayor");
-        modelo.addColumn("Ganancia %");
+        modelo.addColumn("IVA %");
         modelo.addColumn("Ganancia por mayor %");
         modelo.addColumn("Ubicación");
         modelo.addColumn("Cantidad");
@@ -309,7 +312,6 @@ public final class Inventario extends javax.swing.JFrame {
             modelo2.setValueAt(ubi, i, 7);
             modelo2.setValueAt(cant, i, 8);
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -376,6 +378,11 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lupa.png"))); // NOI18N
 
         jTabbedPane1.setFocusable(false);
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         cmbBusq.setFocusable(false);
 
@@ -924,7 +931,7 @@ public final class Inventario extends javax.swing.JFrame {
         if (txtNombreProd.getText().equals("----------")) {
 
         } else {
-            MoverBodega mb = new MoverBodega(null, true);
+            MoverBodega mb = new MoverBodega(this, true);
             mb.txtAyudaIndice.setText(String.valueOf(fila));
             mb.txtAyudaCant.setText(String.valueOf(cantidad));
             mb.txtAyudaCod.setText(codigoProd);
@@ -936,6 +943,15 @@ public final class Inventario extends javax.swing.JFrame {
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         JOptionPane.showMessageDialog(null, "Módulo no disponible");
     }//GEN-LAST:event_btnVerActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        System.out.println(bandera);
+        int index = jTabbedPane1.getSelectedIndex();
+        if ((bandera == false) && (index == 1)) {
+            cargarTablaBodega();
+            bandera = true;
+        }
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
