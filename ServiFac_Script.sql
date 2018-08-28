@@ -1,11 +1,14 @@
 CREATE DATABASE empresa;
 
 USE empresa;
+show processlist;
 select * from CLIENTEs where nombres != "CONSUMIDOR FINAL";
+SELECT login FROM usuario WHERE maquina = 'DESKTOP-RV7RN6Q';
 describe venta;
-Select * from producto where cantidad < cantidad_Minima order by ruc;
+Select * from producto where codigo="0078";
 
-select * from categoria;
+select * from usuario;
+update usuario set rol = false where cedula_usuario = "1105970717";
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
@@ -68,6 +71,7 @@ autorizado_por varchar(10) default "N/A",
 modificado_por varchar(10) default "N/A",
 monto_aprovado decimal(7,2) default 0.00
 );
+ALTER TABLE clientes change monto_aprovado monto_aprobado decimal(7,2) default 0.00;
 select * from PRoducto where codigo = "0078";
 UPDATE clientes set credito = false WHERE cedula_cliente ='1111111111111';
 select * from clientes;

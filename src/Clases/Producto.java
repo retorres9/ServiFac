@@ -55,6 +55,13 @@ public class Producto {
         this.intCantidad = cant;
         this.strUbicacion = ubicacion;
     }
+
+    public Producto(String nombre, double precioPublico, double precioMayor, int cantidad) {
+        this.strNombreProd = nombre;
+        this.fltPrecio = precioPublico;
+         this.fltPrecioMayor = precioMayor;
+         this.intCantidad = cantidad;
+    }
     
     public String getStrBodega() {
         return strBodega;

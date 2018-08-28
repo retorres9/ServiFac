@@ -54,6 +54,37 @@ public class DATMaterial {
         return listaProductos;
     }
 
+    public ArrayList<Producto> busquedaProducto(String codigo) {
+        ArrayList<Producto> listadoProd = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT nombre_producto, precio, precio_mayor, cantidad FROM producto WHERE codigo = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, codigo);
+            System.out.println(ps.toString());
+            System.out.println(sentencia);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombre = rs.getString(1);
+                double precioPublico = rs.getDouble(2);
+                double precioMayor = rs.getDouble(3);
+                int cantidad = rs.getInt(4);
+                Producto prod = new Producto(nombre, precioPublico, precioMayor, cantidad);
+                listadoProd.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listadoProd;
+    }
+
     public ArrayList<Producto> existenciasBodega() {
         ArrayList<Producto> listadoEnBodega = new ArrayList<Producto>();
         try {

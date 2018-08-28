@@ -28,7 +28,7 @@ import javax.swing.table.TableColumnModel;
 public final class Pagos extends javax.swing.JFrame {
 
     NewCliente objClienteNew = new NewCliente();
-    Inventario objBuspProd = new Inventario();
+    Inventario objBuspProd;
     IngresoProd objIngrProd = new IngresoProd();
     Configuracion config = new Configuracion();
     int fila, idVenta;
@@ -50,12 +50,16 @@ public final class Pagos extends javax.swing.JFrame {
     Renderer render = new Renderer();
 
     public Pagos() {
-        initComponents();
-        host = util.getPcName();
         cliente = new DATClientes();
         manejadorAbono = new DATAbonoCliente();
         manejadorVenta = new DATVenta();
         manejadorUsuario = new DATUsuario();
+        initComponents();
+        lblActualiza.setVisible(false);
+        txtActualiza.setVisible(false);
+        btnActualiza.setVisible(false);
+        btnAprobar.setEnabled(false);
+        host = util.getPcName();
         cargaColumnas();
         setAnchoColumnas();
         cargaCombo();
@@ -102,6 +106,12 @@ public final class Pagos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JLabel();
         btnActualizaDir = new javax.swing.JLabel();
+        btnAprobar = new javax.swing.JButton();
+        lblActualiza = new javax.swing.JLabel();
+        txtActualiza = new javax.swing.JTextField();
+        btnActualiza = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        lblRol = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -126,6 +136,7 @@ public final class Pagos extends javax.swing.JFrame {
             }
         });
 
+        tblClientes.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         tblClientes.setModel(modelo);
         tblClientes.getTableHeader().setReorderingAllowed(false);
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -246,6 +257,28 @@ public final class Pagos extends javax.swing.JFrame {
             }
         });
 
+        btnAprobar.setText("Aprobar crédito");
+        btnAprobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAprobarActionPerformed(evt);
+            }
+        });
+
+        lblActualiza.setText("Actualizar monto aprobado");
+
+        txtActualiza.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtActualizaKeyTyped(evt);
+            }
+        });
+
+        btnActualiza.setText("Aceptar");
+        btnActualiza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -268,7 +301,19 @@ public final class Pagos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizaDir)
-                            .addComponent(btnActualizarNombre)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnActualizarNombre)
+                                .addGap(129, 129, 129)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblActualiza)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtActualiza, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnActualiza))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnAprobar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTelf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -277,7 +322,7 @@ public final class Pagos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizaCedula)
                             .addComponent(btnActualizaTelf))))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,21 +334,26 @@ public final class Pagos extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2)
                                 .addComponent(txtNombre))
-                            .addComponent(btnActualizarNombre))
+                            .addComponent(btnActualizarNombre)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnAprobar)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtCedula)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(txtCedula))
+                            .addComponent(lblActualiza)))
                     .addComponent(btnActualizaCedula))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtTelf))
-                    .addComponent(btnActualizaTelf, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtTelf))
+                            .addComponent(btnActualizaTelf, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtDeuda))
@@ -311,9 +361,16 @@ public final class Pagos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnActualizaDir))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnActualiza)
+                            .addComponent(txtActualiza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizaDir)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lblRol.setText("jLabel10");
 
         jMenu2.setText("Productos");
 
@@ -418,31 +475,6 @@ public final class Pagos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(22, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAceptar))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(cmbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVer)))))
-                .addGap(75, 75, 75))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -455,6 +487,38 @@ public final class Pagos extends javax.swing.JFrame {
                 .addGap(129, 129, 129)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(22, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAceptar)
+                                .addGap(47, 47, 47))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(cmbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnVer)))))
+                .addGap(28, 28, 28))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRol)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,9 +550,11 @@ public final class Pagos extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAceptar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addGap(48, 48, 48))
+                .addGap(26, 26, 26)
+                .addComponent(lblRol)
+                .addContainerGap())
         );
 
         pack();
@@ -504,6 +570,14 @@ public final class Pagos extends javax.swing.JFrame {
             txtVendedor.setText(vendedor);
             rol = usuario.getRol();
         }
+    }
+    
+    public void actualizaCredito(){
+        double nuevoMonto = Double.parseDouble(txtActualiza.getText());
+        objCliente = new Clientes(nuevoMonto, txtCedula.getText(), cedUsuario);
+        cliente.actualizaCredito(objCliente);
+        tblClientes.setValueAt(nuevoMonto, fila, 6);
+        JOptionPane.showMessageDialog(this, "Se ha modificado correctamente el monto de crédito aprobado");
     }
 
     public static void setAnchoColumnas() {
@@ -530,6 +604,12 @@ public final class Pagos extends javax.swing.JFrame {
                 case 4:
                     anchoColumna = (70 * ancho) / 100;
                     break;
+                case 5:
+                    anchoColumna = (30 * ancho) / 100;
+                    break;
+                case 6:
+                    anchoColumna = (30 * ancho) / 100;
+                    break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
         }
@@ -541,6 +621,8 @@ public final class Pagos extends javax.swing.JFrame {
         modelo.addColumn("Teléfono");
         modelo.addColumn("Deuda");
         modelo.addColumn("Dirección");
+        modelo.addColumn("Crédito");
+        modelo.addColumn("Monto aprobado");
     }
 
     public void permisos() {
@@ -585,6 +667,24 @@ public final class Pagos extends javax.swing.JFrame {
         String deuda = tblClientes.getModel().getValueAt(fila, 3).toString();
         txtDeuda.setText(deuda);
         String direccion = (String) tblClientes.getValueAt(fila, 4);
+        String credito = (String) tblClientes.getValueAt(fila, 5);
+        Double monto = (Double) tblClientes.getValueAt(fila, 6);
+        if (monto == 0.00) {
+
+        } else {
+            txtActualiza.setText(String.valueOf(monto));
+        }
+        if (credito.equals("Aprobado")) {
+            lblActualiza.setVisible(true);
+            txtActualiza.setVisible(true);
+            btnActualiza.setVisible(true);
+            btnAprobar.setEnabled(false);
+        } else {
+            btnAprobar.setEnabled(true);
+            lblActualiza.setVisible(false);
+            txtActualiza.setVisible(false);
+            btnActualiza.setVisible(false);
+        }
         txtDireccion.setText(direccion);
         btnActualizarNombre.setVisible(true);
         btnActualizaCedula.setVisible(true);
@@ -873,6 +973,39 @@ public final class Pagos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnActualizaDirMouseClicked
 
+    private void txtActualizaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtActualizaKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9') && (c != '.')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtActualizaKeyTyped
+
+    private void btnActualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizaActionPerformed
+        if (txtActualiza.getText().isEmpty()) {
+            actualizaCredito();
+        }
+        if(rol == 0){
+            JOptionPane.showMessageDialog(this, "No tiene permiso para actualizar el monto del crédito del cliente");
+        } else {
+            actualizaCredito();
+        }
+    }//GEN-LAST:event_btnActualizaActionPerformed
+
+    private void btnAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprobarActionPerformed
+        if (rol == 0) {
+            int n = JOptionPane.showConfirmDialog(null, "No tiene permiso para asignar credito a los clientes\n"
+                    + "Presione Si para ingresar las credenciales de un administrador, de lo contrario presione no", "Aviso", JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                PermisoDialg permiso = new PermisoDialg(this, true);
+                permiso.lblFila.setText(String.valueOf(fila));
+                permiso.lblAyuda.setText("PagoFrame");
+                permiso.setVisible(true);
+            }
+        } else {
+            
+        }
+    }//GEN-LAST:event_btnAprobarActionPerformed
+
     public void cargarTabla() {
         ArrayList<Clientes> listadoClientes = cliente.ObtenerClientes();
         int cantLista = listadoClientes.size();
@@ -884,11 +1017,21 @@ public final class Pagos extends javax.swing.JFrame {
             String telf = objCliente.getStrTelf();
             double deuda = objCliente.getDblDeuda();
             String direccion = objCliente.getStrDireccion();
+            boolean credito = objCliente.isCredito();
+            double monto = objCliente.getCant();
+            String strCredito;
+            if (credito == true) {
+                strCredito = "Aprobado";
+            } else {
+                strCredito = "Denegado";
+            }
             modelo.setValueAt(nombres, i, 0);
             modelo.setValueAt(cedula, i, 1);
             modelo.setValueAt(telf, i, 2);
             modelo.setValueAt(deuda, i, 3);
             modelo.setValueAt(direccion, i, 4);
+            modelo.setValueAt(strCredito, i, 5);
+            modelo.setValueAt(monto, i, 6);
         }
     }
 
@@ -970,10 +1113,12 @@ public final class Pagos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Seleccion;
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnActualiza;
     private javax.swing.JLabel btnActualizaCedula;
     private javax.swing.JLabel btnActualizaDir;
     private javax.swing.JLabel btnActualizaTelf;
     private javax.swing.JLabel btnActualizarNombre;
+    private javax.swing.JButton btnAprobar;
     private javax.swing.JButton btnVer;
     private javax.swing.JComboBox<String> cmbClientes;
     private javax.swing.JButton jButton2;
@@ -999,11 +1144,15 @@ public final class Pagos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
-    private static final javax.swing.JTable tblClientes = new javax.swing.JTable();
+    private javax.swing.JLabel lblActualiza;
+    public javax.swing.JLabel lblRol;
+    public static final javax.swing.JTable tblClientes = new javax.swing.JTable();
+    private javax.swing.JTextField txtActualiza;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtCedula;
     private javax.swing.JLabel txtDeuda;

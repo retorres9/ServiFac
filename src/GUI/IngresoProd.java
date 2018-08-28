@@ -453,7 +453,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         jLabel3.setText("Codigo:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel4.setText("Precio:");
+        jLabel4.setText("Precio de compra:");
 
         lblPrecioMayor.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lblPrecioMayor.setForeground(new java.awt.Color(0, 153, 51));

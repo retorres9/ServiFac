@@ -38,6 +38,10 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
+    public Usuario(boolean login) {
+        this.login = login;
+    }
+
     public String getNombre() {
         return nombre;
     }

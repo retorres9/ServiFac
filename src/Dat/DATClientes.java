@@ -23,7 +23,7 @@ public class DATClientes {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion FROM clientes WHERE nombres != 'CONSUMIDOR FINAL' ORDER BY nombres";
+            String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion, credito, monto_aprobado FROM clientes WHERE nombres != 'CONSUMIDOR FINAL' ORDER BY nombres";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -32,7 +32,9 @@ public class DATClientes {
                 String telf = rs.getString(3);
                 double deuda = rs.getDouble(4);
                 String direccion = rs.getString(5);
-                cliente = new Clientes(nombre, cedula, telf, deuda, direccion);
+                boolean credito = rs.getBoolean(6);
+                double monto = rs.getDouble(7);
+                cliente = new Clientes(nombre, cedula, telf, deuda, direccion, credito, monto);
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
@@ -46,6 +48,28 @@ public class DATClientes {
             }
         }
         return listadoClientes;
+    }
+
+    public void actualizaCredito(Clientes cliente) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE clientes SET credito = true, monto_aprobado = ?, modificado_por = ?"
+                    + "WHERE cedula_cliente = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setDouble(1, cliente.getCant());
+            ps.setString(2, cliente.getUsuario());//Se usa getNombre para obtener el numero de cedula de quien modificó el crédito
+            ps.setString(3, cliente.getStrCedula());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el metodo actualizaCredito");
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 //    public ArrayList<Clientes> ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
@@ -160,12 +184,12 @@ public class DATClientes {
         }
         return true;
     }
-    
+
     public boolean InsertarCliente2(Clientes cliente) throws SQLException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO clientes (Nombres, Cedula_Cliente, Telefono, Deuda, Direccion, Credito, "
-                    + "autorizado_por, monto_aprovado)"
+                    + "autorizado_por, monto_aprobado)"
                     + "VALUES (?,?,?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrNombre());
@@ -279,7 +303,7 @@ public class DATClientes {
         ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT nombres, direccion, deuda, telefono, credito, monto_aprovado FROM clientes WHERE cedula_cliente = ?";
+            String sentencia = "SELECT nombres, direccion, deuda, telefono, credito, monto_aprobado FROM clientes WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
             rs = ps.executeQuery();

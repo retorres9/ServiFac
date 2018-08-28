@@ -120,7 +120,33 @@ public class DATUsuario {
             }
         }
     }
-
+    
+    public ArrayList<Usuario> cierraPrograma(String host){
+        ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            String sentecnia = "SELECT login FROM usuario WHERE login = 1 AND maquina = ?";
+            ps = con.prepareStatement(sentecnia);
+            ps.setString(1, host);            
+            rs = ps.executeQuery();
+            while(rs.next()){
+                boolean login = rs.getBoolean(1);
+                Usuario user = new Usuario(login);
+                resultado.add(user);
+            }
+        } catch (SQLException ex) {
+            
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return resultado;
+    }
+    
     public void startupLogin(String maq) {
         try {
             //con = DriverManager.getConnection("jdbc:mysql://192.168.1.7:3306/empresa", "root", "ticowrc2017");

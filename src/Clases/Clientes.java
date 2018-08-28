@@ -31,7 +31,7 @@ public class Clientes {
         this.cant = cant;
     }
 
-    public Clientes(double dblDeuda, String strCedula) {
+    public Clientes(double dblDeuda, String strCedula) {//Usado en mas de dos frames
         this.strCedula = strCedula;
         this.dblDeuda = dblDeuda;
     }
@@ -41,6 +41,16 @@ public class Clientes {
         this.strCedula = strCedula;
     }
 
+    public Clientes(String strNombre, String strCedula, String strTelf, double dblDeuda, String strDireccion, boolean credito, double cant) {
+        this.strNombre = strNombre;
+        this.strCedula = strCedula;
+        this.strTelf = strTelf;
+        this.dblDeuda = dblDeuda;
+        this.strDireccion = strDireccion;
+        this.credito = credito;
+        this.cant = cant;
+    }
+    
     public Clientes(String strNombre, String strCedula, String strTelf, double dblDeuda, String strDireccion) {
         this.strNombre = strNombre;
         this.strCedula = strCedula;
@@ -65,6 +75,12 @@ public class Clientes {
         this.strCedula = strCedula;
         this.strTelf = strTelf;
         this.strDireccion = strDireccion;
+    }
+
+    public Clientes(double nuevoMonto, String cedUsuario, String usuario) {
+        this.cant = nuevoMonto;
+        this.strCedula = cedUsuario;
+        this.usuario = usuario;
     }
 
     public String getStrNombre() {

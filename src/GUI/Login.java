@@ -1,6 +1,7 @@
 package GUI;
 
 import Clases.Configuracion;
+import Clases.Usuario;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
@@ -9,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -22,20 +24,19 @@ public final class Login extends javax.swing.JFrame {
     String valid = "";
     String valid2 = "";
     String valid3 = "";
-    
+
     /*Clases*/
     Utilidades util = new Utilidades();
     Configuracion config = new Configuracion();
-    
+
     /*DAT*/
     DATUsuario manejadorUsuario;
-    
-    
 
     public Login() {
-        initComponents();
-        host = util.getPcName();
         manejadorUsuario = new DATUsuario();
+        host = util.getPcName();
+        cerrarApp();
+        initComponents();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -182,6 +183,16 @@ public final class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void cerrarApp() {
+        ArrayList<Usuario> result = manejadorUsuario.cierraPrograma(host);
+        int cant = result.size();
+        if(cant==0){
+            
+        } else {
+            System.exit(0);
+        }
+    }
+
     public void inicio(String user, String pass) {
 
         ResultSet res;
@@ -201,7 +212,7 @@ public final class Login extends javax.swing.JFrame {
             if (txtUsuario.getText().isEmpty() || txtPass.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Hay uno o más campos vacios");
             } else if (valid.equals(user) && valid2.equals(pass)) {
-                
+
                 Principal objPncl = new Principal();
                 manejadorUsuario.setLogin(valid3, host);
                 objPncl.obtenerUsuario();

@@ -95,8 +95,6 @@ public final class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jmiElimProd = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -343,34 +341,15 @@ public final class Principal extends javax.swing.JFrame {
         getContentPane().add(txtVendedor);
         txtVendedor.setBounds(902, 10, 100, 24);
 
-        jMenu2.setText("Productos");
+        jMenu2.setText("Producto");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Ingresar Producto");
+        jMenuItem1.setText("Buscar producto");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Buscar Producto");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jmiElimProd.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        jmiElimProd.setText("Quitar Producto");
-        jmiElimProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiElimProdActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jmiElimProd);
 
         jMenuBar1.add(jMenu2);
 
@@ -472,14 +451,14 @@ public final class Principal extends javax.swing.JFrame {
             txtVendedor.setText(usuar);
             rol = objUser.getRol();
             if (rol == 0) {
-                jmiElimProd.setEnabled(false);
+                //jmiElimProd.setEnabled(false);
                 jmiElimCliente.setEnabled(false);
                 jmiElimProv.setEnabled(false);
                 jmConfig.setEnabled(false);
                 txtConfig.setEnabled(false);
             }
             if (rol == 1) {
-                jmiElimProd.setEnabled(true);
+                //jmiElimProd.setEnabled(true);
                 jmiElimCliente.setEnabled(true);
                 jmiElimProv.setEnabled(true);
                 jmConfig.setEnabled(true);
@@ -573,6 +552,7 @@ public final class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         Pagos objP = new Pagos();
+        objP.lblRol.setText(String.valueOf(rol));
         objP.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -595,12 +575,6 @@ public final class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jmiElimProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProdActionPerformed
-        EliminarProducto objElmProd = new EliminarProducto();
-        objElmProd.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jmiElimProdActionPerformed
-
     private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
         EliminarCliente objElmCl = new EliminarCliente();
         objElmCl.setVisible(true);
@@ -612,18 +586,6 @@ public final class Principal extends javax.swing.JFrame {
         objElimProv.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jmiElimProvActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        IngresoProd objIp = new IngresoProd();
-        objIp.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Inventario objBp = new Inventario();
-        objBp.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         NuevoClienteDialog objNc = new NuevoClienteDialog(this, rootPaneCheckingEnabled);
@@ -684,6 +646,11 @@ public final class Principal extends javax.swing.JFrame {
         Backup back = new Backup(this, true);
         back.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        BusquedaProd busq = new BusquedaProd(this, true);
+        busq.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -747,7 +714,6 @@ public final class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -765,7 +731,6 @@ public final class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
-    private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JLabel txtAlarma;
     private javax.swing.JLabel txtConfig;

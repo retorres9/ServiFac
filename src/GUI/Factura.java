@@ -393,6 +393,7 @@ public final class Factura extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaBusq = new javax.swing.JList<>();
         txtBusqProd = new javax.swing.JTextField();
+        rbtnPrecio2 = new javax.swing.JRadioButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -695,6 +696,8 @@ public final class Factura extends javax.swing.JFrame {
             }
         });
 
+        rbtnPrecio2.setText("Precio 2");
+
         jMenu2.setText("Productos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -843,7 +846,10 @@ public final class Factura extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbtnPrecio2))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -856,8 +862,10 @@ public final class Factura extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(220, 220, 220)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbtnPrecio2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -996,16 +1004,16 @@ public final class Factura extends javax.swing.JFrame {
                 if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
                     venta();
                     ventaProd();
-                    if(ayudaCont == true){
+                    if (ayudaCont == true) {
                         this.contador();
                     } else {
                         //Do nothing
                     }
-                    
+
                 } else {
                     venta();
                     ventaProd();
-                    if(ayudaCont == true){
+                    if (ayudaCont == true) {
                         this.contador();
                     } else {
                         //Do nothing
@@ -1262,48 +1270,135 @@ public final class Factura extends javax.swing.JFrame {
                     + "en el almacén");
         } else {
             crearFilas();
-            for (int i = 0; i < cantLista; i++) {
-                producto = listadoProducto.get(i);
-                String prod = producto.getStrNombreProd();
-                double precio = producto.getFltPrecio();
-                double precioMayor = producto.getFltPrecioMayor();
-                String codigo = producto.getStrCod();
-                String iva = producto.getIva();
-                if (iva.equals("12%")) {
-                    double defecto = 0.00;
-                    ivaInit = precio / 1.12;
-                    aux = ivaInit;
-                    ivaInit = precio - ivaInit;
-                    strAux = dcmlCambio.format(ivaInit);
-                    dblIva = Double.parseDouble(strAux);
+            if (!rbtnPrecio2.isSelected()) {
+                for (int i = 0; i < cantLista; i++) {
+                    producto = listadoProducto.get(i);
+                    String prod = producto.getStrNombreProd();
+                    double precio = producto.getFltPrecio();
+                    double precioMayor = producto.getFltPrecioMayor();
+                    String codigo = producto.getStrCod();
+                    String iva = producto.getIva();
+                    if (iva.equals("12%")) {
+                        double defecto = 0.00;
+                        ivaInit = precio / 1.12;
+                        aux = ivaInit;
+                        ivaInit = precio - ivaInit;
+                        strAux = dcmlCambio.format(ivaInit);
+                        dblIva = Double.parseDouble(strAux);
+                        modelo.setValueAt(dblIva, fila, 6);
+                        modelo.setValueAt(defecto, fila, 8);
+                        aux2 = precio - dblIva;
+                        precioMenos = dcmlCambio.format(aux2);
+                        double dblPrecioMenos = Double.parseDouble(precioMenos);
+                        modelo.setValueAt(dblPrecioMenos, fila, 7);
+                        aux2 = dblPrecioMenos;
+                        modelo.setValueAt(dblIva, fila, 3);
+                    } else {
+                        double defectoNoIVA = 0.00;
+                        modelo.setValueAt(defectoNoIVA, fila, 7);
+                        modelo.setValueAt(precio, fila, 8);
+                        aux2 = precio;
+                    }
+
+                    modelo.setValueAt(cantInicial, fila, 0);
+                    modelo.setValueAt(prod, fila, 1);
+                    modelo.setValueAt(aux2, fila, 2);
+
                     modelo.setValueAt(dblIva, fila, 6);
-                    modelo.setValueAt(defecto, fila, 8);
-                    aux2 = precio - dblIva;
-                    precioMenos = dcmlCambio.format(aux2);
-                    double dblPrecioMenos = Double.parseDouble(precioMenos);
-                    modelo.setValueAt(dblPrecioMenos, fila, 7);
-                    aux2 = dblPrecioMenos;
-                    modelo.setValueAt(dblIva, fila, 3);
-                } else {
-                    double defectoNoIVA = 0.00;
-                    modelo.setValueAt(defectoNoIVA, fila, 7);
-                    modelo.setValueAt(precio, fila, 8);
-                    aux2 = precio;
+                    totProd = cantInicial * aux2;
+
+                    String strPrec = dcmlCambio.format(totProd);
+                    totProd = Double.parseDouble(strPrec);
+                    modelo.setValueAt(totProd, fila, 4);
+                    modelo.setValueAt(codigo, fila, 5);
+
                 }
+            } else {
+                for (int i = 0; i < cantLista; i++) {
+                    producto = listadoProducto.get(i);
+                    String prod = producto.getStrNombreProd();
+                    double precio = producto.getFltPrecio();
+                    double precioMayor = producto.getFltPrecioMayor();
+                    String codigo = producto.getStrCod();
+                    String iva = producto.getIva();
+                    if (iva.equals("12%")) {
+                        double defecto = 0.00;
+                        ivaInit = precioMayor / 1.12;
+                        aux = ivaInit;
+                        ivaInit = precioMayor - ivaInit;
+                        strAux = dcmlCambio.format(ivaInit);
+                        dblIva = Double.parseDouble(strAux);
+                        modelo.setValueAt(dblIva, fila, 6);
+                        modelo.setValueAt(defecto, fila, 8);
+                        aux2 = precioMayor - dblIva;
+                        precioMenos = dcmlCambio.format(aux2);
+                        double dblPrecioMenos = Double.parseDouble(precioMenos);
+                        modelo.setValueAt(dblPrecioMenos, fila, 7);
+                        aux2 = dblPrecioMenos;
+                        modelo.setValueAt(dblIva, fila, 3);
+                    } else {
+                        double defectoNoIVA = 0.00;
+                        modelo.setValueAt(defectoNoIVA, fila, 7);
+                        modelo.setValueAt(precio, fila, 8);
+                        aux2 = precio;
+                    }
 
-                modelo.setValueAt(cantInicial, fila, 0);
-                modelo.setValueAt(prod, fila, 1);
-                modelo.setValueAt(aux2, fila, 2);
+                    modelo.setValueAt(cantInicial, fila, 0);
+                    modelo.setValueAt(prod, fila, 1);
+                    modelo.setValueAt(aux2, fila, 2);
 
-                modelo.setValueAt(dblIva, fila, 6);
-                totProd = cantInicial * aux2;
+                    modelo.setValueAt(dblIva, fila, 6);
+                    totProd = cantInicial * aux2;
 
-                String strPrec = dcmlCambio.format(totProd);
-                totProd = Double.parseDouble(strPrec);
-                modelo.setValueAt(totProd, fila, 4);
-                modelo.setValueAt(codigo, fila, 5);
+                    String strPrec = dcmlCambio.format(totProd);
+                    totProd = Double.parseDouble(strPrec);
+                    modelo.setValueAt(totProd, fila, 4);
+                    modelo.setValueAt(codigo, fila, 5);
 
+                }
             }
+//            for (int i = 0; i < cantLista; i++) {
+//                producto = listadoProducto.get(i);
+//                String prod = producto.getStrNombreProd();
+//                double precio = producto.getFltPrecio();
+//                double precioMayor = producto.getFltPrecioMayor();
+//                String codigo = producto.getStrCod();
+//                String iva = producto.getIva();
+//                if (iva.equals("12%")) {
+//                    double defecto = 0.00;
+//                    ivaInit = precio / 1.12;
+//                    aux = ivaInit;
+//                    ivaInit = precio - ivaInit;
+//                    strAux = dcmlCambio.format(ivaInit);
+//                    dblIva = Double.parseDouble(strAux);
+//                    modelo.setValueAt(dblIva, fila, 6);
+//                    modelo.setValueAt(defecto, fila, 8);
+//                    aux2 = precio - dblIva;
+//                    precioMenos = dcmlCambio.format(aux2);
+//                    double dblPrecioMenos = Double.parseDouble(precioMenos);
+//                    modelo.setValueAt(dblPrecioMenos, fila, 7);
+//                    aux2 = dblPrecioMenos;
+//                    modelo.setValueAt(dblIva, fila, 3);
+//                } else {
+//                    double defectoNoIVA = 0.00;
+//                    modelo.setValueAt(defectoNoIVA, fila, 7);
+//                    modelo.setValueAt(precio, fila, 8);
+//                    aux2 = precio;
+//                }
+//
+//                modelo.setValueAt(cantInicial, fila, 0);
+//                modelo.setValueAt(prod, fila, 1);
+//                modelo.setValueAt(aux2, fila, 2);
+//
+//                modelo.setValueAt(dblIva, fila, 6);
+//                totProd = cantInicial * aux2;
+//
+//                String strPrec = dcmlCambio.format(totProd);
+//                totProd = Double.parseDouble(strPrec);
+//                modelo.setValueAt(totProd, fila, 4);
+//                modelo.setValueAt(codigo, fila, 5);
+//
+//            }
             fila++;
         }
     }
@@ -1471,6 +1566,7 @@ public final class Factura extends javax.swing.JFrame {
     private javax.swing.JLabel lblIvaCero;
     private javax.swing.JLabel lblSubtotal;
     private javax.swing.JList<Producto> listaBusq;
+    private javax.swing.JRadioButton rbtnPrecio2;
     private javax.swing.JTable tblVentas;
     private javax.swing.JTextField txtBusqProd;
     public static final javax.swing.JTextField txtCed = new javax.swing.JTextField();

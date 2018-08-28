@@ -932,6 +932,7 @@ public final class Inventario extends javax.swing.JFrame {
 
         } else {
             MoverBodega mb = new MoverBodega(this, true);
+            mb.lblProd.setText(txtNombreProd.getText());
             mb.txtAyudaIndice.setText(String.valueOf(fila));
             mb.txtAyudaCant.setText(String.valueOf(cantidad));
             mb.txtAyudaCod.setText(codigoProd);
