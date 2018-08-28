@@ -9,12 +9,15 @@ import Utilidades.Utilidades;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ServerSocket;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class Principal extends javax.swing.JFrame {
 
@@ -28,12 +31,13 @@ public final class Principal extends javax.swing.JFrame {
     String cedUser;
     String host;//Nombre de la maquina
     int rol;
+    private static ServerSocket socket;
 
     Usuario objUser = new Usuario();
     DATMaterial objProd = new DATMaterial();
     DATConfiguracion manejadorConf;
     DATUsuario manejadorUsuario;
-
+    
     public Principal() {
         initComponents();
         host = util.getPcName();
@@ -304,7 +308,7 @@ public final class Principal extends javax.swing.JFrame {
 
         jLabel18.setText("Salir");
         getContentPane().add(jLabel18);
-        jLabel18.setBounds(842, 550, 29, 16);
+        jLabel18.setBounds(840, 550, 100, 16);
 
         jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator8);
@@ -537,6 +541,18 @@ public final class Principal extends javax.swing.JFrame {
         }
     }
 
+    public void cerrarSocket() {
+        try {
+            socket = new ServerSocket(6669);
+        } catch (IOException ex) {
+            try {
+                socket.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Inventario objB = new Inventario();
         objB.setVisible(true);
@@ -628,12 +644,7 @@ public final class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtConfigMouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        Login valid = new Login();
-        int n = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar la seción?", "Aviso!", JOptionPane.YES_NO_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            this.setVisible(false);
-            valid.setVisible(true);
-        }
+        cerrar();
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed

@@ -36,7 +36,6 @@
               <EmptySpace min="70" pref="70" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
           </Group>
-          <Component id="jSeparator1" min="-2" pref="510" max="-2" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace min="170" pref="170" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="210" max="-2" attributes="0"/>
@@ -53,11 +52,16 @@
               <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
               <Component id="txtPass" min="-2" pref="232" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="130" pref="130" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="120" max="-2" attributes="0"/>
+          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="130" pref="130" max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" pref="120" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="lblAyuda" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Component id="jSeparator1" min="-2" pref="510" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,7 +98,10 @@
               <EmptySpace min="46" pref="46" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblAyuda" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
       </Group>
@@ -189,6 +196,14 @@
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPassKeyPressed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAyuda">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="inicio"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

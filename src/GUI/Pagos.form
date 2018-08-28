@@ -218,6 +218,8 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="lblCredencial" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="lblRol" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -263,7 +265,10 @@
               <EmptySpace pref="55" max="32767" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-              <Component id="lblRol" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblRol" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCredencial" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -445,9 +450,9 @@
                                           <Component id="btnActualiza" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="btnAprobar" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtMontoAprobado" min="-2" pref="104" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="98" max="-2" attributes="0"/>
+                                          <Component id="btnAprobar" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -465,7 +470,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="100" max="32767" attributes="0"/>
+                  <EmptySpace pref="88" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -482,8 +487,8 @@
                               </Group>
                               <Component id="btnActualizarNombre" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtMontoAprobado" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnAprobar" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -664,14 +669,6 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnActualizaDirMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnAprobar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Aprobar cr&#xe9;dito"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAprobarActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblActualiza">
           <Properties>
             <Property name="text" type="java.lang.String" value="Actualizar monto aprobado"/>
@@ -690,7 +687,15 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtMontoAprobado">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnAprobar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Aprobar cr&#xe9;dito"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAprobarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -700,6 +705,14 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCredencial">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="lblCredencial"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
   </SubComponents>

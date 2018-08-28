@@ -50,6 +50,28 @@ public class DATClientes {
         return listadoClientes;
     }
 
+    public void apruebaCrédito(Clientes cliente) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE clientes set credito = true, monto aprobado = ?, aprobado_por = ?"
+                    + "WHERE cedula_cliente = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setDouble(1, cliente.getCant());
+            ps.setString(2, cliente.getUsuario());
+            ps.setString(3, cliente.getStrCedula());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el método apruebaCredito", "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try{
+                ps.close();
+                con.close();
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cerrar la conexión en apruebaCredito", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     public void actualizaCredito(Clientes cliente) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");

@@ -2,12 +2,12 @@ CREATE DATABASE empresa;
 
 USE empresa;
 show processlist;
-select * from CLIENTEs where nombres != "CONSUMIDOR FINAL";
-SELECT login FROM usuario WHERE maquina = 'DESKTOP-RV7RN6Q';
-describe venta;
-Select * from producto where codigo="0078";
-
 select * from usuario;
+SELECT login FROM usuario WHERE maquina = 'DESKTOP-RV7RN6Q' AND login =1;
+describe venta;
+Select * from usuario;
+
+select * from clientes;
 update usuario set rol = false where cedula_usuario = "1105970717";
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,

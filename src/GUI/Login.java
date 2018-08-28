@@ -1,16 +1,16 @@
 package GUI;
 
 import Clases.Configuracion;
-import Clases.Usuario;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -24,6 +24,8 @@ public final class Login extends javax.swing.JFrame {
     String valid = "";
     String valid2 = "";
     String valid3 = "";
+    public static String bandera = "false";
+    public static ServerSocket socket;
 
     /*Clases*/
     Utilidades util = new Utilidades();
@@ -34,9 +36,9 @@ public final class Login extends javax.swing.JFrame {
 
     public Login() {
         manejadorUsuario = new DATUsuario();
-        host = util.getPcName();
         cerrarApp();
         initComponents();
+        host = util.getPcName();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -58,6 +60,7 @@ public final class Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtPass = new javax.swing.JPasswordField();
+        lblAyuda = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
@@ -112,6 +115,8 @@ public final class Login extends javax.swing.JFrame {
             }
         });
 
+        lblAyuda.setText("inicio");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,7 +126,6 @@ public final class Login extends javax.swing.JFrame {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(jLabel4))
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(170, 170, 170)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -135,11 +139,15 @@ public final class Login extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jButton2)
-                .addGap(73, 73, 73)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(130, 130, 130)
+                    .addComponent(jButton2)
+                    .addGap(73, 73, 73)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblAyuda))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +176,9 @@ public final class Login extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
-                    .addComponent(jButton1)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(lblAyuda))))
         );
 
         pack();
@@ -184,13 +194,13 @@ public final class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void cerrarApp() {
-        ArrayList<Usuario> result = manejadorUsuario.cierraPrograma(host);
-        int cant = result.size();
-        if(cant==0){
-            
-        } else {
+        try {
+            socket = new ServerSocket(6669);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Ya se está ejecutando esta aplicación");
             System.exit(0);
         }
+
     }
 
     public void inicio(String user, String pass) {
@@ -202,7 +212,6 @@ public final class Login extends javax.swing.JFrame {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             Statement stm = con.createStatement();
             res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
-
             while (res.next()) {
                 valid = res.getString("Usuario");
                 valid2 = res.getString("Contrasena");
@@ -308,6 +317,7 @@ public final class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
+    public javax.swing.JLabel lblAyuda;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Clases.Configuracion;
@@ -71,7 +66,7 @@ public class PermisoDialg extends javax.swing.JDialog {
             } else if (valid.equals(user) && valid2.equals(pass)) {
                 if (valid4 == true) {
                     if (lblAyuda.getText().equals("PagoFrame")) {
-                        Pagos.tblClientes.setValueAt(t, WIDTH, WIDTH);
+                        Pagos.lblCredencial.setText("valido");
                         this.dispose();
                     } else {
                         NewCliente nc = new NewCliente();

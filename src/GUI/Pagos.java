@@ -55,6 +55,8 @@ public final class Pagos extends javax.swing.JFrame {
         manejadorVenta = new DATVenta();
         manejadorUsuario = new DATUsuario();
         initComponents();
+        lblRol.setVisible(false);
+        lblCredencial.setVisible(false);
         lblActualiza.setVisible(false);
         txtActualiza.setVisible(false);
         btnActualiza.setVisible(false);
@@ -106,12 +108,13 @@ public final class Pagos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JLabel();
         btnActualizaDir = new javax.swing.JLabel();
-        btnAprobar = new javax.swing.JButton();
         lblActualiza = new javax.swing.JLabel();
         txtActualiza = new javax.swing.JTextField();
         btnActualiza = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtMontoAprobado = new javax.swing.JTextField();
+        btnAprobar = new javax.swing.JButton();
         lblRol = new javax.swing.JLabel();
+        lblCredencial = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -257,13 +260,6 @@ public final class Pagos extends javax.swing.JFrame {
             }
         });
 
-        btnAprobar.setText("Aprobar crédito");
-        btnAprobar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAprobarActionPerformed(evt);
-            }
-        });
-
         lblActualiza.setText("Actualizar monto aprobado");
 
         txtActualiza.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -276,6 +272,13 @@ public final class Pagos extends javax.swing.JFrame {
         btnActualiza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizaActionPerformed(evt);
+            }
+        });
+
+        btnAprobar.setText("Aprobar crédito");
+        btnAprobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAprobarActionPerformed(evt);
             }
         });
 
@@ -311,9 +314,9 @@ public final class Pagos extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnActualiza))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnAprobar)
+                                        .addComponent(txtMontoAprobado, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(btnAprobar))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTelf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -322,7 +325,7 @@ public final class Pagos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizaCedula)
                             .addComponent(btnActualizaTelf))))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,8 +339,8 @@ public final class Pagos extends javax.swing.JFrame {
                                 .addComponent(txtNombre))
                             .addComponent(btnActualizarNombre)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnAprobar)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtMontoAprobado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAprobar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -371,6 +374,8 @@ public final class Pagos extends javax.swing.JFrame {
         );
 
         lblRol.setText("jLabel10");
+
+        lblCredencial.setText("lblCredencial");
 
         jMenu2.setText("Productos");
 
@@ -517,6 +522,8 @@ public final class Pagos extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCredencial)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblRol)
                 .addContainerGap())
         );
@@ -553,7 +560,9 @@ public final class Pagos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(26, 26, 26)
-                .addComponent(lblRol)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRol)
+                    .addComponent(lblCredencial))
                 .addContainerGap())
         );
 
@@ -571,8 +580,8 @@ public final class Pagos extends javax.swing.JFrame {
             rol = usuario.getRol();
         }
     }
-    
-    public void actualizaCredito(){
+
+    public void actualizaCredito() {
         double nuevoMonto = Double.parseDouble(txtActualiza.getText());
         objCliente = new Clientes(nuevoMonto, txtCedula.getText(), cedUsuario);
         cliente.actualizaCredito(objCliente);
@@ -984,7 +993,7 @@ public final class Pagos extends javax.swing.JFrame {
         if (txtActualiza.getText().isEmpty()) {
             actualizaCredito();
         }
-        if(rol == 0){
+        if (rol == 0) {
             JOptionPane.showMessageDialog(this, "No tiene permiso para actualizar el monto del crédito del cliente");
         } else {
             actualizaCredito();
@@ -992,6 +1001,7 @@ public final class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizaActionPerformed
 
     private void btnAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprobarActionPerformed
+        double montoAprobado = Double.parseDouble(txtMontoAprobado.getText());
         if (rol == 0) {
             int n = JOptionPane.showConfirmDialog(null, "No tiene permiso para asignar credito a los clientes\n"
                     + "Presione Si para ingresar las credenciales de un administrador, de lo contrario presione no", "Aviso", JOptionPane.YES_NO_OPTION);
@@ -1000,9 +1010,18 @@ public final class Pagos extends javax.swing.JFrame {
                 permiso.lblFila.setText(String.valueOf(fila));
                 permiso.lblAyuda.setText("PagoFrame");
                 permiso.setVisible(true);
+                if (lblCredencial.getText().equals("valido")) {
+                    objCliente = new Clientes(montoAprobado, cedUsuario, txtCedula.getText());
+                    cliente.apruebaCrédito(objCliente);
+                    JOptionPane.showMessageDialog(this, "Crédito aprobado correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Las credenciales ingresadas no tienen permiso de administrador");
+                }
             }
         } else {
-            
+            objCliente = new Clientes(montoAprobado, cedUsuario, txtCedula.getText());
+            cliente.apruebaCrédito(objCliente);
+            JOptionPane.showMessageDialog(this, "Crédito aprobado correctamente");
         }
     }//GEN-LAST:event_btnAprobarActionPerformed
 
@@ -1144,12 +1163,12 @@ public final class Pagos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JLabel lblActualiza;
+    public static javax.swing.JLabel lblCredencial;
     public javax.swing.JLabel lblRol;
     public static final javax.swing.JTable tblClientes = new javax.swing.JTable();
     private javax.swing.JTextField txtActualiza;
@@ -1158,6 +1177,7 @@ public final class Pagos extends javax.swing.JFrame {
     private javax.swing.JLabel txtDeuda;
     private javax.swing.JLabel txtDireccion;
     private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtMontoAprobado;
     private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtTelf;
     private javax.swing.JLabel txtVendedor;
