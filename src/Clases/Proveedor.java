@@ -29,6 +29,14 @@ public class Proveedor {
         this.ruc = ruc;
     }
 
+    public Proveedor(String strNombreCuenta, String strTipo, String strNumCuenta, String strTelf, String ruc) {
+        this.strNombreCuenta = strNombreCuenta;
+        this.strTipo = strTipo;
+        this.strNumCuenta = strNumCuenta;
+        this.strTelf = strTelf;
+        this.ruc = ruc;
+    }
+
     public String getRuc() {
         return ruc;
     }

@@ -23,9 +23,6 @@ comentario VARCHAR(500) not null
 
 #ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);
 
-#SELECT MAX(precio) FROM producto;
-
-
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
 nombre VARCHAR(50) NOT NULL UNIQUE,

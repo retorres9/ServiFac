@@ -22,14 +22,13 @@ public final class VistaCreditos extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         manejadorPago = new DATPagoProveedor();
-        emp = PagoProveedor.txtRuc.getText();
+        emp = PagoProveedor.rucEmpresa;
         encabezados();
         cargarTabla();
+        txtAreaComentario.setVisible(false);
     }
 
     public void encabezados() {
-        //modelo.addColumn("Empresa");
-        //modelo.addColumn("Deuda");
         modelo.addColumn("Pagos");
         modelo.addColumn("Usuario");
         modelo.addColumn("Fecha");
@@ -43,6 +42,8 @@ public final class VistaCreditos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaComentario = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -54,6 +55,11 @@ public final class VistaCreditos extends javax.swing.JFrame {
 
         tblVistaCreditos.setModel(modelo);
         tblVistaCreditos.getTableHeader().setReorderingAllowed(false);
+        tblVistaCreditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVistaCreditosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblVistaCreditos);
 
         txtEmpresa.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
@@ -68,12 +74,20 @@ public final class VistaCreditos extends javax.swing.JFrame {
             }
         });
 
+        txtAreaComentario.setColumns(20);
+        txtAreaComentario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtAreaComentario.setRows(5);
+        jScrollPane2.setViewportView(txtAreaComentario);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,9 +96,9 @@ public final class VistaCreditos extends javax.swing.JFrame {
                                 .addComponent(txtEmpresa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jButton1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -95,8 +109,10 @@ public final class VistaCreditos extends javax.swing.JFrame {
                     .addComponent(txtEmpresa)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(38, 38, 38))
         );
@@ -116,9 +132,15 @@ public final class VistaCreditos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void tblVistaCreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVistaCreditosMouseClicked
+        int fila = tblVistaCreditos.rowAtPoint(evt.getPoint());
+        String comentario = (String) tblVistaCreditos.getValueAt(fila, 3);
+        txtAreaComentario.setText(comentario);
+        txtAreaComentario.setVisible(true);
+    }//GEN-LAST:event_tblVistaCreditosMouseClicked
+
     public void cargarTabla() {
-        
-        System.out.println(emp);
+
         ArrayList<PagoProveedorClase> lista = manejadorPago.verPagos(emp);
         int cant = lista.size();
         modelo.setNumRows(cant);
@@ -128,7 +150,6 @@ public final class VistaCreditos extends javax.swing.JFrame {
             String usuario = objPago.getUsuario();
             String strFecha = objPago.getFecha();
             String desc = objPago.getStrDescripcion();
-            System.out.println(desc);
             modelo.setValueAt(montocancelado, i, 0);
             modelo.setValueAt(usuario, i, 1);
             modelo.setValueAt(strFecha, i, 2);
@@ -173,7 +194,9 @@ public final class VistaCreditos extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public static final javax.swing.JTable tblVistaCreditos = new javax.swing.JTable();
+    private javax.swing.JTextArea txtAreaComentario;
     public static final javax.swing.JLabel txtEmpresa = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

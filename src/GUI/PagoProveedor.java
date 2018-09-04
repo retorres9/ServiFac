@@ -34,7 +34,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
     DATPagoProveedor manejadorPago;
     String usuario;
     String host;
-    String rucEmpresa;
+    public static String rucEmpresa;
     String nombreCta;
     String numeroCta;
     String telefono;
@@ -58,6 +58,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         cedula();
+        jPanel2.setVisible(false);
     }
 
     public void cedula() {
@@ -228,6 +229,11 @@ public final class PagoProveedor extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
         txtDeuda = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -405,7 +411,12 @@ public final class PagoProveedor extends javax.swing.JFrame {
             }
         });
 
-        txtDeuda.setText("jLabel1");
+        txtDeuda.setText(" ");
+
+        jLabel1.setText("Deuda:");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel3.setText("Operaciones con proveedores");
 
         jMenu2.setText("Productos");
 
@@ -516,54 +527,72 @@ public final class PagoProveedor extends javax.swing.JFrame {
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(txtUsuario)
-                                    .addGap(90, 90, 90))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnVer))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3))
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(126, 126, 126)
-                                .addComponent(txtDeuda)))))
+                                .addGap(73, 73, 73)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtUsuario))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVer)))))
                 .addContainerGap(43, Short.MAX_VALUE))
+            .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(txtUsuario)
-                .addGap(50, 50, 50)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtUsuario)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEditar)
                     .addComponent(btnVer))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmpresa)
                     .addComponent(jLabel4)
-                    .addComponent(txtDeuda))
-                .addGap(18, 18, 18)
+                    .addComponent(txtDeuda)
+                    .addComponent(jLabel1))
+                .addGap(14, 14, 14)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jLabel2)
                     .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBusc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -593,10 +622,13 @@ public final class PagoProveedor extends javax.swing.JFrame {
         String strRuc = (String) tblProv.getValueAt(fila, 1);
         rucEmpresa = strRuc;
         nombreCta = (String) tblProv.getValueAt(fila, 2);
+        String deuda = tblProv.getValueAt(fila, 5).toString();
+        txtDeuda.setText(deuda);
         numeroCta = (String) tblProv.getValueAt(fila, 4);
         telefono = (String) tblProv.getValueAt(fila, 6);
         tipoCta = (String) tblProv.getValueAt(fila, 3);
-
+        jPanel2.setVisible(true);
+        System.out.println(rucEmpresa);
     }//GEN-LAST:event_tblProvMouseClicked
 
     private void txtBuscKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscKeyReleased
@@ -776,7 +808,6 @@ public final class PagoProveedor extends javax.swing.JFrame {
         if (tblProv.getSelectedRows().length > 0) {
             String empresa = txtEmpresa.getText();
             VistaCreditos.txtEmpresa.setText(empresa);
-            //objVc.cargarTabla();
             objVc.setVisible(true);
             this.setVisible(false);
         }
@@ -807,6 +838,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
 
         } else {
             ActualizaProvDialog actDialg = new ActualizaProvDialog(this, true);
+            actDialg.txtFila.setText(String.valueOf(fila));
             actDialg.txtEmpresa.setText(this.txtEmpresa.getText());
             actDialg.txtRUC.setText(rucEmpresa);
             actDialg.txtNombreCuenta.setText(nombreCta);
@@ -821,7 +853,28 @@ public final class PagoProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        JOptionPane.showMessageDialog(null, "Módulo no disponible");
+        if (txtEmpresa.getText().equals("---------------------")) {
+
+        } else {
+            ActualizaProvDialog actDialg = new ActualizaProvDialog(this, true);
+            actDialg.txtEmpresa.setText(this.txtEmpresa.getText());
+            actDialg.txtRUC.setText(rucEmpresa);
+            actDialg.txtNombreCuenta.setText(nombreCta);
+            actDialg.txtNombreCuenta.setEditable(false);
+            actDialg.txtNumCuenta.setText(numeroCta);
+            actDialg.txtNumCuenta.setEditable(false);
+            actDialg.txtTelefono.setText(telefono);
+            actDialg.txtTelefono.setEditable(false);
+            actDialg.jComboBox1.setSelectedItem(tipoCta);
+            actDialg.jComboBox1.setEnabled(false);
+            actDialg.jComboBox1.setEditable(false);
+            actDialg.btnGuardar.setVisible(false);
+            actDialg.btbCerrar.setText("Cerrar");
+//            actDialg.lblIVA.setText(iva);
+//            actDialg.txtCantidad.setText(String.valueOf(cantidad));
+//            actDialg.txtFila.setText(String.valueOf(fila));
+            actDialg.setVisible(true);
+        }
     }//GEN-LAST:event_btnVerActionPerformed
 
     public static String getFecha() {
@@ -865,7 +918,9 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -880,6 +935,9 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProd;
@@ -887,7 +945,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
     private javax.swing.JRadioButton ocp2;
     private javax.swing.JRadioButton opc1;
     private javax.swing.ButtonGroup rbtn;
-    private javax.swing.JTable tblProv;
+    public static javax.swing.JTable tblProv;
     private javax.swing.JTextField txtBusc;
     private javax.swing.JTextArea txtDesc;
     private javax.swing.JLabel txtDeuda;

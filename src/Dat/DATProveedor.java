@@ -108,22 +108,31 @@ public class DATProveedor {
         return listaProveedor;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-    public ResultSet cargarProveedores() throws SQLException, ClassNotFoundException {
-        Statement ps = c.getConnection().createStatement();
-        String sentencia = "SELECT Empresa FROM proveedores";
-        ResultSet rs = ps.executeQuery(sentencia);
-        return rs;
+    public void actualizaProveedor(Proveedor prov){
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE proveedores SET nombre_cuenta = ?, tipo_cuenta = ?,"
+                    + "numero_cuenta = ?, telefono = ? WHERE RUC = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, prov.getStrNombreCuenta());
+            ps.setString(2, prov.getStrTipo());
+            ps.setString(3, prov.getStrNumCuenta());
+            ps.setString(4, prov.getStrTelf());
+            ps.setString(5, prov.getRuc());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Proveedor actualizado correctamente");
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el proveedor");
+        } finally {
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-
-    public ResultSet cargarTabla() throws ClassNotFoundException, SQLException {
-        Statement ps = c.getConnection().createStatement();
-        String sentencia = "SELECT Empresa, Nombre_Cuenta, Tipo_Cuenta,"
-                + "Numero_Cuenta, Deuda, Telefono FROM proveedores";
-        ResultSet re = ps.executeQuery(sentencia);
-        return re;
-    }
-
+    
     public ArrayList<Proveedor> buscarEmpresa(String nombre) {
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
