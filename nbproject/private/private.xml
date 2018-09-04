@@ -4,10 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/PermisoDialg.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Pagos.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Clientes.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATClientes.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Inventario.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/PagoProveedor.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Login.java</file>
         </group>
     </open-files>

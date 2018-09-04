@@ -1,14 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-show processlist;
-select * from usuario;
-SELECT login FROM usuario WHERE maquina = 'DESKTOP-RV7RN6Q' AND login =1;
-describe venta;
-Select * from usuario;
 
-select * from clientes;
-update usuario set rol = false where cedula_usuario = "1105970717";
 CREATE TABLE configuracion(
 empresa VARCHAR(40) primary key not null,
 direccion varchar(50) not null,
@@ -25,23 +18,13 @@ precio DOUBLE(7,2) not null,
 fecha VARCHAR(10),
 comentario VARCHAR(500) not null
 );
-describe producto;
-select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
-select fecha from venta;
-ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);
-SELECT * FROM usuario;
-UPDATE configuracion SET password = md5("servifac") WHERE empresa ="Libreria y bazar 'San Antonio'";
-#INSERT INTO configuracion(empresa, direccion,propietario, iva, ruc, telefono)
-#VALUES ("Libreria y Bazar 'San Antonio'","Gonzalez Suarez y José Miguel Rosillo","Rober Torres",12,"1111111111001","2687986");
+#describe producto;
+#select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
 
-#update configuracion SET id = 1 WHERE empresa = "Libreria 'San Antonio'";
+#ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);
 
 #SELECT MAX(precio) FROM producto;
-#drop table venta;
-UPDATE usuario SET login = true, maquina = "DESKTOP-GF2OJ9B" where usuario = "marthareyes";
 
-#UPDATE producto SET cantidad = cantidad + 8 WHERE codigo = "9843579834759";
-#describe usuario;
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
@@ -54,8 +37,7 @@ login boolean DEFAULT false,
 maquina VARCHAR(30) not null
 );
 
-
-ALTER TABLE usuario change maquina maquina VARCHAR (20) default NULL;
+#ALTER TABLE usuario change maquina maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario ADD COLUMN maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario add COLUMN estado boolean default true;
 
@@ -69,16 +51,12 @@ estado boolean default true,
 credito boolean default false,
 autorizado_por varchar(10) default "N/A",
 modificado_por varchar(10) default "N/A",
-monto_aprovado decimal(7,2) default 0.00
+monto_aprobado decimal(7,2) default 0.00
 );
-ALTER TABLE clientes change monto_aprovado monto_aprobado decimal(7,2) default 0.00;
-select * from PRoducto where codigo = "0078";
-UPDATE clientes set credito = false WHERE cedula_cliente ='1111111111111';
-select * from clientes;
+
 #ALTER table clientes change modificado_por modificado_por varchar(10) default "N/A";
 
 INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111111", " ", 0.00, " ", 1);#IMPORTANTE
-DELETE FROM clientes WHERE CEDULA_CLIENTE = "1111111111";
 
 CREATE TABLE producto(
 nombre_Producto VARCHAR(40) NOT NULL UNIQUE,
