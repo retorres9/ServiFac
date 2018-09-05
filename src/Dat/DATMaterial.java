@@ -84,6 +84,40 @@ public class DATMaterial {
         }
         return listadoProd;
     }
+    
+    public boolean actualizaCategoria(int id, String nombre){
+        boolean bandera;
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET id_categoria = ? WHERE nombre_producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, id);
+            ps.setString(2, nombre);
+            ps.executeUpdate();
+            bandera = true;
+        } catch (SQLException ex){
+            bandera = false;
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la categoria del producto");
+        }
+        return bandera;
+    }
+    
+    public boolean actualizaProveedor(String ruc, String nombre){
+        boolean bandera;
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "UPDATE producto SET ruc = ? WHERE nombre_producto = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, ruc);
+            ps.setString(2, nombre);
+            ps.executeUpdate();
+            bandera = true;
+        } catch (SQLException ex){
+            bandera = false;
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la categoria del producto");
+        }
+        return bandera;
+    }
 
     public ArrayList<Producto> existenciasBodega() {
         ArrayList<Producto> listadoEnBodega = new ArrayList<Producto>();

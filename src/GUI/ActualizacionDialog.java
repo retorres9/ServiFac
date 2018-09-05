@@ -133,11 +133,6 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         txtPrecio.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(0, 153, 0));
         txtPrecio.setFocusable(false);
-        txtPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecioActionPerformed(evt);
-            }
-        });
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Precio al por mayor:");
@@ -493,16 +488,17 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnActualizaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCategoriaMouseClicked
-        // TODO add your handling code here:
+        ActualizaCategoriaDialog updCat = new ActualizaCategoriaDialog(new javax.swing.JDialog(), true);
+        updCat.txtProducto.setText(txtNombreProd.getText());
+        updCat.setVisible(true);
+        
     }//GEN-LAST:event_btnActualizaCategoriaMouseClicked
 
     private void btnActualizaProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaProveedorMouseClicked
-        // TODO add your handling code here:
+        ActualizaProveedorDialog updProv = new ActualizaProveedorDialog(new javax.swing.JDialog(), true);
+        updProv.txtProducto.setText(txtNombreProd.getText());
+        updProv.setVisible(true);
     }//GEN-LAST:event_btnActualizaProveedorMouseClicked
-
-    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         obtenerProducto();
@@ -579,12 +575,12 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     public javax.swing.JLabel lblIVA;
     private javax.swing.JLabel lblMenos;
     public javax.swing.JLabel txtCantidad;
-    public javax.swing.JLabel txtCategoria;
+    public static javax.swing.JLabel txtCategoria;
     public javax.swing.JLabel txtFila;
     public javax.swing.JLabel txtNombreProd;
     public javax.swing.JTextField txtPrecio;
     public javax.swing.JLabel txtPrecioM;
-    public javax.swing.JLabel txtProveedor;
+    public static javax.swing.JLabel txtProveedor;
     public javax.swing.JLabel txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }
