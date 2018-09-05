@@ -155,6 +155,40 @@ public class DATMaterial {
         return listadoMinimos;
     }
 
+    public ArrayList<Producto> obtenerDetalleProd(String cod) {
+        ArrayList<Producto> detalleProd = new ArrayList<Producto>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            String sentencia = "SELECT p.nombre_producto, p.precio, p.precio_mayor, p.cantidad, u.nombre_ubicacion, c.nombre_categoria, prov.empresa "
+                    + "FROM producto p, ubicacion u, categoria c, proveedores prov WHERE codigo = ? AND p.id_ubicacion = u.id_ubicacion "
+                    + "AND p.id_categoria = c.id_categoria AND p.ruc = prov.ruc";
+            ps = con.prepareStatement(sentencia);
+            ps.setString(1, cod);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreProd = rs.getString(1);
+                double precioNormal = rs.getDouble(2);
+                double precioMayor = rs.getDouble(3);
+                int cantidad = rs.getInt(4);
+                String ubicacion = rs.getString(5);
+                String categoria = rs.getString(6);
+                String proveedor = rs.getString(7);
+                Producto prod = new Producto(nombreProd, precioNormal, precioMayor, cantidad, ubicacion, categoria, proveedor);
+                detalleProd.add(prod);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return detalleProd;
+    }
+
     public ArrayList<Producto> ConsultarMinimo(String prov) throws SQLException {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {

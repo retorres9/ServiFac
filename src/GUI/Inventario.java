@@ -46,6 +46,8 @@ public final class Inventario extends javax.swing.JFrame {
     int cantidad;
     String precioProd;
     String ubicacion;
+    String categoria;
+    String proveedor;
     String iva;
     String precioMayor;
     Principal objP = new Principal();
@@ -915,13 +917,8 @@ public final class Inventario extends javax.swing.JFrame {
 
         } else {
             ActualizacionDialog actDialg = new ActualizacionDialog(new javax.swing.JDialog(), true);
-            actDialg.txtNombreProd.setText(this.txtNombreProd.getText());
-            actDialg.lblCod.setText(codigoProd);
-            actDialg.txtUbicacion.setText(ubicacion);
-            actDialg.txtPrecioM.setText(precioMayor);
-            actDialg.txtPrecio.setText(precioProd);
             actDialg.lblIVA.setText(iva);
-            actDialg.txtCantidad.setText(String.valueOf(cantidad));
+            actDialg.lblCod.setText(codigoProd);
             actDialg.txtFila.setText(String.valueOf(fila));
             actDialg.setVisible(true);
         }

@@ -8,15 +8,16 @@ package GUI;
 import Clases.Producto;
 import Dat.DATMaterial;
 import static GUI.Inventario.tblProd;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class ActualizacionDialog extends javax.swing.JDialog {
-    
+
     Producto producto;
     DATMaterial material;
     int fila;
-    
+
     public ActualizacionDialog(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         material = new DATMaterial();
@@ -27,12 +28,35 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
-        
     }
-    
-    public int obtenerIvaEntero(){
+
+    public void obtenerProducto() {
+        ArrayList<Producto> detalleProd = material.obtenerDetalleProd(lblCod.getText());
+        int cant = detalleProd.size();
+        for (int i = 0; i < cant; i++) {
+            producto = detalleProd.get(i);
+            String nombreProd = producto.getStrNombreProd();
+            double precioNormal = producto.getFltPrecio();
+            double precioMayor = producto.getFltPrecioMayor();
+            int cantidad = producto.getIntCantidad();
+            String ubicacion = producto.getStrUbicacion();
+            String categoria = producto.getStrCategoria();
+            String proveedor = producto.getStrProveedor();
+
+            txtNombreProd.setText(nombreProd);
+            txtPrecio.setText(String.valueOf(precioNormal));
+            txtPrecioM.setText(String.valueOf(precioMayor));
+            txtCantidad.setText(String.valueOf(cantidad));
+            txtUbicacion.setText(ubicacion);
+            txtCategoria.setText(categoria);
+            txtProveedor.setText(proveedor);
+
+        }
+    }
+
+    public int obtenerIvaEntero() {
         String[] strIva = lblIVA.getText().split("%");
-        
+
         int intIva = Integer.parseInt(strIva[0]);
         System.out.println(intIva);
         return intIva;
@@ -69,9 +93,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         lblMenos = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        lblCategoria = new javax.swing.JLabel();
+        txtCategoria = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        txtProveedor = new javax.swing.JLabel();
         btnActualizaCategoria = new javax.swing.JLabel();
         btnActualizaProveedor = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -84,6 +108,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -106,6 +133,11 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         txtPrecio.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(0, 153, 0));
         txtPrecio.setFocusable(false);
+        txtPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecioActionPerformed(evt);
+            }
+        });
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Precio al por mayor:");
@@ -171,16 +203,21 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         });
 
         jButton2.setText("Dar de baja producto");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Categoria:");
 
-        lblCategoria.setText("----------");
-        lblCategoria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtCategoria.setText("----------");
+        txtCategoria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setText("Proveedor:");
 
-        jLabel4.setText("----------");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtProveedor.setText("----------");
+        txtProveedor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnActualizaCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/intercambio.png"))); // NOI18N
         btnActualizaCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -205,41 +242,17 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCantidad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizaCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMenos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 496, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecioM, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizaPrecio)
-                        .addGap(61, 61, 61))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnActualizaNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizaNombre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel1)
@@ -248,18 +261,41 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtUbicacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(txtCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnActualizaUbicacion)
                                     .addComponent(btnActualizaCategoria)
-                                    .addComponent(btnActualizaProveedor))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(78, 78, 78))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnActualizaProveedor)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCantidad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnActualizaCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblMenos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 496, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtPrecioM, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(16, 16, 16))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizaPrecio)
+                        .addGap(61, 61, 61))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,20 +336,23 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                                 .addComponent(txtUbicacion)
                                 .addComponent(jLabel12)))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(lblCategoria))
-                    .addComponent(btnActualizaCategoria))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel4))
-                    .addComponent(btnActualizaProveedor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(15, 15, 15))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(txtCategoria))
+                            .addComponent(btnActualizaCategoria))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(txtProveedor))
+                            .addComponent(btnActualizaProveedor)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(4, 4, 4)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jButton1.setText("Cerrar");
@@ -332,22 +371,21 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblCod)
-                        .addGap(26, 26, 26)
-                        .addComponent(lblIVA)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFila)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(483, 483, 483))))
+                .addContainerGap(916, Short.MAX_VALUE)
+                .addComponent(lblCod)
+                .addGap(26, 26, 26)
+                .addComponent(lblIVA)
+                .addGap(18, 18, 18)
+                .addComponent(txtFila)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 43, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(494, 494, 494)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,9 +397,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                     .addComponent(lblCod))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(17, 17, 17))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -392,7 +430,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         //        } catch (NullPointerException | NumberFormatException e) {
         //            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio de:\n" + txtNombreProd.getText());
         //        }
-        
+
     }//GEN-LAST:event_btnActualizaPrecioMouseClicked
 
     private void btnActualizaNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaNombreMouseClicked
@@ -404,7 +442,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             tblProd.setValueAt(nombre, fila, 0);
             //updateTabla();
         } catch (NullPointerException | NumberFormatException e) {
-            
+
         }
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
@@ -427,48 +465,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnActualizaCantidadMouseClicked
 
     private void btnActualizaUbicacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaUbicacionMouseClicked
-        //        String rol = config.validacion();
-        //        ActualzarUbicacionDialog dialogUbic = new ActualzarUbicacionDialog(this, true);
-        //        if (rol.equals("0")) {
-        //            JOptionPane.showMessageDialog(null, "No tiene el permiso para agregar nuevos proveedores", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        //        } else {
-        //            ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
-        //            dialogUbic.setVisible(true);
-        //            limpiarTabla();
-        //            updateTabla();
-        ////            if (dialogUbic != null) {
-        ////                if (!dialogUbic.getInfo().equals(" ")) {
-        ////                    updateTabla();
-        ////                    System.out.println("if");
-        ////                    txtUbicacion.setText(dialogUbic.getUbic());
-        ////                } else {
-        ////                    updateTabla();
-        ////                    System.out.println("else");
-        ////                }
-        ////            }
-        //        }
-        ////        JOptionPane.showMessageDialog(null, "Módulo en mantenimiento")
-        //int canti = tblProd.getRowCount();
-        //System.out.println(canti);
         ActualzarUbicacionDialog aj = new ActualzarUbicacionDialog(new javax.swing.JDialog(), true);
         aj.setVisible(true);
-        //ActualzarUbicacionDialog vf = new ActualzarUbicacionDialog(this, true);
-        //System.out.println(tblProd.getSelectedRows().length);
-        //int selec = tblProd.getSelectedRow();
-        //String val = modelo.getValueAt(0, fila).toString();
-        //System.out.println(val);
-        //System.out.println(selec);
         ActualzarUbicacionDialog.lblProd.setText(txtNombreProd.getText());
-//        vf.setVisible(true);
-//        if (vf != null) {
-//            if (vf.getInfo() != "") {
-//                updateTabla();
-//            }
-//            String auxUbic = modelo.getValueAt(fila, 7).toString(); 
-//            System.out.println(auxUbic);
-//            txtUbicacion.setText(auxUbic);
-//        }
-        //System.out.println(selec);
     }//GEN-LAST:event_btnActualizaUbicacionMouseClicked
 
     private void lblMenosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenosMouseClicked
@@ -482,8 +481,8 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             material.UpdateCantFactura(producto);
             String nuevaCantTxt = String.valueOf(tot);
             txtCantidad.setText(nuevaCantTxt);
-            //updateTabla();
-
+            fila = Integer.parseInt(txtFila.getText());
+            Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 8);
         } catch (NullPointerException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No se mermó nada a:\n" + txtNombreProd.getText());
         }
@@ -500,6 +499,18 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     private void btnActualizaProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaProveedorMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnActualizaProveedorMouseClicked
+
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        obtenerProducto();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JOptionPane.showMessageDialog(this, "Módulo no disponible");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -560,20 +571,20 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    public javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator3;
-    public javax.swing.JLabel lblCategoria;
     public javax.swing.JLabel lblCod;
     public javax.swing.JLabel lblIVA;
     private javax.swing.JLabel lblMenos;
     public javax.swing.JLabel txtCantidad;
+    public javax.swing.JLabel txtCategoria;
     public javax.swing.JLabel txtFila;
     public javax.swing.JLabel txtNombreProd;
     public javax.swing.JTextField txtPrecio;
     public javax.swing.JLabel txtPrecioM;
+    public javax.swing.JLabel txtProveedor;
     public javax.swing.JLabel txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,6 +26,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     public ActualizacionPrecio(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         lblCod.setVisible(false);
     }
     

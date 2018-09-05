@@ -22,6 +22,8 @@ public class Producto {
     private int bodega;
     /*Atributos para relacionar tablas*/
     private String strUbicacion;
+    private String strCategoria;
+    private String strProveedor;
     private String strEmpresa;
     private String strBodega;
     
@@ -61,6 +63,16 @@ public class Producto {
         this.fltPrecio = precioPublico;
          this.fltPrecioMayor = precioMayor;
          this.intCantidad = cantidad;
+    }
+
+    public Producto(String nombreProd, double precioNormal, double precioMayor, int cantidad, String ubicacion, String categoria, String proveedor) {
+        this.strNombreProd = nombreProd;
+        this.fltPrecio = precioNormal;
+        this.fltPrecioMayor = precioMayor;
+        this.intCantidad = cantidad;
+        this.strUbicacion = ubicacion;
+        this.strCategoria = categoria;
+        this.strProveedor = proveedor;
     }
     
     public String getStrBodega() {
@@ -351,6 +363,22 @@ public class Producto {
 
     public void setBodega(int bodega) {
         this.bodega = bodega;
+    }
+
+    public String getStrCategoria() {
+        return strCategoria;
+    }
+
+    public void setStrCategoria(String strCategoria) {
+        this.strCategoria = strCategoria;
+    }
+
+    public String getStrProveedor() {
+        return strProveedor;
+    }
+
+    public void setStrProveedor(String strProveedor) {
+        this.strProveedor = strProveedor;
     }
     
     @Override
