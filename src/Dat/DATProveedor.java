@@ -204,7 +204,6 @@ public class DATProveedor {
             ps = con.prepareStatement(sentencia);
             ps.setDouble(1, proveedor.getDblDeuda());
             ps.setString(2, proveedor.getRuc());
-            System.out.println(ps.toString());
             ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la deuda con el proveedor en la base de datos\nError 056", "Error!", JOptionPane.ERROR_MESSAGE);

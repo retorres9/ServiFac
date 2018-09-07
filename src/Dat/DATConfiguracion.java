@@ -61,7 +61,7 @@ public class DATConfiguracion {
         ArrayList<Configuracion> credencial = new ArrayList<Configuracion>();
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
-            String sentecia = "SELECT PASSWORD, empresa FROM configuracion";
+            String sentecia = "SELECT contrasena, empresa FROM configuracion";
             ps = con.prepareStatement(sentecia);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -71,7 +71,8 @@ public class DATConfiguracion {
                 credencial.add(objConf);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al obtener las credenciales del usuario\nError 024", "Error!", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Ha ocurrido un error al obtener las credenciales del usuario\nError 024", "Error!", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         } finally {
             try {
                 rs.close();

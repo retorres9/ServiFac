@@ -19,25 +19,27 @@ public class DATUsuario {
     
     
 
-    public boolean nuevoUsuario(Usuario usuario) throws SQLException {
+    public boolean nuevoUsuario(Usuario usuario, String maq) throws SQLException {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol) "
-                    + "VALUES (?,?,?,?,?)";
+            String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol, maquina) "
+                    + "VALUES (?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, usuario.getCedulaUsuario());
             ps.setString(2, usuario.getNombre());
             ps.setString(3, usuario.getUsuario());
             ps.setString(4, usuario.getContrasena());
             ps.setInt(5, usuario.getRol());
+            ps.setString(6, maq);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campos\n"
-                    + "que ha llenado han sido ingresados en otro usuario.\n"
-                    + "Pueden ser:"
-                    + "\n* Nombre"
-                    + "\n* Usuario"
-                    + "\n* Contraseña");
+            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campos\n"
+//                    + "que ha llenado han sido ingresados en otro usuario.\n"
+//                    + "Pueden ser:"
+//                    + "\n* Nombre"
+//                    + "\n* Usuario"
+//                    + "\n* Contraseña");
             return false;
         } finally {
             try {

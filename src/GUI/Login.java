@@ -253,9 +253,8 @@ public final class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        NuevoUsuario objUn = new NuevoUsuario();
-        objUn.setVisible(true);
-        this.dispose();
+        NuevoUsuarioDialog objUn = new NuevoUsuarioDialog(this, true);
+        objUn.setVisible(true);        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed

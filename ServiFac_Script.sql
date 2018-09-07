@@ -8,10 +8,12 @@ direccion varchar(50) not null,
 propietario varchar(60) not null,
 iva INT(2) not null,
 ruc VARCHAR(13) not null,
-telefono VARCHAR(10)
+telefono VARCHAR(10),
+contrasena varchar(100)
 );
-
-INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono) VALUES("Empresa", "Dirección", "Propietario" , 12, "1111111111111", "0000000");
+select * from configuracion;
+delete from usuario where cedula_usuario="1105970717";
+INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono, contrasena) VALUES("Empresa", "Dirección", "Propietario" , 12, "1111111111111", "0000000", md5('servifac'));
 
 #CREATE TABLE devolucion(
 #id_devolucion INT(10),
@@ -23,7 +25,7 @@ INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono) V
 #describe producto;
 #select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
 
-#ALTER TABLE configuracion ADD COLUMN PASSWORD VARCHAR(100);
+
 
 CREATE TABLE usuario(
 cedula_usuario VARCHAR(10) PRIMARY KEY,
