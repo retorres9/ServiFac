@@ -22,9 +22,9 @@ public final class EliminarProducto extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
 
     public EliminarProducto() {
-        initComponents();
-        cargaColumnas();
         material = new DATMaterial();
+        initComponents();
+        cargaColumnas();        
         combo();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());

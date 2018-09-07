@@ -67,6 +67,7 @@ public final class Minimos extends javax.swing.JFrame {
         manejadorConf = new DATConfiguracion();
         host = util.getPcName();
         carcarColumnas();
+        txtMin.setTransferHandler(null);
         setAnchoColumnas();
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
@@ -360,6 +361,12 @@ public final class Minimos extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel12.setText("Cantidad minima:");
+
+        txtMin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMinKeyTyped(evt);
+            }
+        });
 
         txtUpdate.setText("Actualizar");
         txtUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -748,6 +755,13 @@ public final class Minimos extends javax.swing.JFrame {
             auxProv = "";
         }
     }//GEN-LAST:event_cmbProveedorActionPerformed
+
+    private void txtMinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMinKeyTyped
+        char c = evt.getKeyChar();
+        if((c < '0' || c > '9') || txtMin.getText().length()>2){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMinKeyTyped
 
     /**
      * @param args the command line arguments

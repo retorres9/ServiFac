@@ -25,9 +25,11 @@ public final class NuevoProveedor extends javax.swing.JFrame {
     
     public NuevoProveedor() {
         initComponents();
+        txtEmpresa.setTransferHandler(null);
         txtRuc.setTransferHandler(null);
         txtNumero.setTransferHandler(null);
         txtDeuda.setTransferHandler(null);
+        txtNombre.setTransferHandler(null);
         txtTelf.setTransferHandler(null);
         host = util.getPcName();
         prov = new DATProveedor();

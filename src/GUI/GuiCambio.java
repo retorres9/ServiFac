@@ -24,6 +24,7 @@ public class GuiCambio extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.setTitle("ServiFac - Cambio");
         txtAyudaCred.setVisible(false);
+        txtCambio.setTransferHandler(null);
         txtAyudaDeuda.setVisible(false);
     }
 

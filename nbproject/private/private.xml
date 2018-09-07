@@ -3,13 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/NuevoUsuarioDialog.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/PagoProveedor.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/InventarioDialog.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATProveedor.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Minimos.java</file>
-            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATPagoProveedor.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATConfiguracion.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Factura.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATVenta.java</file>
             <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATUsuario.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/VistaFacturaDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Dat/DATMaterial.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Inventario.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/DetalleVentaVista.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Producto.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Minimos.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/ActualzarUbicacionDialog.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/IngresoProd.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/GUI/Login.java</file>
+            <file>file:/C:/Users/rober/Desktop/ServiFac/src/Clases/Venta.java</file>
         </group>
     </open-files>
 </project-private>

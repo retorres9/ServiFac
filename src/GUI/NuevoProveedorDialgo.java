@@ -26,6 +26,12 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     public NuevoProveedorDialgo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        txtEmpresa.setTransferHandler(null);
+        txtRuc.setTransferHandler(null);
+        txtNumero.setTransferHandler(null);
+        txtDeuda.setTransferHandler(null);
+        txtNombre.setTransferHandler(null);
+        txtTelf.setTransferHandler(null);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         prov = new DATProveedor();
         combo();

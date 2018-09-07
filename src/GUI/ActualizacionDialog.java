@@ -22,8 +22,10 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         super(parent, modal);
         material = new DATMaterial();
         initComponents();
+        lblPrecioCompra.setVisible(false);
         lblIVA.setVisible(false);
         lblCod.setVisible(false);
+        txtIngreso.setVisible(false);
         txtFila.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
@@ -102,6 +104,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         lblIVA = new javax.swing.JLabel();
         lblCod = new javax.swing.JLabel();
         lblPrecioCompra = new javax.swing.JLabel();
+        txtIngreso = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -364,12 +367,16 @@ public class ActualizacionDialog extends javax.swing.JDialog {
 
         lblPrecioCompra.setText("jLabel4");
 
+        txtIngreso.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtIngreso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPrecioCompra)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCod)
@@ -395,7 +402,8 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                     .addComponent(txtFila)
                     .addComponent(lblIVA)
                     .addComponent(lblCod)
-                    .addComponent(lblPrecioCompra))
+                    .addComponent(lblPrecioCompra)
+                    .addComponent(txtIngreso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -474,14 +482,18 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_lblMenosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        fila = Integer.parseInt(txtFila.getText());
-        if (lblPrecioCompra.getText().equals("jLabel4")) {
+        if (txtIngreso.getText().equals("ingreso")) {
             this.dispose();
         } else {
-            Inventario.tblProd.setValueAt(txtPrecio.getText(), fila, 3);
-            Inventario.tblProd.setValueAt(txtPrecioM.getText(), fila, 4);
-            Inventario.tblProd.setValueAt(lblPrecioCompra.getText(), fila, 2);
-            this.dispose();
+            fila = Integer.parseInt(txtFila.getText());
+            if (lblPrecioCompra.getText().equals("jLabel4")) {
+                this.dispose();
+            } else {
+                Inventario.tblProd.setValueAt(txtPrecio.getText(), fila, 3);
+                Inventario.tblProd.setValueAt(txtPrecioM.getText(), fila, 4);
+                Inventario.tblProd.setValueAt(lblPrecioCompra.getText(), fila, 2);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -576,6 +588,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     public javax.swing.JLabel txtCantidad;
     public static javax.swing.JLabel txtCategoria;
     public javax.swing.JLabel txtFila;
+    public static javax.swing.JLabel txtIngreso;
     public javax.swing.JLabel txtNombreProd;
     public static javax.swing.JTextField txtPrecio;
     public static javax.swing.JLabel txtPrecioM;

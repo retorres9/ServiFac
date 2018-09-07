@@ -33,12 +33,15 @@ public class NuevoUsuarioDialog extends javax.swing.JDialog {
     public NuevoUsuarioDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         manejadorConf = new DATConfiguracion();
-        initComponents();        
+        initComponents();  
         host = util.getPcName();
         obtenerCredencial();
         combo();
+        txtConf.setTransferHandler(null);
+        txtPass.setTransferHandler(null);
         txtCedulaUser.setTransferHandler(null);
         txtNombre.setTransferHandler(null);
+        txtUsuario.setTransferHandler(null);
         usuario = new DATUsuario();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());

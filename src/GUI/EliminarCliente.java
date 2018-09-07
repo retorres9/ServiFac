@@ -2,10 +2,7 @@ package GUI;
 
 import Clases.Clientes;
 import Dat.DATClientes;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
@@ -15,12 +12,13 @@ import javax.swing.table.TableColumnModel;
 
 public final class EliminarCliente extends javax.swing.JFrame {
 
-    DATClientes cliente = new DATClientes();
+    DATClientes cliente;
     Clientes objCliente = new Clientes();
     DefaultTableModel modelo = new DefaultTableModel();
     int fila;
 
     public EliminarCliente() {
+        cliente = new DATClientes();
         initComponents();
         cargarEncabezado();
         cargarClientes();

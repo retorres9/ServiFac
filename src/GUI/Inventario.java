@@ -72,6 +72,7 @@ public final class Inventario extends javax.swing.JFrame {
         permisos();
         updateTabla();
         cargarTablaBodega();
+        txtBodega.setTransferHandler(null);
         totalInventario();
         tblBodega.setDefaultRenderer(Object.class, render);
     }

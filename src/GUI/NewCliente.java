@@ -29,6 +29,7 @@ public final class NewCliente extends javax.swing.JFrame {
 
     public NewCliente() {
         initComponents();
+        txtNombre.setText(null);
         txtCedula.setTransferHandler(null);
         txtCredito.setTransferHandler(null);
         txtDeuda.setTransferHandler(null);

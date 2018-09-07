@@ -1,9 +1,10 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-
+drop table configuracion;
 CREATE TABLE configuracion(
-empresa VARCHAR(40) primary key not null,
+id INT (10) primary key not null auto_increment,
+empresa VARCHAR(40) not null,
 direccion varchar(50) not null,
 propietario varchar(60) not null,
 iva INT(2) not null,
@@ -11,7 +12,8 @@ ruc VARCHAR(13) not null,
 telefono VARCHAR(10),
 contrasena varchar(100)
 );
-select * from configuracion;
+alter table configuracion ADD COLUMN id INT(10);
+select * from usuario;
 delete from usuario where cedula_usuario="1105970717";
 INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono, contrasena) VALUES("Empresa", "Dirección", "Propietario" , 12, "1111111111111", "0000000", md5('servifac'));
 

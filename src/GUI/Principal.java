@@ -745,7 +745,7 @@ public final class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JLabel txtAlarma;
     private javax.swing.JLabel txtConfig;
-    public javax.swing.JLabel txtEmpresa;
+    public static javax.swing.JLabel txtEmpresa;
     private javax.swing.JLabel txtVendedor;
     // End of variables declaration//GEN-END:variables
 }

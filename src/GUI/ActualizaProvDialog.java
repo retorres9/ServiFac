@@ -29,6 +29,11 @@ public class ActualizaProvDialog extends javax.swing.JDialog {
         super(parent, modal);
         manejadorProv = new DATProveedor();
         initComponents();
+        txtEmpresa.setTransferHandler(null);
+        txtNombreCuenta.setTransferHandler(null);
+        txtNumCuenta.setTransferHandler(null);
+        txtRUC.setTransferHandler(null);
+        txtTelefono.setTransferHandler(null);
         this.setLocationRelativeTo(null);
         txtEmpresa.setEditable(false);
         txtRUC.setEditable(false);

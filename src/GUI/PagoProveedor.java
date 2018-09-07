@@ -49,6 +49,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         host = util.getPcName();
         cargarColumnas();
         cargarTabla();
+        txtMonto.setTransferHandler(null);
         combo();
         seleccion();
         this.setLocationRelativeTo(null);
@@ -739,7 +740,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
 
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
         char c = evt.getKeyChar();
-        if ((c < '0' || c > '9') && c != '.') {
+        if ((c < '0' || c > '9') || (txtMonto.getText().length()>6) && c != '.') {
             evt.consume();
         }
     }//GEN-LAST:event_txtMontoKeyTyped

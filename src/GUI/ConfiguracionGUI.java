@@ -31,11 +31,18 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
     String telefonoEmp;
 
     public ConfiguracionGUI() {
-        initComponents();
         configu = new DATConfiguracion();
         manejadorUsuario = new DATUsuario();
+        initComponents();        
         configuracion();
         encabezados();
+        txtDireccionEmp.setTransferHandler(null);
+        txtNombreEmp.setTransferHandler(null);
+        txtPropietarioEmp.setTransferHandler(null);
+        txtRucEmp.setTransferHandler(null);
+        txtTelefonoEmp.setTransferHandler(null);
+        txtIVA.setEditable(false);
+        txtIVA.setToolTipText("Este campo solo puede ser modificado por el administrador de la base de datos");
         cargarTabla();
         getTexto();
         this.setLocationRelativeTo(null);
@@ -129,11 +136,21 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         jLabel3.setText("Dirección:");
 
         txtRucEmp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtRucEmp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRucEmpKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
         jLabel4.setText("Propietario:");
 
         txtTelefonoEmp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTelefonoEmp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoEmpKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
         jLabel5.setText("IVA:");
@@ -241,8 +258,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         jTabbedPane1.addTab("Empleados", jPanel2);
 
         btnCancelar.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/error.png"))); // NOI18N
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Atrás");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -265,7 +281,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(107, 107, 107)
                 .addComponent(btnCancelar)
-                .addGap(161, 509, Short.MAX_VALUE))
+                .addGap(161, 555, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,9 +305,7 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                     + "¿Esta seguro que desea guardar los cambios?", "Aviso", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 actualizarConfig();
-                SwingUtilities.updateComponentTreeUI(pr);
-                this.setVisible(false);
-                pr.setVisible(true);
+                //SwingUtilities.updateComponentTreeUI(pr);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No ha realizado ningún cambio en la configuración");
@@ -306,17 +320,34 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                     + "¿Desea guardar los cambios?", "Aviso!", JOptionPane.YES_NO_CANCEL_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 actualizarConfig();
+                Principal.txtEmpresa.setText(txtNombreEmp.getText());
                 pr.setVisible(true);
                 this.dispose();
             } else if (n == JOptionPane.NO_OPTION) {
+                Principal.txtEmpresa.setText(txtNombreEmp.getText());
                 pr.setVisible(true);
                 this.dispose();
             }
         } else {
+            Principal.txtEmpresa.setText(txtNombreEmp.getText());
             pr.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtRucEmpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucEmpKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9') || txtRucEmp.getText().length() > 12) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRucEmpKeyTyped
+
+    private void txtTelefonoEmpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoEmpKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9') || txtTelefonoEmp.getText().length() > 9) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoEmpKeyTyped
 
     public void actualizarConfig() {
         nombreEmp = txtNombreEmp.getText();
@@ -327,6 +358,8 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
         iva = Integer.parseInt(txtIVA.getText());
         objConfig = new Configuracion(nombreEmp, propietarioEmp, direccionEmp, iva, rucEmp, telefonoEmp);
         configu.actualizaConfig(objConfig);
+        JOptionPane.showMessageDialog(null, "Configuración actualizada con exito!");
+        bandera= true;
     }
 
     public void configuracion() {

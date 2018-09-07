@@ -29,6 +29,7 @@ public class MoverBodega extends javax.swing.JDialog {
         modeloBodega = new DefaultComboBoxModel<>();
         cargarModeloBodega();
         initComponents();
+        txtCant.setTransferHandler(null);
         //inv = new Inventario();
         txtAyudaCantIni.setVisible(false);
         txtAyudaIndice.setVisible(false);
@@ -68,6 +69,12 @@ public class MoverBodega extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cmbBodega.setModel(modeloBodega);
+
+        txtCant.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantKeyTyped(evt);
+            }
+        });
 
         jButton1.setText("Aceptar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -201,6 +208,13 @@ public class MoverBodega extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtCantKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9') || txtCant.getText().length() > 3) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantKeyTyped
 
     /**
      * @param args the command line arguments

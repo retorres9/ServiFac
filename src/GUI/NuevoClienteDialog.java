@@ -16,9 +16,6 @@ import javax.swing.JOptionPane;
  */
 public class NuevoClienteDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form NuevoClienteDialog
-     */
     Clientes objCliente = new Clientes();
     String informacion = "";
     public static int valid = 1;
@@ -27,6 +24,10 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
     public NuevoClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        txtCedula.setTransferHandler(null);
+        txtCredito.setTransferHandler(null);
+        txtDeuda.setTransferHandler(null);
+        txtTelf.setTransferHandler(null);
         txtAyuda.setVisible(false);
         txtAyudaRol.setVisible(false);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);

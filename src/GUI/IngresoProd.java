@@ -1264,9 +1264,9 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtValidMouseClicked
         if (bandera == false) {
-            InventarioDialog invDialog = new InventarioDialog(this, true);
-            invDialog.txtBuscar.setText(txtCod.getText());
-            invDialog.busqueda();
+            ActualizacionDialog invDialog = new ActualizacionDialog(new javax.swing.JDialog(), true);
+            invDialog.lblCod.setText(txtCod.getText());
+            ActualizacionDialog.txtIngreso.setText("ingreso");
             invDialog.setVisible(true);
 
             //InventarioDialog.txtBuscar.setText(txtCod.getText());

@@ -91,6 +91,7 @@ public final class Factura extends javax.swing.JFrame {
         setAnchoColumnas();
         contador();
         permisos();
+        txtCed.setTransferHandler(null);
         txtCod.requestFocusInWindow();
         usuario();
     }

@@ -2,10 +2,7 @@ package GUI;
 
 import Clases.Proveedor;
 import Dat.DATProveedor;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
@@ -21,8 +18,8 @@ public final class EliminarProveedor extends javax.swing.JFrame {
     Proveedor prov = new Proveedor();
 
     public EliminarProveedor() {
-        initComponents();
         manejadorProv = new DATProveedor();
+        initComponents();        
         cargarEncabezado();
         cargarTabla();
         combo();

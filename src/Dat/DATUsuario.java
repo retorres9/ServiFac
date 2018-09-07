@@ -33,13 +33,12 @@ public class DATUsuario {
             ps.setString(6, maq);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campos\n"
-//                    + "que ha llenado han sido ingresados en otro usuario.\n"
-//                    + "Pueden ser:"
-//                    + "\n* Nombre"
-//                    + "\n* Usuario"
-//                    + "\n* Contraseña");
+            JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campos\n"
+                    + "que ha llenado han sido ingresados en otro usuario.\n"
+                    + "Pueden ser:"
+                    + "\n* Nombre"
+                    + "\n* Usuario"
+                    + "\n* Contraseña");
             return false;
         } finally {
             try {

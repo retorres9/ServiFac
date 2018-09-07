@@ -27,6 +27,9 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
         super(parent, modal);
         manejadorMaterial = new DATMaterial();
         initComponents();
+        txtGanancia.setTransferHandler(null);
+        txtGananciaMayor.setTransferHandler(null);
+        txtPrecioCompra.setTransferHandler(null);
         this.setLocationRelativeTo(null);
         lblCod.setVisible(false);
     }

@@ -266,6 +266,12 @@ public final class Pagos extends javax.swing.JFrame {
             }
         });
 
+        txtMontoAprobado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoAprobadoKeyTyped(evt);
+            }
+        });
+
         btnAprobar.setText("Aprobar crédito");
         btnAprobar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -794,7 +800,7 @@ public final class Pagos extends javax.swing.JFrame {
 
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
         char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)
+        if (((caracter < '0') || (caracter > '9')) || (txtMonto.getText().length() > 7) && (caracter != KeyEvent.VK_BACK_SPACE)
                 && (caracter != '.')) {
             evt.consume();
         }
@@ -947,7 +953,7 @@ public final class Pagos extends javax.swing.JFrame {
 
     private void txtActualizaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtActualizaKeyTyped
         char c = evt.getKeyChar();
-        if ((c < '0' || c > '9') && (c != '.')) {
+        if ((c < '0' || c > '9') || (txtActualiza.getText().length() > 6) && (c != '.')) {
             evt.consume();
         }
     }//GEN-LAST:event_txtActualizaKeyTyped
@@ -987,6 +993,13 @@ public final class Pagos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Crédito aprobado correctamente");
         }
     }//GEN-LAST:event_btnAprobarActionPerformed
+
+    private void txtMontoAprobadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoAprobadoKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9') || (txtMontoAprobado.getText().length() > 6) && c != '.') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMontoAprobadoKeyTyped
 
     public void cargarTabla() {
         ArrayList<Clientes> listadoClientes = cliente.ObtenerClientes();
