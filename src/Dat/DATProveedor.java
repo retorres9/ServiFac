@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +47,6 @@ public class DATProveedor {
         return true;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
     public ArrayList<Proveedor> obtenerEmpresa() {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
@@ -65,7 +63,7 @@ public class DATProveedor {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 051", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -96,7 +94,7 @@ public class DATProveedor {
                 listaProveedor.add(prov);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 052", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -122,7 +120,7 @@ public class DATProveedor {
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Proveedor actualizado correctamente");
         } catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el proveedor");
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del proveedor\nen la base de datos\nError 053", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -154,7 +152,7 @@ public class DATProveedor {
                 listadoBusq.add(prov);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 054", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -187,7 +185,7 @@ public class DATProveedor {
                 listadoBusq.add(prov);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 055", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -199,19 +197,24 @@ public class DATProveedor {
         return listadoBusq;
     }
 
-    public void updateDeuda(Proveedor proveedor) throws ClassNotFoundException, SQLException {
+    public void updateDeuda(Proveedor proveedor) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE proveedores SET Deuda = ? WHERE ruc = ?";
             ps = con.prepareStatement(sentencia);
             ps.setDouble(1, proveedor.getDblDeuda());
             ps.setString(2, proveedor.getRuc());
+            System.out.println(ps.toString());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la deuda con el proveedor en la base de datos\nError 056", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
-            ps.close();
-            con.close();
+            try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
@@ -224,7 +227,7 @@ public class DATProveedor {
             ps.setString(1, empresa);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar el proveedor");
+            JOptionPane.showMessageDialog(null, "No se puede dar de baja el proveedor\nError 057", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

@@ -161,60 +161,52 @@ public final class Minimos extends javax.swing.JFrame {
     }
 
     public void updateTabla() {
-        try {
-            ArrayList<Producto> listaProductos = producto.ConsultarMinimos();
-            int listadoProductos = listaProductos.size();
-            modelo.setNumRows(listadoProductos);
-            for (int i = 0; i < listadoProductos; i++) {
-                manejadorProd = listaProductos.get(i);
-                String nombreProd = manejadorProd.getStrNombreProd();
-                String cod = manejadorProd.getStrCod();
-                Double precio = manejadorProd.getFltPrecio();
-                Double precioMayor = manejadorProd.getFltPrecioMayor();
-                String ubi = manejadorProd.getStrUbicacion();
-                Integer cant = manejadorProd.getIntCantidad();
-                Integer cantMin = manejadorProd.getIntCantidadMinima();
-                String prov = manejadorProd.getStrEmpresa();
-                modelo.setValueAt(nombreProd, i, 0);
-                modelo.setValueAt(cod, i, 1);
-                modelo.setValueAt(precio, i, 2);
-                modelo.setValueAt(precioMayor, i, 3);
-                modelo.setValueAt(ubi, i, 4);
-                modelo.setValueAt(cant, i, 5);
-                modelo.setValueAt(cantMin, i, 6);
-                modelo.setValueAt(prov, i, 7);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<Producto> listaProductos = producto.ConsultarMinimos();
+        int listadoProductos = listaProductos.size();
+        modelo.setNumRows(listadoProductos);
+        for (int i = 0; i < listadoProductos; i++) {
+            manejadorProd = listaProductos.get(i);
+            String nombreProd = manejadorProd.getStrNombreProd();
+            String cod = manejadorProd.getStrCod();
+            Double precio = manejadorProd.getFltPrecio();
+            Double precioMayor = manejadorProd.getFltPrecioMayor();
+            String ubi = manejadorProd.getStrUbicacion();
+            Integer cant = manejadorProd.getIntCantidad();
+            Integer cantMin = manejadorProd.getIntCantidadMinima();
+            String prov = manejadorProd.getStrEmpresa();
+            modelo.setValueAt(nombreProd, i, 0);
+            modelo.setValueAt(cod, i, 1);
+            modelo.setValueAt(precio, i, 2);
+            modelo.setValueAt(precioMayor, i, 3);
+            modelo.setValueAt(ubi, i, 4);
+            modelo.setValueAt(cant, i, 5);
+            modelo.setValueAt(cantMin, i, 6);
+            modelo.setValueAt(prov, i, 7);
         }
     }
 
     public void cargarTablaBusqueda() {
-        try {
-            ArrayList<Producto> listaProductos = producto.ConsultarMinimo(auxProv);
-            int listadoProductos = listaProductos.size();
-            modelo.setNumRows(listadoProductos);
-            for (int i = 0; i < listadoProductos; i++) {
-                manejadorProd = listaProductos.get(i);
-                String nombreProd = manejadorProd.getStrNombreProd();
-                String cod = manejadorProd.getStrCod();
-                Double precio = manejadorProd.getFltPrecio();
-                Double precioMayor = manejadorProd.getFltPrecioMayor();
-                String ubi = manejadorProd.getStrUbicacion();
-                Integer cant = manejadorProd.getIntCantidad();
-                Integer cantMin = manejadorProd.getIntCantidadMinima();
-                String prov = manejadorProd.getStrEmpresa();
-                modelo.setValueAt(nombreProd, i, 0);
-                modelo.setValueAt(cod, i, 1);
-                modelo.setValueAt(precio, i, 2);
-                modelo.setValueAt(precioMayor, i, 3);
-                modelo.setValueAt(ubi, i, 4);
-                modelo.setValueAt(cant, i, 5);
-                modelo.setValueAt(cantMin, i, 6);
-                modelo.setValueAt(prov, i, 7);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Minimos.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<Producto> listaProductos = producto.ConsultarMinimo(auxProv);
+        int listadoProductos = listaProductos.size();
+        modelo.setNumRows(listadoProductos);
+        for (int i = 0; i < listadoProductos; i++) {
+            manejadorProd = listaProductos.get(i);
+            String nombreProd = manejadorProd.getStrNombreProd();
+            String cod = manejadorProd.getStrCod();
+            Double precio = manejadorProd.getFltPrecio();
+            Double precioMayor = manejadorProd.getFltPrecioMayor();
+            String ubi = manejadorProd.getStrUbicacion();
+            Integer cant = manejadorProd.getIntCantidad();
+            Integer cantMin = manejadorProd.getIntCantidadMinima();
+            String prov = manejadorProd.getStrEmpresa();
+            modelo.setValueAt(nombreProd, i, 0);
+            modelo.setValueAt(cod, i, 1);
+            modelo.setValueAt(precio, i, 2);
+            modelo.setValueAt(precioMayor, i, 3);
+            modelo.setValueAt(ubi, i, 4);
+            modelo.setValueAt(cant, i, 5);
+            modelo.setValueAt(cantMin, i, 6);
+            modelo.setValueAt(prov, i, 7);
         }
     }
 

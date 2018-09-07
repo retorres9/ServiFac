@@ -42,7 +42,7 @@ public class DATMaterial {
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 001", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -61,8 +61,6 @@ public class DATMaterial {
             String sentencia = "SELECT nombre_producto, precio, precio_mayor, cantidad FROM producto WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
-            System.out.println(ps.toString());
-            System.out.println(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombre = rs.getString(1);
@@ -73,7 +71,7 @@ public class DATMaterial {
                 listadoProd.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 002", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -84,10 +82,10 @@ public class DATMaterial {
         }
         return listadoProd;
     }
-    
-    public boolean actualizaCategoria(int id, String nombre){
+
+    public boolean actualizaCategoria(int id, String nombre) {
         boolean bandera;
-        try{
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET id_categoria = ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
@@ -95,16 +93,16 @@ public class DATMaterial {
             ps.setString(2, nombre);
             ps.executeUpdate();
             bandera = true;
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             bandera = false;
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la categoria del producto");
         }
         return bandera;
     }
-    
-    public boolean actualizaProveedor(String ruc, String nombre){
+
+    public boolean actualizaProveedor(String ruc, String nombre) {
         boolean bandera;
-        try{
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE producto SET ruc = ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
@@ -112,7 +110,7 @@ public class DATMaterial {
             ps.setString(2, nombre);
             ps.executeUpdate();
             bandera = true;
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             bandera = false;
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la categoria del producto");
         }
@@ -129,7 +127,6 @@ public class DATMaterial {
                     + "producto p, existenciasbodega eb, bodega b WHERE eb.id_bodega = b.id_bodega "
                     + "AND p.codigo = eb.codigo AND stock = true AND eb.cantidad > 0 ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(sentencia);
-            System.out.println(sentencia);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String nombre = rs.getString(1);
@@ -145,7 +142,7 @@ public class DATMaterial {
                 listadoEnBodega.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 003", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -157,7 +154,7 @@ public class DATMaterial {
         return listadoEnBodega;
     }
 
-    public ArrayList<Producto> ConsultarMinimos() throws SQLException {
+    public ArrayList<Producto> ConsultarMinimos() {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -181,10 +178,14 @@ public class DATMaterial {
                 listadoMinimos.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 004", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
-            rs.close();
-            con.close();
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listadoMinimos;
     }
@@ -211,7 +212,7 @@ public class DATMaterial {
                 detalleProd.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 005", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -223,7 +224,7 @@ public class DATMaterial {
         return detalleProd;
     }
 
-    public ArrayList<Producto> ConsultarMinimo(String prov) throws SQLException {
+    public ArrayList<Producto> ConsultarMinimo(String prov) {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -247,11 +248,15 @@ public class DATMaterial {
                 listadoMinimos.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 006", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
-            ps.close();
-            rs.close();
-            con.close();
+            try {
+                ps.close();
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listadoMinimos;
     }
@@ -281,7 +286,7 @@ public class DATMaterial {
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 007", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             rs.close();
             con.close();
@@ -289,7 +294,7 @@ public class DATMaterial {
         return listaProductosNombre;
     }
 
-    public ArrayList<Producto> ConsultarPorCodigo(String nombre) throws SQLException {
+    public ArrayList<Producto> ConsultarPorCodigo(String nombre) {
         ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
@@ -315,10 +320,14 @@ public class DATMaterial {
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 008", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
-            rs.close();
-            con.close();
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listaProductosNombre;
     }
@@ -332,7 +341,7 @@ public class DATMaterial {
             ps.setString(2, producto.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la ubicacion del producto\nen la base de datos\nError 009", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -395,7 +404,7 @@ public class DATMaterial {
             ps.setString(6, prod.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto");
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 010", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -415,7 +424,7 @@ public class DATMaterial {
             ps.setString(2, producto.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 011", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             ps.close();
             con.close();
@@ -432,7 +441,7 @@ public class DATMaterial {
             ps.setString(2, producto.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 012", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -456,7 +465,7 @@ public class DATMaterial {
             ps.setString(6, producto.getStrCod());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 013", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -480,7 +489,7 @@ public class DATMaterial {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 014", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -523,7 +532,14 @@ public class DATMaterial {
                 cant = rs.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 015", "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cant;
     }
@@ -546,7 +562,7 @@ public class DATMaterial {
                 listadoProducto.add(prod);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 016", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -572,7 +588,14 @@ public class DATMaterial {
                 cantidadProd.add(prod);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 017", "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cantidadProd;
     }
@@ -586,7 +609,7 @@ public class DATMaterial {
             ps.setString(2, prod.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 018", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -606,7 +629,7 @@ public class DATMaterial {
             ps.setString(2, prod.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 019", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -626,7 +649,7 @@ public class DATMaterial {
             ps.setString(2, prod.getStrNombreProd());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nError 020", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

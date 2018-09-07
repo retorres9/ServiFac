@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dat;
 
 import Clases.ExistenciasBodega;
@@ -13,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,7 +30,7 @@ public class DATExistenciasBodega {
             ps.setInt(3, existencia.getCantidad());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATExistenciasBodega.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar las existencias en bodega\nen la base de datos\nError 044", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -65,9 +61,8 @@ public class DATExistenciasBodega {
             try {
                 con.rollback();
             } catch (SQLException ex1) {
-                Logger.getLogger(DATExistenciasBodega.class.getName()).log(Level.SEVERE, null, ex1);
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar las existencias en bodega\nen la base de datos\nError 045", "Error!", JOptionPane.ERROR_MESSAGE);
             }
-            Logger.getLogger(DATExistenciasBodega.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -90,7 +85,7 @@ public class DATExistenciasBodega {
                 cant = rs.getInt(1);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 046", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -123,9 +118,8 @@ public class DATExistenciasBodega {
             try {
                 con.rollback();
             } catch (SQLException ex1) {
-                Logger.getLogger(DATExistenciasBodega.class.getName()).log(Level.SEVERE, null, ex1);
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la transacción de inventario\nError 047", "Error!", JOptionPane.ERROR_MESSAGE);
             }
-            Logger.getLogger(DATExistenciasBodega.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 ps.close();
@@ -135,5 +129,4 @@ public class DATExistenciasBodega {
             }
         }
     }
-
 }

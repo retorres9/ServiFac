@@ -6,7 +6,6 @@
 package Dat;
 
 import Clases.Configuracion;
-import Clases.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,7 +45,7 @@ public class DATConfiguracion {
                 config.add(objConfig);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar la configuración desde la base de datos\nError 023", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -71,7 +71,7 @@ public class DATConfiguracion {
                 credencial.add(objConf);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al obtener las credenciales del usuario\nError 024", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -97,7 +97,7 @@ public class DATConfiguracion {
             ps.setString(6, config.getTelefono());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la configuración en la base de datos\nError 024", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

@@ -8,14 +8,11 @@ import Dat.DATProveedor;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
 import com.sun.glass.events.KeyEvent;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -359,7 +356,8 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2))
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +377,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
+                        .addGap(35, 35, 35)
                         .addComponent(jButton2)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -628,7 +626,6 @@ public final class PagoProveedor extends javax.swing.JFrame {
         telefono = (String) tblProv.getValueAt(fila, 6);
         tipoCta = (String) tblProv.getValueAt(fila, 3);
         jPanel2.setVisible(true);
-        System.out.println(rucEmpresa);
     }//GEN-LAST:event_tblProvMouseClicked
 
     private void txtBuscKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscKeyReleased
@@ -681,15 +678,13 @@ public final class PagoProveedor extends javax.swing.JFrame {
                 String strDeuda = formato.format(deuda2);
                 txtDeuda.setText(strDeuda);
                 desc = txtDesc.getText();
-                objProveedor = new Proveedor(rucEmpresa, deuda);
+                objProveedor = new Proveedor(rucEmpresa, deuda2);
                 manejadorProveedor.updateDeuda(objProveedor);
                 objPagoProv = new PagoProveedorClase(rucEmpresa, cedula_usuario, monto, getFecha(), "Crédio", desc);
                 manejadorPago.pagoProveedor(objPagoProv);
                 JOptionPane.showMessageDialog(null, "Crédito registrado exitosamente");
                 txtMonto.setText("");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException e) {
             monto = 0;
         }

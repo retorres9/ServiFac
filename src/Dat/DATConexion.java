@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATConexion {
 
@@ -32,28 +33,16 @@ public class DATConexion {
     public Connection AbrirConexion() {
         try {
             con = getConnection();
-            
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DATConexion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DATConexion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectarse con la base de datos\nError 1x100", "Error!", JOptionPane.ERROR_MESSAGE);
         }
         return con;
     }
 
     public void CerrarConexion() throws ClassNotFoundException, SQLException {
         con = null;
-    }
-    
-    
-    Connection conectar = null;
-    public Connection conexion(){
-        try{
-          Class.forName("com.mysql.jdbc.Driver");
-          conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-        }catch(ClassNotFoundException | SQLException e){
-            System.out.print(e.getMessage());
-        }
-        return conectar;
     }
 }

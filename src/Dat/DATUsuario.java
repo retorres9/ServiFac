@@ -33,7 +33,11 @@ public class DATUsuario {
             ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "El usuario ya está registrado o uno de los campos\n"
-                    + "que ha llenado han sido ingresados en otro usuario");
+                    + "que ha llenado han sido ingresados en otro usuario.\n"
+                    + "Pueden ser:"
+                    + "\n* Nombre"
+                    + "\n* Usuario"
+                    + "\n* Contraseña");
             return false;
         } finally {
             try {
@@ -61,7 +65,7 @@ public class DATUsuario {
                 cedula.add(usuario);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 026", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -88,7 +92,7 @@ public class DATUsuario {
                 listadoUsuarios.add(usuario);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 027", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -102,7 +106,6 @@ public class DATUsuario {
 
     public void setLogin(String us, String maq) {
         try {
-
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE usuario SET login = 1, maquina = ? WHERE cedula_usuario = ?";
             ps = con.prepareStatement(sentencia);
@@ -110,7 +113,7 @@ public class DATUsuario {
             ps.setString(2, us);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar el acceso en la base de datos\nError 028", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -135,7 +138,7 @@ public class DATUsuario {
                 resultado.add(user);
             }
         } catch (SQLException ex) {
-            
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 029", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -149,14 +152,13 @@ public class DATUsuario {
     
     public void startupLogin(String maq) {
         try {
-            //con = DriverManager.getConnection("jdbc:mysql://192.168.1.7:3306/empresa", "root", "ticowrc2017");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE usuario SET login = 0 WHERE maquina = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el acceso del usuario en la base de datos\nError 030", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -183,7 +185,7 @@ public class DATUsuario {
                 listaUsuario.add(user);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 031", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();

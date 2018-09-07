@@ -469,15 +469,10 @@ public final class EliminarCliente extends javax.swing.JFrame {
     }
 
     public void elimiarCliente() {
-        try {
-            String ced = txtCedula.getText();
-            objCliente = new Clientes(ced);
-            cliente.eliminarCliente(objCliente);
+        String ced = txtCedula.getText();
+        objCliente = new Clientes(ced);
+        if(cliente.eliminarCliente(objCliente) == true){
             JOptionPane.showMessageDialog(null, "Cliente eliminado satisfactoriamente");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

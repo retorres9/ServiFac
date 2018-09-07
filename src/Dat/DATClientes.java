@@ -38,7 +38,7 @@ public class DATClientes {
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar los clientes en la base de datos\nError 035", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -61,7 +61,7 @@ public class DATClientes {
             ps.setString(3, cliente.getStrCedula());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el método apruebaCredito", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el cliente en la base de datos\nError 036", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try{
                 ps.close();
@@ -83,7 +83,7 @@ public class DATClientes {
             ps.setString(3, cliente.getStrCedula());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el metodo actualizaCredito");
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el crédito en la base de datos\nError 037", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -93,34 +93,7 @@ public class DATClientes {
             }
         }
     }
-
-//    public ArrayList<Clientes> ConsultarxNombre(String nombre) throws ClassNotFoundException, SQLException {
-//        ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
-//        try{
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-//            String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v.Valor_Cancelado, v.Fecha,c.Nombres "
-//                + "FROM clientes c, detalle_venta dv, venta v "
-//                + "WHERE c.Cedula_Cliente = dv.Cedula AND v.Id_Venta = dv.Id_Venta AND v.Valor_Cancelado<v.Total_Venta AND c.Nombres = ? ORDER BY c.Nombres Asc, dv.Id_Venta";
-//            ps = con.prepareStatement(Sentencia);
-//            rs = ps.executeQuery();
-//            while(rs.next()){
-//                
-//            }
-//        }
-//        
-//        PreparedStatement ps = c.getConnection().prepareStatement(Sentencia);
-//        ps.setString(1, nombre);
-//        return ps.executeQuery();
-//    }
-//
-//    public ResultSet Consultar() throws ClassNotFoundException, SQLException {
-//        Statement st = c.getConnection().createStatement();
-//        String Sentencia = "SELECT DISTINCT dv.Id_Venta, c.Deuda, v.Total_Venta, v. Valor_Cancelado, v.Fecha "
-//                + "FROM clientes c, detalle_venta dv, venta v "
-//                + "WHERE c.Cedula = dv.Cedula AND v.Id_Venta = dv.Id_Venta ORDER BY c.Nombres Asc, dv.Id_Venta";
-//        ResultSet re = st.executeQuery(Sentencia);
-//        return re;
-//    }
+    
     public ArrayList<Clientes> ConsultarPorNombre(String nombre) {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
@@ -139,7 +112,7 @@ public class DATClientes {
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 038", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -169,7 +142,7 @@ public class DATClientes {
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 039", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -220,12 +193,10 @@ public class DATClientes {
             ps.setDouble(4, cliente.getDblDeuda());
             ps.setString(5, cliente.getStrDireccion());
             ps.setBoolean(6, cliente.isCredito());
-            System.out.println(cliente.isCredito());
             ps.setString(7, cliente.getUsuario());
             ps.setDouble(8, cliente.getCant());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "El nombre o la cédula ya están asignados a otro cliente");
             return false;
         } finally {
@@ -248,7 +219,7 @@ public class DATClientes {
             ps.setString(2, cliente.getStrCedula());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar deuda del cliente en la base de datos\nError 040", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -282,16 +253,17 @@ public class DATClientes {
         }
     }
 
-    public void actualizarCedulaCliente(Clientes cliente) {
+    public boolean eliminarCliente(Clientes cliente) {
+        boolean bandera;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "UPDATE clientes SET Cedula_Cliente = ? WHERE Nombres = ?";
+            String sentencia = "UPDATE clientes SET estado = false WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrCedula());
-            ps.setString(2, cliente.getStrNombre());
-            ps.executeUpdate();
+            bandera = true;
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            bandera= false;
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al dar de baja al cliente en la base de datos\nError 042", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -300,25 +272,7 @@ public class DATClientes {
                 Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    public void eliminarCliente(Clientes cliente) throws ClassNotFoundException, SQLException {
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "UPDATE clientes SET estado = false WHERE cedula_cliente = ?";
-            ps = con.prepareStatement(sentencia);
-            ps.setString(1, cliente.getStrCedula());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar el cliente"
-                    + " seleccionado.\nEste error se debe a que el\n"
-                    + "cliente tienes asignadas algunas compras\n"
-                    + "por lo tanto esas compras no pueden"
-                    + "quedar sin un comprador", "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            ps.close();
-            con.close();
-        }
+        return bandera;
     }
 
     public ArrayList<Clientes> FacturaCliente(String nombre) {
@@ -340,7 +294,7 @@ public class DATClientes {
                 listaCliente.add(cliente);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATClientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 043", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();

@@ -943,7 +943,6 @@ public final class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        System.out.println(bandera);
         int index = jTabbedPane1.getSelectedIndex();
         if ((bandera == false) && (index == 1)) {
             cargarTablaBodega();

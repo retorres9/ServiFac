@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,7 +35,7 @@ public class DATBodega {
                 listadoBodega.add(bodega);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATBodega.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 032", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -54,7 +55,7 @@ public class DATBodega {
             ps.setString(1, bodega.getStrBodega());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATBodega.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear la nueva bodega\nError 033", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

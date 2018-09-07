@@ -27,8 +27,7 @@ public class DATUbicacion {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT id_ubicacion, nombre_ubicacion FROM ubicacion ORDER BY nombre_ubicacion";
             ps = con.prepareStatement(sentencia);
-            rs = ps.executeQuery();
-            
+            rs = ps.executeQuery();            
             while(rs.next()){
                 int idUbic = rs.getInt(1);
                 String ubicacion = rs.getString(2);
@@ -36,7 +35,7 @@ public class DATUbicacion {
                 listaUbicacion.add(ubic);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 060", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally{
             try {
                 rs.close();

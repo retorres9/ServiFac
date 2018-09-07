@@ -25,6 +25,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     
     public ActualizacionPrecio(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
+        manejadorMaterial = new DATMaterial();
         initComponents();
         this.setLocationRelativeTo(null);
         lblCod.setVisible(false);
@@ -311,7 +312,11 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
         String codigo = lblCod.getText();
         objProd = new Producto(precioCompra, precio, precioMayor, ganancia, gananciaMayor, codigo);
         manejadorMaterial.ActualizaPrecio(objProd);
+        ActualizacionDialog.txtPrecio.setText(String.valueOf(precio));
+        ActualizacionDialog.txtPrecioM.setText(String.valueOf(precioMayor));
+        ActualizacionDialog.lblPrecioCompra.setText(String.valueOf(precioCompra));
         JOptionPane.showMessageDialog(null, "Se ha actualizado el precio correctamente");
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -35,7 +35,7 @@ public class DATCategoria {
                 listaCategoria.add(objCat);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar las categorias en la base de datos\nError 034", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();

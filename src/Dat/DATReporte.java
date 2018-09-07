@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATReporte {
 
@@ -30,7 +31,7 @@ public class DATReporte {
             ps.setInt(6, detalle.getId_Venta());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar la venta en la base de datos\nError 058", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -61,22 +62,15 @@ public class DATReporte {
                 factura.add(detalle);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 059", "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATReporte.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return factura;
     }
-
-//    public ResultSet reporte(String fecha) throws ClassNotFoundException, SQLException {
-//        String sentencia = "SELECT Cantidad, Producto, Costo, Costo_Total, Fecha FROM detalle_venta WHERE Fecha = ?";
-//        PreparedStatement st = c.getConnection().prepareStatement(sentencia);
-//        st.setString(1, fecha);
-//        return st.executeQuery();
-//    }
-//
-//    public ResultSet suma(String fecha) throws ClassNotFoundException, SQLException {
-//        String sentencia = "SELECT SUM (Costo_Total) As total FROM detalle_venta WHERE Fecha = ?";
-//        PreparedStatement ps = c.getConnection().prepareStatement(sentencia);
-//        ps.setString(1, fecha);
-//        return ps.executeQuery();
-//    }
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATAbonoCliente {
 
@@ -28,8 +29,7 @@ public class DATAbonoCliente {
             ps.setString(4, abonoCl.getFechaAbono());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            //JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-            Logger.getLogger(DATAbonoCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar los datos del abono del cliente\nError 021", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -60,7 +60,7 @@ public class DATAbonoCliente {
                 listadoPagos.add(abono);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATAbonoCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cargar los datos del abono del cliente\nError 022", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -69,7 +69,6 @@ public class DATAbonoCliente {
                 Logger.getLogger(DATAbonoCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
         return listadoPagos;
     }
 }

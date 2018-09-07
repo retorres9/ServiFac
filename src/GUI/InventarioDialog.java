@@ -14,12 +14,7 @@ import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
@@ -179,37 +174,32 @@ public class InventarioDialog extends javax.swing.JDialog {
 
     public void busqueda() {
         String dato = txtBuscar.getText();
-        try {
-            setAnchoColumnas();
-
-            ArrayList<Producto> listadoProd = material.ConsultarPorCodigo(dato);
-            int cantLista = listadoProd.size();
-            modelo.setNumRows(cantLista);
-            for (int i = 0; i < cantLista; i++) {
-                producto = listadoProd.get(i);
-
-                String nombreProd = producto.getStrNombreProd();
-                String cod = producto.getStrCod();
-                Double preciCompra = producto.getPrecioCompra();
-                Double precio = producto.getFltPrecio();
-                Double precioMayor = producto.getFltPrecioMayor();
-                Double ganancia = producto.getGanancia();
-                Double gananciaMayor = producto.getGananciaMayor();
-                String ubi = producto.getStrUbicacion();
-                Integer cant = producto.getIntCantidad();
-
-                modelo.setValueAt(nombreProd, i, 0);
-                modelo.setValueAt(cod, i, 1);
-                modelo.setValueAt(preciCompra, i, 2);
-                modelo.setValueAt(precio, i, 3);
-                modelo.setValueAt(precioMayor, i, 4);
-                modelo.setValueAt(ganancia, i, 5);
-                modelo.setValueAt(gananciaMayor, i, 6);
-                modelo.setValueAt(ubi, i, 7);
-                modelo.setValueAt(cant, i, 8);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        setAnchoColumnas();
+        ArrayList<Producto> listadoProd = material.ConsultarPorCodigo(dato);
+        int cantLista = listadoProd.size();
+        modelo.setNumRows(cantLista);
+        for (int i = 0; i < cantLista; i++) {
+            producto = listadoProd.get(i);
+            
+            String nombreProd = producto.getStrNombreProd();
+            String cod = producto.getStrCod();
+            Double preciCompra = producto.getPrecioCompra();
+            Double precio = producto.getFltPrecio();
+            Double precioMayor = producto.getFltPrecioMayor();
+            Double ganancia = producto.getGanancia();
+            Double gananciaMayor = producto.getGananciaMayor();
+            String ubi = producto.getStrUbicacion();
+            Integer cant = producto.getIntCantidad();
+            
+            modelo.setValueAt(nombreProd, i, 0);
+            modelo.setValueAt(cod, i, 1);
+            modelo.setValueAt(preciCompra, i, 2);
+            modelo.setValueAt(precio, i, 3);
+            modelo.setValueAt(precioMayor, i, 4);
+            modelo.setValueAt(ganancia, i, 5);
+            modelo.setValueAt(gananciaMayor, i, 6);
+            modelo.setValueAt(ubi, i, 7);
+            modelo.setValueAt(cant, i, 8);
         }
     }
 

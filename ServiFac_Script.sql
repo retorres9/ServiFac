@@ -11,13 +11,15 @@ ruc VARCHAR(13) not null,
 telefono VARCHAR(10)
 );
 
-CREATE TABLE devolucion(
-id_devolucion INT(10),
-codigo VARCHAR(13) not null,
-precio DOUBLE(7,2) not null,
-fecha VARCHAR(10),
-comentario VARCHAR(500) not null
-);
+INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono) VALUES("Empresa", "Dirección", "Propietario" , 12, "1111111111111", "0000000");
+
+#CREATE TABLE devolucion(
+#id_devolucion INT(10),
+#codigo VARCHAR(13) not null,
+#precio DOUBLE(7,2) not null,
+#fecha VARCHAR(10),
+#comentario VARCHAR(500) not null
+#);
 #describe producto;
 #select distinct str_to_date(fecha,'%d/%m/%Y') as fecha FROM venta;
 
@@ -96,6 +98,7 @@ deuda DECIMAL(7,2) NOT NULL DEFAULT 0.00,
 telefono VARCHAR(10),
 estado boolean default true
 );
+
 INSERT INTO proveedores (empresa,ruc,nombre_cuenta,tipo_cuenta,numero_cuenta,telefono) VALUES("(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)","(Vacio)");
 
 
@@ -116,9 +119,6 @@ usuario VARCHAR(15),
 id_venta INT(10)
 );
 
-SELECT Distinct v.id_venta, v.fecha, c.cedula_cliente FROM venta v, usuario u, detalle_venta dv, clientes c WHERE v.id_Venta = dv.id_venta AND c.cedula_cliente=dv.cedula_cliente AND c.nombres="CONSUMIDOR FINAL";
-select * from venta;
-select * from detalle_venta;
 CREATE TABLE bodega(
 id_bodega INT (3) PRIMARY KEY AUTO_INCREMENT,
 nombre_bodega VARCHAR (20) NOT NULL UNIQUE
@@ -150,7 +150,7 @@ fecha VARCHAR (10),
 tipo VARCHAR(7),
 descripcion TEXT
 );
-ALTER TABLE pago_proveedor CHANGE descripcion descripcion text;
+
 ALTER TABLE producto
 ADD CONSTRAINT produbic_fk
 FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id_ubicacion);
@@ -174,10 +174,6 @@ FOREIGN KEY (cedula_usuario) REFERENCES usuario(cedula_usuario);
 ALTER TABLE existenciasbodega
 ADD constraint idBodega_fk
 FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
-use empresa;
-select * from existenciasbodega;
-select * from bodega;
-INSERT INTO existenciasBodega (id_bodega, codigo, cantidad) VALUES (1,"0076",1);
 
 ALTER TABLE producto
 ADD CONSTRAINT bodega_fk

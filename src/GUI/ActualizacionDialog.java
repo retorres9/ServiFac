@@ -101,6 +101,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         lblIVA = new javax.swing.JLabel();
         lblCod = new javax.swing.JLabel();
+        lblPrecioCompra = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -361,12 +362,16 @@ public class ActualizacionDialog extends javax.swing.JDialog {
 
         lblCod.setText("jLabel5");
 
+        lblPrecioCompra.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(916, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblPrecioCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCod)
                 .addGap(26, 26, 26)
                 .addComponent(lblIVA)
@@ -389,7 +394,8 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFila)
                     .addComponent(lblIVA)
-                    .addComponent(lblCod))
+                    .addComponent(lblCod)
+                    .addComponent(lblPrecioCompra))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -406,26 +412,10 @@ public class ActualizacionDialog extends javax.swing.JDialog {
 
     private void btnActualizaPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaPrecioMouseClicked
         ActualizacionPrecio actPrecio = new ActualizacionPrecio(new javax.swing.JDialog(), true);
-        //actPrecio.lblIVA.setText();
         int iva = obtenerIvaEntero();
         actPrecio.lblIVA.setText(String.valueOf(iva));
         actPrecio.lblCod.setText(lblCod.getText());
         actPrecio.setVisible(true);
-        //        try {
-        //            n = JOptionPane.showInputDialog(null, "Ingrese el nuevo precio de:\n" + txtNombreProd.getText());
-        //            double newPrecio = Double.parseDouble(n);
-        //            int cant = Integer.parseInt(txtCantidad.getText());
-        //            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-        //            producto = new Producto(txtNombreProd.getText(), newPrecio, Double.parseDouble(txtPrecioM.getText()), cant, cod);
-        //            material.UpdateProducto(producto);
-        //            String nuevoPrecio = String.valueOf(n);
-        //            txtPrecio.setText(nuevoPrecio);
-        //            //updateTabla();
-        //
-        //        } catch (NullPointerException | NumberFormatException e) {
-        //            JOptionPane.showMessageDialog(null, "No se ha cambiado el precio de:\n" + txtNombreProd.getText());
-        //        }
-
     }//GEN-LAST:event_btnActualizaPrecioMouseClicked
 
     private void btnActualizaNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaNombreMouseClicked
@@ -484,14 +474,22 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_lblMenosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
+        fila = Integer.parseInt(txtFila.getText());
+        if (lblPrecioCompra.getText().equals("jLabel4")) {
+            this.dispose();
+        } else {
+            Inventario.tblProd.setValueAt(txtPrecio.getText(), fila, 3);
+            Inventario.tblProd.setValueAt(txtPrecioM.getText(), fila, 4);
+            Inventario.tblProd.setValueAt(lblPrecioCompra.getText(), fila, 2);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnActualizaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCategoriaMouseClicked
         ActualizaCategoriaDialog updCat = new ActualizaCategoriaDialog(new javax.swing.JDialog(), true);
         updCat.txtProducto.setText(txtNombreProd.getText());
         updCat.setVisible(true);
-        
+
     }//GEN-LAST:event_btnActualizaCategoriaMouseClicked
 
     private void btnActualizaProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaProveedorMouseClicked
@@ -574,12 +572,13 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     public javax.swing.JLabel lblCod;
     public javax.swing.JLabel lblIVA;
     private javax.swing.JLabel lblMenos;
+    public static javax.swing.JLabel lblPrecioCompra;
     public javax.swing.JLabel txtCantidad;
     public static javax.swing.JLabel txtCategoria;
     public javax.swing.JLabel txtFila;
     public javax.swing.JLabel txtNombreProd;
-    public javax.swing.JTextField txtPrecio;
-    public javax.swing.JLabel txtPrecioM;
+    public static javax.swing.JTextField txtPrecio;
+    public static javax.swing.JLabel txtPrecioM;
     public static javax.swing.JLabel txtProveedor;
     public javax.swing.JLabel txtUbicacion;
     // End of variables declaration//GEN-END:variables

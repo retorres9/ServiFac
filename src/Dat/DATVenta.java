@@ -34,8 +34,7 @@ public class DATVenta {
             ps.setString(5, venta.getCedulaUser());
             System.out.println(ps.toString());
             ps.executeUpdate();
-            
-            
+
             String sentencia2 = "INSERT INTO detalle_venta (Cedula_Cliente, Cantidad, Codigo, Precio_Venta, Usuario, Id_Venta) "
                     + "VALUES (?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia2);
@@ -55,7 +54,7 @@ public class DATVenta {
             } catch (SQLException ex1) {
                 Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrio un error al prosesar la transaccion", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrio un error al prosesar la transacción\nError 0061", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -84,12 +83,12 @@ public class DATVenta {
                 double totVenta = rs.getDouble(4);
                 double valCancelado = rs.getDouble(5);
                 System.out.println(idVenta);
-                venta = new Venta(idVenta, totVenta, valCancelado, nombre,cedula);
-                System.out.println(idVenta);    
+                venta = new Venta(idVenta, totVenta, valCancelado, nombre, cedula);
+                System.out.println(idVenta);
                 listadoVentas.add(venta);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 0062", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -100,14 +99,14 @@ public class DATVenta {
         }
         return listadoVentas;
     }
-    
+
     public ArrayList<Venta> vistaVentaFiltrada(String fecha, String cliente) {
         ArrayList<Venta> listadoVentas = new ArrayList<Venta>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT DISTINCT v.Id_Venta,dv.Cedula_Cliente, c.Nombres, v.Total_Venta, v.Valor_Cancelado "
                     + "FROM detalle_venta dv, venta v, clientes c "
-                    + "WHERE dv.Cedula_Cliente LIKE '%"+cliente+"%' OR c.Nombres LIKE '%"+cliente+"%' AND dv.Id_Venta = v.Id_Venta AND dv.Cedula_cliente=c.Cedula_cliente AND v.Fecha = ?";
+                    + "WHERE dv.Cedula_Cliente LIKE '%" + cliente + "%' OR c.Nombres LIKE '%" + cliente + "%' AND dv.Id_Venta = v.Id_Venta AND dv.Cedula_cliente=c.Cedula_cliente AND v.Fecha = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, fecha);
             rs = ps.executeQuery();
@@ -118,12 +117,12 @@ public class DATVenta {
                 double totVenta = rs.getDouble(4);
                 double valCancelado = rs.getDouble(5);
                 System.out.println(idVenta);
-                venta = new Venta(idVenta, totVenta, valCancelado, nombre,cedula);
-                System.out.println(idVenta);    
+                venta = new Venta(idVenta, totVenta, valCancelado, nombre, cedula);
+                System.out.println(idVenta);
                 listadoVentas.add(venta);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrio un error al prosesar la transacción\nError 0063", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -134,11 +133,11 @@ public class DATVenta {
         }
         return listadoVentas;
     }
-    
-    public ArrayList<Venta> cargaCompras(String cliente){
-        ArrayList <Venta> compras = new ArrayList<Venta>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+
+    public ArrayList<Venta> cargaCompras(String cliente) {
+        ArrayList<Venta> compras = new ArrayList<Venta>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT Distinct v.id_venta, v.fecha, c.cedula_cliente FROM venta v, usuario u, detalle_venta dv, clientes c WHERE v.id_Venta = dv.id_venta AND c.cedula_cliente=dv.cedula_cliente AND c.nombres='CONSUMIDOR FINAL'";
             ps = con.prepareStatement(sentencia);
             ps.executeQuery();
@@ -150,10 +149,17 @@ public class DATVenta {
                 compras.add(venta);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrio un error al prosesar la transacción\nError 0064", "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return compras;
-        
+
     }
 
     public ArrayList<Venta> ConsultarComprasCL(String nombre) {
@@ -176,7 +182,7 @@ public class DATVenta {
                 listadoVentas.add(venta);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrio un error al prosesar la transacción\nError 0065", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -201,7 +207,14 @@ public class DATVenta {
                 cantVenta.add(venta);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrio un error al prosesar la transacción\nError 0066", "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cantVenta;
     }
@@ -223,7 +236,7 @@ public class DATVenta {
                 listadoVentas.add(venta);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrio un error al prosesar la transacción\nError 0067", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();
@@ -244,7 +257,7 @@ public class DATVenta {
             ps.setDouble(2, valCancel);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrio un error al prosesar la transacción\nError 0068", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DATPagoProveedor {
 
@@ -31,7 +32,7 @@ public class DATPagoProveedor {
             ps.setString(6, pago.getStrDescripcion());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar la transacción en la base de datos\nError 048", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();
@@ -62,7 +63,14 @@ public class DATPagoProveedor {
                 listadoPagos.add(objPago);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 049", "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                rs.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listadoPagos;
 
@@ -87,7 +95,7 @@ public class DATPagoProveedor {
                 listadoPagos.add(pago);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DATPagoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar en la base de datos\nError 050", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 rs.close();

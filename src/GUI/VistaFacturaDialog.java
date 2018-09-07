@@ -5,6 +5,7 @@ import Dat.DATReporte;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -269,11 +270,13 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (tblFactura.getSelectedRowCount() > 0) {
-            DevolucionDialog dev = new DevolucionDialog(new javax.swing.JDialog(), true);
-            dev.lblCant.setText(cant);
-            dev.setVisible(true);
-        }
+//        if (tblFactura.getSelectedRowCount() > 0) {
+//            DevolucionDialog dev = new DevolucionDialog(new javax.swing.JDialog(), true);
+//            dev.lblCant.setText(cant);
+//            dev.setVisible(true);
+//        }
+        JOptionPane.showMessageDialog(this, "Módulo en construcción");
+                
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tblFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacturaMouseClicked

@@ -103,7 +103,6 @@ public final class Pagos extends javax.swing.JFrame {
         txtDeuda = new javax.swing.JLabel();
         txtTelf = new javax.swing.JLabel();
         btnActualizarNombre = new javax.swing.JLabel();
-        btnActualizaCedula = new javax.swing.JLabel();
         btnActualizaTelf = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JLabel();
@@ -230,14 +229,6 @@ public final class Pagos extends javax.swing.JFrame {
             }
         });
 
-        btnActualizaCedula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar.png"))); // NOI18N
-        btnActualizaCedula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizaCedula.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnActualizaCedulaMouseClicked(evt);
-            }
-        });
-
         btnActualizaTelf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/boton-actualizar.png"))); // NOI18N
         btnActualizaTelf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizaTelf.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -322,9 +313,7 @@ public final class Pagos extends javax.swing.JFrame {
                             .addComponent(txtTelf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnActualizaCedula)
-                            .addComponent(btnActualizaTelf))))
+                        .addComponent(btnActualizaTelf)))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -332,22 +321,19 @@ public final class Pagos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(txtNombre))
-                            .addComponent(btnActualizarNombre)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtMontoAprobado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnAprobar)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(txtCedula))
-                            .addComponent(lblActualiza)))
-                    .addComponent(btnActualizaCedula))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtNombre))
+                    .addComponent(btnActualizarNombre)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMontoAprobado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAprobar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtCedula))
+                    .addComponent(lblActualiza))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -651,11 +637,9 @@ public final class Pagos extends javax.swing.JFrame {
 
     public void iconos() {
         btnActualizarNombre.setVisible(false);
-        btnActualizaCedula.setVisible(false);
         btnActualizaTelf.setVisible(false);
         btnActualizaDir.setVisible(false);
         btnActualizarNombre.setToolTipText("Haga clic para actualizar el nombre del cliente");
-        btnActualizaCedula.setToolTipText("Haga clic para actualizar el número de cédula del cliente");
         btnActualizaTelf.setToolTipText("Haga clic para actualizar el número de teléfono del cliente");
         btnActualizaDir.setToolTipText("Haga clic para actualizar la dirección del cliente");
     }
@@ -696,7 +680,6 @@ public final class Pagos extends javax.swing.JFrame {
         }
         txtDireccion.setText(direccion);
         btnActualizarNombre.setVisible(true);
-        btnActualizaCedula.setVisible(true);
         btnActualizaTelf.setVisible(true);
         btnActualizaDir.setVisible(true);
     }//GEN-LAST:event_tblClientesMouseClicked
@@ -843,26 +826,6 @@ public final class Pagos extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnActualizarNombreMouseClicked
-
-    private void btnActualizaCedulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaCedulaMouseClicked
-        try {
-            String ced;
-            ced = JOptionPane.showInputDialog(null, "Actualice el numero de cédula del cliente:\n" + txtNombre.getText());
-            String nom = txtNombre.getText();
-            if (ced.length() != 10 && ced.length() != 13) {
-                JOptionPane.showMessageDialog(null, "Ha ingresado un número de cedula o RUC inválido", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                objCliente = new Clientes(nom, ced);
-                cliente.actualizarCedulaCliente(objCliente);
-                txtCedula.setText(ced);
-                cargarTabla();
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Formato de Cédula Incorrecto", "Aviso", JOptionPane.ERROR_MESSAGE);
-        } catch (NullPointerException ex) {
-
-        }
-    }//GEN-LAST:event_btnActualizaCedulaMouseClicked
 
     private void btnActualizaTelfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaTelfMouseClicked
         try {
@@ -1133,7 +1096,6 @@ public final class Pagos extends javax.swing.JFrame {
     private javax.swing.ButtonGroup Seleccion;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnActualiza;
-    private javax.swing.JLabel btnActualizaCedula;
     private javax.swing.JLabel btnActualizaDir;
     private javax.swing.JLabel btnActualizaTelf;
     private javax.swing.JLabel btnActualizarNombre;

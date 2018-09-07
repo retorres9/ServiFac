@@ -260,7 +260,7 @@ public final class NuevoUsuario extends javax.swing.JFrame {
 
                     String cedula = txtCedulaUser.getText();
                     String nom = txtNombre.getText();
-                    String usu = txtUsuario.getText();
+                    String usu = txtUsuario.getText().toLowerCase();
                     String pass = txtPass.getText();
                     String rol = (String) jComboBox1.getSelectedItem();
                     if (rol.equals("Vendedor")) {
