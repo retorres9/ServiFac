@@ -28,10 +28,10 @@ public class ActualzarUbicacionDialog extends javax.swing.JDialog {
         super(parent, modal);
         objUbic = new DATUbicacion();
         modeloUbicacion = new DefaultComboBoxModel<Ubicacion>();
+        objMat = new DATMaterial();
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        objMat = new DATMaterial();
         this.setLocationRelativeTo(null);
         this.setTitle("Actualizar ubicacion");
         obtenerUbicaciones();

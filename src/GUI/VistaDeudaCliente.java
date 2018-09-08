@@ -18,9 +18,15 @@ public final class VistaDeudaCliente extends javax.swing.JFrame {
     String nombreCli;
 
     public VistaDeudaCliente() {
-        initComponents();
-        txtId.setVisible(false);
         manejadorVenta = new DATVenta();
+        this.modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        initComponents();
+        txtId.setVisible(false);        
         cargaEncabezado();
         cargarTabla();
         setAnchoColumnas();

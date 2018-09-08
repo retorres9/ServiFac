@@ -23,6 +23,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
 
     public NuevoClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        cliente = new DATClientes();
         initComponents();
         txtCedula.setTransferHandler(null);
         txtCredito.setTransferHandler(null);
@@ -30,8 +31,7 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         txtTelf.setTransferHandler(null);
         txtAyuda.setVisible(false);
         txtAyudaRol.setVisible(false);
-        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        cliente = new DATClientes();
+        this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);        
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);

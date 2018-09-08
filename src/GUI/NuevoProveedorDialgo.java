@@ -25,6 +25,7 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     
     public NuevoProveedorDialgo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        prov = new DATProveedor();
         initComponents();
         txtEmpresa.setTransferHandler(null);
         txtRuc.setTransferHandler(null);
@@ -33,7 +34,6 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
         txtNombre.setTransferHandler(null);
         txtTelf.setTransferHandler(null);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        prov = new DATProveedor();
         combo();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);

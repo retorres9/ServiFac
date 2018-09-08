@@ -30,7 +30,6 @@ public class MoverBodega extends javax.swing.JDialog {
         cargarModeloBodega();
         initComponents();
         txtCant.setTransferHandler(null);
-        //inv = new Inventario();
         txtAyudaCantIni.setVisible(false);
         txtAyudaIndice.setVisible(false);
         txtAyudaCant.setVisible(false);

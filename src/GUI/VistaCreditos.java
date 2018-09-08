@@ -17,11 +17,12 @@ public final class VistaCreditos extends javax.swing.JFrame {
     String emp;
 
     public VistaCreditos() {
+        manejadorPago = new DATPagoProveedor();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
-        manejadorPago = new DATPagoProveedor();
+        
         emp = PagoProveedor.rucEmpresa;
         encabezados();
         cargarTabla();

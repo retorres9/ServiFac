@@ -34,15 +34,16 @@ public final class Principal extends javax.swing.JFrame {
     private static ServerSocket socket;
 
     Usuario objUser = new Usuario();
-    DATMaterial objProd = new DATMaterial();
+    DATMaterial objProd;
     DATConfiguracion manejadorConf;
     DATUsuario manejadorUsuario;
     
     public Principal() {
-        initComponents();
-        host = util.getPcName();
+        objProd = new DATMaterial();
         manejadorUsuario = new DATUsuario();
         manejadorConf = new DATConfiguracion();
+        initComponents();
+        host = util.getPcName();        
         obtenerUsuario();
         obtenerConf();
         this.setLocationRelativeTo(null);
@@ -359,7 +360,6 @@ public final class Principal extends javax.swing.JFrame {
 
         jMenu3.setText("Clientes");
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem3.setText("Ingresar Cliente");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -368,7 +368,6 @@ public final class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem3);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem4.setText("Buscar Cliente");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,7 +376,6 @@ public final class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem4);
 
-        jmiElimCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.ALT_MASK));
         jmiElimCliente.setText("Quitar Cliente");
         jmiElimCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -390,7 +388,6 @@ public final class Principal extends javax.swing.JFrame {
 
         jMenu4.setText("Proveedores");
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem5.setText("Ingresar Proveedor");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,7 +396,6 @@ public final class Principal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem5);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem6.setText("Buscar Proveedor");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -408,7 +404,6 @@ public final class Principal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem6);
 
-        jmiElimProv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK));
         jmiElimProv.setText("Quitar Proveedor");
         jmiElimProv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -591,40 +586,6 @@ public final class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
-        EliminarCliente objElmCl = new EliminarCliente();
-        objElmCl.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jmiElimClienteActionPerformed
-
-    private void jmiElimProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProvActionPerformed
-        EliminarProveedor objElimProv = new EliminarProveedor();
-        objElimProv.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jmiElimProvActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        NuevoClienteDialog objNc = new NuevoClienteDialog(this, rootPaneCheckingEnabled);
-        objNc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        Pagos objPa = new Pagos();
-        objPa.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        NuevoProveedorDialgo objNp = new NuevoProveedorDialgo(this, rootPaneCheckingEnabled);
-        objNp.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        PagoProveedor objPP = new PagoProveedor();
-        objPP.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         cerrar();
     }//GEN-LAST:event_formWindowClosing
@@ -653,15 +614,49 @@ public final class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        Backup back = new Backup(this, true);
-        back.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         BusquedaProd busq = new BusquedaProd(this, true);
         busq.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        NuevoClienteDialog objNc = new NuevoClienteDialog(this, rootPaneCheckingEnabled);
+        objNc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        Pagos objPa = new Pagos();
+        objPa.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
+        EliminarCliente objElmCl = new EliminarCliente();
+        objElmCl.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jmiElimClienteActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        NuevoProveedorDialgo objNp = new NuevoProveedorDialgo(this, rootPaneCheckingEnabled);
+        objNp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        PagoProveedor objPP = new PagoProveedor();
+        objPP.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jmiElimProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProvActionPerformed
+        EliminarProveedor objElimProv = new EliminarProveedor();
+        objElimProv.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jmiElimProvActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Backup back = new Backup(this, true);
+        back.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

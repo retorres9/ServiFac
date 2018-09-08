@@ -57,7 +57,19 @@ public final class Inventario extends javax.swing.JFrame {
         manejadorUsuario = new DATUsuario();
         manejadorExistencias = new DATExistenciasBodega();
         manejadorConf = new DATConfiguracion();
-        //mb = new MoverBodega(this, true);
+        this.modelo2 = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        
+        this.modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         initComponents();
         bandera = true;
         host = util.getPcName();
@@ -74,7 +86,6 @@ public final class Inventario extends javax.swing.JFrame {
         cargarTablaBodega();
         txtBodega.setTransferHandler(null);
         totalInventario();
-        tblBodega.setDefaultRenderer(Object.class, render);
     }
 
     public void limpiarTabla() {
@@ -97,15 +108,14 @@ public final class Inventario extends javax.swing.JFrame {
     }
 
     public void insertarColumnas() {
+        modelo.addColumn("Cantidad");
         modelo.addColumn("Nombre producto");
         modelo.addColumn("Codigo");
         modelo.addColumn("Precio de Compra");
         modelo.addColumn("Precio");
         modelo.addColumn("Precio por mayor");
-        modelo.addColumn("IVA %");
-        modelo.addColumn("Ganancia por mayor %");
         modelo.addColumn("Ubicación");
-        modelo.addColumn("Cantidad");
+        
     }
 
     public void totalInventario() {
@@ -114,13 +124,13 @@ public final class Inventario extends javax.swing.JFrame {
         double suma1 = 0.00;
         double suma2 = 0.00;
         for (int i = 0; i < cant1; i++) {
-            int cant = (int) modelo.getValueAt(i, 8);
-            double prec = (Double) modelo.getValueAt(i, 2);
+            int cant = (int) modelo.getValueAt(i, 0);
+            double prec = (Double) modelo.getValueAt(i, 3);
             suma1 = suma1 + (cant * prec);
         }
         for (int i = 0; i < cant2; i++) {
-            int cant = (int) modelo2.getValueAt(i, 8);
-            double prec = (Double) modelo2.getValueAt(i, 2);
+            int cant = (int) modelo2.getValueAt(i, 0);
+            double prec = (Double) modelo2.getValueAt(i, 3);
             suma2 = suma2 + (cant * prec);
         }
         double global = suma1 + suma2;
@@ -132,15 +142,11 @@ public final class Inventario extends javax.swing.JFrame {
     }
 
     public void encabezadoBodega() {
+        modelo2.addColumn("Cantidad");
         modelo2.addColumn("Nombre producto");
         modelo2.addColumn("Codigo");
-        modelo2.addColumn("Precio de Compra");
         modelo2.addColumn("Precio");
-        modelo2.addColumn("Precio por mayor");
-        modelo2.addColumn("Iva");
-        modelo2.addColumn("Ganancia por mayor %");
-        modelo2.addColumn("Bodega");
-        modelo2.addColumn("Cantidad");
+        modelo2.addColumn("Bodega");        
     }
 
     public void permisos() {
@@ -152,7 +158,6 @@ public final class Inventario extends javax.swing.JFrame {
             objU = credencial.get(i);
             rol = objU.getRol();
             if (rol == 0) {
-                jmiElimProd.setEnabled(false);
                 jmiElimCliente.setEnabled(false);
                 jmiElimProv.setEnabled(false);
                 jmConfig.setEnabled(false);
@@ -161,7 +166,6 @@ public final class Inventario extends javax.swing.JFrame {
                 btnMover.setEnabled(false);
             }
             if (rol == 1) {
-                jmiElimProd.setEnabled(true);
                 jmiElimCliente.setEnabled(true);
                 jmiElimProv.setEnabled(true);
                 jmConfig.setEnabled(true);
@@ -182,31 +186,25 @@ public final class Inventario extends javax.swing.JFrame {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
                 case 0:
-                    anchoColumna = (65 * ancho) / 100;
+                    anchoColumna = (20 * ancho) / 100;
                     break;
                 case 1:
-                    anchoColumna = (40 * ancho) / 100;
+                    anchoColumna = (75 * ancho) / 100;
                     break;
                 case 2:
-                    anchoColumna = (40 * ancho) / 100;
+                    anchoColumna = (35 * ancho) / 100;
                     break;
                 case 3:
-                    anchoColumna = (25 * ancho) / 100;
+                    anchoColumna = (35 * ancho) / 100;
                     break;
                 case 4:
-                    anchoColumna = (40 * ancho) / 100;
+                    anchoColumna = (30 * ancho) / 100;
                     break;
                 case 5:
                     anchoColumna = (30 * ancho) / 100;
                     break;
                 case 6:
                     anchoColumna = (50 * ancho) / 100;
-                    break;
-                case 7:
-                    anchoColumna = (35 * ancho) / 100;
-                    break;
-                case 8:
-                    anchoColumna = (25 * ancho) / 100;
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
@@ -214,40 +212,28 @@ public final class Inventario extends javax.swing.JFrame {
     }
 
     public static void setAnchoColumnas2() {
-        JViewport scroll = (JViewport) tblProd.getParent();
+        JViewport scroll = (JViewport) tblBodega.getParent();
         int ancho = scroll.getWidth();
         int anchoColumna = 0;
-        TableColumnModel modeloColumna = tblProd.getColumnModel();
+        TableColumnModel modeloColumna = tblBodega.getColumnModel();
         TableColumn columnaTabla;
-        for (int i = 0; i < tblProd.getColumnCount(); i++) {
+        for (int i = 0; i < tblBodega.getColumnCount(); i++) {
             columnaTabla = modeloColumna.getColumn(i);
             switch (i) {
                 case 0:
-                    anchoColumna = (65 * ancho) / 100;
+                    anchoColumna = (10 * ancho) / 100;
                     break;
                 case 1:
-                    anchoColumna = (40 * ancho) / 100;
+                    anchoColumna = (60 * ancho) / 100;
                     break;
                 case 2:
-                    anchoColumna = (40 * ancho) / 100;
+                    anchoColumna = (30 * ancho) / 100;
                     break;
                 case 3:
                     anchoColumna = (25 * ancho) / 100;
                     break;
                 case 4:
                     anchoColumna = (40 * ancho) / 100;
-                    break;
-                case 5:
-                    anchoColumna = (30 * ancho) / 100;
-                    break;
-                case 6:
-                    anchoColumna = (50 * ancho) / 100;
-                    break;
-                case 7:
-                    anchoColumna = (35 * ancho) / 100;
-                    break;
-                case 8:
-                    anchoColumna = (25 * ancho) / 100;
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
@@ -267,20 +253,17 @@ public final class Inventario extends javax.swing.JFrame {
                 Double preciCompra = producto.getPrecioCompra();
                 Double precio = producto.getFltPrecio();
                 Double precioPorMayor = producto.getFltPrecioMayor();
-                String iva = producto.getIva();
-                Double gananciaMayor = producto.getGananciaMayor();
                 String ubi = producto.getStrUbicacion();
                 Integer cant = producto.getIntCantidad();
-
-                modelo.setValueAt(nombreProd, i, 0);
-                modelo.setValueAt(cod, i, 1);
-                modelo.setValueAt(preciCompra, i, 2);
-                modelo.setValueAt(precio, i, 3);
-                modelo.setValueAt(precioPorMayor, i, 4);
-                modelo.setValueAt(iva, i, 5);
-                modelo.setValueAt(gananciaMayor, i, 6);
-                modelo.setValueAt(ubi, i, 7);
-                modelo.setValueAt(cant, i, 8);
+                
+                modelo.setValueAt(cant, i, 0);
+                modelo.setValueAt(nombreProd, i, 1);
+                modelo.setValueAt(cod, i, 2);
+                modelo.setValueAt(preciCompra, i, 3);
+                modelo.setValueAt(precio, i, 4);
+                modelo.setValueAt(precioPorMayor, i, 5);
+                modelo.setValueAt(ubi, i, 6);
+                
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
@@ -297,23 +280,16 @@ public final class Inventario extends javax.swing.JFrame {
             producto = listadoBodega.get(i);
             String nombreProd = producto.getStrNombreProd();
             String cod = producto.getStrCod();
-            Double preciCompra = producto.getPrecioCompra();
-            Double precio = producto.getFltPrecio();
-            Double precioPorMayor = producto.getFltPrecioMayor();
-            Double ganancia = producto.getGanancia();
-            Double gananciaMayor = producto.getGananciaMayor();
             String ubi = producto.getStrUbicacion();
             Integer cant = producto.getIntCantidad();
+            double precio = producto.getFltPrecio();
 
-            modelo2.setValueAt(nombreProd, i, 0);
-            modelo2.setValueAt(cod, i, 1);
-            modelo2.setValueAt(preciCompra, i, 2);
+            modelo2.setValueAt(cant, i, 0);
+            modelo2.setValueAt(nombreProd, i, 1);
+            modelo2.setValueAt(cod, i, 2);
             modelo2.setValueAt(precio, i, 3);
-            modelo2.setValueAt(precioPorMayor, i, 4);
-            modelo2.setValueAt(ganancia, i, 5);
-            modelo2.setValueAt(gananciaMayor, i, 6);
-            modelo2.setValueAt(ubi, i, 7);
-            modelo2.setValueAt(cant, i, 8);
+            modelo2.setValueAt(ubi, i, 4);
+            
         }
     }
 
@@ -343,12 +319,12 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtBodega = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtProductoBodega = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jmiElimProd = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -357,6 +333,8 @@ public final class Inventario extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jmiElimProv = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jmConfig = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -401,9 +379,7 @@ public final class Inventario extends javax.swing.JFrame {
             public boolean isCellEditable(int row, int col)
             {
                 //If you didn't want the first column to be editable
-                if(col == 0)
-                return true;
-                if(col == 7)
+                if(col == 10)
                 return true;
                 else
                 return false;
@@ -519,6 +495,12 @@ public final class Inventario extends javax.swing.JFrame {
         jTabbedPane1.addTab("Productos en almacén", jPanel2);
 
         tblBodega.setModel(modelo2);
+        tblBodega.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblBodega.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBodegaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblBodega);
 
         jLabel3.setText("Cantidad a mover:");
@@ -536,44 +518,57 @@ public final class Inventario extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Producto:");
+
+        txtProductoBodega.setText(" ");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtProductoBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtProductoBodega))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addGap(24, 24, 24))
         );
 
         jTabbedPane1.addTab("Productos en bodega", jPanel3);
 
         lblTotal.setText("Total del inventario:");
 
-        jMenu2.setText("Productos");
+        jMenu2.setText("Producto");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Ingresar Producto");
+        jMenuItem1.setText("Buscar producto");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -581,29 +576,10 @@ public final class Inventario extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Buscar Producto");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jmiElimProd.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        jmiElimProd.setText("Quitar Producto");
-        jmiElimProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiElimProdActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jmiElimProd);
-
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Clientes");
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem3.setText("Ingresar Cliente");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -612,7 +588,6 @@ public final class Inventario extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem3);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem4.setText("Buscar Cliente");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -621,7 +596,6 @@ public final class Inventario extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem4);
 
-        jmiElimCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.ALT_MASK));
         jmiElimCliente.setText("Quitar Cliente");
         jmiElimCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -634,7 +608,6 @@ public final class Inventario extends javax.swing.JFrame {
 
         jMenu4.setText("Proveedores");
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem5.setText("Ingresar Proveedor");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -643,7 +616,6 @@ public final class Inventario extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem5);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem6.setText("Buscar Proveedor");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -652,7 +624,6 @@ public final class Inventario extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem6);
 
-        jmiElimProv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK));
         jmiElimProv.setText("Quitar Proveedor");
         jmiElimProv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -662,6 +633,18 @@ public final class Inventario extends javax.swing.JFrame {
         jMenu4.add(jmiElimProv);
 
         jMenuBar1.add(jMenu4);
+
+        jMenu1.setText("Backup");
+
+        jMenuItem7.setText("Crear Backup");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu1);
 
         jmConfig.setText("Configuracion");
         jMenuBar1.add(jmConfig);
@@ -714,16 +697,16 @@ public final class Inventario extends javax.swing.JFrame {
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
         fila = tblProd.rowAtPoint(evt.getPoint());
         try {
-            String prod = (String) tblProd.getModel().getValueAt(fila, 0);//Seleccionamos el nombre del producto
+            String prod = (String) tblProd.getModel().getValueAt(fila, 1);//Seleccionamos la cantidad del producto
             txtNombreProd.setText(prod);
-            codigoProd = (String) tblProd.getModel().getValueAt(fila, 1);//Seleccionamos el codigo del producto
-            precioProd = tblProd.getModel().getValueAt(fila, 3).toString();//Seleccionamos el precio del producto
+            codigoProd = (String) tblProd.getModel().getValueAt(fila, 2);//Seleccionamos el nombre del producto
+            precioProd = tblProd.getModel().getValueAt(fila, 4).toString();//Seleccionamos el codigo del producto
 
-            precioMayor = tblProd.getModel().getValueAt(fila, 4).toString();//Seleccionamos el precio al por mayor del producto
-            iva = tblProd.getModel().getValueAt(fila, 5).toString();//Seleccionamos el iva del producto
-            ubicacion = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos la ubicacion del producto
+            precioMayor = tblProd.getModel().getValueAt(fila, 5).toString();//Seleccionamos el precio del producto
+            iva = tblProd.getModel().getValueAt(fila, 6).toString();//Seleccionamos el precio al por mayor del producto
+            ubicacion = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos el iva del producto
 
-            String cant = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos la cantidad del producto
+            String cant = tblProd.getModel().getValueAt(fila, 9).toString();//Seleccionamos la ubicacion del producto
             cantidad = Integer.parseInt(cant);
 
             cantProd = Integer.parseInt(cant);
@@ -824,9 +807,11 @@ public final class Inventario extends javax.swing.JFrame {
                 producto = new Producto(cantMovida, cod);
                 material.moverBodega(producto);
                 existencias = new ExistenciasBodega(cod, cantExist);
-                //manejadorExistencias.actualizarCant(existencias);
+                manejadorExistencias.moverATienda(existencias,cantMovida);
                 updateTabla();
                 cargarTablaBodega();
+                modelo2.setValueAt(cantExist, fila, 8);
+                updateTabla();
                 JOptionPane.showMessageDialog(null, "Se ha movido correcamente el producto al almacén");
                 txtBodega.setText("");
             } else {
@@ -838,60 +823,6 @@ public final class Inventario extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         objP.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        IngresoProd objIp = new IngresoProd();
-        objIp.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Inventario objBp = new Inventario();
-        objBp.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jmiElimProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProdActionPerformed
-        EliminarProducto objElmProd = new EliminarProducto();
-        objElmProd.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jmiElimProdActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        NewCliente objNc = new NewCliente();
-        objNc.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        Pagos objPa = new Pagos();
-        objPa.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
-        EliminarCliente objElmCl = new EliminarCliente();
-        objElmCl.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jmiElimClienteActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        NuevoProveedor objNp = new NuevoProveedor();
-        objNp.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        PagoProveedor objPP = new PagoProveedor();
-        objPP.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jmiElimProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProvActionPerformed
-        EliminarProveedor objElimProv = new EliminarProveedor();
-        objElimProv.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jmiElimProvActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (!(txtBodega.getText().isEmpty()) && (tblBodega.getSelectedRowCount() == 1)) {
@@ -950,6 +881,56 @@ public final class Inventario extends javax.swing.JFrame {
             bandera = true;
         }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        BusquedaProd busq = new BusquedaProd(this, true);
+        busq.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        NuevoClienteDialog objNc = new NuevoClienteDialog(this, rootPaneCheckingEnabled);
+        objNc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        Pagos objPa = new Pagos();
+        objPa.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
+        EliminarCliente objElmCl = new EliminarCliente();
+        objElmCl.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jmiElimClienteActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        NuevoProveedorDialgo objNp = new NuevoProveedorDialgo(this, rootPaneCheckingEnabled);
+        objNp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        PagoProveedor objPP = new PagoProveedor();
+        objPP.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jmiElimProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProvActionPerformed
+        EliminarProveedor objElimProv = new EliminarProveedor();
+        objElimProv.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jmiElimProvActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Backup back = new Backup(this, true);
+        back.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void tblBodegaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBodegaMouseClicked
+        int fila = tblBodega.rowAtPoint(evt.getPoint());
+        String nombreEnBodega = tblBodega.getModel().getValueAt(fila, 1).toString();
+        txtProductoBodega.setText(nombreEnBodega);
+    }//GEN-LAST:event_tblBodegaMouseClicked
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -986,20 +967,22 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbBusq;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1008,7 +991,6 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
-    private javax.swing.JMenuItem jmiElimProd;
     private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JLabel lblTotal;
     public static javax.swing.JTable tblBodega;
@@ -1017,5 +999,6 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtEmpresa;
     private javax.swing.JLabel txtNombreProd;
+    private javax.swing.JLabel txtProductoBodega;
     // End of variables declaration//GEN-END:variables
 }

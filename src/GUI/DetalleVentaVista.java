@@ -32,6 +32,16 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         manejadorVenta = new DATVenta();
         manejadorAbono = new DATAbonoCliente();
         manejadorPago = new DATPagoProveedor();
+        this.modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if ((column == 0) || (column == 1) || (column == 2) || (column == 3) || (column == 4) || (column == 5)) {
+                    return false;
+                } else {
+                    return false;
+                }
+            }
+        };
         initComponents();
         txtId.setVisible(false);
         encabezados();
@@ -143,7 +153,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo.setValueAt(valCancelado, i, 4);
             //modelo.setValueAt(fechaVenta, i, 5);
         }
-        jTabbedPane1.setTitleAt(0, "Ventas ("+String.valueOf(cantFilas)+")");
+        jTabbedPane1.setTitleAt(0, "Ventas (" + String.valueOf(cantFilas) + ")");
     }
 
     public void encabezados() {
@@ -186,7 +196,7 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo2.setValueAt(deuda, i, 3);
             modelo2.setValueAt(usuario, i, 4);
         }
-        jTabbedPane1.setTitleAt(1, "Pago Clientes ("+String.valueOf(cantLista)+")");
+        jTabbedPane1.setTitleAt(1, "Pago Clientes (" + String.valueOf(cantLista) + ")");
     }
 
     public void tablaPagoPR() {
@@ -207,10 +217,10 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
             modelo3.setValueAt(monto, i, 2);
             modelo3.setValueAt(cliente, i, 3);
         }
-        jTabbedPane1.setTitleAt(2, "Pago Proveedores ("+String.valueOf(cantLista)+")");
+        jTabbedPane1.setTitleAt(2, "Pago Proveedores (" + String.valueOf(cantLista) + ")");
     }
-    
-    public void busquedafiltrada(){
+
+    public void busquedafiltrada() {
         String fecha = calendario.getText();
         String nombreCleinte = txtBusqueda.getText();
         ArrayList<Venta> listadoVentas = manejadorVenta.vistaVentaFiltrada(fecha, nombreCleinte);
@@ -262,6 +272,20 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblPagoPr = new javax.swing.JTable();
         txtTotalPagoPr = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jmiElimCliente = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jmiElimProv = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jmConfig = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -490,6 +514,91 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
 
     jTabbedPane1.addTab("Pago Proveedores", jPanel3);
 
+    jMenu2.setText("Producto");
+
+    jMenuItem1.setText("Buscar producto");
+    jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem1ActionPerformed(evt);
+        }
+    });
+    jMenu2.add(jMenuItem1);
+
+    jMenuBar1.add(jMenu2);
+
+    jMenu3.setText("Clientes");
+
+    jMenuItem3.setText("Ingresar Cliente");
+    jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem3ActionPerformed(evt);
+        }
+    });
+    jMenu3.add(jMenuItem3);
+
+    jMenuItem4.setText("Buscar Cliente");
+    jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem4ActionPerformed(evt);
+        }
+    });
+    jMenu3.add(jMenuItem4);
+
+    jmiElimCliente.setText("Quitar Cliente");
+    jmiElimCliente.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiElimClienteActionPerformed(evt);
+        }
+    });
+    jMenu3.add(jmiElimCliente);
+
+    jMenuBar1.add(jMenu3);
+
+    jMenu4.setText("Proveedores");
+
+    jMenuItem5.setText("Ingresar Proveedor");
+    jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem5ActionPerformed(evt);
+        }
+    });
+    jMenu4.add(jMenuItem5);
+
+    jMenuItem6.setText("Buscar Proveedor");
+    jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem6ActionPerformed(evt);
+        }
+    });
+    jMenu4.add(jMenuItem6);
+
+    jmiElimProv.setText("Quitar Proveedor");
+    jmiElimProv.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiElimProvActionPerformed(evt);
+        }
+    });
+    jMenu4.add(jmiElimProv);
+
+    jMenuBar1.add(jMenu4);
+
+    jMenu1.setText("Backup");
+
+    jMenuItem7.setText("Crear Backup");
+    jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem7ActionPerformed(evt);
+        }
+    });
+    jMenu1.add(jMenuItem7);
+
+    jMenuBar1.add(jMenu1);
+
+    jmConfig.setText("Configuracion");
+    jMenuBar1.add(jmConfig);
+
+    setJMenuBar(jMenuBar1);
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -512,16 +621,14 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
-        .addGroup(layout.createSequentialGroup()
-            .addGap(172, 172, 172)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jButton1)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(117, 117, 117)
-                    .addComponent(jLabel2)
-                    .addGap(18, 18, 18)
-                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(111, 111, 111)
+            .addComponent(jButton1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2)
+            .addGap(18, 18, 18)
+            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(337, 337, 337))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,13 +646,12 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
                 .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel2)
-                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(22, 22, 22)
-            .addComponent(jButton1)
-            .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1))
+            .addContainerGap(15, Short.MAX_VALUE))
     );
 
     pack();
@@ -613,19 +719,63 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
 
     private void txtBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusLost
         if (!txtBusqueda.getText().equals("Ingrese el nombre o cédula del usuario que desee buscar.")) {
-            
+
         } else {
             txtBusqueda.setText("");
         }
     }//GEN-LAST:event_txtBusquedaFocusLost
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        if(txtBusqueda.getText().isEmpty()){
-           tablaVentas();
-       } else {
-           busquedafiltrada();
-       }
+        if (txtBusqueda.getText().isEmpty()) {
+            tablaVentas();
+        } else {
+            busquedafiltrada();
+        }
     }//GEN-LAST:event_txtBusquedaKeyReleased
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        BusquedaProd busq = new BusquedaProd(this, true);
+        busq.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        NuevoClienteDialog objNc = new NuevoClienteDialog(this, rootPaneCheckingEnabled);
+        objNc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        Pagos objPa = new Pagos();
+        objPa.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jmiElimClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimClienteActionPerformed
+        EliminarCliente objElmCl = new EliminarCliente();
+        objElmCl.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jmiElimClienteActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        NuevoProveedorDialgo objNp = new NuevoProveedorDialgo(this, rootPaneCheckingEnabled);
+        objNp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        PagoProveedor objPP = new PagoProveedor();
+        objPP.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jmiElimProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiElimProvActionPerformed
+        EliminarProveedor objElimProv = new EliminarProveedor();
+        objElimProv.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jmiElimProvActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Backup back = new Backup(this, true);
+        back.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -671,6 +821,17 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -679,6 +840,9 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenu jmConfig;
+    private javax.swing.JMenuItem jmiElimCliente;
+    private javax.swing.JMenuItem jmiElimProv;
     private javax.swing.JTable tblPagoCl;
     private javax.swing.JTable tblPagoPr;
     public static javax.swing.JTable tblVentas;

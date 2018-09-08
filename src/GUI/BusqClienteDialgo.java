@@ -28,9 +28,9 @@ public class BusqClienteDialgo extends javax.swing.JDialog {
                 return false;
             }
         };
+        manejadorCliente = new DATClientes();
         initComponents();
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
-        manejadorCliente = new DATClientes();
         cargarEncabezado();
         this.setLocationRelativeTo(null);
         cargarTabla();

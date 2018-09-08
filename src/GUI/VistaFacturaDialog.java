@@ -25,9 +25,15 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
 
     public VistaFacturaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        manejadorDetalle = new DATReporte();
+        this.modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         initComponents();
         encabezados();
-        manejadorDetalle = new DATReporte();
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
         setAnchoColumnas();

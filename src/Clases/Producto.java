@@ -46,13 +46,11 @@ public class Producto {
         this.iva = iva;
     }
 
-    public Producto(String nombre, String codigo, double precio, double precioCompra, String iva, double gananciaMayor, double precioMayor, int cant, String ubicacion) {
+    public Producto(String nombre, String codigo, double precio, double precioCompra, double precioMayor, int cant, String ubicacion) {
         this.strNombreProd = nombre;
         this.strCod = codigo;
         this.fltPrecio = precio;
         this.precioCompra = precioCompra;
-        this.iva = iva;
-        this.gananciaMayor = gananciaMayor;
         this.fltPrecioMayor = precioMayor;
         this.intCantidad = cant;
         this.strUbicacion = ubicacion;
@@ -145,6 +143,14 @@ public class Producto {
         this.fltPrecioMayor = fltPrecioMayor;
         this.intCantidad = intCantidad;
         this.strUbicacion = strUbicacion;
+    }
+    
+    public Producto(String strNombreProd, String strCod, int intCantidad, String strUbicacion, double fltPrecio) {
+        this.strNombreProd = strNombreProd;
+        this.strCod = strCod;
+        this.intCantidad = intCantidad;
+        this.strUbicacion = strUbicacion;
+        this.fltPrecio = fltPrecio;
     }
     
     public Producto(String strNombreProd, String strCod, double fltPrecio, double fltPrecioMayor, String strUbicacion, int intCantidad) {

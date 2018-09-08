@@ -26,9 +26,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+N"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Ingresar Cliente"/>
               </Properties>
               <Events>
@@ -37,9 +34,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+B"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Buscar Cliente"/>
               </Properties>
               <Events>
@@ -48,9 +42,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiElimCliente">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+W"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Quitar Cliente"/>
               </Properties>
               <Events>
@@ -66,9 +57,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+N"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Ingresar Proveedor"/>
               </Properties>
               <Events>
@@ -77,9 +65,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+B"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Buscar Proveedor"/>
               </Properties>
               <Events>
@@ -88,9 +73,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiElimProv">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+W"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Quitar Proveedor"/>
               </Properties>
               <Events>

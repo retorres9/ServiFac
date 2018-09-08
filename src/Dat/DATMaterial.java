@@ -22,8 +22,8 @@ public class DATMaterial {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
-                    + " p.precio_compra, p.precio, p.Precio_Mayor, p.iva,"
-                    + " p.ganancia_mayor, u.nombre_ubicacion, p.Cantidad FROM "
+                    + " p.precio_compra, p.precio, p.Precio_Mayor, "
+                    + " u.nombre_ubicacion, p.Cantidad FROM "
                     + "producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion "
                     + "AND stock = true ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
@@ -34,11 +34,9 @@ public class DATMaterial {
                 double precioCompra = rs.getDouble(3);
                 double precio = rs.getDouble(4);
                 double precioMayor = rs.getDouble(5);
-                String iva = rs.getString(6);
-                double gananciaMayor = rs.getDouble(7);
-                String ubicacion = rs.getString(8);
-                int cant = rs.getInt(9);
-                Producto prod = new Producto(nombre, codigo, precio, precioCompra, iva, gananciaMayor, precioMayor, cant, ubicacion);
+                String ubicacion = rs.getString(6);
+                int cant = rs.getInt(7);
+                Producto prod = new Producto(nombre, codigo, precio, precioCompra, precioMayor, cant, ubicacion);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
@@ -121,9 +119,8 @@ public class DATMaterial {
         ArrayList<Producto> listadoEnBodega = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
-                    + " p.precio_compra, p.precio, p.Precio_Mayor, p.ganancia,"
-                    + " p.ganancia_mayor, b.nombre_bodega, eb.cantidad FROM "
+            String sentencia = "SELECT p.Nombre_Producto, p.Codigo, "
+                    + "b.nombre_bodega, eb.cantidad, p.precio FROM "
                     + "producto p, existenciasbodega eb, bodega b WHERE eb.id_bodega = b.id_bodega "
                     + "AND p.codigo = eb.codigo AND stock = true AND eb.cantidad > 0 ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(sentencia);
@@ -131,14 +128,10 @@ public class DATMaterial {
             while (rs.next()) {
                 String nombre = rs.getString(1);
                 String codigo = rs.getString(2);
-                double precioCompra = rs.getDouble(3);
-                double precio = rs.getDouble(4);
-                double precioMayor = rs.getDouble(5);
-                double ganancia = rs.getDouble(6);
-                double gananciaMayor = rs.getDouble(7);
-                String bodega = rs.getString(8);
-                int cant = rs.getInt(9);
-                Producto prod = new Producto(nombre, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, bodega);
+                String bodega = rs.getString(3);
+                int cant = rs.getInt(4);
+                double precio = rs.getDouble(5);
+                Producto prod = new Producto(nombre, codigo, cant, bodega, precio);
                 listadoEnBodega.add(prod);
             }
         } catch (SQLException ex) {

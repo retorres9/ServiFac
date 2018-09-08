@@ -33,9 +33,7 @@ public class PermisoDialg extends javax.swing.JDialog {
     Utilidades util = new Utilidades();
     Configuracion config = new Configuracion();
 
-    /*DAT*/
-    DATUsuario manejadorUsuario;
-
+    
     public PermisoDialg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
