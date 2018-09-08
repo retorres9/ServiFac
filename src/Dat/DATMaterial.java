@@ -23,7 +23,7 @@ public class DATMaterial {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
                     + " p.precio_compra, p.precio, p.Precio_Mayor, "
-                    + " u.nombre_ubicacion, p.Cantidad FROM "
+                    + " u.nombre_ubicacion, p.Cantidad , p.iva FROM "
                     + "producto p, ubicacion u WHERE p.id_ubicacion = u.id_ubicacion "
                     + "AND stock = true ORDER BY p.Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
@@ -36,7 +36,8 @@ public class DATMaterial {
                 double precioMayor = rs.getDouble(5);
                 String ubicacion = rs.getString(6);
                 int cant = rs.getInt(7);
-                Producto prod = new Producto(nombre, codigo, precio, precioCompra, precioMayor, cant, ubicacion);
+                String iva = rs.getString(8);
+                Producto prod = new Producto(nombre, codigo, precio, precioCompra, precioMayor, cant, ubicacion, iva);
                 listaProductos.add(prod);
             }
         } catch (SQLException ex) {
@@ -259,8 +260,8 @@ public class DATMaterial {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
-                    + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
-                    + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
+                    + " p.precio, p.Precio_Mayor,"
+                    + " u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u "
                     + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Nombre_Producto LIKE '%" + nombre + "%'"
                     + "ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
@@ -271,11 +272,10 @@ public class DATMaterial {
                 double precioCompra = rs.getDouble(3);
                 double precio = rs.getDouble(4);
                 double precioMayor = rs.getDouble(5);
-                double ganancia = rs.getDouble(6);
-                double gananciaMayor = rs.getDouble(7);
-                String ubicacion = rs.getString(8);
-                int cant = rs.getInt(9);
-                Producto prod = new Producto(nombreprod, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, ubicacion);
+                String ubicacion = rs.getString(6);
+                int cant = rs.getInt(7);
+                String iva = rs.getString(8);
+                Producto prod = new Producto(nombreprod, codigo, precio, precioCompra, precioMayor, cant, ubicacion, iva);
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {
@@ -292,8 +292,8 @@ public class DATMaterial {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
-                    + " p.precio, p.Precio_Mayor, p.ganancia, p.ganancia_mayor,"
-                    + " u.nombre_ubicacion, p.Cantidad FROM producto p, ubicacion u "
+                    + " p.precio, p.Precio_Mayor,"
+                    + " u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u "
                     + "WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND Codigo "
                     + "REGEXP CONCAT ('^',?) ORDER BY Nombre_Producto Asc";
             ps = con.prepareStatement(Sentencia);
@@ -305,11 +305,10 @@ public class DATMaterial {
                 double precioCompra = rs.getDouble(3);
                 double precio = rs.getDouble(4);
                 double precioMayor = rs.getDouble(5);
-                double ganancia = rs.getDouble(6);
-                double gananciaMayor = rs.getDouble(7);
-                String ubicacion = rs.getString(8);
-                int cant = rs.getInt(9);
-                Producto prod = new Producto(nombreprod, codigo, precio, precioCompra, ganancia, gananciaMayor, precioMayor, cant, ubicacion);
+                String ubicacion = rs.getString(6);
+                int cant = rs.getInt(7);
+                String iva = rs.getString(8);
+                Producto prod = new Producto(nombreprod, codigo, precio, precioCompra, precioMayor, cant, ubicacion, iva);
                 listaProductosNombre.add(prod);
             }
         } catch (SQLException ex) {

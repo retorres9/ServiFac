@@ -44,12 +44,8 @@ public final class Inventario extends javax.swing.JFrame {
     Utilidades util = new Utilidades();
     Renderer render = new Renderer();
     int cantidad;
-    String precioProd;
     String ubicacion;
-    String categoria;
-    String proveedor;
     String iva;
-    String precioMayor;
     Principal objP = new Principal();
 
     public Inventario() {
@@ -115,6 +111,7 @@ public final class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Precio");
         modelo.addColumn("Precio por mayor");
         modelo.addColumn("Ubicación");
+        modelo.addColumn("IVA %");
         
     }
 
@@ -198,13 +195,16 @@ public final class Inventario extends javax.swing.JFrame {
                     anchoColumna = (35 * ancho) / 100;
                     break;
                 case 4:
-                    anchoColumna = (30 * ancho) / 100;
+                    anchoColumna = (25 * ancho) / 100;
                     break;
                 case 5:
                     anchoColumna = (30 * ancho) / 100;
                     break;
                 case 6:
                     anchoColumna = (50 * ancho) / 100;
+                    break;
+                case 7:
+                    anchoColumna = (20 * ancho) / 100;
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
@@ -255,6 +255,7 @@ public final class Inventario extends javax.swing.JFrame {
                 Double precioPorMayor = producto.getFltPrecioMayor();
                 String ubi = producto.getStrUbicacion();
                 Integer cant = producto.getIntCantidad();
+                String ivaProd = producto.getIva();
                 
                 modelo.setValueAt(cant, i, 0);
                 modelo.setValueAt(nombreProd, i, 1);
@@ -263,6 +264,7 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.setValueAt(precio, i, 4);
                 modelo.setValueAt(precioPorMayor, i, 5);
                 modelo.setValueAt(ubi, i, 6);
+                modelo.setValueAt(ivaProd, i, 7);
                 
             }
         } catch (ClassNotFoundException ex) {
@@ -697,19 +699,14 @@ public final class Inventario extends javax.swing.JFrame {
     private void tblProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdMouseClicked
         fila = tblProd.rowAtPoint(evt.getPoint());
         try {
-            String prod = (String) tblProd.getModel().getValueAt(fila, 1);//Seleccionamos la cantidad del producto
+            String prod = (String) tblProd.getModel().getValueAt(fila, 1);//Seleccionamos el nombre del producto
             txtNombreProd.setText(prod);
-            codigoProd = (String) tblProd.getModel().getValueAt(fila, 2);//Seleccionamos el nombre del producto
-            precioProd = tblProd.getModel().getValueAt(fila, 4).toString();//Seleccionamos el codigo del producto
+            codigoProd = (String) tblProd.getModel().getValueAt(fila, 2);//Seleccionamos el codigo del producto
+            ubicacion = tblProd.getModel().getValueAt(fila, 6).toString();//Seleccionamos la ubicacion del producto
+            iva = tblProd.getModel().getValueAt(fila, 7).toString();//Seleccionamos el iva del producto
 
-            precioMayor = tblProd.getModel().getValueAt(fila, 5).toString();//Seleccionamos el precio del producto
-            iva = tblProd.getModel().getValueAt(fila, 6).toString();//Seleccionamos el precio al por mayor del producto
-            ubicacion = tblProd.getModel().getValueAt(fila, 8).toString();//Seleccionamos el iva del producto
-
-            String cant = tblProd.getModel().getValueAt(fila, 9).toString();//Seleccionamos la ubicacion del producto
+            String cant = tblProd.getModel().getValueAt(fila, 0).toString();//Seleccionamos la cantidad del producto
             cantidad = Integer.parseInt(cant);
-
-            cantProd = Integer.parseInt(cant);
             permisos();
 
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -744,20 +741,19 @@ public final class Inventario extends javax.swing.JFrame {
                     Double preciCompra = producto.getPrecioCompra();
                     Double precio = producto.getFltPrecio();
                     Double precioPorMayor = producto.getFltPrecioMayor();
-                    Double ganancia = producto.getGanancia();
-                    Double gananciaMayor = producto.getGananciaMayor();
                     String ubi = producto.getStrUbicacion();
                     Integer cant = producto.getIntCantidad();
+                    String ivaProd = producto.getIva();
 
-                    modelo.setValueAt(nombreProd, i, 0);
-                    modelo.setValueAt(cod, i, 1);
-                    modelo.setValueAt(preciCompra, i, 2);
-                    modelo.setValueAt(precio, i, 3);
-                    modelo.setValueAt(precioPorMayor, i, 4);
-                    modelo.setValueAt(ganancia, i, 5);
-                    modelo.setValueAt(gananciaMayor, i, 6);
-                    modelo.setValueAt(ubi, i, 7);
-                    modelo.setValueAt(cant, i, 8);
+                    modelo.setValueAt(cant, i, 0);
+                    modelo.setValueAt(nombreProd, i, 1);
+                    modelo.setValueAt(cod, i, 2);
+                    modelo.setValueAt(preciCompra, i, 3);
+                    modelo.setValueAt(precio, i, 4);
+                    modelo.setValueAt(precioPorMayor, i, 5);
+                    modelo.setValueAt(ubi, i, 6);
+                    modelo.setValueAt(ivaProd, i, 7);
+                    
                 }
             } else {
                 ArrayList<Producto> listadoProd = material.ConsultarPorCodigo(dato);
@@ -771,20 +767,18 @@ public final class Inventario extends javax.swing.JFrame {
                     Double preciCompra = producto.getPrecioCompra();
                     Double precio = producto.getFltPrecio();
                     Double precioPorMayor = producto.getFltPrecioMayor();
-                    Double ganancia = producto.getGanancia();
-                    Double gananciaMayor = producto.getGananciaMayor();
                     String ubi = producto.getStrUbicacion();
                     Integer cant = producto.getIntCantidad();
+                    String ivaProd = producto.getIva();
 
-                    modelo.setValueAt(nombreProd, i, 0);
-                    modelo.setValueAt(cod, i, 1);
-                    modelo.setValueAt(preciCompra, i, 2);
-                    modelo.setValueAt(precio, i, 3);
-                    modelo.setValueAt(precioPorMayor, i, 4);
-                    modelo.setValueAt(ganancia, i, 5);
-                    modelo.setValueAt(gananciaMayor, i, 6);
-                    modelo.setValueAt(ubi, i, 7);
-                    modelo.setValueAt(cant, i, 8);
+                    modelo.setValueAt(cant, i, 0);
+                    modelo.setValueAt(nombreProd, i, 1);
+                    modelo.setValueAt(cod, i, 2);
+                    modelo.setValueAt(preciCompra, i, 3);
+                    modelo.setValueAt(precio, i, 4);
+                    modelo.setValueAt(precioPorMayor, i, 5);
+                    modelo.setValueAt(ubi, i, 6);
+                    modelo.setValueAt(ivaProd, i, 7);
                 }
             }
             txtNombreProd.setText("----------");
@@ -799,8 +793,8 @@ public final class Inventario extends javax.swing.JFrame {
 
     public void moverBodega() {
         if (tblBodega.getSelectedRowCount() == 1) {
-            String cod = modelo2.getValueAt(tblBodega.getSelectedRow(), 0).toString();
-            int cantExist = (int) modelo2.getValueAt(tblBodega.getSelectedRow(), 8);
+            String cod = modelo2.getValueAt(tblBodega.getSelectedRow(), 2).toString();
+            int cantExist = (int) modelo2.getValueAt(tblBodega.getSelectedRow(), 0);
             int cantMovida = Integer.parseInt(txtBodega.getText());
             if (cantMovida <= cantExist) {
                 cantExist = cantExist - cantMovida;
@@ -810,7 +804,7 @@ public final class Inventario extends javax.swing.JFrame {
                 manejadorExistencias.moverATienda(existencias,cantMovida);
                 updateTabla();
                 cargarTablaBodega();
-                modelo2.setValueAt(cantExist, fila, 8);
+                modelo2.setValueAt(cantExist, fila, 0);
                 updateTabla();
                 JOptionPane.showMessageDialog(null, "Se ha movido correcamente el producto al almacén");
                 txtBodega.setText("");
@@ -865,7 +859,7 @@ public final class Inventario extends javax.swing.JFrame {
             mb.txtAyudaIndice.setText(String.valueOf(fila));
             mb.txtAyudaCant.setText(String.valueOf(cantidad));
             mb.txtAyudaCod.setText(codigoProd);
-            mb.txtAyudaCantIni.setText(tblProd.getValueAt(fila, 8).toString());
+            mb.txtAyudaCantIni.setText(tblProd.getValueAt(fila, 0).toString());
             mb.setVisible(true);
         }
     }//GEN-LAST:event_btnMoverActionPerformed
@@ -927,8 +921,8 @@ public final class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void tblBodegaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBodegaMouseClicked
-        int fila = tblBodega.rowAtPoint(evt.getPoint());
-        String nombreEnBodega = tblBodega.getModel().getValueAt(fila, 1).toString();
+        int filaBodega = tblBodega.rowAtPoint(evt.getPoint());
+        String nombreEnBodega = tblBodega.getModel().getValueAt(filaBodega, 1).toString();
         txtProductoBodega.setText(nombreEnBodega);
     }//GEN-LAST:event_tblBodegaMouseClicked
     public static void main(String args[]) {
