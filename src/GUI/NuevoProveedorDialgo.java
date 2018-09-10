@@ -12,7 +12,7 @@ import java.text.DecimalFormatSymbols;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class NuevoProveedorDialgo extends javax.swing.JDialog {
+public final class NuevoProveedorDialgo extends javax.swing.JDialog {
 
     Proveedor objP = new Proveedor();
     Principal objPr = new Principal();
@@ -324,7 +324,6 @@ public class NuevoProveedorDialgo extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Principal objPr = new Principal();
         if (!txtDeuda.getText().isEmpty() || !txtEmpresa.getText().isEmpty()
             || !txtNombre.getText().isEmpty() || !txtNumero.getText().isEmpty()) {
             int n = JOptionPane.showConfirmDialog(null, "Hay datos que no han sido guardados\n¿Desea salir?", "Aviso", JOptionPane.YES_NO_OPTION);

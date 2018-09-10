@@ -120,8 +120,8 @@ public final class IngresoProd extends javax.swing.JFrame {
         int cantConf = conf.size();
         for (int i = 0; i < cantConf; i++) {
             config = conf.get(i);
-            int iva = config.getIva();
-            txtIva.setText(Integer.toString(iva)+"%");
+            int ivaProd = config.getIva();
+            txtIva.setText(Integer.toString(ivaProd) + "%");
         }
     }
 
@@ -181,11 +181,11 @@ public final class IngresoProd extends javax.swing.JFrame {
     }
 
     public void validacioCod() {
-        int cant = conMat.validaCodigo(txtCod.getText());
+        int cantProd = conMat.validaCodigo(txtCod.getText());
         if (txtCod.getText().isEmpty()) {
             this.txtValid.setIcon(null);
         }
-        if (cant == 0) {
+        if (cantProd == 0) {
             try {
                 Image img = ImageIO.read(getClass().getResource(("/Recursos/success.png")));
                 txtValid.setIcon(new ImageIcon(img));
@@ -250,7 +250,7 @@ public final class IngresoProd extends javax.swing.JFrame {
             jmiElimProv.setEnabled(false);
             jmConfig.setEnabled(false);
         }
-        if (rol ==1) {
+        if (rol == 1) {
             jmiElimCliente.setEnabled(true);
             jmiElimProv.setEnabled(true);
             jmConfig.setEnabled(true);
@@ -308,18 +308,18 @@ public final class IngresoProd extends javax.swing.JFrame {
             double dblGananciaMayot = Double.parseDouble(strGnanciaMayor);
             boolean stock = true;// revisar ya que en BD esta default
             int idBodega;
-            String iva;
+            String ivaPrd;
             if (iva0.isSelected()) {
-                iva = "0%";
+                ivaPrd = "0%";
             } else {
-                iva = "12%";
+                ivaPrd = "12%";
             }
             if (txtExistenciasBodega.getText().isEmpty()) {
                 idBodega = 0;
             } else {
                 idBodega = bod.getIntIdBodega();
             }
-            producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), iva, idBodega);
+            producto = new Producto(nombre, strCod, dblPrecioCompra, precioVenta, precioVentaMayor, dblGanancia, dblGananciaMayot, stock, ubica.getIdUbicacion(), cat.getIdCategoria(), cantidad, cantidadMin, empresa.getRuc(), ivaPrd, idBodega);
             try {
                 if (conMat.IngresarProducto(producto) == true) {
                     JOptionPane.showMessageDialog(null, "Producto creado satisfactoriamente");

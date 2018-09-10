@@ -185,13 +185,13 @@ public final class DetalleVentaVista extends javax.swing.JFrame {
         for (int i = 0; i < cantLista; i++) {
             abono = listadoPagosCL.get(i);
             String cliente = abono.getNombreCL();
-            String cedula = abono.getStrCedula();
+            String cedulaUsuario = abono.getStrCedula();
             double monto = abono.getDblMontoAbono();
             double deuda = abono.getDeuda();
             String usuario = abono.getStrUsuario();
 
             modelo2.setValueAt(cliente, i, 0);
-            modelo2.setValueAt(cedula, i, 1);
+            modelo2.setValueAt(cedulaUsuario, i, 1);
             modelo2.setValueAt(monto, i, 2);
             modelo2.setValueAt(deuda, i, 3);
             modelo2.setValueAt(usuario, i, 4);

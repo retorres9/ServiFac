@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author rober
  */
-public class ActualizaCategoriaDialog extends javax.swing.JDialog {
+public final class ActualizaCategoriaDialog extends javax.swing.JDialog {
 
     DATCategoria manejadorCategoria;
     Categoria objCategoria = new Categoria();

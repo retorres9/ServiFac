@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author rober
  */
-public class NuevoUsuarioDialog extends javax.swing.JDialog {
+public final class NuevoUsuarioDialog extends javax.swing.JDialog {
 
     Usuario objUs = new Usuario();
     DATUsuario usuario;
@@ -76,22 +76,22 @@ public class NuevoUsuarioDialog extends javax.swing.JDialog {
         } else {
             String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear\n"
                     + "un usuario con rol de Vendedor");
-            String cred = util.getMD5(n);
+            String cred = Utilidades.getMD5(n);
             try {
                 if (cred.equals(pass)) {
 
                     String cedula = txtCedulaUser.getText();
                     String nom = txtNombre.getText();
                     String usu = txtUsuario.getText().toLowerCase();
-                    String pass = txtPass.getText();
+                    String passUsuario = txtPass.getText();
                     String rol = (String) jComboBox1.getSelectedItem();
                     if (rol.equals("Vendedor")) {
                         rolUs = 0;
                     }
                     if (txtPass.getText().equals(txtConf.getText())) {
-                        String newPass = pass;
-                        pass = util.getMD5(newPass);
-                        objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                        String newPass = passUsuario;
+                        passUsuario = Utilidades.getMD5(newPass);
+                        objUs = new Usuario(cedula, nom, usu, passUsuario, rolUs);
                         try {
                             if (usuario.nuevoUsuario(objUs, host)) {
                                 JOptionPane.showMessageDialog(null, "El usuario se guardó"
@@ -127,22 +127,22 @@ public class NuevoUsuarioDialog extends javax.swing.JDialog {
         } else {
             String n = JOptionPane.showInputDialog(null, "Ingrese el codigo de confirmación para poder crear\n"
                     + "un usuario con rol de Administrador");
-            String cred = util.getMD5(n);
+            String cred = Utilidades.getMD5(n);
             System.out.println(cred);
             try {
                 if (cred.equals(pass)) {
                     String cedula = txtCedulaUser.getText();
                     String nom = txtNombre.getText();
                     String usu = txtUsuario.getText();
-                    String pass = txtPass.getText();
+                    String passUsuario = txtPass.getText();
                     String rol = (String) jComboBox1.getSelectedItem();
                     if (rol.equals("Administrador")) {
                         rolUs = 1;
                     }
                     if (txtPass.getText().equals(txtConf.getText())) {
-                        String newPass = pass;
-                        pass = util.getMD5(newPass);
-                        objUs = new Usuario(cedula, nom, usu, pass, rolUs);
+                        String newPass = passUsuario;
+                        passUsuario = Utilidades.getMD5(newPass);
+                        objUs = new Usuario(cedula, nom, usu, passUsuario, rolUs);
                         try {
                             if (usuario.nuevoUsuario(objUs, host)) {
                                 JOptionPane.showMessageDialog(null, "El usuario se guardó"

@@ -1,7 +1,7 @@
 CREATE DATABASE empresa;
 
 USE empresa;
-describe configuracion;
+describe producto;
 CREATE TABLE configuracion(
 id INT (10) primary key not null auto_increment,
 empresa VARCHAR(40) not null,

@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  *
  * @author rober
  */
-public class ActualzarUbicacionDialog extends javax.swing.JDialog {
+public final class ActualzarUbicacionDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ActualzarUbicacionDialog

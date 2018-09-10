@@ -53,16 +53,16 @@ public final class Inventario extends javax.swing.JFrame {
         manejadorUsuario = new DATUsuario();
         manejadorExistencias = new DATExistenciasBodega();
         manejadorConf = new DATConfiguracion();
-        this.modelo2 = new DefaultTableModel(){
+        this.modelo2 = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
-        this.modelo = new DefaultTableModel(){
+
+        this.modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -112,7 +112,7 @@ public final class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Precio por mayor");
         modelo.addColumn("Ubicación");
         modelo.addColumn("IVA %");
-        
+
     }
 
     public void totalInventario() {
@@ -143,7 +143,7 @@ public final class Inventario extends javax.swing.JFrame {
         modelo2.addColumn("Nombre producto");
         modelo2.addColumn("Codigo");
         modelo2.addColumn("Precio");
-        modelo2.addColumn("Bodega");        
+        modelo2.addColumn("Bodega");
     }
 
     public void permisos() {
@@ -256,7 +256,7 @@ public final class Inventario extends javax.swing.JFrame {
                 String ubi = producto.getStrUbicacion();
                 Integer cant = producto.getIntCantidad();
                 String ivaProd = producto.getIva();
-                
+
                 modelo.setValueAt(cant, i, 0);
                 modelo.setValueAt(nombreProd, i, 1);
                 modelo.setValueAt(cod, i, 2);
@@ -265,7 +265,7 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.setValueAt(precioPorMayor, i, 5);
                 modelo.setValueAt(ubi, i, 6);
                 modelo.setValueAt(ivaProd, i, 7);
-                
+
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
@@ -291,7 +291,7 @@ public final class Inventario extends javax.swing.JFrame {
             modelo2.setValueAt(cod, i, 2);
             modelo2.setValueAt(precio, i, 3);
             modelo2.setValueAt(ubi, i, 4);
-            
+
         }
     }
 
@@ -753,7 +753,7 @@ public final class Inventario extends javax.swing.JFrame {
                     modelo.setValueAt(precioPorMayor, i, 5);
                     modelo.setValueAt(ubi, i, 6);
                     modelo.setValueAt(ivaProd, i, 7);
-                    
+
                 }
             } else {
                 ArrayList<Producto> listadoProd = material.ConsultarPorCodigo(dato);
@@ -801,7 +801,7 @@ public final class Inventario extends javax.swing.JFrame {
                 producto = new Producto(cantMovida, cod);
                 material.moverBodega(producto);
                 existencias = new ExistenciasBodega(cod, cantExist);
-                manejadorExistencias.moverATienda(existencias,cantMovida);
+                manejadorExistencias.moverATienda(existencias, cantMovida);
                 updateTabla();
                 cargarTablaBodega();
                 modelo2.setValueAt(cantExist, fila, 0);

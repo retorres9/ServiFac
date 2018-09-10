@@ -225,6 +225,7 @@ public final class Login extends javax.swing.JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
+                txtPass.setText("");
                 txtUsuario.requestFocusInWindow();
             }
             stm.close();
@@ -242,10 +243,8 @@ public final class Login extends javax.swing.JFrame {
     public void ingreso() {
         String user = txtUsuario.getText();
         String pass = txtPass.getText();
-        String passMD5 = util.getMD5(pass);
+        String passMD5 = Utilidades.getMD5(pass);
         inicio(user, passMD5);
-        txtUsuario.setText("");
-        txtPass.setText("");
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -254,7 +253,7 @@ public final class Login extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         NuevoUsuarioDialog objUn = new NuevoUsuarioDialog(this, true);
-        objUn.setVisible(true);        
+        objUn.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed

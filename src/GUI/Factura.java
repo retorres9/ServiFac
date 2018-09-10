@@ -76,15 +76,15 @@ public final class Factura extends javax.swing.JFrame {
     Utilidades util = new Utilidades();
 
     public Factura() {
-        initComponents();
-        txtCed.setTransferHandler(null);
-        host = util.getPcName();
-        cargarEncabezado();
         manejadorProd = new DATMaterial();
         manejadorCliente = new DATClientes();
         manejadorVenta = new DATVenta();
         manejadorDetalle = new DATReporte();
         manejadorUsuario = new DATUsuario();
+        initComponents();
+        txtCed.setTransferHandler(null);
+        host = util.getPcName();
+        cargarEncabezado();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
@@ -118,7 +118,7 @@ public final class Factura extends javax.swing.JFrame {
             fact.setVisible(true);
             //jv.setTitle("factura");
         } catch (JRException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar la factura\nError 070", "Error!", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -144,7 +144,7 @@ public final class Factura extends javax.swing.JFrame {
             fact.setVisible(true);
             //jv.setTitle("factura");
         } catch (JRException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar la nota de venta\nError 069", "Error!", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -240,26 +240,6 @@ public final class Factura extends javax.swing.JFrame {
         }
     }
 
-    public void ventaProd() {
-//        for (int i = 0; i < tblVentas.getRowCount(); i++) {
-//
-//            int cantVenta = (int) tblVentas.getValueAt(i, 0);
-//            String descripcionVenta = (String) tblVentas.getValueAt(i, 1);
-//            String strCodigo = (String) tblVentas.getValueAt(i, 5);
-//            System.out.println(strCodigo);
-//            String strPrecio = tblVentas.getValueAt(i, 2).toString();
-//            double precio_Venta = Double.parseDouble(strPrecio);
-//            producto = new Producto(cantVenta, descripcionVenta);
-//            manejadorProd.UpdateCantFactura(producto);
-//            String cedula = txtCed.getText();
-//            detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
-//            manejadorDetalle.creaReporte(detalle);
-//        }
-//        generarFactura();
-//        resetFact();
-
-    }
-
     public void resetFact() {
         int a = tblVentas.getRowCount() - 1;
         for (int j = a; tblVentas.getRowCount() > 0; j--) {
@@ -325,18 +305,18 @@ public final class Factura extends javax.swing.JFrame {
                         manejadorProd.UpdateCantFactura(producto);
                         String cedula = txtCed.getText();
                         detalle = new DetalleVenta(cedula, cantVenta, strCodigo, precio_Venta, vendedor, cont);
-                        //manejadorDetalle.creaReporte(detalle);
                     }
+                    venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario, cont);//OJO
+                    manejadorVenta.crearVenta(venta, detalle);
+                    helper = 1;
+                    ayudaCont = true;
                     if (cmbTipComp.getSelectedItem().equals("Factura")) {
                         generarFactura();
                     } else {
                         generarNotaVenta();
                     }
                     resetFact();
-                    venta = new Venta(cont, numTotal, num, getFecha(), cedUsuario, cont);//OJO
-                    manejadorVenta.crearVenta(venta, detalle);
-                    helper = 1;
-                    ayudaCont = true;
+
                 } else {
                     ayudaCont = false;
                 }
@@ -978,7 +958,6 @@ public final class Factura extends javax.swing.JFrame {
             } else {
                 if (cmbTipComp.getSelectedItem().equals("Nota de Venta")) {
                     venta();
-                    ventaProd();
                     if (ayudaCont == true) {
                         this.contador();
                     } else {
@@ -987,7 +966,6 @@ public final class Factura extends javax.swing.JFrame {
 
                 } else {
                     venta();
-                    ventaProd();
                     if (ayudaCont == true) {
                         this.contador();
                     } else {

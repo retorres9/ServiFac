@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author rober
  */
-public class BusqClienteDialgo extends javax.swing.JDialog {
+public final class BusqClienteDialgo extends javax.swing.JDialog {
 
     /**
      * Creates new form BusqClienteDialgo

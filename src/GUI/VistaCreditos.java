@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import GUI.PagoProveedor;
 
 public final class VistaCreditos extends javax.swing.JFrame {
 

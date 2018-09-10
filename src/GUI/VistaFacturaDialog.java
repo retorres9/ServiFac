@@ -15,7 +15,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author rober
  */
-public class VistaFacturaDialog extends javax.swing.JDialog {
+public final class VistaFacturaDialog extends javax.swing.JDialog {
 
     DetalleVenta detalle = new DetalleVenta();
     DATReporte manejadorDetalle;
@@ -76,14 +76,14 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         txtVenta.setText(DetalleVentaVista.txtId.getText());
         int id = Integer.parseInt(txtVenta.getText());
         ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
-        int cant = listadoFactura.size();
-        modelo.setNumRows(cant);
-        for (int i = 0; i < cant; i++) {
+        int canti = listadoFactura.size();
+        modelo.setNumRows(canti);
+        for (int i = 0; i < canti; i++) {
             detalle = listadoFactura.get(i);
             int cantidad = detalle.getIntCant();
             String desc = detalle.getNombreProd();
             double prec = detalle.getDblPrecioVenta();
-            double total = cant * prec;
+            double total = canti * prec;
             DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
             simbolo.setDecimalSeparator('.');
             DecimalFormat decimal = new DecimalFormat("0.00", simbolo);
@@ -101,14 +101,14 @@ public class VistaFacturaDialog extends javax.swing.JDialog {
         txtVenta.setText(VistaDeudaCliente.txtId.getText());
         int id = Integer.parseInt(txtVenta.getText());
         ArrayList<DetalleVenta> listadoFactura = manejadorDetalle.detalleVenta(id);
-        int cant = listadoFactura.size();
-        modelo.setNumRows(cant);
-        for (int i = 0; i < cant; i++) {
+        int canti = listadoFactura.size();
+        modelo.setNumRows(canti);
+        for (int i = 0; i < canti; i++) {
             detalle = listadoFactura.get(i);
             int cantidad = detalle.getIntCant();
             String desc = detalle.getNombreProd();
             double prec = detalle.getDblPrecioVenta();
-            double total = cant * prec;
+            double total = canti * prec;
             DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
             simbolo.setDecimalSeparator('.');
             DecimalFormat decimal = new DecimalFormat("0.00", simbolo);

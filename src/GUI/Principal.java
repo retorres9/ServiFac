@@ -481,12 +481,12 @@ public final class Principal extends javax.swing.JFrame {
         String fecha = new SimpleDateFormat("dd-MM-yyyy__HH_mm").format(new Date());
         String workingDirectory = System.getProperty("user.home");
         ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + fecha + ".sql";
-        Process p = null;
+        Process proceso = null;
         try {
             Runtime run = Runtime.getRuntime();
-            p = run.exec("mysqldump -u root -pticowrc2017"
+            proceso = run.exec("mysqldump -u root -pticowrc2017"
                     + " empresa");
-            InputStream in = p.getInputStream();
+            InputStream in = proceso.getInputStream();
             FileOutputStream out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];
             int leido = in.read(buffer);

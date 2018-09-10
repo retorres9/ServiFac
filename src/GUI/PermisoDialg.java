@@ -1,7 +1,6 @@
 package GUI;
 
 import Clases.Configuracion;
-import Dat.DATUsuario;
 import Utilidades.Utilidades;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -95,7 +94,7 @@ public class PermisoDialg extends javax.swing.JDialog {
     public void ingreso() {
         String user = txtUsuario.getText();
         String pass = txtPass.getText();
-        String passMD5 = util.getMD5(pass);
+        String passMD5 = Utilidades.getMD5(pass);
         inicio(user, passMD5);
     }
 

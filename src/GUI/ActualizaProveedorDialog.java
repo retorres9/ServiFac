@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author rober
  */
-public class ActualizaProveedorDialog extends javax.swing.JDialog {
+public final class ActualizaProveedorDialog extends javax.swing.JDialog {
 
     Proveedor objProv = new Proveedor();
     DATProveedor manejadorProv;

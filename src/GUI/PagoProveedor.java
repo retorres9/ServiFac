@@ -642,7 +642,7 @@ public final class PagoProveedor extends javax.swing.JFrame {
         double monto;
 
         try {
-            String desc = null;
+            String desc;
             if ((txtDesc.getText().isEmpty()) || txtDesc.getText().equals("Ingrese información acerca del pago o crédito reallizado...")) {
                 desc = "(Vacio)";
             }
