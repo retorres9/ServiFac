@@ -55,6 +55,8 @@ public final class IngresoProd extends javax.swing.JFrame {
     Ubicacion ubicacion;
     Bodega objetoBodega;
     double precioVenta;
+    boolean banderaTextos = true;
+    int ivaProd;
     double precioVentaMayor;
     boolean bandera = true;//Se usará para que al momento de hacer clic en la imagen del producto cambie a false
     boolean banderaCodigo = true;//Se usará para que al momento de validar el codigo de barras
@@ -80,6 +82,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         modeloUbic = new DefaultComboBoxModel<Ubicacion>();
         modeloBodega = new DefaultComboBoxModel<Bodega>();
         manejadorConf = new DATConfiguracion();
+        manejadorUsuario = new DATUsuario();
         objCat = new DATCategoria();
         objProveedor = new DATProveedor();
         objUbic = new DATUbicacion();
@@ -95,11 +98,15 @@ public final class IngresoProd extends javax.swing.JFrame {
         txtCantMin.setTransferHandler(null);
         txtCantidad.setTransferHandler(null);
         txtCod.setTransferHandler(null);
+        txtGanancia.setEnabled(false);
+        txtGananciaMayor.setEnabled(false);
+        txtPrecioCompra.setEnabled(false);
         txtExistenciasBodega.setTransferHandler(null);
         txtGanancia.setTransferHandler(null);
         txtGananciaMayor.setTransferHandler(null);
         txtPrecioCompra.setTransferHandler(null);
         host = util.getPcName();
+        obtenerCredenciales();
         muestraPrecio();
         muestraPrecioxMayor();
         permisos();
@@ -120,7 +127,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         int cantConf = conf.size();
         for (int i = 0; i < cantConf; i++) {
             config = conf.get(i);
-            int ivaProd = config.getIva();
+            ivaProd = config.getIva();
             txtIva.setText(Integer.toString(ivaProd) + "%");
         }
     }
@@ -163,8 +170,12 @@ public final class IngresoProd extends javax.swing.JFrame {
             try {
                 double precioInput = Double.parseDouble(txtPrecioCompra.getText());
                 double ganancia = Double.parseDouble(txtGanancia.getText());
+                Double ivaMasGanancia = ivaProd + ganancia;
+                ivaMasGanancia = ivaMasGanancia / 100;
                 if (txtIva.isSelected()) {
-                    precioVenta = ((precioInput) + precioInput * 0.12) + (precioInput * (ganancia / 100));
+                    precioVenta = precioInput * ivaMasGanancia;
+                    precioInput = precioInput + precioVenta; 
+                    precioVenta = ((precioInput));
                 } else {
                     precioVenta = precioInput + (precioInput * (ganancia / 100));
                 }
@@ -1177,6 +1188,12 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
+        if(banderaTextos == true){
+            txtGanancia.setEnabled(true);
+            txtGananciaMayor.setEnabled(true);
+            txtPrecioCompra.setEnabled(true);
+            bandera = false;
+        }
         if (!txtPrecioCompra.getText().isEmpty()) {
             muestraPrecio();
             muestraPrecioxMayor();
@@ -1184,6 +1201,12 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIvaActionPerformed
 
     private void iva0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iva0ActionPerformed
+        if(banderaTextos == true){
+            txtGanancia.setEnabled(true);
+            txtGananciaMayor.setEnabled(true);
+            txtPrecioCompra.setEnabled(true);
+            bandera = false;
+        }
         if (!txtPrecioCompra.getText().isEmpty()) {
             muestraPrecio();
             muestraPrecioxMayor();

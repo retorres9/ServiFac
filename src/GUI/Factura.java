@@ -980,6 +980,10 @@ public final class Factura extends javax.swing.JFrame {
             txtDireccionCl.setText(" ");
             txtTelf.setText(" ");
             txtCod.requestFocusInWindow();
+            txtTotal.setText("0.00");
+            lblIva.setText("0.00");
+            lblIvaCero.setText("0.00");
+            lblSubtotal.setText("0.00");
         }
     }//GEN-LAST:event_txtImprimirActionPerformed
 
