@@ -60,7 +60,8 @@ public class DATConfiguracion {
     public ArrayList<Configuracion> obtenerCredencial(){
         ArrayList<Configuracion> credencial = new ArrayList<Configuracion>();
         try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            //con = DriverManager.getConnection("jdbc:mysql://empresa.c48fschm0xwp.sa-east-1.rds.amazonaws.com:3306/empresa","roberth","ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentecia = "SELECT contrasena, empresa FROM configuracion";
             ps = con.prepareStatement(sentecia);
             rs = ps.executeQuery();

@@ -203,6 +203,7 @@ public final class Login extends javax.swing.JFrame {
         Connection con;
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            //con = DriverManager.getConnection("jdbc:mysql://192.168.1.3:3306/empresa", "root", "Ticowrc_2017");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             Statement stm = con.createStatement();
             res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");

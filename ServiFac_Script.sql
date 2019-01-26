@@ -1,7 +1,10 @@
 CREATE DATABASE empresa;
+SELECT table_schema as 'Database',
+table_name as 'Tbles',
+round(((data_length + index_length)/ 1024 / 1024),2) 'Size in Mb'
+FROM information_schema.TABLES  ORDER BY( data_length + index_length );
 
 USE empresa;
-
 CREATE TABLE configuracion(
 id INT (10) primary key not null auto_increment,
 empresa VARCHAR(40) not null,
@@ -12,9 +15,9 @@ ruc VARCHAR(13) not null,
 telefono VARCHAR(10),
 contrasena varchar(100)
 );
-alter table configuracion ADD COLUMN id INT(10);
+#alter table configuracion ADD COLUMN id INT(10);
 select * from usuario;
-delete from usuario where cedula_usuario="1105970717";
+#delete from usuario where cedula_usuario="1105970717";
 INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono, contrasena) VALUES("Empresa", "Dirección", "Propietario" , 12, "1111111111111", "0000000", md5('servifac'));
 
 #CREATE TABLE devolucion(
@@ -175,7 +178,7 @@ ALTER TABLE venta
 ADD CONSTRAINT usuario_fk
 FOREIGN KEY (cedula_usuario) REFERENCES usuario(cedula_usuario);
 
-ALTER TABLE existenciasbodega
+ALTER TABLE existenciasBodega
 ADD constraint idBodega_fk
 FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
 
@@ -183,7 +186,7 @@ ALTER TABLE producto
 ADD CONSTRAINT bodega_fk
 FOREIGN KEY (id_bodega) REFERENCES bodega(id_bodega);
 
-ALTER TABLE existenciasbodega
+ALTER TABLE existenciasBodega
 ADD CONSTRAINT codigoBodega_fk
 FOREIGN KEY (codigo) REFERENCES producto(codigo);
 

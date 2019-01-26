@@ -451,7 +451,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             String nuevaCantTxt = String.valueOf(tot);
             txtCantidad.setText(nuevaCantTxt);
             fila = Integer.parseInt(txtFila.getText());
-            Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 8);
+            Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
         } catch (NullPointerException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombreProd.getText());
         }

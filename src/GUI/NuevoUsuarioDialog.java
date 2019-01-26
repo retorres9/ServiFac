@@ -46,6 +46,7 @@ public final class NuevoUsuarioDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
+        System.out.println(pass);
     }
     
     public void obtenerCredencial(){
