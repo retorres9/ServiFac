@@ -30,6 +30,7 @@ public final class ActualzarUbicacionDialog extends javax.swing.JDialog {
         modeloUbicacion = new DefaultComboBoxModel<Ubicacion>();
         objMat = new DATMaterial();
         initComponents();
+        lblProd.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);

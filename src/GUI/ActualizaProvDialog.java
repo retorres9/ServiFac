@@ -35,6 +35,7 @@ public class ActualizaProvDialog extends javax.swing.JDialog {
         txtRUC.setTransferHandler(null);
         txtTelefono.setTransferHandler(null);
         this.setLocationRelativeTo(null);
+        txtFila.setVisible(false);
         txtEmpresa.setEditable(false);
         txtRUC.setEditable(false);
     }

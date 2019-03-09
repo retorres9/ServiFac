@@ -97,7 +97,8 @@ public class DATConfiguracion {
             ps.setString(5, config.getTelefono());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la configuración en la base de datos\nError 025", "Error!", JOptionPane.ERROR_MESSAGE);ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la configuración en la base de datos\nError 025", "Error!", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         } finally {
             try {
                 ps.close();

@@ -21,7 +21,6 @@ public class DATUsuario {
 
     public boolean nuevoUsuario(Usuario usuario, String maq) throws SQLException {
         try {
-            //con = DriverManager.getConnection("jdbc:mysql://192.168.1.3:3306/empresa", "root", "Ticowrc_2017");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol, maquina) "
                     + "VALUES (?,?,?,?,?,?)";
@@ -108,7 +107,6 @@ public class DATUsuario {
 
     public void setLogin(String us, String maq) {
         try {
-            //con = DriverManager.getConnection("jdbc:mysql://fdb23.biz.nf/2836327_empresa","2836327_empresa","ticowrc_2018");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE usuario SET login = 1, maquina = ? WHERE cedula_usuario = ?";
             ps = con.prepareStatement(sentencia);
@@ -155,16 +153,13 @@ public class DATUsuario {
     
     public void startupLogin(String maq) {
         try {
-            //con = DriverManager.getConnection("jdbc:mysql://empresa.c48fschm0xwp.sa-east-1.rds.amazonaws.com:3306/empresa","roberth","ticowrc2017");
-            //con = DriverManager.getConnection("jdbc:mysql://54.207.39.14:3306/empresa", "root", "ticowrc2017");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE usuario SET login = 0 WHERE maquina = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            //JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el acceso del usuario en la base de datos\nError 030", "Error!", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el acceso del usuario en la base de datos\nError 030", "Error!", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 ps.close();

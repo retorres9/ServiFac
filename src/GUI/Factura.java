@@ -634,7 +634,7 @@ public final class Factura extends javax.swing.JFrame {
 
         txtTotal.setEditable(false);
         txtTotal.setBackground(new java.awt.Color(0, 204, 0));
-        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         txtTotal.setText("0.00");
 
         txtUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carnetVendedor.png"))); // NOI18N

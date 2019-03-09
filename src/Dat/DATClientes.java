@@ -260,6 +260,13 @@ public class DATClientes {
             String sentencia = "UPDATE clientes SET estado = false WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrCedula());
+            /////////////////////////////
+            /////////////////////////////
+            /////////////////////////////
+            /////////////////////////////
+            /////////////////////////////falta executequery
+            
+            
             bandera = true;
         } catch (SQLException ex) {
             bandera= false;

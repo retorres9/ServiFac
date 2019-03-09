@@ -3,6 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//////////////////////////////////////////////////
+///
+///
+///
+///////REVISAR PATH PARA MYSQLDUMP
+///
+///
+///
+
 package GUI;
 
 import java.io.FileOutputStream;
@@ -119,7 +128,7 @@ public class Backup extends javax.swing.JDialog {
         try {
             Runtime run = Runtime.getRuntime();
             p = run.exec("mysqldump -u root -pticowrc2017"
-                    + " empresa");
+                    + " dbagente");
             InputStream in = p.getInputStream();
             FileOutputStream out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];

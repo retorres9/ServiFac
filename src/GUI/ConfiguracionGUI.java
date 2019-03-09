@@ -305,7 +305,6 @@ public final class ConfiguracionGUI extends javax.swing.JFrame {
                     + "¿Esta seguro que desea guardar los cambios?", "Aviso", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 actualizarConfig();
-                //SwingUtilities.updateComponentTreeUI(pr);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No ha realizado ningún cambio en la configuración");

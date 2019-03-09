@@ -21,7 +21,6 @@ public class DATMaterial {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            //con = DriverManager.getConnection("jdbc:mysql://54.207.39.14:3306/empresa", "root", "ticowrc2017");
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
                     + " p.precio_compra, p.precio, p.Precio_Mayor, "
                     + " u.nombre_ubicacion, p.Cantidad , p.iva FROM "
@@ -540,7 +539,7 @@ public class DATMaterial {
     public ArrayList<Producto> cargaProductoFact(String codigo) {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://54.207.39.14:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "SELECT Nombre_Producto, Precio, precio_mayor, Codigo, IVA FROM producto WHERE Codigo = ? AND Cantidad > 0";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
