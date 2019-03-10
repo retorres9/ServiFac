@@ -449,11 +449,14 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             producto = new Producto(cant1, txtNombreProd.getText());
             material.AumentaCant(producto);
             String nuevaCantTxt = String.valueOf(tot);
-            txtCantidad.setText(nuevaCantTxt);
-            fila = Integer.parseInt(txtFila.getText());
-            Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
+            txtCantidad.setText(nuevaCantTxt);            
+            if (!(txtIngreso.getText().equals("ingreso"))) {
+                fila = Integer.parseInt(txtFila.getText());
+                Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
+            }            
         } catch (NullPointerException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombreProd.getText());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnActualizaCantidadMouseClicked
 
@@ -473,9 +476,11 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             producto = new Producto(cant1, txtNombreProd.getText());
             material.UpdateCantFactura(producto);
             String nuevaCantTxt = String.valueOf(tot);
-            txtCantidad.setText(nuevaCantTxt);
-            fila = Integer.parseInt(txtFila.getText());
-            Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
+            txtCantidad.setText(nuevaCantTxt);            
+            if (!(txtIngreso.getText().equals("ingreso"))) {
+                fila = Integer.parseInt(txtFila.getText());
+                Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
+            }
         } catch (NullPointerException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No se mermó nada a:\n" + txtNombreProd.getText());
         }
