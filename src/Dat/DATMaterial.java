@@ -188,7 +188,7 @@ public class DATMaterial {
         ArrayList<Producto> detalleProd = new ArrayList<Producto>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "SELECT p.nombre_producto, p.precio, p.precio_mayor, p.cantidad, u.nombre_ubicacion, c.nombre_categoria, prov.empresa "
+            String sentencia = "SELECT p.nombre_producto, p.precio, p.precio_mayor, p.cantidad, u.nombre_ubicacion, c.nombre_categoria, prov.empresa, p.iva "
                     + "FROM producto p, ubicacion u, categoria c, proveedores prov WHERE codigo = ? AND p.id_ubicacion = u.id_ubicacion "
                     + "AND p.id_categoria = c.id_categoria AND p.ruc = prov.ruc";
             ps = con.prepareStatement(sentencia);
@@ -202,7 +202,8 @@ public class DATMaterial {
                 String ubicacion = rs.getString(5);
                 String categoria = rs.getString(6);
                 String proveedor = rs.getString(7);
-                Producto prod = new Producto(nombreProd, precioNormal, precioMayor, cantidad, ubicacion, categoria, proveedor);
+                String iva = rs.getString(8);
+                Producto prod = new Producto(nombreProd, precioNormal, precioMayor, cantidad, ubicacion, categoria, proveedor, iva);
                 detalleProd.add(prod);
             }
         } catch (SQLException ex) {

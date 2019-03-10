@@ -64,7 +64,7 @@ public class Producto {
          this.intCantidad = cantidad;
     }
 
-    public Producto(String nombreProd, double precioNormal, double precioMayor, int cantidad, String ubicacion, String categoria, String proveedor) {
+    public Producto(String nombreProd, double precioNormal, double precioMayor, int cantidad, String ubicacion, String categoria, String proveedor, String iva) {
         this.strNombreProd = nombreProd;
         this.fltPrecio = precioNormal;
         this.fltPrecioMayor = precioMayor;
@@ -72,6 +72,7 @@ public class Producto {
         this.strUbicacion = ubicacion;
         this.strCategoria = categoria;
         this.strProveedor = proveedor;
+        this.iva = iva;
     }
     
     public String getStrBodega() {

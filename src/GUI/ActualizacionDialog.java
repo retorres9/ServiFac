@@ -44,6 +44,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             String ubicacion = producto.getStrUbicacion();
             String categoria = producto.getStrCategoria();
             String proveedor = producto.getStrProveedor();
+            String iva = producto.getIva();
 
             txtNombreProd.setText(nombreProd);
             txtPrecio.setText(String.valueOf(precioNormal));
@@ -52,6 +53,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             txtUbicacion.setText(ubicacion);
             txtCategoria.setText(categoria);
             txtProveedor.setText(proveedor);
+            lblIVA.setText(iva);
 
         }
     }
@@ -429,13 +431,21 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     private void btnActualizaNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaNombreMouseClicked
         try {
             String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombreProd.getText()).toUpperCase();
-            String cod = (String) tblProd.getModel().getValueAt(fila, 1);
-            producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
-            material.UpdateProducto(producto);
-            tblProd.setValueAt(nombre, fila, 0);
-            //updateTabla();
-        } catch (NullPointerException | NumberFormatException e) {
 
+            if (!(txtIngreso.getText().equals("ingreso"))) {
+                String cod = (String) tblProd.getModel().getValueAt(fila, 2);
+                producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
+                material.UpdateProducto(producto);
+                tblProd.setValueAt(nombre, fila, 1);
+                txtNombreProd.setText(nombre);
+            } else {
+                String cod = lblCod.getText();
+                producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
+                material.UpdateProducto(producto);
+                txtNombreProd.setText(nombre);
+            }
+        } catch (NullPointerException | NumberFormatException e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
@@ -449,11 +459,11 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             producto = new Producto(cant1, txtNombreProd.getText());
             material.AumentaCant(producto);
             String nuevaCantTxt = String.valueOf(tot);
-            txtCantidad.setText(nuevaCantTxt);            
+            txtCantidad.setText(nuevaCantTxt);
             if (!(txtIngreso.getText().equals("ingreso"))) {
                 fila = Integer.parseInt(txtFila.getText());
                 Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
-            }            
+            }
         } catch (NullPointerException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No se agregó nada a:\n" + txtNombreProd.getText());
             e.printStackTrace();
@@ -476,7 +486,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             producto = new Producto(cant1, txtNombreProd.getText());
             material.UpdateCantFactura(producto);
             String nuevaCantTxt = String.valueOf(tot);
-            txtCantidad.setText(nuevaCantTxt);            
+            txtCantidad.setText(nuevaCantTxt);
             if (!(txtIngreso.getText().equals("ingreso"))) {
                 fila = Integer.parseInt(txtFila.getText());
                 Inventario.tblProd.setValueAt(nuevaCantTxt, fila, 0);
