@@ -40,7 +40,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
             try {
                 double precio = Double.parseDouble(txtPrecioCompra.getText());
                 double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
-                if (lblIVA.getText().equals("12%")) {
+                if (lblIVA.getText().equals("12")) {
                     precioVentaMayor = ((precio) + precio * 0.12) + (precio * (gananciaMayor / 100));
                 } else {
                     precioVentaMayor = precio + (precio * (gananciaMayor / 100));
@@ -63,7 +63,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
             try {
                 double precioInput = Double.parseDouble(txtPrecioCompra.getText());
                 double ganancia = Double.parseDouble(txtGanancia.getText());
-                if (lblIVA.getText().equals("12%")) {
+                if (lblIVA.getText().equals("12")) {
                     precioVenta = ((precioInput) + precioInput * 0.12) + (precioInput * (ganancia / 100));
                 } else {
                     precioVenta = precioInput + (precioInput * (ganancia / 100));
@@ -102,6 +102,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         lblCod = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -169,6 +170,8 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
 
         lblCod.setText("jLabel2");
 
+        jLabel2.setText("%");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,7 +201,10 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtGananciaMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblPrecioPublico)
-                            .addComponent(lblIVA)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblIVA)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblCod)))
@@ -211,7 +217,8 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblIVA))
+                    .addComponent(lblIVA)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,6 +380,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     public javax.swing.JLabel lblCod;
