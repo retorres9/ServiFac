@@ -174,7 +174,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                 ivaMasGanancia = ivaMasGanancia / 100;
                 if (txtIva.isSelected()) {
                     precioVenta = precioInput * ivaMasGanancia;
-                    precioInput = precioInput + precioVenta; 
+                    precioInput = precioInput + precioVenta;
                     precioVenta = ((precioInput));
                 } else {
                     precioVenta = precioInput + (precioInput * (ganancia / 100));
@@ -923,7 +923,7 @@ public final class IngresoProd extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(cbxAyuda)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(lblPrecioMayor)
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1059,7 +1059,12 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void btnGeneradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneradorActionPerformed
         if (this.txtCod.getText().length() < 1) {
-            JOptionPane.showMessageDialog(this, "Debes ingresar un valor!!!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debes ingresar un código para generar el código de barras!!!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (this.txtNombreProd.getText().length() < 1) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar el nombre del producto para\ngenerar el código de barras!!!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (this.txtCantidad.getText().length() < 1) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar la cantidad existente\n"
+                    + "del producto.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             generaCodigo(this.txtCod.getText());
         }
@@ -1204,7 +1209,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
-        if(banderaTextos == true){
+        if (banderaTextos == true) {
             txtGanancia.setEnabled(true);
             txtGananciaMayor.setEnabled(true);
             txtPrecioCompra.setEnabled(true);
@@ -1217,7 +1222,7 @@ public final class IngresoProd extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIvaActionPerformed
 
     private void iva0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iva0ActionPerformed
-        if(banderaTextos == true){
+        if (banderaTextos == true) {
             txtGanancia.setEnabled(true);
             txtGananciaMayor.setEnabled(true);
             txtPrecioCompra.setEnabled(true);
@@ -1231,7 +1236,7 @@ public final class IngresoProd extends javax.swing.JFrame {
 
     private void txtCodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyReleased
         validacioCod();
-        if(!(txtCod.getText().isEmpty())){
+        if (!(txtCod.getText().isEmpty())) {
             try {
                 Image img = ImageIO.read(getClass().getResource(("/Recursos/goma-de-borrar.png")));
                 lblBorrar.setIcon(new ImageIcon(img));
@@ -1325,7 +1330,7 @@ public final class IngresoProd extends javax.swing.JFrame {
         try {
             String workingDirectory = System.getProperty("user.home");
             String absoluteFilePath = "";
-            absoluteFilePath = workingDirectory + "\\Pictures" + File.separator + txtNombreProd.getText() + ".png";
+            absoluteFilePath = workingDirectory + "\\Pictures" + File.separator + txtNombreProd.getText() + " - " + txtCantidad.getText() + ".png";
             // save to file
             imgCodigoArticulo = new File(absoluteFilePath);
             ImageIO.write(imagen, "png", imgCodigoArticulo);
