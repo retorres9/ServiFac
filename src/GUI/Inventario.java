@@ -10,24 +10,32 @@ import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import jbarcodebean.JBarcodeBean;
+import net.sourceforge.jbarcodebean.model.Code128;
 
 public final class Inventario extends javax.swing.JFrame {
 
     int fila;
+    File imgCodigoArticulo;
     String n;
-    int cantProd;
+    String cantProd;
     String codigoProd;
     Producto producto;
     Usuario objU = new Usuario();
@@ -47,6 +55,9 @@ public final class Inventario extends javax.swing.JFrame {
     String ubicacion;
     String iva;
     Principal objP = new Principal();
+    JBarcodeBean barcode = new JBarcodeBean();
+    public BufferedImage imagen = null;
+    
 
     public Inventario() {
         material = new DATMaterial();
@@ -91,6 +102,40 @@ public final class Inventario extends javax.swing.JFrame {
                 modelo.removeRow(i);
             }
         }
+    }
+    
+    private void generaCodigo(String codigo) {
+        // nuestro tipo de codigo de barra
+        barcode.setCodeType(new Code128());
+        // nuestro valor a codificar y algunas configuraciones mas
+        barcode.setCode(codigo);
+
+        barcode.setCheckDigit(true);
+
+        imagen = barcode.draw(new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB));
+
+        ImageIcon barras = new ImageIcon(imagen);
+
+        //lblImagen.setIcon(barras);
+        Image image = barras.getImage();
+
+        // cast it to bufferedimage
+        BufferedImage buffered = (BufferedImage) image;
+
+        try {
+            String workingDirectory = System.getProperty("user.home");
+            String absoluteFilePath = "";
+            absoluteFilePath = workingDirectory + "\\Pictures" + File.separator + txtNombreProd.getText() + " - " + cantProd + ".png";
+            // save to file
+            imgCodigoArticulo = new File(absoluteFilePath);
+            ImageIO.write(imagen, "png", imgCodigoArticulo);
+            System.out.println(imgCodigoArticulo.getAbsolutePath());
+            JOptionPane.showMessageDialog(this, "Código de barras generado correctamente, la imagen se guardó en el siguiente directorio\n"
+                    + imgCodigoArticulo.getAbsolutePath());
+        } catch (IOException e) {
+            Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, e);
+        }
+
     }
 
     public void cargarConfig() {
@@ -315,6 +360,7 @@ public final class Inventario extends javax.swing.JFrame {
         btnMover = new javax.swing.JButton();
         txtNombreProd = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblBodega = new javax.swing.JTable();
@@ -441,6 +487,17 @@ public final class Inventario extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Nombre del Producto:");
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/barcode.png"))); // NOI18N
+        jButton3.setText("Generar");
+        jButton3.setToolTipText("Presione para generar código de barra del producto seleccionado");
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -457,17 +514,19 @@ public final class Inventario extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnVer)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnMover))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(16, 16, 16)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVer)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnMover)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)))))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -477,8 +536,9 @@ public final class Inventario extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEditar)
                     .addComponent(btnVer)
-                    .addComponent(btnMover))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnMover)
+                    .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -489,9 +549,9 @@ public final class Inventario extends javax.swing.JFrame {
                         .addComponent(jLabel6))
                     .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Productos en almacén", jPanel2);
@@ -660,19 +720,19 @@ public final class Inventario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
                 .addGap(224, 224, 224)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(153, 153, 153))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,13 +744,13 @@ public final class Inventario extends javax.swing.JFrame {
                         .addComponent(txtEmpresa)))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(lblTotal))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -925,6 +985,18 @@ public final class Inventario extends javax.swing.JFrame {
         String nombreEnBodega = tblBodega.getModel().getValueAt(filaBodega, 1).toString();
         txtProductoBodega.setText(nombreEnBodega);
     }//GEN-LAST:event_tblBodegaMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        fila = tblProd.getSelectedRow();
+        if(txtNombreProd.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String codi = tblProd.getValueAt(fila, 2).toString();
+            cantProd = tblProd.getValueAt(fila, 0).toString();
+            generaCodigo(codi);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -961,6 +1033,7 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbBusq;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
