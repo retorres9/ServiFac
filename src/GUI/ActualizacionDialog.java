@@ -429,14 +429,17 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnActualizaPrecioMouseClicked
 
     private void btnActualizaNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaNombreMouseClicked
+        fila = Integer.parseInt(txtFila.getText());
         try {
             String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombreProd.getText()).toUpperCase();
 
             if (!(txtIngreso.getText().equals("ingreso"))) {
+                System.out.println("aqui");
                 String cod = (String) tblProd.getModel().getValueAt(fila, 2);
                 producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
                 material.UpdateProducto(producto);
                 tblProd.setValueAt(nombre, fila, 1);
+                System.out.println(fila);
                 txtNombreProd.setText(nombre);
             } else {
                 String cod = lblCod.getText();
