@@ -22,7 +22,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     Producto objProd = new Producto();
     double precioVenta;
     double precioVentaMayor;
-    
+
     public ActualizacionPrecio(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         manejadorMaterial = new DATMaterial();
@@ -33,7 +33,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         lblCod.setVisible(false);
     }
-    
+
     public void muestraPrecioxMayor() {
         if (txtPrecioCompra.getText().isEmpty() || txtGananciaMayor.getText().isEmpty()) {
         } else {
@@ -255,8 +255,8 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
         char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9') || txtPrecioCompra.getText().length() > 5)
-            && (caracter != KeyEvent.VK_BACK_SPACE)
-            && (caracter != '.')) {
+                && (caracter != KeyEvent.VK_BACK_SPACE)
+                && (caracter != '.')) {
             evt.consume();
         }
         if (!txtGanancia.getText().isEmpty() || !txtGananciaMayor.getText().isEmpty()) {
@@ -314,19 +314,21 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     }//GEN-LAST:event_txtGananciaMayorKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Double precioCompra = Double.parseDouble(txtPrecioCompra.getText());
-        Double precio = precioVenta;
-        Double precioMayor = precioVentaMayor;
-        Double ganancia = Double.parseDouble(txtGanancia.getText());
-        Double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
-        String codigo = lblCod.getText();
-        objProd = new Producto(precioCompra, precio, precioMayor, ganancia, gananciaMayor, codigo);
-        manejadorMaterial.ActualizaPrecio(objProd);
-        ActualizacionDialog.txtPrecio.setText(String.valueOf(precio));
-        ActualizacionDialog.txtPrecioM.setText(String.valueOf(precioMayor));
-        ActualizacionDialog.lblPrecioCompra.setText(String.valueOf(precioCompra));
-        JOptionPane.showMessageDialog(null, "Se ha actualizado el precio correctamente");
-        this.dispose();
+        if (!(txtGanancia.getText().isEmpty() || !(txtGanancia.getText().isEmpty()) || !(txtGanancia.getText().isEmpty()))) {
+            Double precioCompra = Double.parseDouble(txtPrecioCompra.getText());
+            Double precio = precioVenta;
+            Double precioMayor = precioVentaMayor;
+            Double ganancia = Double.parseDouble(txtGanancia.getText());
+            Double gananciaMayor = Double.parseDouble(txtGananciaMayor.getText());
+            String codigo = lblCod.getText();
+            objProd = new Producto(precioCompra, precio, precioMayor, ganancia, gananciaMayor, codigo);
+            manejadorMaterial.ActualizaPrecio(objProd);
+            ActualizacionDialog.txtPrecio.setText(String.valueOf(precio));
+            ActualizacionDialog.txtPrecioM.setText(String.valueOf(precioMayor));
+            ActualizacionDialog.lblPrecioCompra.setText(String.valueOf(precioCompra));
+            JOptionPane.showMessageDialog(null, "Se ha actualizado el precio correctamente");
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

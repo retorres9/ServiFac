@@ -10,6 +10,7 @@ import Dat.DATExistenciasBodega;
 import Dat.DATMaterial;
 import Dat.DATUsuario;
 import Utilidades.Utilidades;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -57,7 +58,6 @@ public final class Inventario extends javax.swing.JFrame {
     Principal objP = new Principal();
     JBarcodeBean barcode = new JBarcodeBean();
     public BufferedImage imagen = null;
-    
 
     public Inventario() {
         material = new DATMaterial();
@@ -103,7 +103,7 @@ public final class Inventario extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void generaCodigo(String codigo) {
         // nuestro tipo de codigo de barra
         barcode.setCodeType(new Code128());
@@ -361,6 +361,7 @@ public final class Inventario extends javax.swing.JFrame {
         txtNombreProd = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        lblBorrar = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblBodega = new javax.swing.JTable();
@@ -414,6 +415,11 @@ public final class Inventario extends javax.swing.JFrame {
         });
 
         cmbBusq.setFocusable(false);
+        cmbBusq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBusqActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Buscar por:");
 
@@ -449,6 +455,7 @@ public final class Inventario extends javax.swing.JFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Editar.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.setFocusable(false);
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEditar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         btnEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -460,6 +467,7 @@ public final class Inventario extends javax.swing.JFrame {
 
         btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/binoculares.png"))); // NOI18N
         btnVer.setText("Ver");
+        btnVer.setFocusable(false);
         btnVer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnVer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnVer.addActionListener(new java.awt.event.ActionListener() {
@@ -470,6 +478,7 @@ public final class Inventario extends javax.swing.JFrame {
 
         btnMover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/mozo-de-carga.png"))); // NOI18N
         btnMover.setText("Mover");
+        btnMover.setFocusable(false);
         btnMover.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnMover.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnMover.addActionListener(new java.awt.event.ActionListener() {
@@ -490,11 +499,19 @@ public final class Inventario extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/barcode.png"))); // NOI18N
         jButton3.setText("Generar");
         jButton3.setToolTipText("Presione para generar código de barra del producto seleccionado");
+        jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        lblBorrar.setToolTipText("Presione para limpiar el buscador");
+        lblBorrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBorrarMouseClicked(evt);
             }
         });
 
@@ -518,7 +535,9 @@ public final class Inventario extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(16, 16, 16)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnEditar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -543,12 +562,15 @@ public final class Inventario extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel6))
                     .addComponent(cmbBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -849,6 +871,16 @@ public final class Inventario extends javax.swing.JFrame {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         busqueda();
+        if (txtBuscar.getText().length() > 0) {
+            try {
+                Image img = ImageIO.read(getClass().getResource(("/Recursos/goma-de-borrar.png")));
+                lblBorrar.setIcon(new ImageIcon(img));
+                Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+                lblBorrar.setCursor(cursor);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "No se ha podido cargar la imagen de la goma de borrar");
+            }
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     public void moverBodega() {
@@ -988,7 +1020,7 @@ public final class Inventario extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         fila = tblProd.getSelectedRow();
-        if(txtNombreProd.getText().isEmpty()){
+        if (txtNombreProd.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             String codi = tblProd.getValueAt(fila, 2).toString();
@@ -996,7 +1028,16 @@ public final class Inventario extends javax.swing.JFrame {
             generaCodigo(codi);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-    
+
+    private void cmbBusqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBusqActionPerformed
+        txtBuscar.requestFocus();
+    }//GEN-LAST:event_cmbBusqActionPerformed
+
+    private void lblBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBorrarMouseClicked
+        txtBuscar.setText("");
+        this.lblBorrar.setIcon(null);
+    }//GEN-LAST:event_lblBorrarMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1059,6 +1100,7 @@ public final class Inventario extends javax.swing.JFrame {
     private javax.swing.JMenu jmConfig;
     private javax.swing.JMenuItem jmiElimCliente;
     private javax.swing.JMenuItem jmiElimProv;
+    private javax.swing.JLabel lblBorrar;
     private javax.swing.JLabel lblTotal;
     public static javax.swing.JTable tblBodega;
     public static javax.swing.JTable tblProd;

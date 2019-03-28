@@ -118,7 +118,7 @@ public final class Factura extends javax.swing.JFrame {
             fact.setVisible(true);
             //jv.setTitle("factura");
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar la factura\nError 070", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar la factura\nError 070", "Error!", JOptionPane.ERROR_MESSAGE);            
         }
 
     }

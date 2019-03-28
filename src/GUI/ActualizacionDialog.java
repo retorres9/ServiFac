@@ -8,6 +8,7 @@ package GUI;
 import Clases.Producto;
 import Dat.DATMaterial;
 import static GUI.Inventario.tblProd;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -17,6 +18,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     Producto producto;
     DATMaterial material;
     int fila;
+    public BufferedImage image = null;
 
     public ActualizacionDialog(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
@@ -204,6 +206,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         });
 
         jButton2.setText("Dar de baja producto");
+        jButton2.setFocusable(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -429,15 +432,14 @@ public class ActualizacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnActualizaPrecioMouseClicked
 
     private void btnActualizaNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaNombreMouseClicked
-        fila = Integer.parseInt(txtFila.getText());
         try {
-            String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombreProd.getText()).toUpperCase();
-
+            String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombreProd.getText(),txtNombreProd.getText()).toUpperCase();
             if (!(txtIngreso.getText().equals("ingreso"))) {
                 System.out.println("aqui");
                 String cod = (String) tblProd.getModel().getValueAt(fila, 2);
                 producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
                 material.UpdateProducto(producto);
+                fila = Integer.parseInt(txtFila.getText());
                 tblProd.setValueAt(nombre, fila, 1);
                 System.out.println(fila);
                 txtNombreProd.setText(nombre);
@@ -448,7 +450,7 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                 txtNombreProd.setText(nombre);
             }
         } catch (NullPointerException | NumberFormatException e) {
-            e.printStackTrace();
+
         }
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 
@@ -507,9 +509,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
             if (lblPrecioCompra.getText().equals("jLabel4")) {
                 this.dispose();
             } else {
-                Inventario.tblProd.setValueAt(txtPrecio.getText(), fila, 3);
-                Inventario.tblProd.setValueAt(txtPrecioM.getText(), fila, 4);
-                Inventario.tblProd.setValueAt(lblPrecioCompra.getText(), fila, 2);
+                Inventario.tblProd.setValueAt(txtPrecio.getText(), fila, 4);
+                Inventario.tblProd.setValueAt(txtPrecioM.getText(), fila, 5);
+                Inventario.tblProd.setValueAt(lblPrecioCompra.getText(), fila, 3);
                 this.dispose();
             }
         }
