@@ -314,7 +314,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
     }//GEN-LAST:event_txtGananciaMayorKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (!(txtGanancia.getText().isEmpty() || !(txtGanancia.getText().isEmpty()) || !(txtGanancia.getText().isEmpty()))) {
+        if (!(txtGanancia.getText().isEmpty()) || !(txtGananciaMayor.getText().isEmpty()) || !(txtPrecioCompra.getText().isEmpty())) {
             Double precioCompra = Double.parseDouble(txtPrecioCompra.getText());
             Double precio = precioVenta;
             Double precioMayor = precioVentaMayor;
@@ -328,6 +328,8 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
             ActualizacionDialog.lblPrecioCompra.setText(String.valueOf(precioCompra));
             JOptionPane.showMessageDialog(null, "Se ha actualizado el precio correctamente");
             this.dispose();
+        } else {
+            System.out.println("aqui");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

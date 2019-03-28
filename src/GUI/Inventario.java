@@ -133,7 +133,7 @@ public final class Inventario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Código de barras generado correctamente, la imagen se guardó en el siguiente directorio\n"
                     + imgCodigoArticulo.getAbsolutePath());
         } catch (IOException e) {
-            Logger.getLogger(IngresoProd.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, e);
         }
 
     }
