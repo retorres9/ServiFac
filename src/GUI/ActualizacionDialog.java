@@ -26,9 +26,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         initComponents();
         lblPrecioCompra.setVisible(false);
         lblIVA.setVisible(false);
-        lblCod.setVisible(false);
+//        lblCod.setVisible(false);
         txtIngreso.setVisible(false);
-        txtFila.setVisible(false);
+//        txtFila.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
@@ -435,8 +435,10 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         try {
             String nombre = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de:\n" + txtNombreProd.getText(),txtNombreProd.getText()).toUpperCase();
             if (!(txtIngreso.getText().equals("ingreso"))) {
-                System.out.println("aqui");
+                fila = Integer.parseInt(txtFila.getText());
                 String cod = (String) tblProd.getModel().getValueAt(fila, 2);
+                System.out.println(fila);
+                System.out.println(cod+" aqui");
                 producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
                 material.UpdateProducto(producto);
                 fila = Integer.parseInt(txtFila.getText());
@@ -445,12 +447,14 @@ public class ActualizacionDialog extends javax.swing.JDialog {
                 txtNombreProd.setText(nombre);
             } else {
                 String cod = lblCod.getText();
+                System.out.println("codigo"+cod);
                 producto = new Producto(nombre, Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecioM.getText()), Integer.parseInt(txtCantidad.getText()), cod);
+                
                 material.UpdateProducto(producto);
                 txtNombreProd.setText(nombre);
             }
         } catch (NullPointerException | NumberFormatException e) {
-
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnActualizaNombreMouseClicked
 

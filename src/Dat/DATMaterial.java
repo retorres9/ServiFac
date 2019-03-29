@@ -432,6 +432,8 @@ public class DATMaterial {
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
             ps.setString(2, producto.getStrCod());
+            System.out.println(producto.getStrCod());
+            System.out.println(Sentencia);
             ps.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar los datos del producto\nNombre duplicado\nError 012", "Error!", JOptionPane.ERROR_MESSAGE);

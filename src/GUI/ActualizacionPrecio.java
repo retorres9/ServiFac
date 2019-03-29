@@ -329,7 +329,7 @@ public class ActualizacionPrecio extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Se ha actualizado el precio correctamente");
             this.dispose();
         } else {
-            System.out.println("aqui");
+            JOptionPane.showMessageDialog(this, "Hay campos vacios");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

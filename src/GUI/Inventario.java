@@ -132,9 +132,9 @@ public final class Inventario extends javax.swing.JFrame {
             System.out.println(imgCodigoArticulo.getAbsolutePath());
             JOptionPane.showMessageDialog(this, "Código de barras generado correctamente, la imagen se guardó en el siguiente directorio\n"
                     + imgCodigoArticulo.getAbsolutePath());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "No se ha podido generar el código de barras");
+        } 
 
     }
 
@@ -1036,6 +1036,9 @@ public final class Inventario extends javax.swing.JFrame {
     private void lblBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBorrarMouseClicked
         txtBuscar.setText("");
         this.lblBorrar.setIcon(null);
+        txtBuscar.requestFocus();
+        Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
+        txtBuscar.setCursor(cursor);
     }//GEN-LAST:event_lblBorrarMouseClicked
 
     public static void main(String args[]) {
