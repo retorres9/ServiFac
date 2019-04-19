@@ -132,7 +132,7 @@ public class Backup extends javax.swing.JDialog {
         try {
             Runtime run = Runtime.getRuntime();
             p = run.exec("mysqldump -u root -pticowrc2017"
-                    + " dbagente");
+                    + " empresa");
             InputStream in = p.getInputStream();
             FileOutputStream out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];

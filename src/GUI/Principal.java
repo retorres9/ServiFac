@@ -37,13 +37,13 @@ public final class Principal extends javax.swing.JFrame {
     DATMaterial objProd;
     DATConfiguracion manejadorConf;
     DATUsuario manejadorUsuario;
-    
+
     public Principal() {
         objProd = new DATMaterial();
         manejadorUsuario = new DATUsuario();
         manejadorConf = new DATConfiguracion();
         initComponents();
-        host = util.getPcName();        
+        host = util.getPcName();
         obtenerUsuario();
         obtenerConf();
         this.setLocationRelativeTo(null);
@@ -480,7 +480,7 @@ public final class Principal extends javax.swing.JFrame {
     public void respaldo() {
         String fecha = new SimpleDateFormat("dd-MM-yyyy__HH_mm").format(new Date());
         String workingDirectory = System.getProperty("user.home");
-        ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + fecha + ".sql";
+        ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + host + "_" + fecha + ".sql";
         Process proceso = null;
         try {
             Runtime run = Runtime.getRuntime();
