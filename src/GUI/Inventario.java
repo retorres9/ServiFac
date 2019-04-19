@@ -1038,7 +1038,7 @@ public final class Inventario extends javax.swing.JFrame {
         this.lblBorrar.setIcon(null);
         txtBuscar.requestFocus();
         Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
-        txtBuscar.setCursor(cursor);
+        lblBorrar.setCursor(cursor);
     }//GEN-LAST:event_lblBorrarMouseClicked
 
     public static void main(String args[]) {

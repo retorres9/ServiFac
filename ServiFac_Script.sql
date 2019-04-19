@@ -1,10 +1,20 @@
 CREATE DATABASE empresa;
-SELECT table_schema as 'Database',
-table_name as 'Tbles',
-round(((data_length + index_length)/ 1024 / 1024),2) 'Size in Mb'
-FROM information_schema.TABLES  ORDER BY( data_length + index_length );
+use empresa;
+#show tables;
+#describe venta;
+#use empresa;
 
-USE empresa;
+#SELECT * from producto where Nombre_Producto LIKE "%bolas%" OR codigo LIKE "%bolas%";
+
+#SELECT p.Nombre_Producto, p.Codigo, p.precio_compra, p.precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u 
+#WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND (codigo LIKE "1346" OR Nombre_Producto LIKE "%1346%" ) ORDER BY Nombre_Producto Asc;
+
+#SELECT table_schema as 'Database',
+#table_name as 'Tbles',
+#round(((data_length + index_length)/ 1024 / 1024),2) 'Size in Mb'
+#FROM information_schema.TABLES  ORDER BY( data_length + index_length );
+
+#USE empresa;
 CREATE TABLE configuracion(
 id INT (10) primary key not null auto_increment,
 empresa VARCHAR(40) not null,
@@ -16,7 +26,7 @@ telefono VARCHAR(10),
 contrasena varchar(100)
 );
 #alter table configuracion ADD COLUMN id INT(10);
-select * from usuario;
+#select * from usuario;
 #delete from usuario where cedula_usuario="1105970717";
 INSERT INTO configuracion(empresa, direccion, propietario, iva, ruc, telefono, contrasena) VALUES("Empresa", "Dirección", "Propietario" , 12, "1111111111111", "0000000", md5('servifac'));
 

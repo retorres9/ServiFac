@@ -11,9 +11,9 @@
 ///
 ///
 ///
-
 package GUI;
 
+import Utilidades.Utilidades;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,13 +28,17 @@ import javax.swing.JOptionPane;
 public class Backup extends javax.swing.JDialog {
 
     String ruta = null;
+    String host = "unknown";
+    Utilidades util = new Utilidades();
+
     public Backup(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        host = util.getPcName();
         this.setLocationRelativeTo(null);
         this.setTitle("Servifac - Crear Respaldo");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +126,7 @@ public class Backup extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String fecha = new SimpleDateFormat("dd-MM-yyyy__HH_mm").format(new Date());
         String workingDirectory = System.getProperty("user.home");
-        ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + fecha + ".sql";
+        ruta = workingDirectory + "\\" + "OneDrive\\Backups\\Libreria\\" + host + "_" + fecha + ".sql";
         System.out.println(ruta);
         Process p = null;
         try {
@@ -133,7 +137,7 @@ public class Backup extends javax.swing.JDialog {
             FileOutputStream out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];
             int leido = in.read(buffer);
-            while (leido >0){
+            while (leido > 0) {
                 out.write(buffer, 0, leido);
                 leido = in.read(buffer);
             }

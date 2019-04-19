@@ -650,6 +650,12 @@ public final class Factura extends javax.swing.JFrame {
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         listaBusq.setModel(listaProductos);
+        listaBusq.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaBusq.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaBusqMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(listaBusq);
 
         txtBusqProd.setText("Buscar...");
@@ -1186,6 +1192,16 @@ public final class Factura extends javax.swing.JFrame {
         Backup back = new Backup(this, true);
         back.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void listaBusqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaBusqMouseClicked
+        if((evt.getClickCount()==2) && (listaBusq.isSelectionEmpty()==false) ){
+            String auxCod = listaBusq.getSelectedValue().getStrCod();
+            txtCod.setText(auxCod);
+            comparaProducto();
+            txtCod.setText("");
+        }
+        txtCod.requestFocus();
+    }//GEN-LAST:event_listaBusqMouseClicked
 
     private void limpiarLista() {
         listaProductos.clear();
