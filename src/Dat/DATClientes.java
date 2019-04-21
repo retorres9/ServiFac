@@ -38,7 +38,8 @@ public class DATClientes {
                 listadoClientes.add(cliente);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar los clientes en la base de datos\nError 035", "Error!", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Ha ocurrido un error al consultar los clientes en la base de datos\nError 035", "Error!", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         } finally {
             try {
                 rs.close();
@@ -53,15 +54,18 @@ public class DATClientes {
     public void apruebaCrédito(Clientes cliente) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            String sentencia = "UPDATE clientes set credito = true, monto aprobado = ?, aprobado_por = ?"
+            String sentencia = "UPDATE clientes set credito = true, monto_aprobado = ?, autorizado_por = ? "
                     + "WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
+            System.out.println(ps);
+            System.out.println(cliente.getCant());
             ps.setDouble(1, cliente.getCant());
             ps.setString(2, cliente.getUsuario());
             ps.setString(3, cliente.getStrCedula());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el cliente en la base de datos\nError 036", "Error!", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el cliente en la base de datos\nError 036", "Error!", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         } finally {
             try{
                 ps.close();

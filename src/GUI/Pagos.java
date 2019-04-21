@@ -665,15 +665,15 @@ public final class Pagos extends javax.swing.JFrame {
             txtActualiza.setText(String.valueOf(monto));
         }
         if (credito.equals("Aprobado")) {
-            lblActualiza.setVisible(true);
-            txtActualiza.setVisible(true);
-            btnActualiza.setVisible(true);
-            btnAprobar.setEnabled(false);
+//            lblActualiza.setVisible(true);
+//            txtActualiza.setVisible(true);
+//            btnActualiza.setVisible(true);
+//            btnAprobar.setEnabled(false);
         } else {
-            btnAprobar.setEnabled(true);
-            lblActualiza.setVisible(false);
-            txtActualiza.setVisible(false);
-            btnActualiza.setVisible(false);
+//            btnAprobar.setEnabled(true);
+//            lblActualiza.setVisible(false);
+//            txtActualiza.setVisible(false);
+//            btnActualiza.setVisible(false);
         }
         txtDireccion.setText(direccion);
         btnActualizarNombre.setVisible(true);

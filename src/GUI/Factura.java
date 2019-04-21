@@ -118,7 +118,7 @@ public final class Factura extends javax.swing.JFrame {
             fact.setVisible(true);
             //jv.setTitle("factura");
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar la factura\nError 070", "Error!", JOptionPane.ERROR_MESSAGE);            
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar la factura\nError 070", "Error!", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -221,19 +221,22 @@ public final class Factura extends javax.swing.JFrame {
                     anchoColumna = (60 * ancho) / 100;
                     break;
                 case 2:
-                    anchoColumna = (25 * ancho) / 100;
+                    anchoColumna = (15 * ancho) / 100;
                     break;
                 case 3:
-                    anchoColumna = (25 * ancho) / 100;
+                    anchoColumna = (15 * ancho) / 100;
                     break;
                 case 4:
-                    anchoColumna = (25 * ancho) / 100;
+                    anchoColumna = (15 * ancho) / 100;
                     break;
                 case 5:
-                    anchoColumna = (10 * ancho) / 100;
+                    anchoColumna = (20 * ancho) / 100;
                     break;
                 case 6:
-                    anchoColumna = (10 * ancho) / 100;
+                    anchoColumna = (15 * ancho) / 100;
+                    break;
+                case 7:
+                    anchoColumna = (15 * ancho) / 100;
                     break;
             }
             columnaTabla.setPreferredWidth(anchoColumna);
@@ -287,7 +290,7 @@ public final class Factura extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "<html><h1>No hay cambio</h1></html>");
                     } else if ((dblDecimal > 0) && (num > numTotal)) {
                         JOptionPane.showMessageDialog(null, "<html><h1>El cambio es: " + dblDecimal + "</h1></html>");
-
+                        num = num - dblDecimal;
                     } else {
                         JOptionPane.showMessageDialog(null, "<html><h1>El cliente debe: " + dblDecimal + "</h1></html>");
                         double nuevaDeuda = deuda + dblDecimal;
@@ -794,8 +797,8 @@ public final class Factura extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(29, 29, 29)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(86, 86, 86))
+                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -1038,18 +1041,24 @@ public final class Factura extends javax.swing.JFrame {
 
     private void tblVentasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVentasKeyPressed
         int filaSeleccionada = tblVentas.getSelectedRow();
+        int cantFilas = tblVentas.getRowCount();
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             if (filaSeleccionada >= 0) {
                 int[] filasselec = tblVentas.getSelectedRows();
                 for (int i = 0; i < filasselec.length; i++) {
                     modelo.removeRow(filaSeleccionada);
                     fila = fila - 1;
+                    if (fila == 0) {
+                        txtTotal.setText("0.00");
+                        lblSubtotal.setText("0.00");
+                        lblIva.setText("0.00");
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
             }
         }
-
+        total();
     }//GEN-LAST:event_tblVentasKeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -1088,7 +1097,7 @@ public final class Factura extends javax.swing.JFrame {
                         double soloIva = (Double) modelo.getValueAt(filaSeleccionada, 3);
                         double newPrecioTot = newCant * precioUnit;
                         double nuevoIva = newCant * soloIva;
-                        double nuevoPrecioIva = newCant * precioUnit;
+                        double nuevoPrecioIva = soloIva + precioUnit;
                         double nuevoIva0 = newCant * iva0;
                         modelo.setValueAt(newCant, filaSeleccionada, 0);
                         modelo.setValueAt(newPrecioTot, filaSeleccionada, 4);
@@ -1106,6 +1115,7 @@ public final class Factura extends javax.swing.JFrame {
             }
 
         }
+
     }//GEN-LAST:event_tblVentasKeyReleased
 
     private void txtCedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedFocusLost
@@ -1194,7 +1204,7 @@ public final class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void listaBusqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaBusqMouseClicked
-        if((evt.getClickCount()==2) && (listaBusq.isSelectionEmpty()==false) ){
+        if ((evt.getClickCount() == 2) && (listaBusq.isSelectionEmpty() == false)) {
             String auxCod = listaBusq.getSelectedValue().getStrCod();
             txtCod.setText(auxCod);
             comparaProducto();
@@ -1327,6 +1337,7 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void total() { //Para sumar el precio total y asignarlo a el textfield de total
+        System.out.println("here");
         try {
             double total1 = 0.00;
             double totalIva = 0.00;
@@ -1335,7 +1346,7 @@ public final class Factura extends javax.swing.JFrame {
             totalRow -= 1;
             for (int j = 0; j <= (totalRow); j++) {
                 String strIva = tblVentas.getValueAt(j, 6).toString();
-                String strProdIva = tblVentas.getValueAt(j, 7).toString();
+                String strProdIva = tblVentas.getValueAt(j, 4).toString();
                 String strProdIvaO = tblVentas.getValueAt(j, 8).toString();
 
                 double dblIva = Double.parseDouble(strIva);
@@ -1400,9 +1411,9 @@ public final class Factura extends javax.swing.JFrame {
                 String putoIva = dcmlCambio.format(nuevoPrecioIva);
                 double putoIva2 = Double.parseDouble(putoIva);
                 modelo.setValueAt(cant2, i, 0);
-                modelo.setValueAt(precio2, i, 4);
+                modelo.setValueAt(putoIva2, i, 4);
                 modelo.setValueAt(strIva2, i, 6);
-                modelo.setValueAt(putoIva2, i, 7);
+                //modelo.setValueAt(putoIva2, i, 7);
                 modelo.setValueAt(nuevoIvaO, i, 8);
                 flag = false;
                 verif = false;

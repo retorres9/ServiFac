@@ -26,9 +26,9 @@ public class ActualizacionDialog extends javax.swing.JDialog {
         initComponents();
         lblPrecioCompra.setVisible(false);
         lblIVA.setVisible(false);
-//        lblCod.setVisible(false);
+        lblCod.setVisible(false);
         txtIngreso.setVisible(false);
-//        txtFila.setVisible(false);
+        txtFila.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/ServiFac.png")).getImage());
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);

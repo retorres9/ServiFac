@@ -84,7 +84,7 @@ public final class NewCliente extends javax.swing.JFrame {
                 credito = true;
                 System.out.println(credito);
                 double cantidad = Double.parseDouble(txtCredito.getText());
-                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyudaCed.getText(), cantidad);
+                objCliente = new Clientes(nombre, cedula, telf, deuda, dir, credito, txtAyuda.getText(), cantidad);
             } else {
                 objCliente = new Clientes(nombre, cedula, telf, deuda, dir);
             }
