@@ -54,9 +54,9 @@ public final class Pagos extends javax.swing.JFrame {
         manejadorAbono = new DATAbonoCliente();
         manejadorVenta = new DATVenta();
         manejadorUsuario = new DATUsuario();
-        this.modelo = new DefaultTableModel(){
+        this.modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -624,6 +624,10 @@ public final class Pagos extends javax.swing.JFrame {
             jmiElimCliente.setEnabled(false);
             jmiElimProv.setEnabled(false);
             jmConfig.setEnabled(false);
+            btnActualiza.setEnabled(false);
+            btnAprobar.setEnabled(false);
+            btnActualizarNombre.setVisible(false); 
+            btnActualizarNombre.setIcon(null);
         }
         if (rol == 1) {
             jmiElimCliente.setEnabled(true);
@@ -664,16 +668,20 @@ public final class Pagos extends javax.swing.JFrame {
         } else {
             txtActualiza.setText(String.valueOf(monto));
         }
+        if(rol==0)
+        
         if (credito.equals("Aprobado")) {
-//            lblActualiza.setVisible(true);
-//            txtActualiza.setVisible(true);
-//            btnActualiza.setVisible(true);
-//            btnAprobar.setEnabled(false);
+            lblActualiza.setVisible(true);
+            txtActualiza.setVisible(true);
+            btnActualiza.setVisible(true);
+            btnAprobar.setEnabled(false);
+            permisos();
         } else {
-//            btnAprobar.setEnabled(true);
-//            lblActualiza.setVisible(false);
-//            txtActualiza.setVisible(false);
-//            btnActualiza.setVisible(false);
+            btnAprobar.setEnabled(true);
+            lblActualiza.setVisible(false);
+            txtActualiza.setVisible(false);
+            btnActualiza.setVisible(false);
+            permisos();
         }
         txtDireccion.setText(direccion);
         btnActualizarNombre.setVisible(true);
@@ -818,10 +826,8 @@ public final class Pagos extends javax.swing.JFrame {
             }
 
         } catch (NullPointerException ex) {
-            Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
-
-
     }//GEN-LAST:event_btnActualizarNombreMouseClicked
 
     private void btnActualizaTelfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizaTelfMouseClicked
@@ -908,6 +914,7 @@ public final class Pagos extends javax.swing.JFrame {
 
     private void btnAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprobarActionPerformed
         double montoAprobado = Double.parseDouble(txtMontoAprobado.getText());
+        int filaSelec = tblClientes.getSelectedRow();
         if (rol == 0) {
             int n = JOptionPane.showConfirmDialog(null, "No tiene permiso para asignar credito a los clientes\n"
                     + "Presione Si para ingresar las credenciales de un administrador, de lo contrario presione no", "Aviso", JOptionPane.YES_NO_OPTION);
@@ -920,6 +927,7 @@ public final class Pagos extends javax.swing.JFrame {
                     objCliente = new Clientes(montoAprobado, cedUsuario, txtCedula.getText());
                     cliente.apruebaCrédito(objCliente);
                     JOptionPane.showMessageDialog(this, "Crédito aprobado correctamente");
+                    txtMontoAprobado.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Las credenciales ingresadas no tienen permiso de administrador");
                 }
@@ -928,6 +936,10 @@ public final class Pagos extends javax.swing.JFrame {
             objCliente = new Clientes(montoAprobado, cedUsuario, txtCedula.getText());
             cliente.apruebaCrédito(objCliente);
             JOptionPane.showMessageDialog(this, "Crédito aprobado correctamente");
+            System.out.println(filaSelec + " es");
+            tblClientes.setValueAt("Aprobado", filaSelec, 5);            
+            tblClientes.setValueAt(montoAprobado, filaSelec, 6);
+            txtMontoAprobado.setText("");
         }
     }//GEN-LAST:event_btnAprobarActionPerformed
 

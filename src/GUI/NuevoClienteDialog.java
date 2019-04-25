@@ -36,6 +36,13 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         this.setLocationRelativeTo(null);
     }
+    
+    public void deshabilitaCredito(){
+        if(txtAyudaRol.getText().equals("0")){
+            rbtnCredito.setEnabled(false);
+            txtCredito.setEnabled(false);
+        }
+    }
 
     public String getInformacion() {
         return informacion;
@@ -114,6 +121,11 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
         txtAyudaRol = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         btnGuardarCli.setFont(new java.awt.Font("Roboto Condensed Light", 1, 13)); // NOI18N
         btnGuardarCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/save.png"))); // NOI18N
@@ -438,6 +450,10 @@ public class NuevoClienteDialog extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtCreditoKeyTyped
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        deshabilitaCredito();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

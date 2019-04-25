@@ -4,8 +4,8 @@ use empresa;
 #describe venta;
 #use empresa;
 
-#SELECT * from producto where Nombre_Producto LIKE "%bolas%" OR codigo LIKE "%bolas%";
-
+#SELECT * from venta;
+update clientes set credito = 0 where cedula_cliente = "1111111111112";
 #SELECT p.Nombre_Producto, p.Codigo, p.precio_compra, p.precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u 
 #WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND (codigo LIKE "1346" OR Nombre_Producto LIKE "%1346%" ) ORDER BY Nombre_Producto Asc;
 
@@ -56,7 +56,8 @@ maquina VARCHAR(30) not null
 #ALTER TABLE usuario change maquina maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario ADD COLUMN maquina VARCHAR (20) default NULL;
 #ALTER TABLE usuario add COLUMN estado boolean default true;
-
+select * from clientes;
+update clientes set monto_aprobado=100.00 where cedula_cliente="1111111122222";
 CREATE TABLE clientes(
 nombres VARCHAR(50) NOT NULL UNIQUE,
 cedula_cliente VARCHAR(13) PRIMARY KEY,#13 digitos debido a que puede agregarse 001(RUC)
@@ -69,8 +70,8 @@ autorizado_por varchar(10) default "N/A",
 modificado_por varchar(10) default "N/A",
 monto_aprobado decimal(10,2) default 0.00
 );
-
-#ALTER table clientes change modificado_por modificado_por varchar(10) default "N/A";
+use empresa;
+ALTER table clientes add column credito boolean default false;
 
 INSERT INTO clientes (nombres, cedula_cliente, telefono, deuda, direccion, estado) VALUES ("CONSUMIDOR FINAL","1111111111111", " ", 0.00, " ", 1);#IMPORTANTE
 
@@ -99,7 +100,6 @@ CREATE TABLE ubicacion(
 id_ubicacion INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_ubicacion VARCHAR(20) UNIQUE NOT NULL
 );
-
 CREATE TABLE categoria(
 id_categoria INT (3) AUTO_INCREMENT PRIMARY KEY,
 nombre_categoria VARCHAR(20) UNIQUE NOT NULL

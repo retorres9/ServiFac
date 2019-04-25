@@ -56,13 +56,13 @@ public class DATClientes {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
             String sentencia = "UPDATE clientes set credito = true, monto_aprobado = ?, autorizado_por = ? "
                     + "WHERE cedula_cliente = ?";
-            ps = con.prepareStatement(sentencia);
-            System.out.println(ps);
+            ps = con.prepareStatement(sentencia);            
             System.out.println(cliente.getCant());
             ps.setDouble(1, cliente.getCant());
-            ps.setString(2, cliente.getUsuario());
-            ps.setString(3, cliente.getStrCedula());
-            ps.executeUpdate();
+            ps.setString(2, cliente.getStrCedula());
+            ps.setString(3, cliente.getUsuario());//se toma usario aprovechando el campo cedula pero en realidad se recibe cedula del que aprueba            
+            System.out.println(ps);
+            ps.executeUpdate();            
         } catch (SQLException ex) {
             //JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el cliente en la base de datos\nError 036", "Error!", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();

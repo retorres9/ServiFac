@@ -179,21 +179,21 @@ public final class NuevoUsuarioDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtConf = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        txtNombre = new javax.swing.JTextField();
         txtNombreEmp = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
-        txtCedulaUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JPasswordField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        txtCedulaUser = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
+        txtPass = new javax.swing.JPasswordField();
+        txtConf = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -214,34 +214,13 @@ public final class NuevoUsuarioDialog extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel4.setText("Rol:");
 
-        txtNombre.setFont(new java.awt.Font("Roboto Medium", 0, 13)); // NOI18N
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
-
         txtNombreEmp.setFont(new java.awt.Font("Roboto Cn", 1, 26)); // NOI18N
         txtNombreEmp.setText("Nombre de Empresa");
-
-        txtUsuario.setFont(new java.awt.Font("Roboto Medium", 0, 13)); // NOI18N
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuarioKeyTyped(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         jLabel8.setText("Cédula:");
 
         jComboBox1.setFont(new java.awt.Font("Roboto Condensed Light", 0, 13)); // NOI18N
-
-        txtCedulaUser.setFont(new java.awt.Font("Roboto Medium", 0, 13)); // NOI18N
-        txtCedulaUser.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCedulaUserKeyTyped(evt);
-            }
-        });
 
         btnGuardar.setFont(new java.awt.Font("Roboto Condensed", 0, 13)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/save.png"))); // NOI18N
@@ -289,11 +268,11 @@ public final class NuevoUsuarioDialog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtConf)
-                            .addComponent(txtPass)
+                            .addComponent(txtCedulaUser)
                             .addComponent(txtNombre)
                             .addComponent(txtUsuario)
-                            .addComponent(txtCedulaUser))
+                            .addComponent(txtPass)
+                            .addComponent(txtConf))
                         .addGap(115, 115, 115))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(191, Short.MAX_VALUE)
@@ -321,7 +300,7 @@ public final class NuevoUsuarioDialog extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtCedulaUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -354,26 +333,6 @@ public final class NuevoUsuarioDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        char caracter = evt.getKeyChar();
-        if ((!Character.isLetter(caracter)) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter != KeyEvent.VK_SPACE) || (txtNombre.getText().length() > 49)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
-        if (txtUsuario.getText().length() > 14) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtUsuarioKeyTyped
-
-    private void txtCedulaUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaUserKeyTyped
-        char caracter = evt.getKeyChar();
-        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) || (txtCedulaUser.getText().length() > 9)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtCedulaUserKeyTyped
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (jComboBox1.getSelectedItem().equals("Seleccione...")) {

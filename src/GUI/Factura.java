@@ -94,9 +94,11 @@ public final class Factura extends javax.swing.JFrame {
         txtCed.setTransferHandler(null);
         txtCod.requestFocusInWindow();
         usuario();
+        
     }
 
     @SuppressWarnings("unchecked")
+    
     public void generarFactura() {
         try {
             JDialog fact = new JDialog(new javax.swing.JFrame(), "Factura", true);
@@ -174,6 +176,8 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void usuario() {
+        int e = tblVentas.getRowCount();
+        System.out.println(e);
         ArrayList<Usuario> cedula = manejadorUsuario.obtenerUserLog(host);
         int cantUser = cedula.size();
         for (int i = 0; i < cantUser; i++) {
@@ -638,6 +642,7 @@ public final class Factura extends javax.swing.JFrame {
         txtTotal.setEditable(false);
         txtTotal.setBackground(new java.awt.Color(0, 204, 0));
         txtTotal.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTotal.setText("0.00");
 
         txtUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carnetVendedor.png"))); // NOI18N
@@ -1337,7 +1342,6 @@ public final class Factura extends javax.swing.JFrame {
     }
 
     public void total() { //Para sumar el precio total y asignarlo a el textfield de total
-        System.out.println("here");
         try {
             double total1 = 0.00;
             double totalIva = 0.00;
@@ -1385,44 +1389,55 @@ public final class Factura extends javax.swing.JFrame {
     boolean verif = true;
 
     public void verificar() {//Para actualizar la cantidad si se repite el producto
-        for (int i = 0; i < tblVentas.getRowCount(); i++) {
-            String cod = (String) tblVentas.getValueAt(i, 5);
-            double precio = (Double) tblVentas.getValueAt(i, 2);
-            double dblIva = (Double) tblVentas.getValueAt(i, 3);
-            //double dblPrecioIva = (Double) tblVentas.getValueAt(i, 7);
-            double dblPrecioIvaO = (Double) tblVentas.getValueAt(i, 8);
+        int f = tblVentas.getRowCount();
+        System.out.println("fila v1= " + f);
+        try {
+            for (int i = 0; i <= tblVentas.getRowCount(); i++) {
+                System.out.println("fila v2= "+f);
+                int p = tblVentas.getRowCount();
+                System.out.println(p);
+                String cod = (String) tblVentas.getValueAt(i, 5);
+                double precio = (Double) tblVentas.getValueAt(i, 2);
+                double dblIva = (Double) tblVentas.getValueAt(i, 3);
+                //double dblPrecioIva = (Double) tblVentas.getValueAt(i, 7);
+                double dblPrecioIvaO = (Double) tblVentas.getValueAt(i, 8);
 
-            int cantidad = (int) tblVentas.getValueAt(i, 0);
-            if (cod.equals(txtCod.getText())) {
-                int cant2 = cantidad + 1;
+                int cantidad = Integer.parseInt( tblVentas.getValueAt(i, 0).toString());
+                System.out.println("cantidad "+cantidad);
+                if (cod.equals(txtCod.getText())) {
+                    int cant2 = cantidad + 1;
+                    double precio2 = cant2 * precio;
+                    double nuevo_iva = cant2 * dblIva;
+                    double nuevoPrecioIva = cant2 * precio;
+                    double nuevoIvaO = cant2 * dblPrecioIvaO;
 
-                double precio2 = cant2 * precio;
-                double nuevo_iva = cant2 * dblIva;
-                double nuevoPrecioIva = cant2 * precio;
-                double nuevoIvaO = cant2 * dblPrecioIvaO;
-
-                DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-                simbolos.setDecimalSeparator('.');
-                DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
-                String strTotalLbl = dcmlCambio.format(precio2);
-                precio2 = Double.parseDouble(strTotalLbl);
-                String strIva = dcmlCambio.format(nuevo_iva);
-                double strIva2 = Double.parseDouble(strIva);
-                String putoIva = dcmlCambio.format(nuevoPrecioIva);
-                double putoIva2 = Double.parseDouble(putoIva);
-                modelo.setValueAt(cant2, i, 0);
-                modelo.setValueAt(putoIva2, i, 4);
-                modelo.setValueAt(strIva2, i, 6);
-                //modelo.setValueAt(putoIva2, i, 7);
-                modelo.setValueAt(nuevoIvaO, i, 8);
-                flag = false;
-                verif = false;
-                total();
-                break;
-            } else {
-                flag = true;
+                    DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+                    simbolos.setDecimalSeparator('.');
+                    DecimalFormat dcmlCambio = new DecimalFormat("0.00", simbolos);
+                    String strTotalLbl = dcmlCambio.format(precio2);
+                    precio2 = Double.parseDouble(strTotalLbl);
+                    String strIva = dcmlCambio.format(nuevo_iva);
+                    double strIva2 = Double.parseDouble(strIva);
+                    String putoIva = dcmlCambio.format(nuevoPrecioIva);
+                    double putoIva2 = Double.parseDouble(putoIva);
+                    System.out.println("cant2 "+cant2);
+                    modelo.setValueAt(cant2, i, 0);
+                    modelo.setValueAt(putoIva2, i, 4);
+                    modelo.setValueAt(strIva2, i, 6);
+                    //modelo.setValueAt(putoIva2, i, 7);
+                    modelo.setValueAt(nuevoIvaO, i, 8);
+                    flag = false;
+                    verif = false;
+                    total();
+                    break;
+                } else {
+                    flag = true;
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException ex) {
+
         }
+
     }
 
     public static void main(String args[]) {
