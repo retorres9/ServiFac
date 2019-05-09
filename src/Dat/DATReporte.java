@@ -10,16 +10,32 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATReporte {
 
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+
+    public DATReporte() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void creaReporte(DetalleVenta detalle) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "INSERT INTO detalle_venta (Cedula_Cliente, Cantidad, Codigo, Precio_Venta, Usuario, Id_Venta) "
                     + "VALUES (?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
@@ -45,7 +61,7 @@ public class DATReporte {
     public ArrayList<DetalleVenta> detalleVenta(int idVenta) {
         ArrayList<DetalleVenta> factura = new ArrayList<DetalleVenta>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT dv.Cantidad, p.Nombre_Producto, p.Precio, v.Fecha , dv.Id_Venta "
                     + "FROM detalle_venta dv, producto p, venta v "
                     + "WHERE dv.Codigo = p.Codigo AND dv.Id_Venta = v.Id_Venta AND v.Id_Venta = ?";

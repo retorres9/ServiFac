@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import entitymanager.Entity;
+import entitymanager.EntityException;
 /**
  *
  * @author rober
@@ -20,11 +21,25 @@ public class DATBodega {
     Connection con;
     ResultSet rs;
     PreparedStatement ps;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATBodega() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public ArrayList<Bodega> obtenerBodega() {
         ArrayList<Bodega> listadoBodega = new ArrayList<Bodega>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "Select id_bodega, nombre_bodega From Bodega";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -49,7 +64,7 @@ public class DATBodega {
 
     public void nuevaBodega(Bodega bodega) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "INSERT INTO bodega (nombre_bodega) VALUES(?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, bodega.getStrBodega());

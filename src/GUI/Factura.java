@@ -111,7 +111,6 @@ public final class Factura extends javax.swing.JFrame {
             parametro.put("direccion", txtDireccionCl.getText());
             parametro.put("cliente", txtCliente.getText());
             parametro.put("telefono", txtTelf.getText());
-            parametro.put("telefono", txtTelf.getText());
             parametro.put("total", txtTotal.getText());
             JRDataSource dataSource = new JRTableModelDataSource(tblVentas.getModel());
             JasperPrint j = JasperFillManager.fillReport(reporte, parametro, dataSource);

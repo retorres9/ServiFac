@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 /**
  *
@@ -20,11 +22,25 @@ public class DATUbicacion {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATUbicacion() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public ArrayList<Ubicacion> obtenerUbicacion(){
         ArrayList<Ubicacion> listaUbicacion = new ArrayList<Ubicacion>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT id_ubicacion, nombre_ubicacion FROM ubicacion ORDER BY nombre_ubicacion";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();            
@@ -49,7 +65,7 @@ public class DATUbicacion {
     
     public boolean crearUbicacion(Ubicacion ubi)throws SQLException{
         try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "INSERT INTO ubicacion(nombre_ubicacion) VALUES(?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, ubi.getStrUbicacion());

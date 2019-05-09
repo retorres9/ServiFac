@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 /**
  *
@@ -20,11 +22,25 @@ public class DATCategoria {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATCategoria() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public ArrayList<Categoria> obtenerCategoria() throws ClassNotFoundException{
         ArrayList<Categoria> listaCategoria = new ArrayList<Categoria>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT id_categoria, nombre_categoria FROM categoria";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -48,7 +64,7 @@ public class DATCategoria {
     }
     public boolean IngresarCat(Categoria cat) throws SQLException, ClassNotFoundException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "INSERT INTO categoria (nombre_categoria)"
                     + "VALUES (?)";
             ps = con.prepareStatement(Sentencia);

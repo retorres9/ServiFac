@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +32,7 @@ public class Backup extends javax.swing.JDialog {
     String ruta = null;
     String host = "unknown";
     Utilidades util = new Utilidades();
+    FileOutputStream out;
 
     public Backup(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -134,18 +137,24 @@ public class Backup extends javax.swing.JDialog {
             p = run.exec("mysqldump -u root -pticowrc2017"
                     + " empresa");
             InputStream in = p.getInputStream();
-            FileOutputStream out = new FileOutputStream(ruta);
+            out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];
             int leido = in.read(buffer);
             while (leido > 0) {
                 out.write(buffer, 0, leido);
                 leido = in.read(buffer);
             }
-            out.close();
+            
             JOptionPane.showMessageDialog(null, "Backup creado satisfactoriamente");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un problema al crear el Backup");
-        }
+        } finally {
+            try {
+                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

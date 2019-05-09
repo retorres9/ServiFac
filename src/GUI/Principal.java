@@ -37,6 +37,7 @@ public final class Principal extends javax.swing.JFrame {
     DATMaterial objProd;
     DATConfiguracion manejadorConf;
     DATUsuario manejadorUsuario;
+    FileOutputStream out;
 
     public Principal() {
         objProd = new DATMaterial();
@@ -487,17 +488,23 @@ public final class Principal extends javax.swing.JFrame {
             proceso = run.exec("mysqldump -u root -pticowrc2017"
                     + " empresa");
             InputStream in = proceso.getInputStream();
-            FileOutputStream out = new FileOutputStream(ruta);
+            out = new FileOutputStream(ruta);
             byte[] buffer = new byte[1000];
             int leido = in.read(buffer);
             while (leido > 0) {
                 out.write(buffer, 0, leido);
                 leido = in.read(buffer);
             }
-            out.close();
+            
             JOptionPane.showMessageDialog(null, "Backup creado satisfactoriamente");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un problema al crear el Backup");
+        } finally {
+            try {
+                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

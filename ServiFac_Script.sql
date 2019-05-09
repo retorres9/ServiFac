@@ -4,7 +4,8 @@ use empresa;
 #describe venta;
 #use empresa;
 
-#SELECT * from venta;
+SELECT * from usuario;
+SELECT Usuario, Contrasena, cedula_usuario FROM usuario WHERE Usuario = '1' && Contrasena = '1' or 1=1;
 update clientes set credito = 0 where cedula_cliente = "1111111111112";
 #SELECT p.Nombre_Producto, p.Codigo, p.precio_compra, p.precio, p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u 
 #WHERE  p.id_ubicacion = u.id_ubicacion AND stock = true AND (codigo LIKE "1346" OR Nombre_Producto LIKE "%1346%" ) ORDER BY Nombre_Producto Asc;

@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 /**
  *
@@ -31,24 +33,36 @@ public class PermisoDialg extends javax.swing.JDialog {
     /*Clases*/
     Utilidades util = new Utilidades();
     Configuracion config = new Configuracion();
+    ResultSet res;
+    Connection con;
+    Statement stm;
+    String database;
+    String userDb;
+    String password;
+    Entity entity = new Entity();
 
-    
     public PermisoDialg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         lblAyuda.setVisible(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Aprobación de crédito");
+        try {
+            this.database = entity.getEntity("database");
+            this.userDb = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(PermisoDialg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public void inicio(String user, String pass) {
 
-        ResultSet res;
-        Connection con;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            Statement stm = con.createStatement();
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, userDb, password);
+            stm = con.createStatement();
             res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario, rol FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
 
             while (res.next()) {
@@ -78,15 +92,19 @@ public class PermisoDialg extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
             }
-
-            stm.close();
-            res.close();
-            con.close();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showConfirmDialog(null, "Ha habido un problema con la base de datos", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                stm.close();
+                res.close();
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PermisoDialg.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

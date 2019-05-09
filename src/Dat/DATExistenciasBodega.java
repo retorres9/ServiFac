@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 /**
  *
@@ -19,10 +21,24 @@ public class DATExistenciasBodega {
     Connection con;
     ResultSet rs;
     PreparedStatement ps;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+
+    public DATExistenciasBodega() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void ingresarEnBodega(ExistenciasBodega existencia) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "INSERT INTO existenciasBodega (id_bodega, codigo, cantidad) VALUES (?,?,?)";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, existencia.getIdBodega());
@@ -43,7 +59,7 @@ public class DATExistenciasBodega {
 
     public void actualizarCant(ExistenciasBodega existencia, int cant) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             con.setAutoCommit(false);
             String sentencia = "UPDATE existenciasBodega SET cantidad = cantidad + ? WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
@@ -72,10 +88,10 @@ public class DATExistenciasBodega {
             }
         }
     }
-    
+
     public void moverATienda(ExistenciasBodega existencia, int cant) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             con.setAutoCommit(false);
             String sentencia = "UPDATE existenciasBodega SET cantidad = cantidad - ? WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
@@ -108,7 +124,7 @@ public class DATExistenciasBodega {
     public int contadorProdBodega(String cod) {
         int cant = 0;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT count(*) FROM existenciasbodega WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cod);
@@ -131,7 +147,7 @@ public class DATExistenciasBodega {
 
     public void ingresarEnBodegaInventario(ExistenciasBodega existencia, int cant) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             con.setAutoCommit(false);
             String sentencia = "INSERT INTO existenciasBodega (id_bodega, codigo, cantidad) VALUES (?,?,?)";
             ps = con.prepareStatement(sentencia);

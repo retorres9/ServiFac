@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATProveedor {
 
@@ -17,10 +19,24 @@ public class DATProveedor {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATProveedor() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public boolean ingresoProveedor(Proveedor prov) throws SQLException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "INSERT INTO proveedores (empresa, ruc, nombre_cuenta, tipo_cuenta,"
                     + "numero_cuenta, deuda, telefono)" + "VALUES(?,?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
@@ -50,7 +66,7 @@ public class DATProveedor {
     public ArrayList<Proveedor> obtenerEmpresa() {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT ruc, empresa FROM proveedores ORDER BY empresa";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -78,7 +94,7 @@ public class DATProveedor {
     public ArrayList<Proveedor> obtenerTODOempresa() {
         ArrayList<Proveedor> listaProveedor = new ArrayList<Proveedor>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT * FROM proveedores WHERE estado = true AND empresa NOT LIKE '(Vacio)'";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -108,7 +124,7 @@ public class DATProveedor {
 
     public void actualizaProveedor(Proveedor prov){
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "UPDATE proveedores SET nombre_cuenta = ?, tipo_cuenta = ?,"
                     + "numero_cuenta = ?, telefono = ? WHERE RUC = ?";
             ps = con.prepareStatement(sentencia);
@@ -134,7 +150,7 @@ public class DATProveedor {
     public ArrayList<Proveedor> buscarEmpresa(String nombre) {
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT Empresa, ruc, Nombre_Cuenta, Tipo_Cuenta,"
                     + "Numero_Cuenta, Deuda, Telefono FROM proveedores WHERE estado = true AND Empresa REGEXP CONCAT ('^',?)";
             ps = con.prepareStatement(sentencia);
@@ -167,7 +183,7 @@ public class DATProveedor {
     public ArrayList<Proveedor> buscarNombreCuenta(String nombreEmpresa) {
         ArrayList<Proveedor> listadoBusq = new ArrayList<Proveedor>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT Empresa, ruc, Nombre_Cuenta, Tipo_Cuenta,"
                     + "Numero_Cuenta, Deuda, Telefono FROM proveedores WHERE estado = true AND Nombre_Cuenta REGEXP CONCAT ('^',?)";
             ps = con.prepareStatement(sentencia);
@@ -199,7 +215,7 @@ public class DATProveedor {
 
     public void updateDeuda(Proveedor proveedor) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "UPDATE proveedores SET Deuda = ? WHERE ruc = ?";
             ps = con.prepareStatement(sentencia);
             ps.setDouble(1, proveedor.getDblDeuda());
@@ -220,7 +236,7 @@ public class DATProveedor {
 
     public void eliminarProveedor(String empresa) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "UPDATE proveedores SET estado = false WHERE  Empresa = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, empresa);

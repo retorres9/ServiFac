@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATAbonoCliente {
 
@@ -17,10 +19,24 @@ public class DATAbonoCliente {
     PreparedStatement ps = null;
     ResultSet rs = null;
     AbonoCliente abono = new AbonoCliente();
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATAbonoCliente(){
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void abonoCliente(AbonoCliente abonoCl) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "INSERT INTO abono_cliente (Cedula_cliente, cedula_usuario, Monto_Abono, Fecha) VALUES (?,?,?,?)";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, abonoCl.getStrCedula());
@@ -43,7 +59,7 @@ public class DATAbonoCliente {
     public ArrayList<AbonoCliente> verAbonos(String strFecha) {
         ArrayList<AbonoCliente> listadoPagos = new ArrayList<AbonoCliente>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT c.Nombres, c.Cedula_cliente, ac.Monto_Abono, c.Deuda, u.usuario "
                     + "FROM clientes c, abono_cliente ac, usuario u "
                     + "WHERE u.cedula_usuario = ac.cedula_usuario AND c.Cedula_cliente = ac.Cedula_cliente AND Fecha = ?";

@@ -6,6 +6,8 @@
 package Dat;
 
 import Clases.Configuracion;
+import entitymanager.EntityException;
+import entitymanager.Entity;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,12 +27,25 @@ public class DATConfiguracion {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
     
+    public DATConfiguracion(){
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public ArrayList<Configuracion> cargaConfig(){
         ArrayList<Configuracion> config = new ArrayList<Configuracion>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT * FROM configuracion";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -61,7 +76,7 @@ public class DATConfiguracion {
         ArrayList<Configuracion> credencial = new ArrayList<Configuracion>();
         try{
             //con = DriverManager.getConnection("jdbc:mysql://empresa.c48fschm0xwp.sa-east-1.rds.amazonaws.com:3306/empresa","roberth","ticowrc2017");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentecia = "SELECT contrasena, empresa FROM configuracion";
             ps = con.prepareStatement(sentecia);
             rs = ps.executeQuery();
@@ -86,7 +101,7 @@ public class DATConfiguracion {
     
     public void actualizaConfig(Configuracion config){
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE configuracion SET empresa = ?, direccion = ?,"
                     + "propietario = ?, ruc = ?, telefono = ? WHERE id = 1";
             ps = con.prepareStatement(sentencia);

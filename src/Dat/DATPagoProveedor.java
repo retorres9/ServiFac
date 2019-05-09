@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATPagoProveedor {
 
@@ -17,10 +19,24 @@ public class DATPagoProveedor {
     ResultSet rs;
     PreparedStatement ps;
     PagoProveedorClase pago = new PagoProveedorClase();
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATPagoProveedor() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void pagoProveedor(PagoProveedorClase pago) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "INSERT INTO pago_proveedor (ruc, cedula_usuario, Monto_Cancelado, Fecha, Tipo, descripcion) "
                     + "VALUES (?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
@@ -47,7 +63,7 @@ public class DATPagoProveedor {
     public ArrayList<PagoProveedorClase> verPagos(String empresa) {
         ArrayList<PagoProveedorClase> listadoPagos = new ArrayList<PagoProveedorClase>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT pp.monto_cancelado, u.usuario, pp.fecha, pp.descripcion "
                     + "FROM proveedores p, pago_proveedor pp , usuario u "
                     + "WHERE p.RUC = pp.RUC AND u.cedula_usuario = pp.cedula_usuario AND pp.RUC = ?";
@@ -79,7 +95,7 @@ public class DATPagoProveedor {
     public ArrayList<PagoProveedorClase> verPagosPorFecha(String strFecha) {
         ArrayList<PagoProveedorClase> listadoPagos = new ArrayList<PagoProveedorClase>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT p.Empresa, p.Deuda, pp.Monto_Cancelado, U.usuario "
                     + "FROM proveedores p, pago_proveedor pp, usuario u "
                     + "WHERE u.cedula_usuario=pp.cedula_usuario AND p.ruc = pp.ruc AND pp.Fecha = ? AND Tipo ='Pago'";

@@ -10,17 +10,33 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATMaterial {
 
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    Entity entity = new Entity();
+    String database;
+    String user;
+    String password;
 
+    public DATMaterial() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public ArrayList<Producto> Consultar() throws ClassNotFoundException {
         ArrayList<Producto> listaProductos = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo,"
                     + " p.precio_compra, p.precio, p.Precio_Mayor, "
                     + " u.nombre_ubicacion, p.Cantidad , p.iva FROM "
@@ -56,7 +72,7 @@ public class DATMaterial {
     public ArrayList<Producto> busquedaProducto(String codigo) {
         ArrayList<Producto> listadoProd = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT nombre_producto, precio, precio_mayor, cantidad FROM producto WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
@@ -85,7 +101,7 @@ public class DATMaterial {
     public boolean actualizaCategoria(int id, String nombre) {
         boolean bandera;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET id_categoria = ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, id);
@@ -102,7 +118,7 @@ public class DATMaterial {
     public boolean actualizaProveedor(String ruc, String nombre) {
         boolean bandera;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET ruc = ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, ruc);
@@ -119,7 +135,7 @@ public class DATMaterial {
     public ArrayList<Producto> existenciasBodega() {
         ArrayList<Producto> listadoEnBodega = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT p.Nombre_Producto, p.Codigo, "
                     + "b.nombre_bodega, eb.cantidad, p.precio FROM "
                     + "producto p, existenciasbodega eb, bodega b WHERE eb.id_bodega = b.id_bodega "
@@ -151,7 +167,7 @@ public class DATMaterial {
     public ArrayList<Producto> ConsultarMinimos() {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT distinct p.Nombre_Producto, p.Codigo, p.Precio, "
                     + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
                     + "p.Cantidad_Minima, pr.Empresa FROM categoria cat, producto p, ubicacion u, "
@@ -187,7 +203,7 @@ public class DATMaterial {
     public ArrayList<Producto> obtenerDetalleProd(String cod) {
         ArrayList<Producto> detalleProd = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT p.nombre_producto, p.precio, p.precio_mayor, p.cantidad, u.nombre_ubicacion, c.nombre_categoria, prov.empresa, p.iva "
                     + "FROM producto p, ubicacion u, categoria c, proveedores prov WHERE codigo = ? AND p.id_ubicacion = u.id_ubicacion "
                     + "AND p.id_categoria = c.id_categoria AND p.ruc = prov.ruc";
@@ -222,7 +238,7 @@ public class DATMaterial {
     public ArrayList<Producto> ConsultarMinimo(String prov) {
         ArrayList<Producto> listadoMinimos = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT distinct p.Nombre_Producto, p.Codigo, p.Precio, "
                     + "p.Precio_Mayor, u.nombre_ubicacion, p.Cantidad, "
                     + "p.Cantidad_Minima, pr.Empresa FROM categoria cat, producto p, ubicacion u, "
@@ -259,7 +275,7 @@ public class DATMaterial {
     public ArrayList<Producto> ConsultarPorNombre(String nombre) throws SQLException {
         ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor,"
                     + " u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u "
@@ -291,7 +307,7 @@ public class DATMaterial {
     public ArrayList<Producto> ConsultarPorCodigo(String nombre) {
         ArrayList<Producto> listaProductosNombre = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "SELECT p.Nombre_Producto, p.Codigo, p.precio_compra,"
                     + " p.precio, p.Precio_Mayor,"
                     + " u.nombre_ubicacion, p.Cantidad, p.iva FROM producto p, ubicacion u "
@@ -327,7 +343,7 @@ public class DATMaterial {
 
     public void actualizarUbicacion(Producto producto) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET id_ubicacion = ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, producto.getIntUbicacion());
@@ -348,7 +364,7 @@ public class DATMaterial {
     public boolean IngresarProducto(Producto producto) throws SQLException, ClassNotFoundException {
 
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "INSERT INTO producto (nombre_producto, codigo,"
                     + " precio_Compra, precio, precio_mayor, ganancia, ganancia_Mayor,"
                     + "id_categoria, id_ubicacion, cantidad, cantidad_Minima,"
@@ -385,7 +401,7 @@ public class DATMaterial {
 
     public void ActualizaPrecio(Producto prod) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET precio_Compra = ?, precio = ?, precio_mayor = ?, ganancia = ?, ganancia_Mayor = ?"
                     + "WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
@@ -410,7 +426,7 @@ public class DATMaterial {
 
     public void UpdateFormaCantMin(Producto producto) throws ClassNotFoundException, SQLException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET Cantidad_Minima = ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, producto.getIntCantidad());
@@ -423,11 +439,10 @@ public class DATMaterial {
             con.close();
         }
     }
-//
 
     public void UpdateProducto(Producto producto) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "UPDATE producto SET Nombre_Producto = ? WHERE Codigo = ?";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
@@ -450,7 +465,7 @@ public class DATMaterial {
 
     public void UpdateNombreProducto(Producto producto, String codigo) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "UPDATE producto SET Nombre_Producto = ?,Precio = ?, Precio_Mayor = ?, Cantidad = ?, Ubicacion = ? WHERE Codigo = ?";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, producto.getStrNombreProd());
@@ -476,7 +491,7 @@ public class DATMaterial {
     public int CuentaRegistros() {
         int cant = 0;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT count(*) FROM producto WHERE Cantidad <= Cantidad_Minima";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -499,7 +514,7 @@ public class DATMaterial {
 
     public void eliminarProducto(String nombre) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET stock = false WHERE codigo = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
@@ -519,7 +534,7 @@ public class DATMaterial {
     public int validaCodigo(String codigo) {
         int cant = 0;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "select count(codigo) from producto where codigo LIKE ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
@@ -543,7 +558,7 @@ public class DATMaterial {
     public ArrayList<Producto> cargaProductoFact(String codigo) {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT Nombre_Producto, Precio, precio_mayor, Codigo, IVA FROM producto WHERE Codigo = ? AND Cantidad > 0";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, codigo);
@@ -573,7 +588,7 @@ public class DATMaterial {
     public ArrayList<Producto> comprobarCant(String nombre) {
         ArrayList<Producto> cantidadProd = new ArrayList<Producto>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT cantidad FROM producto Where nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
@@ -598,7 +613,7 @@ public class DATMaterial {
 
     public void UpdateCantFactura(Producto prod) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET Cantidad = cantidad - ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, prod.getIntCantidadMinima());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
@@ -618,7 +633,7 @@ public class DATMaterial {
 
     public void AumentaCant(Producto prod) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET Cantidad = cantidad + ? WHERE Nombre_Producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, prod.getIntCantidadMinima());//se recupera ubicacion porque constructor (String, int) ya esta asiganado para actualizar la ubicacion
@@ -638,7 +653,7 @@ public class DATMaterial {
 
     public void moverBodega(Producto prod) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE producto SET Cantidad = cantidad + ? WHERE nombre_producto = ?";
             ps = con.prepareStatement(sentencia);
             ps.setInt(1, prod.getIntCantidadMinima());

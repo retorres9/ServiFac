@@ -8,26 +8,39 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATConexion {
 
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    
 
     public DATConexion() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DATConexion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (EntityException ex) {
             Logger.getLogger(DATConexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/empresa";
+        String url = "jdbc:mysql://localhost:3306/"+database;
         Class.forName(driver);
-        return DriverManager.getConnection(url, "root", "ticowrc2017");
+        return DriverManager.getConnection(url, user, password);
     }
 
     public Connection AbrirConexion() {

@@ -10,18 +10,32 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATUsuario {
 
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
-    
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+
+    public DATUsuario() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public boolean nuevoUsuario(Usuario usuario, String maq) throws SQLException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "INSERT INTO usuario (Cedula_Usuario,Nombre, Usuario, Contrasena, Rol, maquina) "
                     + "VALUES (?,?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
@@ -55,7 +69,7 @@ public class DATUsuario {
     public ArrayList<Usuario> obtenerCedula(String user) {
         ArrayList<Usuario> cedula = new ArrayList<Usuario>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT cedula_usuario FROM usuario WHERE usuario = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, user);
@@ -81,7 +95,7 @@ public class DATUsuario {
     public ArrayList<Usuario> listarUsuarios() {
         ArrayList<Usuario> listadoUsuarios = new ArrayList<Usuario>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT nombre, usuario, rol FROM usuario ORDER BY nombre";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -107,7 +121,7 @@ public class DATUsuario {
 
     public void setLogin(String us, String maq) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "UPDATE usuario SET login = 1, maquina = ? WHERE cedula_usuario = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
@@ -124,16 +138,16 @@ public class DATUsuario {
             }
         }
     }
-    
-    public ArrayList<Usuario> cierraPrograma(String host){
+
+    public ArrayList<Usuario> cierraPrograma(String host) {
         ArrayList<Usuario> resultado = new ArrayList<Usuario>();
-        try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa","root","ticowrc2017");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentecnia = "SELECT login FROM usuario WHERE login = 1 AND maquina = ?";
             ps = con.prepareStatement(sentecnia);
-            ps.setString(1, host);            
+            ps.setString(1, host);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 boolean login = rs.getBoolean(1);
                 Usuario user = new Usuario(login);
                 resultado.add(user);
@@ -150,10 +164,10 @@ public class DATUsuario {
         }
         return resultado;
     }
-    
+
     public void startupLogin(String maq) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "UPDATE usuario SET login = 0 WHERE maquina = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
@@ -171,15 +185,15 @@ public class DATUsuario {
     }
 
     public ArrayList<Usuario> obtenerUserLog(String maq) {
-        ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();        
+        ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, user, password);
             String sentencia = "SELECT usuario, cedula_usuario, rol FROM usuario WHERE  login = 1 AND maquina = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, maq);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String strUsuario = rs.getString(1);                
+                String strUsuario = rs.getString(1);
                 String cedula = rs.getString(2);
                 int rol = rs.getInt(3);
                 Usuario user = new Usuario(strUsuario, cedula, rol);//en objeto (nombre, usuario,rol)

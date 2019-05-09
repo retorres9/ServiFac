@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public final class Login extends javax.swing.JFrame {
 
@@ -26,6 +28,13 @@ public final class Login extends javax.swing.JFrame {
     String valid3 = "";
     public static String bandera = "false";
     public static ServerSocket socket;
+    ResultSet res;
+    Connection con;
+    Statement stm;
+    String database;
+    String userDb;
+    String password;
+    Entity entity = new Entity();
 
     /*Clases*/
     Utilidades util = new Utilidades();
@@ -44,6 +53,13 @@ public final class Login extends javax.swing.JFrame {
         this.setTitle(Constantes.Constantes.NOMBRE_PROGRAMA);
         txtUsuario.requestFocus();
         manejadorUsuario.startupLogin(host);
+        try {
+            this.database = entity.getEntity("database");
+            this.userDb = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -197,16 +213,14 @@ public final class Login extends javax.swing.JFrame {
 
     }
 
-    public void inicio(String user, String pass) {
+    public void loginValidation(String user, String pass) {
 
-        ResultSet res;
-        Connection con;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             //con = DriverManager.getConnection("jdbc:mysql://192.168.1.3:3306/empresa", "root", "Ticowrc_2017");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
-            Statement stm = con.createStatement();
-            res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario FROM usuario WHERE Usuario = '" + user + "' && Contrasena = '" + pass + "'");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
+            stm = con.createStatement();
+            res = stm.executeQuery("SELECT Usuario, Contrasena, cedula_usuario FROM usuario WHERE Usuario = '" + userDb + "' && Contrasena = '" + pass + "'");
             while (res.next()) {
                 valid = res.getString("Usuario");
                 valid2 = res.getString("Contrasena");
@@ -229,14 +243,20 @@ public final class Login extends javax.swing.JFrame {
                 txtPass.setText("");
                 txtUsuario.requestFocusInWindow();
             }
-            stm.close();
-            res.close();
-            con.close();
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showConfirmDialog(null, "Ha habido un problema con la base de datos", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                stm.close();
+                res.close();
+                con.close();
+            } catch (Exception e) {
+            }
+
         }
 
     }
@@ -245,7 +265,7 @@ public final class Login extends javax.swing.JFrame {
         String user = txtUsuario.getText();
         String pass = txtPass.getText();
         String passMD5 = Utilidades.getMD5(pass);
-        inicio(user, passMD5);
+        loginValidation(user, passMD5);
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

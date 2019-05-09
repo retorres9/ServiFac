@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entitymanager.Entity;
+import entitymanager.EntityException;
 
 public class DATClientes {
 
@@ -18,11 +20,25 @@ public class DATClientes {
     PreparedStatement ps = null;
     ResultSet rs = null;
     Clientes cliente = new Clientes();
+    String database;
+    String user;
+    String password;
+    Entity entity = new Entity();
+    
+    public DATClientes() {
+        try {
+            this.database = entity.getEntity("database");
+            this.user = entity.getEntity("user");
+            this.password = entity.getEntity("password");
+        } catch (EntityException ex) {
+            Logger.getLogger(DATMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public ArrayList<Clientes> ObtenerClientes() {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT nombres, cedula_cliente, telefono, deuda, direccion, credito, monto_aprobado FROM clientes WHERE nombres != 'CONSUMIDOR FINAL' ORDER BY nombres";
             ps = con.prepareStatement(sentencia);
             rs = ps.executeQuery();
@@ -53,7 +69,7 @@ public class DATClientes {
 
     public void apruebaCrédito(Clientes cliente) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE clientes set credito = true, monto_aprobado = ?, autorizado_por = ? "
                     + "WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);            
@@ -78,7 +94,7 @@ public class DATClientes {
 
     public void actualizaCredito(Clientes cliente) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE clientes SET credito = true, monto_aprobado = ?, modificado_por = ?"
                     + "WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
@@ -101,7 +117,7 @@ public class DATClientes {
     public ArrayList<Clientes> ConsultarPorNombre(String nombre) {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE DEUDA > 0.00 AND estado = true AND Nombres REGEXP CONCAT('^',?) ORDER BY Nombres";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
@@ -131,7 +147,7 @@ public class DATClientes {
     public ArrayList<Clientes> ConsultarCedula(String cedulaCli) {
         ArrayList<Clientes> listadoClientes = new ArrayList<Clientes>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String Sentencia = "SELECT Nombres, Cedula_Cliente, Telefono, Deuda, Direccion FROM clientes WHERE Deuda> 0.00 AND Cedula_Cliente REGEXP CONCAT('^',?) ORDER BY Nombres";
             ps = con.prepareStatement(Sentencia);
             ps.setString(1, cedulaCli);
@@ -160,7 +176,7 @@ public class DATClientes {
 
     public boolean InsertarCliente(Clientes cliente) throws SQLException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "INSERT INTO clientes (Nombres, Cedula_Cliente, Telefono, Deuda, Direccion)"
                     + "VALUES (?,?,?,?,?)";
             ps = con.prepareStatement(sentencia);
@@ -186,7 +202,7 @@ public class DATClientes {
 
     public boolean InsertarCliente2(Clientes cliente) throws SQLException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "INSERT INTO clientes (Nombres, Cedula_Cliente, Telefono, Deuda, Direccion, Credito, "
                     + "autorizado_por, monto_aprobado)"
                     + "VALUES (?,?,?,?,?,?,?,?)";
@@ -216,7 +232,7 @@ public class DATClientes {
 
     public void agregarDeuda(Clientes cliente) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE clientes SET Deuda = ? WHERE Cedula_Cliente = ? ";
             ps = con.prepareStatement(sentencia);
             ps.setDouble(1, cliente.getDblDeuda());
@@ -236,7 +252,7 @@ public class DATClientes {
 
     public void actualizarCliente(Clientes cliente) throws SQLException {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE clientes SET Nombres = ?, Telefono = ?, Direccion = ? WHERE Cedula_Cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrNombre());
@@ -260,7 +276,7 @@ public class DATClientes {
     public boolean eliminarCliente(Clientes cliente) {
         boolean bandera;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "UPDATE clientes SET estado = false WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, cliente.getStrCedula());
@@ -289,7 +305,7 @@ public class DATClientes {
     public ArrayList<Clientes> FacturaCliente(String nombre) {
         ArrayList<Clientes> listaCliente = new ArrayList<Clientes>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "ticowrc2017");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database, user, password);
             String sentencia = "SELECT nombres, direccion, deuda, telefono, credito, monto_aprobado FROM clientes WHERE cedula_cliente = ?";
             ps = con.prepareStatement(sentencia);
             ps.setString(1, nombre);
